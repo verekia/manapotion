@@ -26,5 +26,5 @@
     "composite": true,
     "allowSyntheticDefaultImports": true,
   },
-  "include": ["src", "index.tsx"],
+  "include": ["src", "index.ts"],
 }
