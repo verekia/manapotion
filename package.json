@@ -6,6 +6,7 @@
     "example"
   ],
   "scripts": {
-    "dev": "cd example && bun dev"
+    "dev": "cd example && bun dev",
+    "pub": "cd engine && npm publish"
   }
 }

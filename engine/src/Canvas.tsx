@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from 'react'
 
 import { Canvas as R3FCanvas, useThree } from '@react-three/fiber'
-import useStore from '#/store'
+import useStore from './store'
 
 let WebGPURenderer: any
 
