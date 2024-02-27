@@ -1,0 +1,11 @@
+{
+  "name": "v1v2-engine-monorepo",
+  "private": true,
+  "workspaces": [
+    "engine",
+    "example"
+  ],
+  "scripts": {
+    "dev": "cd example && bun dev"
+  }
+}
