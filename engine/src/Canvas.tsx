@@ -1,6 +1,6 @@
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Canvas as R3FCanvas, useThree } from '@react-three/fiber'
+import { Canvas as R3FCanvas, useThree, CanvasProps } from '@react-three/fiber'
 import useStore from './store'
 
 let WebGPURenderer: any
@@ -22,10 +22,9 @@ const RendererDetector = () => {
   return null
 }
 
-const Canvas = ({ children, forceWebGL }: { children?: ReactNode; forceWebGL?: boolean }) => {
+const Canvas = ({ children, forceWebGL, ...props }: CanvasProps & { forceWebGL?: boolean }) => {
   const [isWebGPUAvailable, setIsWebGPUAvailable] = useState(false)
   const [isReady, setIsReady] = useState(false)
-  const longRightClickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const fn = async () => {
@@ -41,39 +40,12 @@ const Canvas = ({ children, forceWebGL }: { children?: ReactNode; forceWebGL?: b
       setIsReady(true)
     }
     fn()
-
-    return () => {
-      longRightClickTimeoutRef.current && clearTimeout(longRightClickTimeoutRef.current)
-    }
   }, [])
 
   return (
     isReady && (
       <R3FCanvas
         dpr={[1, 1.5]}
-        className="top-0 z-0"
-        style={{ position: 'absolute' }}
-        onContextMenu={e => e.preventDefault()}
-        onMouseMove={e => {
-          // Note: This can cause many exceptions if the fullscreen is not allowed
-          if (e.buttons === 2) {
-            document.body.requestPointerLock()
-            longRightClickTimeoutRef.current && clearTimeout(longRightClickTimeoutRef.current)
-          }
-        }}
-        onMouseUp={e => {
-          if (e.button === 2) {
-            longRightClickTimeoutRef.current && clearTimeout(longRightClickTimeoutRef.current)
-          }
-        }}
-        onMouseDown={e => {
-          if (e.button === 2) {
-            longRightClickTimeoutRef.current = setTimeout(() => {
-              document.body.requestPointerLock()
-            }, 300)
-          }
-        }}
-        shadows
         {...(isWebGPUAvailable && {
           gl: canvas => {
             const r = new WebGPURenderer({ canvas })
@@ -82,6 +54,7 @@ const Canvas = ({ children, forceWebGL }: { children?: ReactNode; forceWebGL?: b
             return r
           },
         })}
+        {...props}
       >
         {children}
         <RendererDetector />
