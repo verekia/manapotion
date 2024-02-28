@@ -5,9 +5,9 @@ type CanvasStore = {
   setRendererName: (name: string) => void
 }
 
-const useCanvasStore = create<CanvasStore>(set => ({
+export const useCanvasStore = create<CanvasStore>(set => ({
   rendererName: undefined,
   setRendererName: name => set(() => ({ rendererName: name })),
 }))
 
-export default useCanvasStore
+export const getCanvasState = () => useCanvasStore.getState()

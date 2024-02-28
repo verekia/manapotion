@@ -4,6 +4,21 @@ Do not use, unless you are me.
 
 TS and React only. The TypeScript React files are not even compiled. If your project uses different `tsconfig.json` settings than what the library expects, it might break. It is based on Vite's tsconfig.
 
+## Features
+
+- [WebGPU Canvas](#webgpu-canvas)
+- [Browser Events](#browser-events)
+- [Utils](#utils)
+
+## Installation
+
+```sh
+npm install @v1v2/engine
+yarn add @v1v2/engine
+pnpm add @v1v2/engine
+bun add @v1v2/engine
+```
+
 ## WebGPU Canvas
 
 Wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
@@ -88,6 +103,23 @@ const App = () => {
   )
 }
 ```
+
+For a fully immersive experience of an FPS game for example, when the player clicks Play or the Fullscreen button, you might want to call multiple helpers in a row like this:
+
+```jsx
+<button
+  onClick={() => {
+    enterFullscreen()
+    lockOrientation('landscape') // This will only affect mobile
+    lockPointer() // This will only affect desktop
+    lockKeys(['Escape']) // This will only affect desktop
+  }}
+>
+  Play
+</button>
+```
+
+**Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.
 
 # Utils
 

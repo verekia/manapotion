@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
 
-import useBrowserStore from './stores/useBrowserStore'
+import { getBrowserState } from './stores/useBrowserStore'
 
 const BrowserEvents = () => {
   useEffect(() => {
-    const handleVisibilityChange = () => useBrowserStore.getState().setPageVisible(!document.hidden)
+    const handleVisibilityChange = () => getBrowserState().setPageVisible(!document.hidden)
 
     const handleFullscreenChange = () =>
-      useBrowserStore.getState().setFullscreen(Boolean(document.fullscreenElement))
+      getBrowserState().setFullscreen(Boolean(document.fullscreenElement))
 
     const handlePointerLockChange = () =>
-      useBrowserStore.getState().setPointerLocked(Boolean(document.pointerLockElement))
+      getBrowserState().setPointerLocked(Boolean(document.pointerLockElement))
 
     document.addEventListener('visibilitychange', handleVisibilityChange)
     document.addEventListener('fullscreenchange', handleFullscreenChange)

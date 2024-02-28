@@ -1,20 +1,27 @@
+import { useEffect } from 'react'
+
 import { useThree } from '@react-three/fiber'
 
-import useCanvasStore from './stores/useCanvasStore'
+import { getCanvasState } from './stores/useCanvasStore'
 
 const RendererDetector = () => {
-  const { gl } = useThree()
-  const rendererName = useCanvasStore(s => s.rendererName)
+  const gl = useThree(s => s.gl)
 
-  // @ts-expect-error
-  if (gl.isWebGPURenderer && rendererName !== 'WebGPU') {
-    useCanvasStore.getState().setRendererName('WebGPU')
-  }
+  useEffect(() => {
+    const { rendererName, setRendererName } = getCanvasState()
 
-  // @ts-expect-error
-  if (gl.isWebGLRenderer && rendererName !== 'WebGL') {
-    useCanvasStore.getState().setRendererName('WebGL')
-  }
+    if (gl) {
+      // @ts-expect-error
+      if (gl.isWebGPURenderer && rendererName !== 'WebGPU') {
+        setRendererName('WebGPU')
+      }
+
+      // @ts-expect-error
+      if (gl.isWebGLRenderer && rendererName !== 'WebGL') {
+        setRendererName('WebGL')
+      }
+    }
+  }, [gl])
 
   return null
 }

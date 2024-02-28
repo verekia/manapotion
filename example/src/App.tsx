@@ -48,8 +48,8 @@ const App = () => {
 
   return (
     <>
-      <h1 className="text-center">V1V2 Engine</h1>
-      <div className="space-x-2">
+      <div className="space-x-2 absolute z-10">
+        <h1 className="text-center">V1V2 Engine</h1>
         <div>
           <h2>Fullscreen: {isFullscreen ? 'Yes' : 'No'}</h2>
           <button
@@ -60,7 +60,7 @@ const App = () => {
           </button>
         </div>
         <div>
-          <h2>Orientation</h2>
+          <h2>Orientation (use after fullscreen on mobile)</h2>
           <button
             className="bg-slate-100 rounded-md px-2 py-1"
             onClick={() => lockOrientation('landscape')}
@@ -78,7 +78,7 @@ const App = () => {
           </button>
         </div>
         <div>
-          <h2>Keyboard lock (use after fullscreen)</h2>
+          <h2>Keyboard lock (use after fullscreen on desktop)</h2>
           <button
             className="bg-slate-100 rounded-md px-2 py-1"
             onClick={() => lockKeys(['Escape'])}
@@ -89,13 +89,13 @@ const App = () => {
             Release Esc
           </button>
         </div>
-        <div>Page is visible: {isPageVisible ? 'Yes' : 'No'}</div>
         <div>
           <h2>Pointer is locked: {isPointerLocked ? 'Yes' : 'No'}</h2>
           <button className="bg-slate-100 rounded-md px-2 py-1" onClick={lockPointer}>
             Lock pointer
           </button>
         </div>
+        <div>Page is visible: {isPageVisible ? 'Yes' : 'No'}</div>
       </div>
       <RendererInfo toggleRenderer={toggleRenderer} />
       <Canvas forceWebGL={renderer === 'WebGL' || Boolean(import.meta.env.VITE_FORCE_WEBGL)}>

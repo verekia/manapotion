@@ -9,7 +9,7 @@ type BrowserStore = {
   setPageVisible: (isPageVisible: boolean) => void
 }
 
-const useBrowserStore = create<BrowserStore>(set => ({
+export const useBrowserStore = create<BrowserStore>(set => ({
   isPointerLocked: false,
   isFullscreen: false,
   isPageVisible: true,
@@ -18,4 +18,4 @@ const useBrowserStore = create<BrowserStore>(set => ({
   setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
 }))
 
-export default useBrowserStore
+export const getBrowserState = () => useBrowserStore.getState()
