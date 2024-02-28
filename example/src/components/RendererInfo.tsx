@@ -1,12 +1,17 @@
 import { useCanvasStore } from '@v1v2/engine'
 
-const RendererInfo = () => {
+const RendererInfo = ({ toggleRenderer }: { toggleRenderer: () => void }) => {
   const rendererName = useCanvasStore(s => s.rendererName)
 
   if (!rendererName) return null
 
   return (
-    <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 transform">{rendererName}</div>
+    <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transform">
+      {rendererName}
+      <button className="bg-slate-100 rounded-md px-2 py-1 ml-2" onClick={toggleRenderer}>
+        Change
+      </button>
+    </div>
   )
 }
 

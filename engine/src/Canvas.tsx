@@ -1,52 +1,51 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { Canvas as R3FCanvas, useThree, CanvasProps } from '@react-three/fiber'
-import useStore from './store'
+import { Canvas as R3FCanvas, CanvasProps } from '@react-three/fiber'
+
+import RendererDetector from './RendererDetector'
 
 let WebGPURenderer: any
 
-const RendererDetector = () => {
-  const { gl } = useThree()
-  const rendererName = useStore(s => s.rendererName)
-
-  // @ts-expect-error
-  if (gl.isWebGPURenderer && rendererName !== 'WebGPU') {
-    useStore.getState().setRendererName('WebGPU')
-  }
-
-  // @ts-expect-error
-  if (gl.isWebGLRenderer && rendererName !== 'WebGL') {
-    useStore.getState().setRendererName('WebGL')
-  }
-
-  return null
-}
-
-const Canvas = ({ children, forceWebGL, ...props }: CanvasProps & { forceWebGL?: boolean }) => {
-  const [isWebGPUAvailable, setIsWebGPUAvailable] = useState(false)
+const Canvas = ({
+  children,
+  forceWebGL = false,
+  ...props
+}: CanvasProps & { forceWebGL?: boolean }) => {
+  const [isWebGPU, setIsWebGPU] = useState(false)
   const [isReady, setIsReady] = useState(false)
+  const previousForceWebGLRef = useRef(forceWebGL)
 
   useEffect(() => {
-    const fn = async () => {
-      if (forceWebGL) {
+    const loadWebGPU = async () => {
+      if (!forceWebGL) {
+        const capabilities = (await import('three/addons/capabilities/WebGPU.js')).default
+        WebGPURenderer = (await import('three/addons/renderers/webgpu/WebGPURenderer.js')).default
+        setIsWebGPU(capabilities.isAvailable())
         setIsReady(true)
-        return
       }
-      // @ts-ignore
-      const capabilities = (await import('three/addons/capabilities/WebGPU.js')).default
-      // @ts-ignore
-      WebGPURenderer = (await import('three/addons/renderers/webgpu/WebGPURenderer.js')).default
-      setIsWebGPUAvailable(capabilities.isAvailable())
-      setIsReady(true)
     }
-    fn()
-  }, [])
+
+    // This is to fully unmount the canvas and remount it, otherwise the renderer won't change
+    if (previousForceWebGLRef.current !== forceWebGL) {
+      setIsReady(false)
+      if (forceWebGL) {
+        setTimeout(() => setIsReady(true), 0)
+      }
+      previousForceWebGLRef.current = forceWebGL
+    }
+
+    if (!forceWebGL) {
+      loadWebGPU()
+    }
+  }, [forceWebGL])
+
+  if (!isReady) return null
 
   return (
-    isReady && (
-      <R3FCanvas
-        dpr={[1, 1.5]}
-        {...(isWebGPUAvailable && {
+    <R3FCanvas
+      dpr={[1, 1.5]}
+      {...(isWebGPU &&
+        !forceWebGL && {
           gl: canvas => {
             const r = new WebGPURenderer({ canvas })
             r.setClearColor(0x000000, 0)
@@ -54,12 +53,11 @@ const Canvas = ({ children, forceWebGL, ...props }: CanvasProps & { forceWebGL?:
             return r
           },
         })}
-        {...props}
-      >
-        {children}
-        <RendererDetector />
-      </R3FCanvas>
-    )
+      {...props}
+    >
+      {children}
+      <RendererDetector />
+    </R3FCanvas>
   )
 }
 

@@ -2,7 +2,7 @@
 
 Do not use, unless you are me.
 
-TS and React only. The TypeScript React files are not even compiled.
+TS and React only. The TypeScript React files are not even compiled. If your project uses different `tsconfig.json` settings than what the library expects, it might break. It is based on Vite's tsconfig.
 
 ## WebGPU Canvas
 
@@ -26,6 +26,29 @@ const RendererIndicator = () => {
 
   return <div>{rendererName}</div>
 }
+```
+
+For a canvas that takes up the entire screen and resizes nicely on mobile, you can use:
+
+```css
+html {
+  height: 100dvh;
+}
+
+body,
+#root {
+  height: 100%;
+}
+```
+
+With Tailwind:
+
+```html
+<html class="h-dvh">
+  <body class="h-full">
+    <div id="root" class="h-full"><!-- App --></div>
+  </body>
+</html>
 ```
 
 # Utils
