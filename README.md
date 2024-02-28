@@ -51,6 +51,44 @@ With Tailwind:
 </html>
 ```
 
+## Browser Events
+
+Add `<BrowserEvents>` to your app anywhere to listen and bind the following events to the reactive `useBrowserStore` values:
+
+- `fullscreenchange` => `isFullscreen`
+- `visibilitychange` => `isPageVisible`
+- `pointerlockchange` => `isPointerLocked`
+
+Some helpers to abstract the browser's API are also included:
+
+- `enterFullscreen`
+- `exitFullscreen`
+- `lockOrientation`
+- `unlockOrientation`
+- `lockPointer`
+- `unlockPointer`
+- `lockKeys`
+- `unlockKeys`
+
+Combine the functionalities above this way:
+
+```jsx
+import { BrowserEvents, useBrowserStore, enterFullscreen, exitFullscreen } from '@v1v2/engine'
+
+const App = () => {
+  const isFullscreen = useBrowserStore(s => s.isFullscreen)
+
+  return (
+    <>
+      <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
+        {isFullscreen ? 'Fullscreen' : 'Not fullscreen'}
+      </button>
+      <BrowserEvents />
+    </>
+  )
+}
+```
+
 # Utils
 
 A few utilities are included:

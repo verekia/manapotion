@@ -1,6 +1,6 @@
 import { useThree } from '@react-three/fiber'
 
-import useCanvasStore from './store'
+import useCanvasStore from './stores/useCanvasStore'
 
 const RendererDetector = () => {
   const { gl } = useThree()
