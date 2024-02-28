@@ -7,6 +7,6 @@
   ],
   "scripts": {
     "dev": "cd example && bun dev",
-    "pub": "cd engine && npm publish"
+    "pub": "git diff --exit-code && cd engine && npm publish"
   }
 }
