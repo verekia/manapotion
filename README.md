@@ -1,8 +1,10 @@
 # 🏎 V1V2 Engine
 
-Do not use, unless you are me.
+This is a work-in-progress collection of utilities and components to make [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) and React game development easier.
 
-TS and React only. The TypeScript React files are not even compiled. If your project uses different `tsconfig.json` settings than what the library expects, it might break. It is based on Vite's tsconfig.
+🛑 Do not use, unless you are me.
+
+TS and React only. The TypeScript React files are not even compiled at the moment. If your project uses different `tsconfig.json` settings than what the library expects, it might break. It is based on Vite's tsconfig.
 
 ## Features
 
@@ -104,6 +106,17 @@ const App = () => {
 }
 ```
 
+If you want to access any store's value outside of a component's lifecycle, you can use `getBrowserState`:
+
+```jsx
+import { getBrowserState } from '@v1v2/engine'
+
+const myMainUpdateLoop = () => {
+  const isFullscreen = getBrowserState().isFullscreen
+  // ...
+}
+```
+
 For a fully immersive experience of an FPS game for example, when the player clicks Play or the Fullscreen button, you might want to call multiple helpers in a row like this:
 
 ```jsx
@@ -125,6 +138,6 @@ For a fully immersive experience of an FPS game for example, when the player cli
 
 A few utilities are included:
 
-- `lerp`
-- `clamp`
-- `pi`
+- `lerp`: Linear interpolation.
+- `clamp`: Clamps a number between a minimum and a maximum value.
+- `pi`: A less verbose `Math.PI`.
