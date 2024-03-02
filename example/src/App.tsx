@@ -47,6 +47,7 @@ const App = () => {
   const isPointerLocked = useBrowserStore(s => s.isPointerLocked)
   const width = useBrowserStore(s => s.width)
   const height = useBrowserStore(s => s.height)
+  const canHover = useBrowserStore(s => s.canHover)
 
   return (
     <>
@@ -101,6 +102,7 @@ const App = () => {
         <div>
           Size: {width}x{height}
         </div>
+        <div>Can hover: {canHover ? 'Yes' : 'No'}</div>
       </div>
       <RendererInfo toggleRenderer={toggleRenderer} />
       <Canvas forceWebGL={renderer === 'WebGL' || Boolean(import.meta.env.VITE_FORCE_WEBGL)}>

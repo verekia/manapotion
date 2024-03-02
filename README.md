@@ -76,6 +76,7 @@ Add `<BrowserEvents>` to your app anywhere to listen and bind the following even
 - `visibilitychange` => `isPageVisible`
 - `pointerlockchange` => `isPointerLocked`
 - `resize` => `width` and `height`
+- `window.matchMedia('(hover: hover)').matches` => `canHover`
 
 Some helpers to abstract the browser's API are also included:
 

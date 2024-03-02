@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useThree } from '@react-three/fiber'
 
-import { getCanvasState } from './stores/useCanvasStore'
+import { getCanvasState } from './stores/canvas-store'
 
 const RendererDetector = () => {
   const gl = useThree(s => s.gl)

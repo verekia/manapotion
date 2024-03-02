@@ -1,7 +1,7 @@
 export { default as Canvas } from './src/Canvas'
 export { default as BrowserEvents } from './src/BrowserEvents'
-export { useCanvasStore, getCanvasState } from './src/stores/useCanvasStore'
-export { useBrowserStore, getBrowserState } from './src/stores/useBrowserStore'
+export { useCanvasStore, getCanvasState } from './src/stores/canvas-store'
+export { useBrowserStore, getBrowserState } from './src/stores/browser-store'
 
 export {
   enterFullscreen,
