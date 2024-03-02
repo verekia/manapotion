@@ -15,7 +15,7 @@ import {
   unlockOrientation,
   useEngine,
   useUIFrame,
-} from '@v1v2/engine'
+} from 'manapotion'
 import { Mesh } from 'three'
 
 import RendererInfo from '#/components/RendererInfo'
@@ -84,7 +84,7 @@ const App = () => {
   return (
     <>
       <div className="space-x-2 absolute z-10">
-        <h1 className="text-center">V1V2 Engine</h1>
+        <h1 className="text-center">Mana Potion</h1>
         <div>
           <h2>Fullscreen: {isFullscreen ? 'Yes' : 'No'}</h2>
           <button

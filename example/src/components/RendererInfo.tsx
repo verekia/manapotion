@@ -1,4 +1,4 @@
-import { useEngine } from '@v1v2/engine'
+import { useEngine } from 'manapotion'
 
 const RendererInfo = ({ toggleRenderer }: { toggleRenderer: () => void }) => {
   const rendererName = useEngine(s => s.rendererName)

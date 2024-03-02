@@ -1,6 +1,6 @@
-# 🏎 V1V2 Engine
+# 💙 Mana Potion
 
-This is a work-in-progress lightweight engine and collection of helpers to make [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) and React game development easier.
+This is a work-in-progress toolkit to make [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) and React game development easier.
 
 🛑 Do not use, unless you are me.
 
@@ -16,13 +16,13 @@ TS and React only. The TypeScript React files are not even compiled at the momen
 
 ```sh
 # NPM
-npm install @v1v2/engine
+npm install manapotion
 # Yarn
-yarn add @v1v2/engine
+yarn add manapotion
 # PNPM
-pnpm add @v1v2/engine
+pnpm add manapotion
 # Bun
-bun add @v1v2/engine
+bun add manapotion
 ```
 
 ## Getting started
@@ -32,7 +32,7 @@ bun add @v1v2/engine
 - You can optionally use [`<Canvas />`](#webgpu-canvas) from this library instead of R3F's to automatically enable WebGPU if supported.
 
 ```jsx
-import { Canvas, CanvasEngine, UIEngine } from '@v1v2/engine'
+import { Canvas, CanvasEngine, UIEngine } from 'manapotion'
 
 const App = () => (
   <>
@@ -54,7 +54,7 @@ const App = () => (
 Access reactive variables with the `useEngine` hook, and use [helper functions](#helpers) to trigger common browser events:
 
 ```jsx
-import { useEngine, enterFullscreen, exitFullscreen } from '@v1v2/engine'
+import { useEngine, enterFullscreen, exitFullscreen } from 'manapotion'
 
 const FullscreenButton = () => {
   const isFullscreen = useEngine(s => s.isFullscreen)
@@ -70,7 +70,7 @@ const FullscreenButton = () => {
 If you need to access the state outside of a component's lifecycle, you can use `engine()`:
 
 ```jsx
-import { engine } from '@v1v2/engine'
+import { engine } from 'manapotion'
 
 const myMainUpdateLoop = () => {
   const { isRightMouseDown } = engine()
@@ -168,17 +168,17 @@ For a fully immersive experience of an FPS game for example, when the player cli
 Wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
 
 ```jsx
-import { Canvas } from '@v1v2/engine'
+import { Canvas } from 'manapotion'
 
 const App = () => <Canvas forceWebGL={false}>{/* Your scene */}</Canvas>
 ```
 
-👉 Due to the way Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/v1v2-engine/blob/main/example/vite.config.ts)).
+👉 Due to the way Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/manapotion/blob/main/example/vite.config.ts)).
 
 If you want to show an indicator that the canvas is currently using WebGPU, you can use `useCanvasStore`:
 
 ```jsx
-import { useCanvasStore } from '@v1v2/engine'
+import { useCanvasStore } from 'manapotion'
 
 const RendererIndicator = () => {
   const rendererName = useCanvasStore(s => s.rendererName)

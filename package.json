@@ -1,8 +1,8 @@
 {
-  "name": "v1v2-engine-monorepo",
+  "name": "manapotion-monorepo",
   "private": true,
   "workspaces": [
-    "engine",
+    "packages/*",
     "example"
   ],
   "scripts": {
