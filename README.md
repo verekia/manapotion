@@ -75,6 +75,7 @@ Add `<BrowserEvents>` to your app anywhere to listen and bind the following even
 - `fullscreenchange` => `isFullscreen`
 - `visibilitychange` => `isPageVisible`
 - `pointerlockchange` => `isPointerLocked`
+- `resize` => `width` and `height`
 
 Some helpers to abstract the browser's API are also included:
 
@@ -93,14 +94,17 @@ Combine the functionalities above this way:
 import { BrowserEvents, useBrowserStore, enterFullscreen, exitFullscreen } from '@v1v2/engine'
 
 const App = () => {
-  const isFullscreen = useBrowserStore(s => s.isFullscreen)
+  const isFullscreen = useBrowserStore(s => s.isFullscreen) // Reactive
 
   return (
     <>
       <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
         {isFullscreen ? 'Fullscreen' : 'Not fullscreen'}
       </button>
-      <BrowserEvents />
+      <BrowserEvents
+        // Event callbacks
+        onPointerLockChange={isPointerLocked => console.log(isPointerLocked)}
+      />
     </>
   )
 }

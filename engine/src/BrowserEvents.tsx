@@ -11,30 +11,35 @@ const BrowserEvents = ({
   onResize,
 }: {
   resizeThrottleDelay?: number
-  onVisibilityChange?: (event: Event) => void
-  onFullscreenChange?: (event: Event) => void
-  onPointerLockChange?: (event: Event) => void
-  onResize?: (event: Event) => void
+  onVisibilityChange?: (isVisible: boolean) => void
+  onFullscreenChange?: (isFullscreen: boolean) => void
+  onPointerLockChange?: (isPointerLocked: boolean) => void
+  onResize?: (width: number, height: number) => void
 }) => {
   useEffect(() => {
-    const handleVisibilityChange = (e: Event) => {
-      getBrowserState().setPageVisible(!document.hidden)
-      onVisibilityChange?.(e)
+    const handleVisibilityChange = () => {
+      const isVisible = !document.hidden
+      getBrowserState().setPageVisible(isVisible)
+      onVisibilityChange?.(isVisible)
     }
 
-    const handleFullscreenChange = (e: Event) => {
-      getBrowserState().setFullscreen(Boolean(document.fullscreenElement))
-      onFullscreenChange?.(e)
+    const handleFullscreenChange = () => {
+      const isFullscreen = Boolean(document.fullscreenElement)
+      getBrowserState().setFullscreen(isFullscreen)
+      onFullscreenChange?.(isFullscreen)
     }
 
-    const handlePointerLockChange = (e: Event) => {
-      getBrowserState().setPointerLocked(Boolean(document.pointerLockElement))
-      onPointerLockChange?.(e)
+    const handlePointerLockChange = () => {
+      const isPointerLocked = Boolean(document.pointerLockElement)
+      getBrowserState().setPointerLocked(isPointerLocked)
+      onPointerLockChange?.(isPointerLocked)
     }
 
-    const handleResize = (e: Event) => {
-      getBrowserState().setSize(window.innerWidth, window.innerHeight)
-      onResize?.(e)
+    const handleResize = () => {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      getBrowserState().setSize(width, height)
+      onResize?.(width, height)
     }
 
     getBrowserState().setSize(window.innerWidth, window.innerHeight)
