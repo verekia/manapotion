@@ -207,6 +207,67 @@ export const CanHoverEvents = ({
   return null
 }
 
+export const MouseDownEvents = ({
+  onLeftMouseDown,
+  onMiddleMouseDown,
+  onRightMouseDown,
+  onLeftMouseUp,
+  onMiddleMouseUp,
+  onRightMouseUp,
+}: {
+  onLeftMouseDown?: () => void
+  onMiddleMouseDown?: () => void
+  onRightMouseDown?: () => void
+  onLeftMouseUp?: () => void
+  onMiddleMouseUp?: () => void
+  onRightMouseUp?: () => void
+}) => {
+  useEffect(() => {
+    const handleMouseDown = (e: MouseEvent) => {
+      if (e.button === 0) {
+        getBrowserState().setLeftMouseDown(true)
+        onLeftMouseDown?.()
+      } else if (e.button === 1) {
+        getBrowserState().setMiddleMouseDown(true)
+        onMiddleMouseDown?.()
+      } else if (e.button === 2) {
+        getBrowserState().setRightMouseDown(true)
+        onRightMouseDown?.()
+      }
+    }
+
+    const handleMouseUp = (e: MouseEvent) => {
+      if (e.button === 0) {
+        getBrowserState().setLeftMouseDown(false)
+        onLeftMouseUp?.()
+      } else if (e.button === 1) {
+        getBrowserState().setMiddleMouseDown(false)
+        onMiddleMouseUp?.()
+      } else if (e.button === 2) {
+        getBrowserState().setRightMouseDown(false)
+        onRightMouseUp?.()
+      }
+    }
+
+    window.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mouseup', handleMouseUp)
+
+    return () => {
+      window.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [
+    onLeftMouseDown,
+    onMiddleMouseDown,
+    onRightMouseDown,
+    onLeftMouseUp,
+    onMiddleMouseUp,
+    onRightMouseUp,
+  ])
+
+  return null
+}
+
 const AllBrowserEvents = ({
   mouseMoveEvents,
   pageVisibilityEvents,
@@ -214,6 +275,7 @@ const AllBrowserEvents = ({
   fullscreenChangeEvents,
   resizeEvents,
   canHoverEvents,
+  mouseDownEvents,
 }: {
   mouseMoveEvents?: Parameters<typeof MouseMoveEvents>[0]
   pageVisibilityEvents?: Parameters<typeof PageVisibilityEvents>[0]
@@ -221,6 +283,7 @@ const AllBrowserEvents = ({
   fullscreenChangeEvents?: Parameters<typeof FullscreenChangeEvents>[0]
   resizeEvents?: Parameters<typeof ResizeEvents>[0]
   canHoverEvents?: Parameters<typeof CanHoverEvents>[0]
+  mouseDownEvents?: Parameters<typeof MouseDownEvents>[0]
 }) => (
   <>
     <MouseMoveEvents {...mouseMoveEvents} />
@@ -229,6 +292,7 @@ const AllBrowserEvents = ({
     <FullscreenChangeEvents {...fullscreenChangeEvents} />
     <ResizeEvents {...resizeEvents} />
     <CanHoverEvents {...canHoverEvents} />
+    <MouseDownEvents {...mouseDownEvents} />
   </>
 )
 

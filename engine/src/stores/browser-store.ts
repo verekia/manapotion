@@ -11,6 +11,9 @@ type BrowserStore = {
   mouseY?: number
   mouseMovementX?: number
   mouseMovementY?: number
+  isLeftMouseDown?: boolean
+  isMiddleMouseDown?: boolean
+  isRightMouseDown?: boolean
   setPointerLocked: (isPointerLocked: boolean) => void
   setFullscreen: (isFullscreen: boolean) => void
   setPageVisible: (isPageVisible: boolean) => void
@@ -18,6 +21,9 @@ type BrowserStore = {
   setCanHover: (canHover: boolean) => void
   setMousePosition: (x: number, y: number) => void
   setMouseMovement: (x: number, y: number) => void
+  setLeftMouseDown: (isLeftMouseDown: boolean) => void
+  setMiddleMouseDown: (isMiddleMouseDown: boolean) => void
+  setRightMouseDown: (isRightMouseDown: boolean) => void
 }
 
 export const liveBrowserState = {
@@ -40,6 +46,9 @@ export const useBrowserStore = create<BrowserStore>(set => ({
   mouseY: undefined,
   mouseMovementX: undefined,
   mouseMovementY: undefined,
+  isLeftMouseDown: false,
+  isMiddleMouseDown: false,
+  isRightMouseDown: false,
   setPointerLocked: isPointerLocked => set(() => ({ isPointerLocked })),
   setFullscreen: isFullscreen => set(() => ({ isFullscreen })),
   setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
@@ -48,6 +57,9 @@ export const useBrowserStore = create<BrowserStore>(set => ({
   setMousePosition: (mouseX, mouseY) => set(() => ({ mouseX, mouseY })),
   setMouseMovement: (mouseMovementX, mouseMovementY) =>
     set(() => ({ mouseMovementX, mouseMovementY })),
+  setLeftMouseDown: isLeftMouseDown => set(() => ({ isLeftMouseDown })),
+  setMiddleMouseDown: isMiddleMouseDown => set(() => ({ isMiddleMouseDown })),
+  setRightMouseDown: isRightMouseDown => set(() => ({ isRightMouseDown })),
 }))
 
 export const getBrowserState = () => useBrowserStore.getState()

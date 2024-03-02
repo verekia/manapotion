@@ -54,6 +54,9 @@ const App = () => {
   const mouseY = useBrowserStore(s => s.mouseY)
   const mouseMovementX = useBrowserStore(s => s.mouseMovementX)
   const mouseMovementY = useBrowserStore(s => s.mouseMovementY)
+  const isLeftMouseDown = useBrowserStore(s => s.isLeftMouseDown)
+  const isMiddleMouseDown = useBrowserStore(s => s.isMiddleMouseDown)
+  const isRightMouseDown = useBrowserStore(s => s.isRightMouseDown)
 
   const liveMouseXRef = useRef<HTMLSpanElement>(null)
   const liveMouseYRef = useRef<HTMLSpanElement>(null)
@@ -129,6 +132,12 @@ const App = () => {
         <div>Page is visible: {isPageVisible ? 'Yes' : 'No'}</div>
         <div>Can hover: {canHover ? 'Yes' : 'No'}</div>
         <div>
+          <b>Mouse buttons</b>
+        </div>
+        <div>Left: {isLeftMouseDown ? 'Yes' : 'No'} </div>
+        <div>Middle: {isMiddleMouseDown ? 'Yes' : 'No'} </div>
+        <div>Right: {isRightMouseDown ? 'Yes' : 'No'} </div>
+        <div>
           <b>Window size</b>
         </div>
         <div>
@@ -157,7 +166,10 @@ const App = () => {
         </div>
       </div>
       <RendererInfo toggleRenderer={toggleRenderer} />
-      <Canvas forceWebGL={renderer === 'WebGL' || Boolean(import.meta.env.VITE_FORCE_WEBGL)}>
+      <Canvas
+        forceWebGL={renderer === 'WebGL' || Boolean(import.meta.env.VITE_FORCE_WEBGL)}
+        onContextMenu={e => e.preventDefault()}
+      >
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
           position={[10, 10, 10]}
@@ -172,8 +184,8 @@ const App = () => {
       </Canvas>
       <AllBrowserEvents
         pointerLockEvents={{ onPointerLockChange: handlePointerLockChange }}
-        mouseMoveEvents={{ reactiveMouseMoveThrottleDelay: 500, mouseMovementResetDelay: 200 }}
-        resizeEvents={{ reactiveResizeThrottleDelay: 500 }}
+        mouseMoveEvents={{ reactiveMouseMoveThrottleDelay: 200, mouseMovementResetDelay: 100 }}
+        resizeEvents={{ reactiveResizeThrottleDelay: 200 }}
       />
     </>
   )
