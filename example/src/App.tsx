@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
-  BrowserEvents,
+  AllBrowserEvents,
   Canvas,
   enterFullscreen,
   exitFullscreen,
@@ -170,11 +170,10 @@ const App = () => {
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
       </Canvas>
-      <BrowserEvents
-        onPointerLockChange={handlePointerLockChange}
-        reactiveMouseMoveThrottleDelay={500}
-        reactiveResizeThrottleDelay={500}
-        mouseMovementResetDelay={200}
+      <AllBrowserEvents
+        pointerLockEvents={{ onPointerLockChange: handlePointerLockChange }}
+        mouseMoveEvents={{ reactiveMouseMoveThrottleDelay: 500, mouseMovementResetDelay: 200 }}
+        resizeEvents={{ reactiveResizeThrottleDelay: 500 }}
       />
     </>
   )

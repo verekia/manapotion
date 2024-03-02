@@ -70,7 +70,7 @@ With Tailwind:
 
 ## Browser Events
 
-Add `<BrowserEvents>` to your app anywhere to listen and bind the following events to the reactive `useBrowserStore` values:
+Add `<AllBrowserEvents>` to your app anywhere to listen and bind the following events to the reactive `useBrowserStore` values:
 
 - `fullscreenchange` => `isFullscreen`
 - `visibilitychange` => `isPageVisible`
@@ -92,7 +92,7 @@ Some helpers to abstract the browser's API are also included:
 Combine the functionalities above this way:
 
 ```jsx
-import { BrowserEvents, useBrowserStore, enterFullscreen, exitFullscreen } from '@v1v2/engine'
+import { AllBrowserEvents, useBrowserStore, enterFullscreen, exitFullscreen } from '@v1v2/engine'
 
 const App = () => {
   const isFullscreen = useBrowserStore(s => s.isFullscreen) // Reactive
@@ -102,7 +102,7 @@ const App = () => {
       <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
         {isFullscreen ? 'Fullscreen' : 'Not fullscreen'}
       </button>
-      <BrowserEvents />
+      <AllBrowserEvents />
     </>
   )
 }
@@ -114,7 +114,7 @@ If you provide custom event callbacks, make them stable references with `useCall
 const App = () => {
   const handlePointerLockChange = useCallback(isPointerLocked => console.log(isPointerLocked), [])
 
-  return <BrowserEvents onPointerLockChange={handlePointerLockChange} />
+  return <PointerLockEvents onPointerLockChange={handlePointerLockChange} />
 }
 ```
 
@@ -156,3 +156,7 @@ A few utilities are included:
 - `throttle`: Throttles a function by a given time in ms.
 - `debounce`: Debounces a function by a given time in ms.
 - `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
+
+# Hooks
+
+- `useUIFrame`: Like R3F `useFrame` but for your UI updates.
