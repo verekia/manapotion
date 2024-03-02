@@ -37,15 +37,15 @@ export const MouseMoveEvents = ({
 
     const handleMouseMove = (e: MouseEvent) => {
       const mouseX = e.clientX
-      const mouseY = e.clientY
+      const mouseY = window.innerHeight - e.clientY
       const mouseMovementX = e.movementX
-      const mouseMovementY = e.movementY
+      const mouseMovementY = -e.movementY
 
       engine().mouseX = mouseX
       engine().mouseY = mouseY
       engine().mouseMovementX = mouseMovementX
       engine().mouseMovementY = mouseMovementY
-      onLiveMouseMove?.(mouseX, mouseY, e.movementX, e.movementY)
+      onLiveMouseMove?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
 
       mouseMovementResetTimeoutRef.current && clearTimeout(mouseMovementResetTimeoutRef.current)
 
@@ -57,7 +57,7 @@ export const MouseMoveEvents = ({
         }, mouseMovementResetDelay)
       }
 
-      throttledMouseMove(mouseX, mouseY, e.movementX, e.movementY)
+      throttledMouseMove(mouseX, mouseY, mouseMovementX, mouseMovementY)
     }
 
     window.addEventListener('mousemove', handleMouseMove)

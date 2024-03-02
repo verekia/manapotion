@@ -110,9 +110,9 @@ Here is the list of available variables. Variables that are both reactive and no
 - `isMiddleMouseDown`
 - `isRightMouseDown`
 - ⚡️ `mouseX`
-- ⚡️ `mouseY`
+- ⚡️ `mouseY` (the bottom of the screen is 0)
 - ⚡️ `mouseMovementX`
-- ⚡️ `mouseMovementY`
+- ⚡️ `mouseMovementY` (going up is positive)
 
 ### 🎨 Canvas
 
