@@ -14,4 +14,4 @@ export {
   unlockPointer,
 } from './src/browser'
 
-export { lerp, clamp, pi } from './src/util'
+export { lerp, clamp, pi, debounce, throttle, throttleDebounce } from './src/util'

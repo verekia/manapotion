@@ -48,8 +48,12 @@ const Canvas = ({
         !forceWebGL && {
           gl: canvas => {
             const r = new WebGPURenderer({ canvas })
+            // Note: WebGPURenderer also does have a forceWebGL parameter and falls back to WebGL if WebGPU is not available
             r.setClearColor(0x000000, 0)
             r.xr = { addEventListener: () => {} }
+            // From https://github.com/Lunakepio/Mario-Kart-3.js/blob/main/src/App.jsx
+            // gl={{ antialias: false, stencil: false, depth:false, powerPreference: 'high-performance' }}
+            // mode="concurrent"
             return r
           },
         })}
