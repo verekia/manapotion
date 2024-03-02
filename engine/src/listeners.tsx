@@ -1,31 +1,33 @@
 import { useEffect, useRef } from 'react'
 
-import { getBrowserState, liveBrowserState } from './stores/browser-store'
 import { throttleDebounce } from './util'
+import { engine, live } from './store'
+
+export type MouseMoveEventProps = {
+  mouseMovementResetDelay?: number
+  reactiveMouseMoveThrottleDelay?: number
+  onReactiveMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
+  onLiveMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
+}
 
 export const MouseMoveEvents = ({
   mouseMovementResetDelay = 30,
   reactiveMouseMoveThrottleDelay = 100,
   onReactiveMouseMove,
   onLiveMouseMove,
-}: {
-  reactiveMouseMoveThrottleDelay?: number
-  mouseMovementResetDelay?: number
-  onReactiveMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
-  onLiveMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
-}) => {
+}: MouseMoveEventProps) => {
   const mouseMovementResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const throttledMouseMove = throttleDebounce(
       (x: number, y: number, movementX: number, movementY: number) => {
-        getBrowserState().setMousePosition(x, y)
-        getBrowserState().setMouseMovement(movementX, movementY)
+        engine().setMousePosition(x, y)
+        engine().setMouseMovement(movementX, movementY)
         onReactiveMouseMove?.(x, y, movementX, movementY)
 
         if (mouseMovementResetDelay) {
           mouseMovementResetTimeoutRef.current = setTimeout(() => {
-            getBrowserState().setMouseMovement(0, 0)
+            engine().setMouseMovement(0, 0)
             onReactiveMouseMove?.(x, y, 0, 0)
           }, mouseMovementResetDelay)
         }
@@ -39,18 +41,18 @@ export const MouseMoveEvents = ({
       const mouseMovementX = e.movementX
       const mouseMovementY = e.movementY
 
-      liveBrowserState.mouseX = mouseX
-      liveBrowserState.mouseY = mouseY
-      liveBrowserState.mouseMovementX = mouseMovementX
-      liveBrowserState.mouseMovementY = mouseMovementY
+      live.mouseX = mouseX
+      live.mouseY = mouseY
+      live.mouseMovementX = mouseMovementX
+      live.mouseMovementY = mouseMovementY
       onLiveMouseMove?.(mouseX, mouseY, e.movementX, e.movementY)
 
       mouseMovementResetTimeoutRef.current && clearTimeout(mouseMovementResetTimeoutRef.current)
 
       if (mouseMovementResetDelay) {
         mouseMovementResetTimeoutRef.current = setTimeout(() => {
-          liveBrowserState.mouseMovementX = 0
-          liveBrowserState.mouseMovementY = 0
+          live.mouseMovementX = 0
+          live.mouseMovementY = 0
           onLiveMouseMove?.(mouseX, mouseY, 0, 0)
         }, mouseMovementResetDelay)
       }
@@ -76,15 +78,15 @@ export const MouseMoveEvents = ({
   return null
 }
 
-export const PageVisibilityEvents = ({
-  onVisibilityChange,
-}: {
+export type PageVisibilityEventProps = {
   onVisibilityChange?: (isVisible: boolean) => void
-}) => {
+}
+
+export const PageVisibilityEvents = ({ onVisibilityChange }: PageVisibilityEventProps) => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       const isVisible = !document.hidden
-      getBrowserState().setPageVisible(isVisible)
+      engine().setPageVisible(isVisible)
       onVisibilityChange?.(isVisible)
     }
 
@@ -96,15 +98,15 @@ export const PageVisibilityEvents = ({
   return null
 }
 
-export const PointerLockEvents = ({
-  onPointerLockChange,
-}: {
+export type PointerLockEventProps = {
   onPointerLockChange?: (isPointerLocked: boolean) => void
-}) => {
+}
+
+export const PointerLockEvents = ({ onPointerLockChange }: PointerLockEventProps) => {
   useEffect(() => {
     const handlePointerLockChange = () => {
       const isPointerLocked = Boolean(document.pointerLockElement)
-      getBrowserState().setPointerLocked(isPointerLocked)
+      engine().setPointerLocked(isPointerLocked)
       onPointerLockChange?.(isPointerLocked)
     }
 
@@ -116,15 +118,15 @@ export const PointerLockEvents = ({
   return null
 }
 
-export const FullscreenChangeEvents = ({
-  onFullscreenChange,
-}: {
+export type FullscreenChangeEventProps = {
   onFullscreenChange?: (isFullscreen: boolean) => void
-}) => {
+}
+
+export const FullscreenChangeEvents = ({ onFullscreenChange }: FullscreenChangeEventProps) => {
   useEffect(() => {
     const handleFullscreenChange = () => {
       const isFullscreen = Boolean(document.fullscreenElement)
-      getBrowserState().setFullscreen(isFullscreen)
+      engine().setFullscreen(isFullscreen)
       onFullscreenChange?.(isFullscreen)
     }
 
@@ -136,18 +138,20 @@ export const FullscreenChangeEvents = ({
   return null
 }
 
+export type ResizeEventProps = {
+  reactiveResizeThrottleDelay?: number
+  onReactiveResize?: (width: number, height: number) => void
+  onLiveResize?: (width: number, height: number) => void
+}
+
 export const ResizeEvents = ({
   reactiveResizeThrottleDelay = 100,
   onReactiveResize,
   onLiveResize,
-}: {
-  reactiveResizeThrottleDelay?: number
-  onReactiveResize?: (width: number, height: number) => void
-  onLiveResize?: (width: number, height: number) => void
-}) => {
+}: ResizeEventProps) => {
   useEffect(() => {
     const throttledResize = throttleDebounce((width: number, height: number) => {
-      getBrowserState().setSize(width, height)
+      engine().setSize(width, height)
       onReactiveResize?.(width, height)
     }, reactiveResizeThrottleDelay)
 
@@ -155,8 +159,8 @@ export const ResizeEvents = ({
       const width = window.innerWidth
       const height = window.innerHeight
 
-      liveBrowserState.width = width
-      liveBrowserState.height = height
+      live.width = width
+      live.height = height
       onLiveResize?.(width, height)
 
       throttledResize(width, height)
@@ -164,10 +168,10 @@ export const ResizeEvents = ({
 
     const widthInit = window.innerWidth
     const heightInit = window.innerHeight
-    getBrowserState().setSize(widthInit, heightInit)
+    engine().setSize(widthInit, heightInit)
     onReactiveResize?.(widthInit, heightInit)
-    liveBrowserState.width = widthInit
-    liveBrowserState.height = heightInit
+    live.width = widthInit
+    live.height = heightInit
 
     window.addEventListener('resize', handleResize)
 
@@ -177,24 +181,26 @@ export const ResizeEvents = ({
   return null
 }
 
+export type CanHoverEventProps = {
+  canHoverIntervalDelay?: number
+  onCanHoverChange?: (canHover: boolean) => void
+}
+
 export const CanHoverEvents = ({
   canHoverIntervalDelay = 500,
   onCanHoverChange,
-}: {
-  canHoverIntervalDelay?: number
-  onCanHoverChange?: (canHover: boolean) => void
-}) => {
+}: CanHoverEventProps) => {
   const canHoverIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     canHoverIntervalRef.current = setInterval(() => {
       const canHover = window.matchMedia('(hover: hover)').matches
-      getBrowserState().setCanHover(canHover)
+      engine().setCanHover(canHover)
       onCanHoverChange?.(canHover)
     }, canHoverIntervalDelay)
 
     const canHoverInit = window.matchMedia('(hover: hover)').matches
-    getBrowserState().setCanHover(canHoverInit)
+    engine().setCanHover(canHoverInit)
     onCanHoverChange?.(canHoverInit)
 
     return () => {
@@ -207,6 +213,15 @@ export const CanHoverEvents = ({
   return null
 }
 
+export type MouseDownEventProps = {
+  onLeftMouseDown?: () => void
+  onMiddleMouseDown?: () => void
+  onRightMouseDown?: () => void
+  onLeftMouseUp?: () => void
+  onMiddleMouseUp?: () => void
+  onRightMouseUp?: () => void
+}
+
 export const MouseDownEvents = ({
   onLeftMouseDown,
   onMiddleMouseDown,
@@ -214,37 +229,30 @@ export const MouseDownEvents = ({
   onLeftMouseUp,
   onMiddleMouseUp,
   onRightMouseUp,
-}: {
-  onLeftMouseDown?: () => void
-  onMiddleMouseDown?: () => void
-  onRightMouseDown?: () => void
-  onLeftMouseUp?: () => void
-  onMiddleMouseUp?: () => void
-  onRightMouseUp?: () => void
-}) => {
+}: MouseDownEventProps) => {
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
       if (e.button === 0) {
-        getBrowserState().setLeftMouseDown(true)
+        engine().setLeftMouseDown(true)
         onLeftMouseDown?.()
       } else if (e.button === 1) {
-        getBrowserState().setMiddleMouseDown(true)
+        engine().setMiddleMouseDown(true)
         onMiddleMouseDown?.()
       } else if (e.button === 2) {
-        getBrowserState().setRightMouseDown(true)
+        engine().setRightMouseDown(true)
         onRightMouseDown?.()
       }
     }
 
     const handleMouseUp = (e: MouseEvent) => {
       if (e.button === 0) {
-        getBrowserState().setLeftMouseDown(false)
+        engine().setLeftMouseDown(false)
         onLeftMouseUp?.()
       } else if (e.button === 1) {
-        getBrowserState().setMiddleMouseDown(false)
+        engine().setMiddleMouseDown(false)
         onMiddleMouseUp?.()
       } else if (e.button === 2) {
-        getBrowserState().setRightMouseDown(false)
+        engine().setRightMouseDown(false)
         onRightMouseUp?.()
       }
     }
@@ -268,32 +276,60 @@ export const MouseDownEvents = ({
   return null
 }
 
-const AllBrowserEvents = ({
-  mouseMoveEvents,
-  pageVisibilityEvents,
-  pointerLockEvents,
-  fullscreenChangeEvents,
-  resizeEvents,
-  canHoverEvents,
-  mouseDownEvents,
-}: {
-  mouseMoveEvents?: Parameters<typeof MouseMoveEvents>[0]
-  pageVisibilityEvents?: Parameters<typeof PageVisibilityEvents>[0]
-  pointerLockEvents?: Parameters<typeof PointerLockEvents>[0]
-  fullscreenChangeEvents?: Parameters<typeof FullscreenChangeEvents>[0]
-  resizeEvents?: Parameters<typeof ResizeEvents>[0]
-  canHoverEvents?: Parameters<typeof CanHoverEvents>[0]
-  mouseDownEvents?: Parameters<typeof MouseDownEvents>[0]
-}) => (
+export type EngineProps = MouseMoveEventProps &
+  PageVisibilityEventProps &
+  PointerLockEventProps &
+  FullscreenChangeEventProps &
+  ResizeEventProps &
+  CanHoverEventProps &
+  MouseDownEventProps
+
+export const Engine = ({
+  mouseMovementResetDelay = 30,
+  reactiveMouseMoveThrottleDelay = 100,
+  onReactiveMouseMove,
+  onLiveMouseMove,
+  onVisibilityChange,
+  onPointerLockChange,
+  onFullscreenChange,
+  reactiveResizeThrottleDelay = 100,
+  onReactiveResize,
+  onLiveResize,
+  canHoverIntervalDelay = 500,
+  onCanHoverChange,
+  onLeftMouseDown,
+  onMiddleMouseDown,
+  onRightMouseDown,
+  onLeftMouseUp,
+  onMiddleMouseUp,
+  onRightMouseUp,
+}: EngineProps) => (
   <>
-    <MouseMoveEvents {...mouseMoveEvents} />
-    <PageVisibilityEvents {...pageVisibilityEvents} />
-    <PointerLockEvents {...pointerLockEvents} />
-    <FullscreenChangeEvents {...fullscreenChangeEvents} />
-    <ResizeEvents {...resizeEvents} />
-    <CanHoverEvents {...canHoverEvents} />
-    <MouseDownEvents {...mouseDownEvents} />
+    <MouseMoveEvents
+      mouseMovementResetDelay={mouseMovementResetDelay}
+      reactiveMouseMoveThrottleDelay={reactiveMouseMoveThrottleDelay}
+      onReactiveMouseMove={onReactiveMouseMove}
+      onLiveMouseMove={onLiveMouseMove}
+    />
+    <PageVisibilityEvents onVisibilityChange={onVisibilityChange} />
+    <PointerLockEvents onPointerLockChange={onPointerLockChange} />
+    <FullscreenChangeEvents onFullscreenChange={onFullscreenChange} />
+    <ResizeEvents
+      reactiveResizeThrottleDelay={reactiveResizeThrottleDelay}
+      onReactiveResize={onReactiveResize}
+      onLiveResize={onLiveResize}
+    />
+    <CanHoverEvents
+      canHoverIntervalDelay={canHoverIntervalDelay}
+      onCanHoverChange={onCanHoverChange}
+    />
+    <MouseDownEvents
+      onLeftMouseDown={onLeftMouseDown}
+      onMiddleMouseDown={onMiddleMouseDown}
+      onRightMouseDown={onRightMouseDown}
+      onLeftMouseUp={onLeftMouseUp}
+      onMiddleMouseUp={onMiddleMouseUp}
+      onRightMouseUp={onRightMouseUp}
+    />
   </>
 )
-
-export default AllBrowserEvents

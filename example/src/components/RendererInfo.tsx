@@ -1,7 +1,7 @@
-import { useCanvasStore } from '@v1v2/engine'
+import { useEngine } from '@v1v2/engine'
 
 const RendererInfo = ({ toggleRenderer }: { toggleRenderer: () => void }) => {
-  const rendererName = useCanvasStore(s => s.rendererName)
+  const rendererName = useEngine(s => s.rendererName)
 
   if (!rendererName) return null
 

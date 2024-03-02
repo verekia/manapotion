@@ -2,17 +2,17 @@ import { useCallback, useRef, useState } from 'react'
 
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
-  AllBrowserEvents,
   Canvas,
+  Engine,
   enterFullscreen,
   exitFullscreen,
-  liveBrowserState,
+  live,
   lockKeys,
   lockOrientation,
   lockPointer,
   unlockKeys,
   unlockOrientation,
-  useBrowserStore,
+  useEngine,
   useUIFrame,
 } from '@v1v2/engine'
 import { Mesh } from 'three'
@@ -44,19 +44,19 @@ function Box(props: MeshProps) {
 const App = () => {
   const [renderer, setRenderer] = useState('WebGPU')
   const toggleRenderer = () => setRenderer(renderer === 'WebGPU' ? 'WebGL' : 'WebGPU')
-  const isFullscreen = useBrowserStore(s => s.isFullscreen)
-  const isPageVisible = useBrowserStore(s => s.isPageVisible)
-  const isPointerLocked = useBrowserStore(s => s.isPointerLocked)
-  const width = useBrowserStore(s => s.width)
-  const height = useBrowserStore(s => s.height)
-  const canHover = useBrowserStore(s => s.canHover)
-  const mouseX = useBrowserStore(s => s.mouseX)
-  const mouseY = useBrowserStore(s => s.mouseY)
-  const mouseMovementX = useBrowserStore(s => s.mouseMovementX)
-  const mouseMovementY = useBrowserStore(s => s.mouseMovementY)
-  const isLeftMouseDown = useBrowserStore(s => s.isLeftMouseDown)
-  const isMiddleMouseDown = useBrowserStore(s => s.isMiddleMouseDown)
-  const isRightMouseDown = useBrowserStore(s => s.isRightMouseDown)
+  const isFullscreen = useEngine(s => s.isFullscreen)
+  const isPageVisible = useEngine(s => s.isPageVisible)
+  const isPointerLocked = useEngine(s => s.isPointerLocked)
+  const width = useEngine(s => s.width)
+  const height = useEngine(s => s.height)
+  const canHover = useEngine(s => s.canHover)
+  const mouseX = useEngine(s => s.mouseX)
+  const mouseY = useEngine(s => s.mouseY)
+  const mouseMovementX = useEngine(s => s.mouseMovementX)
+  const mouseMovementY = useEngine(s => s.mouseMovementY)
+  const isLeftMouseDown = useEngine(s => s.isLeftMouseDown)
+  const isMiddleMouseDown = useEngine(s => s.isMiddleMouseDown)
+  const isRightMouseDown = useEngine(s => s.isRightMouseDown)
 
   const liveMouseXRef = useRef<HTMLSpanElement>(null)
   const liveMouseYRef = useRef<HTMLSpanElement>(null)
@@ -72,12 +72,12 @@ const App = () => {
   )
 
   useUIFrame(() => {
-    liveMouseXRef.current!.textContent = String(liveBrowserState.mouseX)
-    liveMouseYRef.current!.textContent = String(liveBrowserState.mouseY)
-    liveMouseMovementXRef.current!.textContent = String(liveBrowserState.mouseMovementX)
-    liveMouseMovementYRef.current!.textContent = String(liveBrowserState.mouseMovementY)
-    liveWidthRef.current!.textContent = String(liveBrowserState.width)
-    liveHeightRef.current!.textContent = String(liveBrowserState.height)
+    liveMouseXRef.current!.textContent = String(live.mouseX)
+    liveMouseYRef.current!.textContent = String(live.mouseY)
+    liveMouseMovementXRef.current!.textContent = String(live.mouseMovementX)
+    liveMouseMovementYRef.current!.textContent = String(live.mouseMovementY)
+    liveWidthRef.current!.textContent = String(live.width)
+    liveHeightRef.current!.textContent = String(live.height)
   })
 
   return (
@@ -182,10 +182,11 @@ const App = () => {
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
       </Canvas>
-      <AllBrowserEvents
-        pointerLockEvents={{ onPointerLockChange: handlePointerLockChange }}
-        mouseMoveEvents={{ reactiveMouseMoveThrottleDelay: 200, mouseMovementResetDelay: 100 }}
-        resizeEvents={{ reactiveResizeThrottleDelay: 200 }}
+      <Engine
+        onPointerLockChange={handlePointerLockChange}
+        reactiveMouseMoveThrottleDelay={200}
+        mouseMovementResetDelay={100}
+        reactiveResizeThrottleDelay={200}
       />
     </>
   )

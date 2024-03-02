@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 
 import { useThree } from '@react-three/fiber'
 
-import { getCanvasState } from './stores/canvas-store'
+import { engine } from './store'
 
 const RendererDetector = () => {
   const gl = useThree(s => s.gl)
 
   useEffect(() => {
-    const { rendererName, setRendererName } = getCanvasState()
+    const { rendererName, setRendererName } = engine()
 
     if (gl) {
       // @ts-expect-error
