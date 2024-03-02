@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type BrowserStore = {
+export interface BrowserStore {
   isPointerLocked: boolean
   isFullscreen: boolean
   isPageVisible: boolean
@@ -30,7 +30,7 @@ export type BrowserStore = {
   setMobileJoystick2: (joystickData: any) => void
 }
 
-export type LiveBrowserState = {
+export interface LiveBrowserState {
   width?: number
   height?: number
   mouseX?: number
