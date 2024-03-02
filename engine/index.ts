@@ -7,6 +7,7 @@ export {
   PageVisibilityEvents,
   PointerLockEvents,
   ResizeEvents,
+  MouseDownEvents,
 } from './src/browser-events'
 export { useCanvasStore, getCanvasState } from './src/stores/canvas-store'
 export { useBrowserStore, getBrowserState, liveBrowserState } from './src/stores/browser-store'
