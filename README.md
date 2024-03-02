@@ -146,3 +146,6 @@ A few utilities are included:
 - `lerp`: Linear interpolation.
 - `clamp`: Clamps a number between a minimum and a maximum value.
 - `pi`: A less verbose `Math.PI`.
+- `throttle`: Throttles a function by a given time in ms.
+- `debounce`: Debounces a function by a given time in ms.
+- `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
