@@ -102,12 +102,19 @@ const App = () => {
       <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
         {isFullscreen ? 'Fullscreen' : 'Not fullscreen'}
       </button>
-      <BrowserEvents
-        // Event callbacks
-        onPointerLockChange={isPointerLocked => console.log(isPointerLocked)}
-      />
+      <BrowserEvents />
     </>
   )
+}
+```
+
+If you provide custom event callbacks, make them stable references with `useCallback`:
+
+```jsx
+const App = () => {
+  const handlePointerLockChange = useCallback(isPointerLocked => console.log(isPointerLocked), [])
+
+  return <BrowserEvents onPointerLockChange={handlePointerLockChange} />
 }
 ```
 

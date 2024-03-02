@@ -3,6 +3,8 @@ export const clamp = (value: number, limit: number) => Math.max(Math.min(value, 
 export const pi = Math.PI
 
 export const throttle = (callback: (...args: any[]) => void, delay = 100) => {
+  if (delay <= 0) return callback
+
   let lastCall = 0
 
   return (...args: any[]) => {
@@ -14,6 +16,8 @@ export const throttle = (callback: (...args: any[]) => void, delay = 100) => {
 }
 
 export const debounce = (callback: (...args: any[]) => void, delay = 100) => {
+  if (delay <= 0) return callback
+
   let timeout: ReturnType<typeof setTimeout> | null = null
 
   return (...args: any[]) => {
@@ -25,26 +29,31 @@ export const debounce = (callback: (...args: any[]) => void, delay = 100) => {
 }
 
 export const throttleDebounce = (callback: (...args: any[]) => void, delay = 100) => {
+  if (delay <= 0) return callback
+
   let debounceTimeout: ReturnType<typeof setTimeout> | null = null
   let lastCall = 0
 
   return (...args: any[]) => {
     const now = performance.now()
-    if (now - lastCall >= delay) {
+    const throttleTimePassed = now - lastCall >= delay
+    const callCallback = () => {
       if (debounceTimeout !== null) {
         clearTimeout(debounceTimeout)
         debounceTimeout = null
       }
       callback(...args)
-      lastCall = now
-    } else if (debounceTimeout === null) {
-      debounceTimeout = setTimeout(
-        () => {
-          callback(...args)
-          lastCall = performance.now()
-        },
-        delay - (now - lastCall)
-      )
+      lastCall = performance.now()
+    }
+
+    if (debounceTimeout !== null) {
+      clearTimeout(debounceTimeout)
+    }
+
+    if (throttleTimePassed) {
+      callCallback()
+    } else {
+      debounceTimeout = setTimeout(callCallback, delay - (now - lastCall))
     }
   }
 }

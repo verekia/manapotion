@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
@@ -6,12 +6,14 @@ import {
   Canvas,
   enterFullscreen,
   exitFullscreen,
+  liveBrowserState,
   lockKeys,
   lockOrientation,
   lockPointer,
   unlockKeys,
   unlockOrientation,
   useBrowserStore,
+  useUIFrame,
 } from '@v1v2/engine'
 import { Mesh } from 'three'
 
@@ -48,6 +50,32 @@ const App = () => {
   const width = useBrowserStore(s => s.width)
   const height = useBrowserStore(s => s.height)
   const canHover = useBrowserStore(s => s.canHover)
+  const mouseX = useBrowserStore(s => s.mouseX)
+  const mouseY = useBrowserStore(s => s.mouseY)
+  const mouseMovementX = useBrowserStore(s => s.mouseMovementX)
+  const mouseMovementY = useBrowserStore(s => s.mouseMovementY)
+
+  const liveMouseXRef = useRef<HTMLSpanElement>(null)
+  const liveMouseYRef = useRef<HTMLSpanElement>(null)
+  const liveMouseMovementXRef = useRef<HTMLSpanElement>(null)
+  const liveMouseMovementYRef = useRef<HTMLSpanElement>(null)
+
+  const liveWidthRef = useRef<HTMLSpanElement>(null)
+  const liveHeightRef = useRef<HTMLSpanElement>(null)
+
+  const handlePointerLockChange = useCallback(
+    (isPointerLocked: boolean) => console.log(isPointerLocked),
+    [],
+  )
+
+  useUIFrame(() => {
+    liveMouseXRef.current!.textContent = String(liveBrowserState.mouseX)
+    liveMouseYRef.current!.textContent = String(liveBrowserState.mouseY)
+    liveMouseMovementXRef.current!.textContent = String(liveBrowserState.mouseMovementX)
+    liveMouseMovementYRef.current!.textContent = String(liveBrowserState.mouseMovementY)
+    liveWidthRef.current!.textContent = String(liveBrowserState.width)
+    liveHeightRef.current!.textContent = String(liveBrowserState.height)
+  })
 
   return (
     <>
@@ -99,10 +127,34 @@ const App = () => {
           </button>
         </div>
         <div>Page is visible: {isPageVisible ? 'Yes' : 'No'}</div>
-        <div>
-          Size: {width}x{height}
-        </div>
         <div>Can hover: {canHover ? 'Yes' : 'No'}</div>
+        <div>
+          <b>Window size</b>
+        </div>
+        <div>
+          Live: <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
+        </div>
+        <div>
+          Reactive: {width}x{height}
+        </div>
+        <div>
+          <b>Mouse position</b>
+        </div>
+        <div>
+          Live: <span ref={liveMouseXRef} /> <span ref={liveMouseYRef} />
+        </div>
+        <div>
+          Reactive: {mouseX} {mouseY}
+        </div>
+        <div>
+          <b>Mouse movement</b>
+        </div>
+        <div>
+          Live: <span ref={liveMouseMovementXRef} /> <span ref={liveMouseMovementYRef} />
+        </div>
+        <div>
+          Reactive: {mouseMovementX} {mouseMovementY}
+        </div>
       </div>
       <RendererInfo toggleRenderer={toggleRenderer} />
       <Canvas forceWebGL={renderer === 'WebGL' || Boolean(import.meta.env.VITE_FORCE_WEBGL)}>
@@ -118,7 +170,12 @@ const App = () => {
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
       </Canvas>
-      <BrowserEvents onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
+      <BrowserEvents
+        onPointerLockChange={handlePointerLockChange}
+        reactiveMouseMoveThrottleDelay={500}
+        reactiveResizeThrottleDelay={500}
+        mouseMovementResetDelay={200}
+      />
     </>
   )
 }
