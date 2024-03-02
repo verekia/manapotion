@@ -1,6 +1,6 @@
 export { default as Canvas } from './src/Canvas'
 export {
-  Engine,
+  default as UIEngine,
   CanHoverEvents,
   FullscreenChangeEvents,
   MouseDownEvents,
@@ -8,19 +8,20 @@ export {
   PageVisibilityEvents,
   PointerLockEvents,
   ResizeEvents,
-} from './src/listeners'
+} from './src/UIEngine'
 export type {
   CanHoverEventProps,
-  EngineProps,
+  UIEngineProps,
   FullscreenChangeEventProps,
   MouseDownEventProps,
   MouseMoveEventProps,
   PageVisibilityEventProps,
   PointerLockEventProps,
   ResizeEventProps,
-} from './src/listeners'
+} from './src/UIEngine'
+export { default as CanvasEngine } from './src/CanvasEngine'
 
-export { useEngine, engine, live } from './src/store'
+export { useEngine, engine } from './src/store'
 export type { EngineState } from './src/store'
 
 export {

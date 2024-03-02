@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { throttleDebounce } from './util'
-import { engine, live } from './store'
+import { engine } from './store'
 
 export type MouseMoveEventProps = {
   mouseMovementResetDelay?: number
@@ -41,18 +41,18 @@ export const MouseMoveEvents = ({
       const mouseMovementX = e.movementX
       const mouseMovementY = e.movementY
 
-      live.mouseX = mouseX
-      live.mouseY = mouseY
-      live.mouseMovementX = mouseMovementX
-      live.mouseMovementY = mouseMovementY
+      engine().mouseX = mouseX
+      engine().mouseY = mouseY
+      engine().mouseMovementX = mouseMovementX
+      engine().mouseMovementY = mouseMovementY
       onLiveMouseMove?.(mouseX, mouseY, e.movementX, e.movementY)
 
       mouseMovementResetTimeoutRef.current && clearTimeout(mouseMovementResetTimeoutRef.current)
 
       if (mouseMovementResetDelay) {
         mouseMovementResetTimeoutRef.current = setTimeout(() => {
-          live.mouseMovementX = 0
-          live.mouseMovementY = 0
+          engine().mouseMovementX = 0
+          engine().mouseMovementY = 0
           onLiveMouseMove?.(mouseX, mouseY, 0, 0)
         }, mouseMovementResetDelay)
       }
@@ -159,8 +159,8 @@ export const ResizeEvents = ({
       const width = window.innerWidth
       const height = window.innerHeight
 
-      live.width = width
-      live.height = height
+      engine().width = width
+      engine().height = height
       onLiveResize?.(width, height)
 
       throttledResize(width, height)
@@ -170,8 +170,8 @@ export const ResizeEvents = ({
     const heightInit = window.innerHeight
     engine().setSize(widthInit, heightInit)
     onReactiveResize?.(widthInit, heightInit)
-    live.width = widthInit
-    live.height = heightInit
+    engine().width = widthInit
+    engine().height = heightInit
 
     window.addEventListener('resize', handleResize)
 
@@ -276,7 +276,7 @@ export const MouseDownEvents = ({
   return null
 }
 
-export type EngineProps = MouseMoveEventProps &
+export type UIEngineProps = MouseMoveEventProps &
   PageVisibilityEventProps &
   PointerLockEventProps &
   FullscreenChangeEventProps &
@@ -284,7 +284,7 @@ export type EngineProps = MouseMoveEventProps &
   CanHoverEventProps &
   MouseDownEventProps
 
-export const Engine = ({
+const UIEngine = ({
   mouseMovementResetDelay = 30,
   reactiveMouseMoveThrottleDelay = 100,
   onReactiveMouseMove,
@@ -303,7 +303,7 @@ export const Engine = ({
   onLeftMouseUp,
   onMiddleMouseUp,
   onRightMouseUp,
-}: EngineProps) => (
+}: UIEngineProps) => (
   <>
     <MouseMoveEvents
       mouseMovementResetDelay={mouseMovementResetDelay}
@@ -333,3 +333,5 @@ export const Engine = ({
     />
   </>
 )
+
+export default UIEngine

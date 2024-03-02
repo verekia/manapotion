@@ -3,13 +3,14 @@ import { useCallback, useRef, useState } from 'react'
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
   Canvas,
-  Engine,
+  CanvasEngine,
+  engine,
   enterFullscreen,
   exitFullscreen,
-  live,
   lockKeys,
   lockOrientation,
   lockPointer,
+  UIEngine,
   unlockKeys,
   unlockOrientation,
   useEngine,
@@ -72,12 +73,12 @@ const App = () => {
   )
 
   useUIFrame(() => {
-    liveMouseXRef.current!.textContent = String(live.mouseX)
-    liveMouseYRef.current!.textContent = String(live.mouseY)
-    liveMouseMovementXRef.current!.textContent = String(live.mouseMovementX)
-    liveMouseMovementYRef.current!.textContent = String(live.mouseMovementY)
-    liveWidthRef.current!.textContent = String(live.width)
-    liveHeightRef.current!.textContent = String(live.height)
+    liveMouseXRef.current!.textContent = String(engine().mouseX)
+    liveMouseYRef.current!.textContent = String(engine().mouseY)
+    liveMouseMovementXRef.current!.textContent = String(engine().mouseMovementX)
+    liveMouseMovementYRef.current!.textContent = String(engine().mouseMovementY)
+    liveWidthRef.current!.textContent = String(engine().width)
+    liveHeightRef.current!.textContent = String(engine().height)
   })
 
   return (
@@ -141,28 +142,28 @@ const App = () => {
           <b>Window size</b>
         </div>
         <div>
-          Live: <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
+          Non-reactive: <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
         </div>
         <div>
-          Reactive: {width}x{height}
+          Reactive throttled: {width}x{height}
         </div>
         <div>
           <b>Mouse position</b>
         </div>
         <div>
-          Live: <span ref={liveMouseXRef} /> <span ref={liveMouseYRef} />
+          Non-reactive: <span ref={liveMouseXRef} /> <span ref={liveMouseYRef} />
         </div>
         <div>
-          Reactive: {mouseX} {mouseY}
+          Reactive throttled: {mouseX} {mouseY}
         </div>
         <div>
           <b>Mouse movement</b>
         </div>
         <div>
-          Live: <span ref={liveMouseMovementXRef} /> <span ref={liveMouseMovementYRef} />
+          Non-reactive: <span ref={liveMouseMovementXRef} /> <span ref={liveMouseMovementYRef} />
         </div>
         <div>
-          Reactive: {mouseMovementX} {mouseMovementY}
+          Reactive throttled: {mouseMovementX} {mouseMovementY}
         </div>
       </div>
       <RendererInfo toggleRenderer={toggleRenderer} />
@@ -181,8 +182,9 @@ const App = () => {
         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
+        <CanvasEngine />
       </Canvas>
-      <Engine
+      <UIEngine
         onPointerLockChange={handlePointerLockChange}
         reactiveMouseMoveThrottleDelay={200}
         mouseMovementResetDelay={100}

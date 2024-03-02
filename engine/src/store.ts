@@ -28,11 +28,6 @@ const createBrowserSlice: StateCreator<BrowserSlice> = set => ({
   setCanHover: canHover => set(() => ({ canHover })),
 })
 
-const liveBrowser = {
-  width: 0,
-  height: 0,
-}
-
 interface InputSlice {
   isLeftMouseDown: boolean
   isMiddleMouseDown: boolean
@@ -64,13 +59,6 @@ const createInputSlice: StateCreator<InputSlice> = set => ({
   setRightMouseDown: isRightMouseDown => set(() => ({ isRightMouseDown })),
 })
 
-const liveInputs = {
-  mouseX: 0,
-  mouseY: 0,
-  mouseMovementX: 0,
-  mouseMovementY: 0,
-}
-
 interface CanvasSlice {
   rendererName?: string
   setRendererName: (name: string) => void
@@ -90,8 +78,3 @@ export const useEngine = create<EngineState>()((...a) => ({
 }))
 
 export const engine = () => useEngine.getState()
-
-export const live = {
-  ...liveInputs,
-  ...liveBrowser,
-}

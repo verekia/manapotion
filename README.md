@@ -1,6 +1,6 @@
 # 🏎 V1V2 Engine
 
-This is a work-in-progress collection of utilities and components to make [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) and React game development easier.
+This is a work-in-progress lightweight engine and collection of helpers to make [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) and React game development easier.
 
 🛑 Do not use, unless you are me.
 
@@ -8,18 +8,160 @@ TS and React only. The TypeScript React files are not even compiled at the momen
 
 ## Features
 
-- [WebGPU Canvas](#webgpu-canvas)
 - [Browser Events](#browser-events)
+- [WebGPU Canvas](#webgpu-canvas)
 - [Utils](#utils)
 
 ## Installation
 
 ```sh
+# NPM
 npm install @v1v2/engine
+# Yarn
 yarn add @v1v2/engine
+# PNPM
 pnpm add @v1v2/engine
+# Bun
 bun add @v1v2/engine
 ```
+
+## Getting started
+
+- Add `<UIEngine />` somewhere outside your canvas.
+- Add `<CanvasEngine />` somewhere inside your canvas.
+- You can optionally use [`<Canvas />`](#webgpu-canvas) from this library instead of R3F's to automatically enable WebGPU if supported.
+
+```jsx
+import { Canvas, CanvasEngine, UIEngine } from '@v1v2/engine'
+
+const App = () => (
+  <>
+    <div>Your UI</div>
+    <UIEngine />
+
+    <Canvas>
+      {/* Your scene */}
+      <CanvasEngine />
+    </Canvas>
+  </>
+)
+```
+
+## How to use
+
+`<UIEngine />` automatically listens to common browser events to give you access to both reactive and non-reactive variables, as well as event callbacks for custom logic.
+
+Access reactive variables with the `useEngine` hook, and use [helper functions](#helpers) to trigger common browser events:
+
+```jsx
+import { useEngine, enterFullscreen, exitFullscreen } from '@v1v2/engine'
+
+const FullscreenButton = () => {
+  const isFullscreen = useEngine(s => s.isFullscreen)
+
+  return (
+    <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
+      {isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+    </button>
+  )
+}
+```
+
+If you need to access the state outside of a component's lifecycle, you can use `engine()`:
+
+```jsx
+import { engine } from '@v1v2/engine'
+
+const myMainUpdateLoop = () => {
+  const { isRightMouseDown } = engine()
+  // ...
+}
+```
+
+Some variables that update very frequently such as mouse position are available in two flavors:
+
+- Reactive but throttled via `useEngine` for when you want to trigger React re-renders.
+- Non-reactive but always up-to-date via `engine` to use in your animation loops:
+
+```jsx
+const Camera = () => {
+  useFrame(() => {
+    const { mouseMovementX, mouseMovementY } = engine()
+    // ...
+  })
+  // ...
+}
+```
+
+Here is the list of available variables. Variables that are both reactive and non-reactive are marked with a ⚡️.
+
+### 🌐 General browser state
+
+- `isPointerLocked`
+- `isFullscreen`
+- `isPageVisible`
+- `canHover` (you can think of it as "is desktop". Mobile and touch devices will return `false`.)
+- ⚡️ `width` (of the window)
+- ⚡️ `height` (of the window)
+
+### 🕹 Inputs
+
+- `isLeftMouseDown`
+- `isMiddleMouseDown`
+- `isRightMouseDown`
+- ⚡️ `mouseX`
+- ⚡️ `mouseY`
+- ⚡️ `mouseMovementX`
+- ⚡️ `mouseMovementY`
+
+### 🎨 Canvas
+
+- `rendererName` (`'WebGL'` or `'WebGPU'`)
+
+## UIEngine callbacks
+
+You can provide custom event callbacks to `<UIEngine />`.
+
+```jsx
+<UIEngine onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
+```
+
+**Note to myself**: Check that making them stable with `useCallback` is not necessary.
+
+## Helpers
+
+Some helpers to abstract the browser's API are also included:
+
+- `enterFullscreen`
+- `exitFullscreen`
+- `lockOrientation`
+- `unlockOrientation`
+- `lockPointer`
+- `unlockPointer`
+- `lockKeys`
+- `unlockKeys`
+
+For a fully immersive experience of an FPS game for example, when the player clicks Play or the Fullscreen button, you might want to call multiple helpers in a row like this:
+
+```jsx
+<button
+  onClick={() => {
+    if (isFullscreen) {
+      exitFullscreen()
+      unlockKeys()
+      unlockOrientation()
+    } else {
+      enterFullscreen()
+      lockOrientation('landscape')
+      lockKeys(['Escape'])
+    }
+  }}
+>
+  Toggle fullscreen
+</button>
+```
+
+**Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.
 
 ## WebGPU Canvas
 
@@ -68,84 +210,6 @@ With Tailwind:
 </html>
 ```
 
-## Browser Events
-
-Add `<AllBrowserEvents>` to your app anywhere to listen and bind the following events to the reactive `useBrowserStore` values:
-
-- `fullscreenchange` => `isFullscreen`
-- `visibilitychange` => `isPageVisible`
-- `pointerlockchange` => `isPointerLocked`
-- `resize` => `width` and `height`
-- `window.matchMedia('(hover: hover)').matches` => `canHover`
-
-Some helpers to abstract the browser's API are also included:
-
-- `enterFullscreen`
-- `exitFullscreen`
-- `lockOrientation`
-- `unlockOrientation`
-- `lockPointer`
-- `unlockPointer`
-- `lockKeys`
-- `unlockKeys`
-
-Combine the functionalities above this way:
-
-```jsx
-import { AllBrowserEvents, useBrowserStore, enterFullscreen, exitFullscreen } from '@v1v2/engine'
-
-const App = () => {
-  const isFullscreen = useBrowserStore(s => s.isFullscreen) // Reactive
-
-  return (
-    <>
-      <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
-        {isFullscreen ? 'Fullscreen' : 'Not fullscreen'}
-      </button>
-      <AllBrowserEvents />
-    </>
-  )
-}
-```
-
-If you provide custom event callbacks, make them stable references with `useCallback`:
-
-```jsx
-const App = () => {
-  const handlePointerLockChange = useCallback(isPointerLocked => console.log(isPointerLocked), [])
-
-  return <PointerLockEvents onPointerLockChange={handlePointerLockChange} />
-}
-```
-
-If you want to access any store's value outside of a component's lifecycle, you can use `getBrowserState`:
-
-```jsx
-import { getBrowserState } from '@v1v2/engine'
-
-const myMainUpdateLoop = () => {
-  const isFullscreen = getBrowserState().isFullscreen
-  // ...
-}
-```
-
-For a fully immersive experience of an FPS game for example, when the player clicks Play or the Fullscreen button, you might want to call multiple helpers in a row like this:
-
-```jsx
-<button
-  onClick={() => {
-    enterFullscreen()
-    lockOrientation('landscape') // This will only affect mobile
-    lockPointer() // This will only affect desktop
-    lockKeys(['Escape']) // This will only affect desktop
-  }}
->
-  Play
-</button>
-```
-
-**Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.
-
 # Utils
 
 A few utilities are included:
@@ -160,3 +224,7 @@ A few utilities are included:
 # Hooks
 
 - `useUIFrame`: Like R3F `useFrame` but for your UI updates.
+
+## CanvasEngine
+
+🚧 CanvasEngine doesn't do anything yet.
