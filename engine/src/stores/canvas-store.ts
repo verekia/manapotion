@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type CanvasStore = {
+export type CanvasStore = {
   rendererName?: string
   setRendererName: (name: string) => void
 }

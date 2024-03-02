@@ -1,6 +1,6 @@
 {
   "name": "@v1v2/engine",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "type": "module",
   "peerDependencies": {
     "@react-three/fiber": ">=8.0.0",

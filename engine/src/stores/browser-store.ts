@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type BrowserStore = {
+export type BrowserStore = {
   isPointerLocked: boolean
   isFullscreen: boolean
   isPageVisible: boolean
@@ -30,15 +30,26 @@ type BrowserStore = {
   setMobileJoystick2: (joystickData: any) => void
 }
 
-export const liveBrowserState = {
-  width: undefined as number | undefined,
-  height: undefined as number | undefined,
-  mouseX: undefined as number | undefined,
-  mouseY: undefined as number | undefined,
-  mouseMovementX: undefined as number | undefined,
-  mouseMovementY: undefined as number | undefined,
-  mobileJoystick1: undefined as any,
-  mobileJoystick2: undefined as any,
+export type LiveBrowserState = {
+  width?: number
+  height?: number
+  mouseX?: number
+  mouseY?: number
+  mouseMovementX?: number
+  mouseMovementY?: number
+  mobileJoystick1?: any
+  mobileJoystick2?: any
+}
+
+export const liveBrowserState: LiveBrowserState = {
+  width: undefined,
+  height: undefined,
+  mouseX: undefined,
+  mouseY: undefined,
+  mouseMovementX: undefined,
+  mouseMovementY: undefined,
+  mobileJoystick1: undefined,
+  mobileJoystick2: undefined,
 }
 
 export const useBrowserStore = create<BrowserStore>(set => ({
