@@ -76,16 +76,12 @@ const App = () => (
 Access reactive variables with the `useMP` hook, and use [helper functions](#helpers) to trigger common browser events:
 
 ```jsx
-import { useMP, mp, enterFullscreen, exitFullscreen } from 'manapotion'
+import { useMP } from 'manapotion'
 
-const FullscreenButton = () => {
+const Header = () => {
   const isFullscreen = useMP(s => s.isFullscreen)
 
-  return (
-    <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
-      {isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-    </button>
-  )
+  return <div>{isFullscreen ? 'You are fullscreen' : 'You are not fullscreen'}</div>
 }
 ```
 

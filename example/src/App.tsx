@@ -3,21 +3,19 @@ import { useCallback, useRef, useState } from 'react'
 import { Canvas } from '@manapotion/r3f'
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
-  engine,
   enterFullscreen,
   exitFullscreen,
   Listeners,
   lockKeys,
   lockOrientation,
   lockPointer,
+  mp,
   unlockKeys,
   unlockOrientation,
-  useEngine,
+  useMP,
   useUIFrame,
 } from 'manapotion'
 import { Mesh } from 'three'
-
-import RendererInfo from '#/components/RendererInfo'
 
 function Box(props: MeshProps) {
   const meshRef = useRef<Mesh>(null)
@@ -44,19 +42,19 @@ function Box(props: MeshProps) {
 const App = () => {
   const [renderer, setRenderer] = useState('WebGPU')
   const toggleRenderer = () => setRenderer(renderer === 'WebGPU' ? 'WebGL' : 'WebGPU')
-  const isFullscreen = useEngine(s => s.isFullscreen)
-  const isPageVisible = useEngine(s => s.isPageVisible)
-  const isPointerLocked = useEngine(s => s.isPointerLocked)
-  const width = useEngine(s => s.width)
-  const height = useEngine(s => s.height)
-  const canHover = useEngine(s => s.canHover)
-  const mouseX = useEngine(s => s.mouseX)
-  const mouseY = useEngine(s => s.mouseY)
-  const mouseMovementX = useEngine(s => s.mouseMovementX)
-  const mouseMovementY = useEngine(s => s.mouseMovementY)
-  const isLeftMouseDown = useEngine(s => s.isLeftMouseDown)
-  const isMiddleMouseDown = useEngine(s => s.isMiddleMouseDown)
-  const isRightMouseDown = useEngine(s => s.isRightMouseDown)
+  const isFullscreen = useMP(s => s.isFullscreen)
+  const isPageVisible = useMP(s => s.isPageVisible)
+  const isPointerLocked = useMP(s => s.isPointerLocked)
+  const width = useMP(s => s.width)
+  const height = useMP(s => s.height)
+  const canHover = useMP(s => s.canHover)
+  const mouseX = useMP(s => s.mouseX)
+  const mouseY = useMP(s => s.mouseY)
+  const mouseMovementX = useMP(s => s.mouseMovementX)
+  const mouseMovementY = useMP(s => s.mouseMovementY)
+  const isLeftMouseDown = useMP(s => s.isLeftMouseDown)
+  const isMiddleMouseDown = useMP(s => s.isMiddleMouseDown)
+  const isRightMouseDown = useMP(s => s.isRightMouseDown)
 
   const liveMouseXRef = useRef<HTMLSpanElement>(null)
   const liveMouseYRef = useRef<HTMLSpanElement>(null)
@@ -72,12 +70,12 @@ const App = () => {
   )
 
   useUIFrame(() => {
-    liveMouseXRef.current!.textContent = String(engine().mouseX)
-    liveMouseYRef.current!.textContent = String(engine().mouseY)
-    liveMouseMovementXRef.current!.textContent = String(engine().mouseMovementX)
-    liveMouseMovementYRef.current!.textContent = String(engine().mouseMovementY)
-    liveWidthRef.current!.textContent = String(engine().width)
-    liveHeightRef.current!.textContent = String(engine().height)
+    liveMouseXRef.current!.textContent = String(mp().mouseX)
+    liveMouseYRef.current!.textContent = String(mp().mouseY)
+    liveMouseMovementXRef.current!.textContent = String(mp().mouseMovementX)
+    liveMouseMovementYRef.current!.textContent = String(mp().mouseMovementY)
+    liveWidthRef.current!.textContent = String(mp().width)
+    liveHeightRef.current!.textContent = String(mp().height)
   })
 
   return (
@@ -165,7 +163,12 @@ const App = () => {
           Reactive throttled: {mouseMovementX} {mouseMovementY}
         </div>
       </div>
-      <RendererInfo toggleRenderer={toggleRenderer} />
+      <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transform">
+        {renderer}
+        <button className="bg-slate-100 rounded-md px-2 py-1 ml-2" onClick={toggleRenderer}>
+          Change
+        </button>
+      </div>
       <Canvas
         forceWebGL={renderer === 'WebGL' || Boolean(import.meta.env.VITE_FORCE_WEBGL)}
         onContextMenu={e => e.preventDefault()}

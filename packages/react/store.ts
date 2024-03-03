@@ -59,22 +59,11 @@ const createInputSlice: StateCreator<InputSlice> = set => ({
   setRightMouseDown: isRightMouseDown => set(() => ({ isRightMouseDown })),
 })
 
-interface CanvasSlice {
-  rendererName?: string
-  setRendererName: (name: string) => void
-}
+export type ManaPotionState = BrowserSlice & InputSlice
 
-const createCanvasSlice: StateCreator<CanvasSlice> = set => ({
-  rendererName: undefined,
-  setRendererName: name => set(() => ({ rendererName: name })),
-})
-
-export type EngineState = BrowserSlice & InputSlice & CanvasSlice
-
-export const useEngine = create<EngineState>()((...a) => ({
+export const useMP = create<ManaPotionState>()((...a) => ({
   ...createBrowserSlice(...a),
   ...createInputSlice(...a),
-  ...createCanvasSlice(...a),
 }))
 
-export const engine = () => useEngine.getState()
+export const mp = () => useMP.getState()

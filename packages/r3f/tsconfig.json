@@ -25,5 +25,5 @@
     "composite": true,
     "allowSyntheticDefaultImports": true,
   },
-  "include": ["index.tsx"],
+  "include": ["index.ts", "Canvas.tsx"],
 }

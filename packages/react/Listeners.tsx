@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { throttleDebounce } from './util'
-import { engine } from './store'
+import { mp } from './store'
 
 export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
@@ -21,13 +21,13 @@ export const MouseMoveListener = ({
   useEffect(() => {
     const throttledMouseMove = throttleDebounce(
       (x: number, y: number, movementX: number, movementY: number) => {
-        engine().setMousePosition(x, y)
-        engine().setMouseMovement(movementX, movementY)
+        mp().setMousePosition(x, y)
+        mp().setMouseMovement(movementX, movementY)
         onReactiveMouseMove?.(x, y, movementX, movementY)
 
         if (mouseMovementResetDelay) {
           mouseMovementResetTimeoutRef.current = setTimeout(() => {
-            engine().setMouseMovement(0, 0)
+            mp().setMouseMovement(0, 0)
             onReactiveMouseMove?.(x, y, 0, 0)
           }, mouseMovementResetDelay)
         }
@@ -41,18 +41,18 @@ export const MouseMoveListener = ({
       const mouseMovementX = e.movementX
       const mouseMovementY = -e.movementY
 
-      engine().mouseX = mouseX
-      engine().mouseY = mouseY
-      engine().mouseMovementX = mouseMovementX
-      engine().mouseMovementY = mouseMovementY
+      mp().mouseX = mouseX
+      mp().mouseY = mouseY
+      mp().mouseMovementX = mouseMovementX
+      mp().mouseMovementY = mouseMovementY
       onLiveMouseMove?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
 
       mouseMovementResetTimeoutRef.current && clearTimeout(mouseMovementResetTimeoutRef.current)
 
       if (mouseMovementResetDelay) {
         mouseMovementResetTimeoutRef.current = setTimeout(() => {
-          engine().mouseMovementX = 0
-          engine().mouseMovementY = 0
+          mp().mouseMovementX = 0
+          mp().mouseMovementY = 0
           onLiveMouseMove?.(mouseX, mouseY, 0, 0)
         }, mouseMovementResetDelay)
       }
@@ -86,7 +86,7 @@ export const PageVisibilityListener = ({ onVisibilityChange }: PageVisibilityLis
   useEffect(() => {
     const handleVisibilityChange = () => {
       const isVisible = !document.hidden
-      engine().setPageVisible(isVisible)
+      mp().setPageVisible(isVisible)
       onVisibilityChange?.(isVisible)
     }
 
@@ -106,7 +106,7 @@ export const PointerLockListener = ({ onPointerLockChange }: PointerLockListener
   useEffect(() => {
     const handlePointerLockChange = () => {
       const isPointerLocked = Boolean(document.pointerLockElement)
-      engine().setPointerLocked(isPointerLocked)
+      mp().setPointerLocked(isPointerLocked)
       onPointerLockChange?.(isPointerLocked)
     }
 
@@ -126,7 +126,7 @@ export const FullscreenChangeListener = ({ onFullscreenChange }: FullscreenChang
   useEffect(() => {
     const handleFullscreenChange = () => {
       const isFullscreen = Boolean(document.fullscreenElement)
-      engine().setFullscreen(isFullscreen)
+      mp().setFullscreen(isFullscreen)
       onFullscreenChange?.(isFullscreen)
     }
 
@@ -151,7 +151,7 @@ export const ResizeListener = ({
 }: ResizeListenerProps) => {
   useEffect(() => {
     const throttledResize = throttleDebounce((width: number, height: number) => {
-      engine().setSize(width, height)
+      mp().setSize(width, height)
       onReactiveResize?.(width, height)
     }, reactiveResizeThrottleDelay)
 
@@ -159,8 +159,8 @@ export const ResizeListener = ({
       const width = window.innerWidth
       const height = window.innerHeight
 
-      engine().width = width
-      engine().height = height
+      mp().width = width
+      mp().height = height
       onLiveResize?.(width, height)
 
       throttledResize(width, height)
@@ -168,10 +168,10 @@ export const ResizeListener = ({
 
     const widthInit = window.innerWidth
     const heightInit = window.innerHeight
-    engine().setSize(widthInit, heightInit)
+    mp().setSize(widthInit, heightInit)
     onReactiveResize?.(widthInit, heightInit)
-    engine().width = widthInit
-    engine().height = heightInit
+    mp().width = widthInit
+    mp().height = heightInit
 
     window.addEventListener('resize', handleResize)
 
@@ -195,12 +195,12 @@ export const CanHoverListener = ({
   useEffect(() => {
     canHoverIntervalRef.current = setInterval(() => {
       const canHover = window.matchMedia('(hover: hover)').matches
-      engine().setCanHover(canHover)
+      mp().setCanHover(canHover)
       onCanHoverChange?.(canHover)
     }, canHoverIntervalDelay)
 
     const canHoverInit = window.matchMedia('(hover: hover)').matches
-    engine().setCanHover(canHoverInit)
+    mp().setCanHover(canHoverInit)
     onCanHoverChange?.(canHoverInit)
 
     return () => {
@@ -233,26 +233,26 @@ export const MouseDownListener = ({
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
       if (e.button === 0) {
-        engine().setLeftMouseDown(true)
+        mp().setLeftMouseDown(true)
         onLeftMouseDown?.()
       } else if (e.button === 1) {
-        engine().setMiddleMouseDown(true)
+        mp().setMiddleMouseDown(true)
         onMiddleMouseDown?.()
       } else if (e.button === 2) {
-        engine().setRightMouseDown(true)
+        mp().setRightMouseDown(true)
         onRightMouseDown?.()
       }
     }
 
     const handleMouseUp = (e: MouseEvent) => {
       if (e.button === 0) {
-        engine().setLeftMouseDown(false)
+        mp().setLeftMouseDown(false)
         onLeftMouseUp?.()
       } else if (e.button === 1) {
-        engine().setMiddleMouseDown(false)
+        mp().setMiddleMouseDown(false)
         onMiddleMouseUp?.()
       } else if (e.button === 2) {
-        engine().setRightMouseDown(false)
+        mp().setRightMouseDown(false)
         onRightMouseUp?.()
       }
     }
