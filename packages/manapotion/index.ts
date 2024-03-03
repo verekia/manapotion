@@ -1,6 +1,5 @@
-export { default as Canvas } from './src/Canvas'
 export {
-  default as UIEngine,
+  default as ManaPotion,
   CanHoverEvents,
   FullscreenChangeEvents,
   MouseDownEvents,
@@ -8,18 +7,17 @@ export {
   PageVisibilityEvents,
   PointerLockEvents,
   ResizeEvents,
-} from './src/UIEngine'
+} from './src/ManaPotion'
 export type {
   CanHoverEventProps,
-  UIEngineProps,
+  ManaPotionProps,
   FullscreenChangeEventProps,
   MouseDownEventProps,
   MouseMoveEventProps,
   PageVisibilityEventProps,
   PointerLockEventProps,
   ResizeEventProps,
-} from './src/UIEngine'
-export { default as CanvasEngine } from './src/CanvasEngine'
+} from './src/ManaPotion'
 
 export { useEngine, engine } from './src/store'
 export type { EngineState } from './src/store'

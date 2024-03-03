@@ -1,16 +1,15 @@
 import { useCallback, useRef, useState } from 'react'
 
+import { Canvas } from '@manapotion/r3f'
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
-  Canvas,
-  CanvasEngine,
   engine,
   enterFullscreen,
   exitFullscreen,
   lockKeys,
   lockOrientation,
   lockPointer,
-  UIEngine,
+  ManaPotion,
   unlockKeys,
   unlockOrientation,
   useEngine,
@@ -182,9 +181,8 @@ const App = () => {
         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
-        <CanvasEngine />
       </Canvas>
-      <UIEngine
+      <ManaPotion
         onPointerLockChange={handlePointerLockChange}
         reactiveMouseMoveThrottleDelay={200}
         mouseMovementResetDelay={100}

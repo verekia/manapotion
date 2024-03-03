@@ -31,37 +31,44 @@ bun add manapotion
 
 ## Getting started
 
-- Add `<UIEngine />` somewhere outside your canvas.
-- Add `<CanvasEngine />` somewhere inside your canvas.
-- You can optionally use [`<Canvas />`](#webgpu-canvas) from this library instead of R3F's to automatically enable WebGPU if supported.
+- Add `<ManaPotion />` to your app.
 
 ```jsx
-import { Canvas, CanvasEngine, UIEngine } from 'manapotion'
+import { ManaPotion } from 'manapotion'
 
 const App = () => (
   <>
-    <div>Your UI</div>
-    <UIEngine />
-
-    <Canvas>
-      {/* Your scene */}
-      <CanvasEngine />
-    </Canvas>
+    <div>Your game</div>
+    <ManaPotion />
   </>
 )
 ```
 
 ## How to use
 
-`<UIEngine />` automatically listens to common browser events to give you access to both reactive and non-reactive variables, as well as event callbacks for custom logic.
+`<ManaPotion />` automatically listens to common browser events to give you access to both reactive and non-reactive variables, as well as event callbacks for custom logic.
 
 Access reactive variables with the `useEngine` hook, and use [helper functions](#helpers) to trigger common browser events:
 
 ```jsx
-import { useEngine, enterFullscreen, exitFullscreen } from 'manapotion'
+import { useMana, usePotion enterFullscreen, exitFullscreen } from 'manapotion'
 
 const FullscreenButton = () => {
-  const isFullscreen = useEngine(s => s.isFullscreen)
+  const isFullscreen = useMana(s => s.isFullscreen)
+  const isFullscreen = usePotion(s => s.isFullscreen)
+
+  if (mana().isFullscreen) {
+    exitFullscreen()
+  } else {
+    enterFullscreen()
+  }
+
+  if (potion().isFullscreen) {
+    exitFullscreen()
+  } else {
+    enterFullscreen()
+  }
+
 
   return (
     <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
@@ -118,16 +125,12 @@ Here is the list of available variables. Variables that are both reactive and no
 - ⚡️ `mouseMovementX`
 - ⚡️ `mouseMovementY` (going up is positive)
 
-### 🎨 Canvas
+## `<ManaPotion />` callbacks
 
-- `rendererName` (`'WebGL'` or `'WebGPU'`)
-
-## UIEngine callbacks
-
-You can provide custom event callbacks to `<UIEngine />`.
+You can provide custom event callbacks to `<ManaPotion />`.
 
 ```jsx
-<UIEngine onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
+<ManaPotion onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
 ```
 
 **Note to myself**: Check that making them stable with `useCallback` is not necessary.
@@ -169,25 +172,37 @@ For a fully immersive experience of an FPS game for example, when the player cli
 
 ## WebGPU Canvas
 
+```sh
+# NPM
+npm install @manapotion/r3f
+# Yarn
+yarn add @manapotion/r3f
+# PNPM
+pnpm add @manapotion/r3f
+# Bun
+bun add @manapotion/r3f
+```
+
 Wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
 
 ```jsx
-import { Canvas } from 'manapotion'
+import { Canvas } from '@manapotion/r3f'
 
 const App = () => <Canvas forceWebGL={false}>{/* Your scene */}</Canvas>
 ```
 
 👉 Due to the way Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/manapotion/blob/main/example/vite.config.ts)).
 
-If you want to show an indicator that the canvas is currently using WebGPU, you can use `useCanvasStore`:
+To know if your canvas is currently using WebGPU or WebGL, you can use `useThree` inside the canvas:
 
 ```jsx
-import { useCanvasStore } from 'manapotion'
+const Scene = () => {
+  const gl = useThree(s => s.gl)
 
-const RendererIndicator = () => {
-  const rendererName = useCanvasStore(s => s.rendererName)
+  console.log(gl.isWebGLRenderer)
+  console.log(gl.isWebGPURenderer)
 
-  return <div>{rendererName}</div>
+  // ...
 }
 ```
 
@@ -228,7 +243,3 @@ A few utilities are included:
 # Hooks
 
 - `useUIFrame`: Like R3F `useFrame` but for your UI updates.
-
-## CanvasEngine
-
-🚧 CanvasEngine doesn't do anything yet.

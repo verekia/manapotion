@@ -2,11 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Canvas as R3FCanvas, CanvasProps } from '@react-three/fiber'
 
-import RendererDetector from './RendererDetector'
-
 let WebGPURenderer: any
 
-const Canvas = ({
+export const Canvas = ({
   children,
   forceWebGL = false,
   ...props
@@ -60,9 +58,6 @@ const Canvas = ({
       {...props}
     >
       {children}
-      <RendererDetector />
     </R3FCanvas>
   )
 }
-
-export default Canvas

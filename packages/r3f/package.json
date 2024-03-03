@@ -1,0 +1,14 @@
+{
+  "name": "@manapotion/r3f",
+  "version": "0.0.3",
+  "type": "module",
+  "peerDependencies": {
+    "@react-three/fiber": ">=8.0.0",
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0",
+    "three": ">=0.160.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

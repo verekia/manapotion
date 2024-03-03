@@ -276,7 +276,7 @@ export const MouseDownEvents = ({
   return null
 }
 
-export type UIEngineProps = MouseMoveEventProps &
+export type ManaPotionProps = MouseMoveEventProps &
   PageVisibilityEventProps &
   PointerLockEventProps &
   FullscreenChangeEventProps &
@@ -284,7 +284,7 @@ export type UIEngineProps = MouseMoveEventProps &
   CanHoverEventProps &
   MouseDownEventProps
 
-const UIEngine = ({
+const ManaPotion = ({
   mouseMovementResetDelay = 30,
   reactiveMouseMoveThrottleDelay = 100,
   onReactiveMouseMove,
@@ -303,7 +303,7 @@ const UIEngine = ({
   onLeftMouseUp,
   onMiddleMouseUp,
   onRightMouseUp,
-}: UIEngineProps) => (
+}: ManaPotionProps) => (
   <>
     <MouseMoveEvents
       mouseMovementResetDelay={mouseMovementResetDelay}
@@ -334,4 +334,4 @@ const UIEngine = ({
   </>
 )
 
-export default UIEngine
+export default ManaPotion

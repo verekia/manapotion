@@ -1,3 +1,1 @@
 # @manapotion/util
-
-Bump

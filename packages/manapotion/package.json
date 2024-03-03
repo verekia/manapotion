@@ -2,12 +2,8 @@
   "name": "manapotion",
   "version": "0.0.3",
   "type": "module",
-  "main": "index.ts",
   "peerDependencies": {
-    "@react-three/fiber": ">=8.0.0",
-    "react": ">=17.0.0",
-    "react-dom": ">=17.0.0",
-    "three": ">=0.160.0"
+    "react": ">=17.0.0"
   },
   "dependencies": {
     "@manapotion/util": "^0.0.3",
