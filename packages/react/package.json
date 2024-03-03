@@ -1,0 +1,14 @@
+{
+  "name": "@manapotion/react",
+  "version": "0.0.4",
+  "type": "module",
+  "peerDependencies": {
+    "react": ">=17.0.0"
+  },
+  "dependencies": {
+    "zustand": "^4.5.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

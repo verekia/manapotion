@@ -1,21 +1,21 @@
 import { useEffect, useRef } from 'react'
 
-import { throttleDebounce } from '@manapotion/util'
+import { throttleDebounce } from './util'
 import { engine } from './store'
 
-export type MouseMoveEventProps = {
+export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
   reactiveMouseMoveThrottleDelay?: number
   onReactiveMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
   onLiveMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
 }
 
-export const MouseMoveEvents = ({
+export const MouseMoveListener = ({
   mouseMovementResetDelay = 30,
   reactiveMouseMoveThrottleDelay = 100,
   onReactiveMouseMove,
   onLiveMouseMove,
-}: MouseMoveEventProps) => {
+}: MouseMoveListenerProps) => {
   const mouseMovementResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -78,11 +78,11 @@ export const MouseMoveEvents = ({
   return null
 }
 
-export type PageVisibilityEventProps = {
+export type PageVisibilityListenerProps = {
   onVisibilityChange?: (isVisible: boolean) => void
 }
 
-export const PageVisibilityEvents = ({ onVisibilityChange }: PageVisibilityEventProps) => {
+export const PageVisibilityListener = ({ onVisibilityChange }: PageVisibilityListenerProps) => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       const isVisible = !document.hidden
@@ -98,11 +98,11 @@ export const PageVisibilityEvents = ({ onVisibilityChange }: PageVisibilityEvent
   return null
 }
 
-export type PointerLockEventProps = {
+export type PointerLockListenerProps = {
   onPointerLockChange?: (isPointerLocked: boolean) => void
 }
 
-export const PointerLockEvents = ({ onPointerLockChange }: PointerLockEventProps) => {
+export const PointerLockListener = ({ onPointerLockChange }: PointerLockListenerProps) => {
   useEffect(() => {
     const handlePointerLockChange = () => {
       const isPointerLocked = Boolean(document.pointerLockElement)
@@ -118,11 +118,11 @@ export const PointerLockEvents = ({ onPointerLockChange }: PointerLockEventProps
   return null
 }
 
-export type FullscreenChangeEventProps = {
+export type FullscreenChangeListenerProps = {
   onFullscreenChange?: (isFullscreen: boolean) => void
 }
 
-export const FullscreenChangeEvents = ({ onFullscreenChange }: FullscreenChangeEventProps) => {
+export const FullscreenChangeListener = ({ onFullscreenChange }: FullscreenChangeListenerProps) => {
   useEffect(() => {
     const handleFullscreenChange = () => {
       const isFullscreen = Boolean(document.fullscreenElement)
@@ -138,17 +138,17 @@ export const FullscreenChangeEvents = ({ onFullscreenChange }: FullscreenChangeE
   return null
 }
 
-export type ResizeEventProps = {
+export type ResizeListenerProps = {
   reactiveResizeThrottleDelay?: number
   onReactiveResize?: (width: number, height: number) => void
   onLiveResize?: (width: number, height: number) => void
 }
 
-export const ResizeEvents = ({
+export const ResizeListener = ({
   reactiveResizeThrottleDelay = 100,
   onReactiveResize,
   onLiveResize,
-}: ResizeEventProps) => {
+}: ResizeListenerProps) => {
   useEffect(() => {
     const throttledResize = throttleDebounce((width: number, height: number) => {
       engine().setSize(width, height)
@@ -181,15 +181,15 @@ export const ResizeEvents = ({
   return null
 }
 
-export type CanHoverEventProps = {
+export type CanHoverListenerProps = {
   canHoverIntervalDelay?: number
   onCanHoverChange?: (canHover: boolean) => void
 }
 
-export const CanHoverEvents = ({
+export const CanHoverListener = ({
   canHoverIntervalDelay = 500,
   onCanHoverChange,
-}: CanHoverEventProps) => {
+}: CanHoverListenerProps) => {
   const canHoverIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
@@ -213,7 +213,7 @@ export const CanHoverEvents = ({
   return null
 }
 
-export type MouseDownEventProps = {
+export type MouseDownListenerProps = {
   onLeftMouseDown?: () => void
   onMiddleMouseDown?: () => void
   onRightMouseDown?: () => void
@@ -222,14 +222,14 @@ export type MouseDownEventProps = {
   onRightMouseUp?: () => void
 }
 
-export const MouseDownEvents = ({
+export const MouseDownListener = ({
   onLeftMouseDown,
   onMiddleMouseDown,
   onRightMouseDown,
   onLeftMouseUp,
   onMiddleMouseUp,
   onRightMouseUp,
-}: MouseDownEventProps) => {
+}: MouseDownListenerProps) => {
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
       if (e.button === 0) {
@@ -276,15 +276,15 @@ export const MouseDownEvents = ({
   return null
 }
 
-export type ManaPotionProps = MouseMoveEventProps &
-  PageVisibilityEventProps &
-  PointerLockEventProps &
-  FullscreenChangeEventProps &
-  ResizeEventProps &
-  CanHoverEventProps &
-  MouseDownEventProps
+export type ListenersProps = MouseMoveListenerProps &
+  PageVisibilityListenerProps &
+  PointerLockListenerProps &
+  FullscreenChangeListenerProps &
+  ResizeListenerProps &
+  CanHoverListenerProps &
+  MouseDownListenerProps
 
-const ManaPotion = ({
+export const Listeners = ({
   mouseMovementResetDelay = 30,
   reactiveMouseMoveThrottleDelay = 100,
   onReactiveMouseMove,
@@ -303,27 +303,27 @@ const ManaPotion = ({
   onLeftMouseUp,
   onMiddleMouseUp,
   onRightMouseUp,
-}: ManaPotionProps) => (
+}: ListenersProps) => (
   <>
-    <MouseMoveEvents
+    <MouseMoveListener
       mouseMovementResetDelay={mouseMovementResetDelay}
       reactiveMouseMoveThrottleDelay={reactiveMouseMoveThrottleDelay}
       onReactiveMouseMove={onReactiveMouseMove}
       onLiveMouseMove={onLiveMouseMove}
     />
-    <PageVisibilityEvents onVisibilityChange={onVisibilityChange} />
-    <PointerLockEvents onPointerLockChange={onPointerLockChange} />
-    <FullscreenChangeEvents onFullscreenChange={onFullscreenChange} />
-    <ResizeEvents
+    <PageVisibilityListener onVisibilityChange={onVisibilityChange} />
+    <PointerLockListener onPointerLockChange={onPointerLockChange} />
+    <FullscreenChangeListener onFullscreenChange={onFullscreenChange} />
+    <ResizeListener
       reactiveResizeThrottleDelay={reactiveResizeThrottleDelay}
       onReactiveResize={onReactiveResize}
       onLiveResize={onLiveResize}
     />
-    <CanHoverEvents
+    <CanHoverListener
       canHoverIntervalDelay={canHoverIntervalDelay}
       onCanHoverChange={onCanHoverChange}
     />
-    <MouseDownEvents
+    <MouseDownListener
       onLeftMouseDown={onLeftMouseDown}
       onMiddleMouseDown={onMiddleMouseDown}
       onRightMouseDown={onRightMouseDown}
@@ -333,5 +333,3 @@ const ManaPotion = ({
     />
   </>
 )
-
-export default ManaPotion

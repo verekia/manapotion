@@ -1,0 +1,8 @@
+{
+  "name": "@manapotion/browser",
+  "version": "0.0.4",
+  "type": "module",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

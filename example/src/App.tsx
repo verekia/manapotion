@@ -6,10 +6,10 @@ import {
   engine,
   enterFullscreen,
   exitFullscreen,
+  Listeners,
   lockKeys,
   lockOrientation,
   lockPointer,
-  ManaPotion,
   unlockKeys,
   unlockOrientation,
   useEngine,
@@ -182,7 +182,7 @@ const App = () => {
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
       </Canvas>
-      <ManaPotion
+      <Listeners
         onPointerLockChange={handlePointerLockChange}
         reactiveMouseMoveThrottleDelay={200}
         mouseMovementResetDelay={100}

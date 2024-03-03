@@ -18,6 +18,15 @@ TS and React only. The TypeScript React files are not even compiled at the momen
 
 ## Installation
 
+Mana Potion consists of:
+
+- `@manapotion/react`: Listeners, state, and React hooks.
+- `@manapotion/r3f`: For React Three Fiber.
+- `@manapotion/util`: Utilities.
+- `manapotion`: All of the above in one package.
+
+If you are making a React Three Fiber game, the easiest option is to install `manapotion`:
+
 ```sh
 # NPM
 npm install manapotion
@@ -29,46 +38,47 @@ pnpm add manapotion
 bun add manapotion
 ```
 
+Otherwise for plain React setups, or if you want to install the packages separately:
+
+```sh
+# NPM
+npm install @manapotion/react
+# Yarn
+yarn add @manapotion/react
+# PNPM
+pnpm add @manapotion/react
+# Bun
+bun add @manapotion/react
+```
+
+This documentation uses imports from `manapotion`, so if you install packages separately, you will have to import the relevant packages directly.
+
 ## Getting started
 
 - Add `<ManaPotion />` to your app.
 
 ```jsx
-import { ManaPotion } from 'manapotion'
+import { Listeners } from 'manapotion'
 
 const App = () => (
   <>
     <div>Your game</div>
-    <ManaPotion />
+    <Listeners />
   </>
 )
 ```
 
 ## How to use
 
-`<ManaPotion />` automatically listens to common browser events to give you access to both reactive and non-reactive variables, as well as event callbacks for custom logic.
+`<Listeners />` listens to common browser events to give you access to both reactive and non-reactive variables, as well as event callbacks for custom logic.
 
-Access reactive variables with the `useEngine` hook, and use [helper functions](#helpers) to trigger common browser events:
+Access reactive variables with the `useMP` hook, and use [helper functions](#helpers) to trigger common browser events:
 
 ```jsx
-import { useMana, usePotion enterFullscreen, exitFullscreen } from 'manapotion'
+import { useMP, mp, enterFullscreen, exitFullscreen } from 'manapotion'
 
 const FullscreenButton = () => {
-  const isFullscreen = useMana(s => s.isFullscreen)
-  const isFullscreen = usePotion(s => s.isFullscreen)
-
-  if (mana().isFullscreen) {
-    exitFullscreen()
-  } else {
-    enterFullscreen()
-  }
-
-  if (potion().isFullscreen) {
-    exitFullscreen()
-  } else {
-    enterFullscreen()
-  }
-
+  const isFullscreen = useMP(s => s.isFullscreen)
 
   return (
     <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
@@ -78,26 +88,26 @@ const FullscreenButton = () => {
 }
 ```
 
-If you need to access the state outside of a component's lifecycle, you can use `engine()`:
+If you need to access the state outside of a component's lifecycle, you can use `mp()`:
 
 ```jsx
-import { engine } from 'manapotion'
+import { mp } from 'manapotion'
 
 const myMainUpdateLoop = () => {
-  const { isRightMouseDown } = engine()
+  const { isRightMouseDown } = mp()
   // ...
 }
 ```
 
 Some variables that update very frequently such as mouse position are available in two flavors:
 
-- Reactive but throttled via `useEngine` for when you want to trigger React re-renders.
-- Non-reactive but always up-to-date via `engine` to use in your animation loops:
+- Reactive but throttled via `useMP` for when you want to trigger React re-renders.
+- Non-reactive but always up-to-date via `mp` to use in your animation loops:
 
 ```jsx
 const Camera = () => {
   useFrame(() => {
-    const { mouseMovementX, mouseMovementY } = engine()
+    const { mouseMovementX, mouseMovementY } = mp()
     // ...
   })
   // ...

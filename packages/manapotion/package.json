@@ -2,12 +2,11 @@
   "name": "manapotion",
   "version": "0.0.4",
   "type": "module",
-  "peerDependencies": {
-    "react": ">=17.0.0"
-  },
   "dependencies": {
-    "@manapotion/util": "^0.0.4",
-    "zustand": "^4.5.1"
+    "@manapotion/browser": "^0.0.4",
+    "@manapotion/r3f": "^0.0.4",
+    "@manapotion/react": "^0.0.4",
+    "@manapotion/util": "^0.0.4"
   },
   "devDependencies": {
     "typescript": "^5.3.3"
