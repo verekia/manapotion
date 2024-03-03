@@ -93,11 +93,20 @@ const createInputSlice: StateCreator<InputSlice> = set => ({
     }),
 })
 
-export type ManaPotionState = BrowserSlice & InputSlice
+export interface CustomSlice {
+  setCustom: (key: string, value: any) => void
+}
+
+const createCustomSlice: StateCreator<CustomSlice> = set => ({
+  setCustom: (key, value) => set(() => ({ [key]: value })),
+})
+
+export type ManaPotionState = BrowserSlice & InputSlice & CustomSlice
 
 export const useMP = create<ManaPotionState>()((...a) => ({
   ...createBrowserSlice(...a),
   ...createInputSlice(...a),
+  ...createCustomSlice(...a),
 }))
 
 export const mp = () => useMP.getState()
