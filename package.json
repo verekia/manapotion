@@ -7,7 +7,8 @@
   ],
   "scripts": {
     "dev": "cd example && bun dev",
-    "version": "lerna version"
+    "lerna-version": "lerna version",
+    "lerna-publish": "lerna publish"
   },
   "devDependencies": {
     "lerna": "^8.1.2"
