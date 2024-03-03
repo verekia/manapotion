@@ -97,9 +97,10 @@ export interface CustomSlice {
   setCustom: (key: string, value: any) => void
 }
 
-const createCustomSlice: StateCreator<CustomSlice> = set => ({
-  setCustom: (key, value) => set(() => ({ [key]: value })),
-})
+const createCustomSlice: StateCreator<CustomSlice> = set =>
+  ({
+    setCustom: (key, value) => set(() => ({ [key]: value })),
+  }) as CustomSlice
 
 export type ManaPotionState = BrowserSlice & InputSlice & CustomSlice
 
