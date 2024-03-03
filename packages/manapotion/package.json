@@ -1,6 +1,6 @@
 {
   "name": "manapotion",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "index.ts",
   "peerDependencies": {
@@ -10,7 +10,7 @@
     "three": ">=0.160.0"
   },
   "dependencies": {
-    "@manapotion/util": "^0.0.1",
+    "@manapotion/util": "^0.0.2",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
