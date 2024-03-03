@@ -1,12 +1,12 @@
 {
   "name": "manapotion",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "peerDependencies": {
     "react": ">=17.0.0"
   },
   "dependencies": {
-    "@manapotion/util": "^0.0.3",
+    "@manapotion/util": "^0.0.4",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
