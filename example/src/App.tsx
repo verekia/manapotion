@@ -1,8 +1,8 @@
 import { useCallback, useRef, useState } from 'react'
 
-import { Canvas } from '@manapotion/r3f'
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
+  Canvas,
   enterFullscreen,
   exitFullscreen,
   Listeners,
