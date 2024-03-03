@@ -1,6 +1,6 @@
 {
   "name": "manapotion",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "type": "module",
   "files": [
     "dist"
@@ -24,7 +24,7 @@
   "dependencies": {
     "@manapotion/browser": "^0.1.8",
     "@manapotion/r3f": "^0.1.8",
-    "@manapotion/react": "^0.1.8",
+    "@manapotion/react": "^0.1.9",
     "@manapotion/util": "^0.1.8"
   },
   "devDependencies": {
