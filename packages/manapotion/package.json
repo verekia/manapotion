@@ -1,6 +1,6 @@
 {
   "name": "manapotion",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "files": [
     "dist"
@@ -19,10 +19,10 @@
     "tsup": "tsup *.ts *.tsx --dts --format esm,cjs --clean"
   },
   "dependencies": {
-    "@manapotion/browser": "^0.1.5",
-    "@manapotion/r3f": "^0.1.5",
-    "@manapotion/react": "^0.1.5",
-    "@manapotion/util": "^0.1.4"
+    "@manapotion/browser": "^0.1.6",
+    "@manapotion/r3f": "^0.1.6",
+    "@manapotion/react": "^0.1.6",
+    "@manapotion/util": "^0.1.6"
   },
   "devDependencies": {
     "tsup": "^8.0.2",
