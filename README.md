@@ -73,7 +73,7 @@ const App = () => (
 )
 ```
 
-Access reactive variables with the `useMP` hook, and use [helper functions](#helpers) to trigger common browser events:
+Access reactive variables with the `useMP` hook. It is a [Zustand](https://github.com/pmndrs/zustand) store, so you must pass a selector to it:
 
 ```jsx
 import { useMP } from 'manapotion'
