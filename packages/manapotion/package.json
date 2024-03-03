@@ -2,6 +2,14 @@
   "name": "manapotion",
   "version": "0.1.4",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "scripts": {
+    "tsup": "tsup *.ts *.tsx --dts --format esm,cjs --clean"
+  },
   "dependencies": {
     "@manapotion/browser": "^0.1.3",
     "@manapotion/r3f": "^0.1.3",

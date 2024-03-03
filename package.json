@@ -6,9 +6,8 @@
     "example"
   ],
   "scripts": {
-    "dev": "cd example && bun dev",
-    "tsup-all": "cd packages/util && npm run tsup",
-    "pub": "npm run tsup-all && lerna publish"
+    "dev": "cd example && npm run dev",
+    "pub": "npm run tsup -ws && lerna publish"
   },
   "devDependencies": {
     "lerna": "^8.1.2"

@@ -26,4 +26,5 @@
     "allowSyntheticDefaultImports": true,
   },
   "include": ["index.ts", "Canvas.tsx"],
+  "exclude": ["node_modules", "dist"],
 }
