@@ -37,4 +37,4 @@ export {
 
 export { useUIFrame } from './src/hooks'
 
-export { lerp, clamp, pi, debounce, throttle, throttleDebounce } from './src/util'
+export { lerp, clamp, pi, debounce, throttle, throttleDebounce } from '@manapotion/util'

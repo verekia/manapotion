@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-import { throttleDebounce } from './util'
+import { throttleDebounce } from '@manapotion/util'
 import { engine } from './store'
 
 export type MouseMoveEventProps = {
