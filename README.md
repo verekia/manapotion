@@ -50,6 +50,7 @@ The listeners available are:
 
 - `<MouseDownListener />`
 - `<MouseMoveListener />`
+- `<KeyboardListener />`
 - `<PointerLockListener />`
 - `<FullscreenChangeListener />`
 - `<ResizeListener />`

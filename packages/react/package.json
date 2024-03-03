@@ -7,7 +7,6 @@
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     "import": {
       "types": "./dist/index.d.ts",
@@ -19,7 +18,8 @@
     }
   },
   "scripts": {
-    "tsup": "tsup *.ts *.tsx --dts --format esm,cjs --clean"
+    "tsup": "tsup *.ts *.tsx --dts --format esm,cjs --clean",
+    "publint": "npx publint"
   },
   "peerDependencies": {
     "react": ">=17.0.0"
@@ -28,6 +28,7 @@
     "zustand": "^4.5.1"
   },
   "devDependencies": {
+    "publint": "^0.2.7",
     "tsup": "^8.0.2",
     "typescript": "^5.3.3"
   }

@@ -7,7 +7,9 @@
   ],
   "scripts": {
     "dev": "cd example && npm run dev",
-    "pub": "npm run tsup -ws && lerna publish"
+    "tsup": "npm run tsup -ws",
+    "publint": "npm run publint -ws",
+    "pub": "npm run tsup && npm run publint && lerna publish"
   },
   "devDependencies": {
     "lerna": "^8.1.2"
