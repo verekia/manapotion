@@ -114,12 +114,12 @@ const App = () => {
           <h2>Keyboard lock (use after fullscreen on desktop)</h2>
           <button
             className="bg-slate-100 rounded-md px-2 py-1"
-            onClick={() => lockKeys(['Escape'])}
+            onClick={() => lockKeys(['Escape', 'KeyW', 'KeyA', 'KeyS', 'KeyD'])}
           >
-            Lock Esc
+            Lock Esc and WASD
           </button>
           <button className="bg-slate-100 rounded-md px-2 py-1" onClick={() => unlockKeys()}>
-            Release Esc
+            Release keys
           </button>
         </div>
         <div>

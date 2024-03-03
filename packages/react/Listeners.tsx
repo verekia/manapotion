@@ -294,13 +294,12 @@ export const KeyboardListener = ({ onKeydown, onKeyup }: KeyboardListenerProps) 
       const keyState = {
         key,
         code,
-        modifiers: {
-          ctrl: e.ctrlKey,
-          shift: e.shiftKey,
-          alt: e.altKey,
-          meta: e.metaKey,
-        },
+        ctrl: e.ctrlKey,
+        shift: e.shiftKey,
+        alt: e.altKey,
+        meta: e.metaKey,
       }
+
       onKeydown?.(keyState)
       mp().setKeyDown(keyState)
     }

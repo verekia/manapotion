@@ -31,12 +31,10 @@ const createBrowserSlice: StateCreator<BrowserSlice> = set => ({
 export type KeyState = {
   code: string
   key: string
-  modifiers: {
-    ctrl: boolean
-    shift: boolean
-    alt: boolean
-    meta: boolean
-  }
+  ctrl: boolean
+  shift: boolean
+  alt: boolean
+  meta: boolean
 }
 
 interface InputSlice {
