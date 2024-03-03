@@ -18,3 +18,5 @@ export const useUIFrame = (callback: (deltaTime: number) => void) => {
     return () => cancelAnimationFrame(requestRef.current!)
   }, [])
 }
+
+export const useAnimationFrame = useUIFrame

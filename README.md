@@ -4,9 +4,7 @@
   <img src="/example/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
-This is a work-in-progress toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well.
-
-🛑 **Not ready for public use**: The published TypeScript and React files are not compiled at the moment. If your `tsconfig.json` settings differ from what the library expects, it might break. It is based on Vite's tsconfig.
+Mana Potion is a 🚧 **work-in-progress** 🚧 toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well.
 
 ## Installation
 
@@ -113,8 +111,6 @@ const Camera = () => {
 
 Here is the list of available variables. Variables that are both reactive and non-reactive are marked with a ⚡️.
 
-- `useUIFrame`: Like R3F `useFrame` but for your UI updates.
-
 ### 🌐 General browser state
 
 - `isPointerLocked`
@@ -175,6 +171,22 @@ const App = () => {
       <Listeners onKeyDown={handleKeyDown} />
     </>
   )
+}
+```
+
+### Hooks
+
+- `useUIFrame` or `useAnimationFrame` (alias): Like R3F's [`useFrame`](https://docs.pmnd.rs/react-three-fiber/api/hooks#useframe) but for your UI updates. It will execute your callback at every frame without being tied to React's rendering cycle.
+
+```jsx
+const HealthBar = () => {
+  const ref = useRef()
+
+  useUIFrame(() => {
+    ref.current.textContent = `Health: ${entity.health}%`
+  })
+
+  return <div ref={ref} />
 }
 ```
 
