@@ -129,8 +129,7 @@ Here is the list of available variables. Variables that are both reactive and no
 - `isLeftMouseDown`
 - `isMiddleMouseDown`
 - `isRightMouseDown`
-- `keys.byCode` – [Physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) `keys.byCode.KeyW` – Better for game controls.
-- `keys.byKey` – Character being typed `keys.byKey.w`
+- `keys`
 - ⚡️ `mouseX`
 - ⚡️ `mouseY` (the bottom of the screen is 0)
 - ⚡️ `mouseMovementX`
@@ -145,6 +144,55 @@ You can provide custom event callbacks to `<Listeners />`.
 ```
 
 **Note to myself**: Check that making them stable with `useCallback` is not necessary.
+
+### Keys
+
+Keyboard `keys` are available in two versions,`keys.byCode` and `keys.byKey`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`byCode`) of the key or the character being typed as a key (`byKey`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
+
+Here is how you would handle going forward when the user presses W (or Z on French keyboards):
+
+```js
+const myMainLoop = () => {
+  if (mp().keys.byCode.KeyW) {
+    // Go forward
+  }
+}
+```
+
+For keyboard events, just like all other events, you can add a custom callback to `<Listeners />`:
+
+```jsx
+const App = () => {
+  const handleKeyDown = e => {
+    if (e.code === 'Space') {
+      jump()
+    }
+  }
+
+  return (
+    <>
+      <div>Your game</div>
+      <Listeners onKeyDown={handleKeyDown} />
+    </>
+  )
+}
+```
+
+### Augmenting the store
+
+You can add your own variables to the store by augmenting the `CustomSlice` interface from `@manapotion/react` or from `manapotion` in a global definition file such as `global.d.ts` at the root of your project:
+
+```ts
+import '@manapotion/react'
+
+declare module '@manapotion/react' {
+  interface CustomSlice {
+    joystick: { angle?: number; force?: number }
+  }
+}
+```
+
+You can then set it imperatively as `mp().joystick = joystickData` or reactively with `mp().setCustom('joystick', joystickData)`.
 
 ## Browser API Helpers
 
