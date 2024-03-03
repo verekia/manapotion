@@ -12,10 +12,10 @@ This is a work-in-progress toolkit to web game development easier. It is current
 
 Mana Potion consists of:
 
-- [**`@manapotion/react`**](#⚛️-react-listeners-store-and-hooks): React listeners, store, and hooks
-- [**`@manapotion/browser`**](#🌐-browser-api-helpers): Browser API helpers
-- [**`@manapotion/r3f`**](#⚛️-react-three-fiber-webgpu-canvas): React Three Fiber WebGPU canvas
-- [**`@manapotion/util`**](#🛠-general-gamedev-utilities): General gamedev utilities
+- [**`@manapotion/react`**](#react-listeners-store-and-hooks): React listeners, store, and hooks
+- [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
+- [**`@manapotion/r3f`**](#react-three-fiber-webgpu-canvas): React Three Fiber WebGPU canvas
+- [**`@manapotion/util`**](#general-gamedev-utilities): General gamedev utilities
 - **`manapotion`**: All of the above in one package that exports everything
 
 If you are making a React Three Fiber game, the easiest option is to add `manapotion` to your project:
@@ -44,9 +44,9 @@ pnpm add @manapotion/react @manapotion/browser
 bun add @manapotion/react @manapotion/browser
 ```
 
-## ⚛️ React Listeners, Store, and Hooks
+## React Listeners, Store, and Hooks
 
-**`@manapotion/react`** is the main package of Mana Potion. It contains listeners that update a reactive store which you can use as a hook in your components or access directly in your imperative code.
+⚛️ **`@manapotion/react`** is the main package of Mana Potion. It contains listeners that update a reactive store which you can use as a hook in your components or access directly in your imperative code.
 
 The listeners available are:
 
@@ -148,9 +148,9 @@ You can provide custom event callbacks to `<ManaPotion />`.
 
 **Note to myself**: Check that making them stable with `useCallback` is not necessary.
 
-## 🌐 Browser API Helpers
+## Browser API Helpers
 
-**`@manapotion/browser`** provides helper functions to abstract some browser APIs:
+🌐 **`@manapotion/browser`** provides helper functions to abstract some browser APIs:
 
 - `enterFullscreen`
 - `exitFullscreen`
@@ -194,9 +194,9 @@ const FullscreenButton = () => (
 
 **Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.
 
-## ⚛️ React Three Fiber WebGPU Canvas
+## React Three Fiber WebGPU Canvas
 
-**`@manapotion/r3f`** currently includes a single component: a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
+⚛️ **`@manapotion/r3f`** currently includes a single component: a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
 
 ```jsx
 import { Canvas } from '@manapotion/r3f'
@@ -242,9 +242,9 @@ With Tailwind:
 </html>
 ```
 
-# 🛠 General Gamedev Utilities
+# General Gamedev Utilities
 
-**`@manapotion/util`** provides a few utility functions that are useful for JS gamedev in general.
+🛠 **`@manapotion/util`** provides a few utility functions that are useful for JS gamedev in general.
 
 - `lerp`: Linear interpolation.
 - `clamp`: Clamps a number between a minimum and a maximum value.
