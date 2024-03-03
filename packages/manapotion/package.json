@@ -1,12 +1,12 @@
 {
   "name": "manapotion",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "dependencies": {
-    "@manapotion/browser": "^0.0.4",
-    "@manapotion/r3f": "^0.0.4",
-    "@manapotion/react": "^0.0.4",
-    "@manapotion/util": "^0.0.4"
+    "@manapotion/browser": "^0.0.5",
+    "@manapotion/r3f": "^0.0.5",
+    "@manapotion/react": "^0.0.5",
+    "@manapotion/util": "^0.0.5"
   },
   "devDependencies": {
     "typescript": "^5.3.3"

@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/util",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "devDependencies": {
     "typescript": "^5.3.3"
