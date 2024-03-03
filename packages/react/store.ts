@@ -28,6 +28,17 @@ const createBrowserSlice: StateCreator<BrowserSlice> = set => ({
   setCanHover: canHover => set(() => ({ canHover })),
 })
 
+export type KeyState = {
+  code: string
+  key: string
+  modifiers: {
+    ctrl: boolean
+    shift: boolean
+    alt: boolean
+    meta: boolean
+  }
+}
+
 interface InputSlice {
   isLeftMouseDown: boolean
   isMiddleMouseDown: boolean
@@ -36,11 +47,17 @@ interface InputSlice {
   mouseY: number
   mouseMovementX: number
   mouseMovementY: number
+  keys: {
+    byCode: Record<string, KeyState>
+    byKey: Record<string, KeyState>
+  }
   setMousePosition: (x: number, y: number) => void
   setMouseMovement: (x: number, y: number) => void
   setLeftMouseDown: (isLeftMouseDown: boolean) => void
   setMiddleMouseDown: (isMiddleMouseDown: boolean) => void
   setRightMouseDown: (isRightMouseDown: boolean) => void
+  setKeyDown: (keyState: KeyState) => void
+  setKeyUp: (key: string, code: string) => void
 }
 
 const createInputSlice: StateCreator<InputSlice> = set => ({
@@ -51,12 +68,29 @@ const createInputSlice: StateCreator<InputSlice> = set => ({
   mouseY: 0,
   mouseMovementX: 0,
   mouseMovementY: 0,
+  keys: {
+    byCode: {},
+    byKey: {},
+  },
   setMousePosition: (mouseX, mouseY) => set(() => ({ mouseX, mouseY })),
   setMouseMovement: (mouseMovementX, mouseMovementY) =>
     set(() => ({ mouseMovementX, mouseMovementY })),
   setLeftMouseDown: isLeftMouseDown => set(() => ({ isLeftMouseDown })),
   setMiddleMouseDown: isMiddleMouseDown => set(() => ({ isMiddleMouseDown })),
   setRightMouseDown: isRightMouseDown => set(() => ({ isRightMouseDown })),
+  setKeyDown: (keyState: KeyState) =>
+    set(state => ({
+      keys: {
+        byCode: { ...state.keys.byCode, [keyState.code]: keyState },
+        byKey: { ...state.keys.byKey, [keyState.key]: keyState },
+      },
+    })),
+  setKeyUp: (code, key) =>
+    set(state => {
+      const { [code]: __, ...byCode } = state.keys.byCode
+      const { [key]: _, ...byKey } = state.keys.byKey
+      return { keys: { byCode, byKey } }
+    }),
 })
 
 export type ManaPotionState = BrowserSlice & InputSlice

@@ -55,6 +55,7 @@ const App = () => {
   const isLeftMouseDown = useMP(s => s.isLeftMouseDown)
   const isMiddleMouseDown = useMP(s => s.isMiddleMouseDown)
   const isRightMouseDown = useMP(s => s.isRightMouseDown)
+  const keys = useMP(s => s.keys)
 
   const liveMouseXRef = useRef<HTMLSpanElement>(null)
   const liveMouseYRef = useRef<HTMLSpanElement>(null)
@@ -162,6 +163,12 @@ const App = () => {
         <div>
           Reactive throttled: {mouseMovementX} {mouseMovementY}
         </div>
+        <div>
+          <div>
+            <b>Keyboard</b>
+          </div>
+          <textarea readOnly className="w-[500px] h-[100px]" value={JSON.stringify(keys)} />
+        </div>
       </div>
       <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transform">
         {renderer}
@@ -190,6 +197,7 @@ const App = () => {
         reactiveMouseMoveThrottleDelay={200}
         mouseMovementResetDelay={100}
         reactiveResizeThrottleDelay={200}
+        onKeydown={keyState => console.log(keyState)}
       />
     </>
   )

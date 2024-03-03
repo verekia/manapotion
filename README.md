@@ -129,6 +129,8 @@ Here is the list of available variables. Variables that are both reactive and no
 - `isLeftMouseDown`
 - `isMiddleMouseDown`
 - `isRightMouseDown`
+- `keys.byCode` – [Physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) `keys.byCode.KeyW` – Better for game controls.
+- `keys.byKey` – Character being typed `keys.byKey.w`
 - ⚡️ `mouseX`
 - ⚡️ `mouseY` (the bottom of the screen is 0)
 - ⚡️ `mouseMovementX`
@@ -179,7 +181,7 @@ const FullscreenButton = () => (
       } else {
         enterFullscreen()
         lockOrientation('landscape')
-        lockKeys(['Escape'])
+        lockKeys(['Escape', 'KeyW', 'KeyA', 'KeyS', 'KeyD'])
       }
     }}
   >

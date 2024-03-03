@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { throttleDebounce } from './util'
-import { mp } from './store'
+import { KeyState, mp } from './store'
 
 export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
@@ -276,13 +276,60 @@ export const MouseDownListener = ({
   return null
 }
 
+type KeyboardListenerProps = {
+  onKeydown?: (keyState: KeyState) => void
+  onKeyup?: (code: string, key: string) => void
+}
+
+// https://w3c.github.io/uievents/tools/key-event-viewer.html
+export const KeyboardListener = ({ onKeydown, onKeyup }: KeyboardListenerProps) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const { key, code } = e
+
+      if (mp().keys.byCode[code] || mp().keys.byKey[key]) {
+        return
+      }
+
+      const keyState = {
+        key,
+        code,
+        modifiers: {
+          ctrl: e.ctrlKey,
+          shift: e.shiftKey,
+          alt: e.altKey,
+          meta: e.metaKey,
+        },
+      }
+      onKeydown?.(keyState)
+      mp().setKeyDown(keyState)
+    }
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      mp().setKeyUp(e.code, e.key)
+      onKeyup?.(e.code, e.key)
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('keyup', handleKeyUp)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [onKeydown, onKeyup])
+
+  return null
+}
+
 export type ListenersProps = MouseMoveListenerProps &
   PageVisibilityListenerProps &
   PointerLockListenerProps &
   FullscreenChangeListenerProps &
   ResizeListenerProps &
   CanHoverListenerProps &
-  MouseDownListenerProps
+  MouseDownListenerProps &
+  KeyboardListenerProps
 
 export const Listeners = ({
   mouseMovementResetDelay = 30,
@@ -303,6 +350,8 @@ export const Listeners = ({
   onLeftMouseUp,
   onMiddleMouseUp,
   onRightMouseUp,
+  onKeydown,
+  onKeyup,
 }: ListenersProps) => (
   <>
     <MouseMoveListener
@@ -331,5 +380,6 @@ export const Listeners = ({
       onMiddleMouseUp={onMiddleMouseUp}
       onRightMouseUp={onRightMouseUp}
     />
+    <KeyboardListener onKeydown={onKeydown} onKeyup={onKeyup} />
   </>
 )
