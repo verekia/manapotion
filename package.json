@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "dev": "cd example && bun dev",
-    "pub": "lerna publish --no-private"
+    "pub": "lerna publish"
   },
   "devDependencies": {
     "lerna": "^8.1.2"
