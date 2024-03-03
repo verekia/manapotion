@@ -4,9 +4,9 @@
   <img src="/example/public/mana-potion.webp" alt="Mana Potion" width="150" height="150" />
 </p>
 
-This is a work-in-progress toolkit to web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects.
+This is a work-in-progress toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well.
 
-🛑 **Not ready for public use**: The published TypeScript and React files are not compiled at the moment. If your project uses different `tsconfig.json` settings than what the library expects, it might break. It is based on Vite's tsconfig.
+🛑 **Not ready for public use**: The published TypeScript and React files are not compiled at the moment. If your `tsconfig.json` settings differ from what the library expects, it might break. It is based on Vite's tsconfig.
 
 ## Installation
 
@@ -14,8 +14,8 @@ Mana Potion consists of:
 
 - [**`@manapotion/react`**](#react-listeners-store-and-hooks): React listeners, store, and hooks
 - [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
-- [**`@manapotion/r3f`**](#react-three-fiber-webgpu-canvas): React Three Fiber WebGPU canvas
-- [**`@manapotion/util`**](#general-gamedev-utilities): General gamedev utilities
+- [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas
+- [**`@manapotion/util`**](#utilities): General gamedev utilities
 - **`manapotion`**: All of the above in one package that exports everything
 
 If you are making a React Three Fiber game, the easiest option is to add `manapotion` to your project:
@@ -138,12 +138,12 @@ Here is the list of available variables. Variables that are both reactive and no
 - ⚡️ `mouseMovementX`
 - ⚡️ `mouseMovementY` (going up is positive)
 
-## `<ManaPotion />` callbacks
+### Callbacks
 
-You can provide custom event callbacks to `<ManaPotion />`.
+You can provide custom event callbacks to `<Listeners />`.
 
 ```jsx
-<ManaPotion onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
+<Listeners onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
 ```
 
 **Note to myself**: Check that making them stable with `useCallback` is not necessary.
@@ -194,7 +194,7 @@ const FullscreenButton = () => (
 
 **Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.
 
-## React Three Fiber WebGPU Canvas
+## React Three Fiber
 
 ⚛️ **`@manapotion/r3f`** currently includes a single component: a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
 
@@ -242,7 +242,7 @@ With Tailwind:
 </html>
 ```
 
-# General Gamedev Utilities
+# Utilities
 
 🛠 **`@manapotion/util`** provides a few utility functions that are useful for JS gamedev in general.
 
