@@ -26,4 +26,5 @@
     "allowSyntheticDefaultImports": true,
   },
   "include": ["index.ts", "util.ts"],
+  "exclude": ["node_modules", "dist"],
 }
