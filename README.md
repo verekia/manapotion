@@ -1,7 +1,7 @@
 <h1 align="center">Mana Potion</h1>
 
 <p align="center">
-  <img src="/example/public/mana-potion.webp" alt="Mana Potion" width="150" height="150" />
+  <img src="/example/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
 This is a work-in-progress toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well.
