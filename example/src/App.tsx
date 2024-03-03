@@ -130,7 +130,7 @@ const App = () => {
           </button>
         </div>
         <div>Page is visible: {isPageVisible ? 'Yes' : 'No'}</div>
-        <div>Can hover: {canHover ? 'Yes' : 'No'}</div>
+        <div>Can hover (is desktop): {canHover ? 'Yes' : 'No'}</div>
         <div>
           <b>Mouse buttons</b>
         </div>

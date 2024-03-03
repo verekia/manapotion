@@ -4,28 +4,21 @@
   <img src="/example/public/mana-potion.webp" alt="Mana Potion" width="150" height="150" />
 </p>
 
-This is a work-in-progress toolkit to make [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) and React game development easier.
+This is a work-in-progress toolkit to web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects.
 
-🛑 Do not use, unless you are me.
-
-TS and React only. The TypeScript React files are not even compiled at the moment. If your project uses different `tsconfig.json` settings than what the library expects, it might break. It is based on Vite's tsconfig.
-
-## Features
-
-- [Browser Events](#browser-events)
-- [WebGPU Canvas](#webgpu-canvas)
-- [Utils](#utils)
+🛑 **Not ready for public use**: The published TypeScript and React files are not compiled at the moment. If your project uses different `tsconfig.json` settings than what the library expects, it might break. It is based on Vite's tsconfig.
 
 ## Installation
 
 Mana Potion consists of:
 
-- `@manapotion/react`: Listeners, state, and React hooks.
-- `@manapotion/r3f`: For React Three Fiber.
-- `@manapotion/util`: Utilities.
-- `manapotion`: All of the above in one package.
+- [**`@manapotion/react`**](#⚛️-react-listeners-store-and-hooks): React listeners, store, and hooks
+- [**`@manapotion/browser`**](#🌐-browser-api-helpers): Browser API helpers
+- [**`@manapotion/r3f`**](#⚛️-react-three-fiber-webgpu-canvas): React Three Fiber WebGPU canvas
+- [**`@manapotion/util`**](#🛠-general-gamedev-utilities): General gamedev utilities
+- **`manapotion`**: All of the above in one package that exports everything
 
-If you are making a React Three Fiber game, the easiest option is to install `manapotion`:
+If you are making a React Three Fiber game, the easiest option is to add `manapotion` to your project:
 
 ```sh
 # NPM
@@ -38,27 +31,39 @@ pnpm add manapotion
 bun add manapotion
 ```
 
-Otherwise for plain React setups, or if you want to install the packages separately:
+For React projects that don't use R3F, non-React projects, or if you are not interested in all of the features of Mana Potion, install the packages that are relevant to you independently. For example:
 
 ```sh
 # NPM
-npm install @manapotion/react
+npm install @manapotion/react @manapotion/browser
 # Yarn
-yarn add @manapotion/react
+yarn add @manapotion/react @manapotion/browser
 # PNPM
-pnpm add @manapotion/react
+pnpm add @manapotion/react @manapotion/browser
 # Bun
-bun add @manapotion/react
+bun add @manapotion/react @manapotion/browser
 ```
 
-This documentation uses imports from `manapotion`, so if you install packages separately, you will have to import the relevant packages directly.
+## ⚛️ React Listeners, Store, and Hooks
 
-## Getting started
+**`@manapotion/react`** is the main package of Mana Potion. It contains listeners that update a reactive store which you can use as a hook in your components or access directly in your imperative code.
 
-- Add `<ManaPotion />` to your app.
+The listeners available are:
+
+- `<MouseDownListener />`
+- `<MouseMoveListener />`
+- `<PointerLockListener />`
+- `<FullscreenChangeListener />`
+- `<ResizeListener />`
+- `<CanHoverListener />`
+- `<PageVisibilityListener />`
+
+To enable them all, simply add `<Listeners />` to your app:
 
 ```jsx
-import { Listeners } from 'manapotion'
+import { Listeners } from '@manapotion/react'
+// or
+// import { Listeners } from 'manapotion
 
 const App = () => (
   <>
@@ -67,10 +72,6 @@ const App = () => (
   </>
 )
 ```
-
-## How to use
-
-`<Listeners />` listens to common browser events to give you access to both reactive and non-reactive variables, as well as event callbacks for custom logic.
 
 Access reactive variables with the `useMP` hook, and use [helper functions](#helpers) to trigger common browser events:
 
@@ -116,6 +117,8 @@ const Camera = () => {
 
 Here is the list of available variables. Variables that are both reactive and non-reactive are marked with a ⚡️.
 
+- `useUIFrame`: Like R3F `useFrame` but for your UI updates.
+
 ### 🌐 General browser state
 
 - `isPointerLocked`
@@ -145,9 +148,9 @@ You can provide custom event callbacks to `<ManaPotion />`.
 
 **Note to myself**: Check that making them stable with `useCallback` is not necessary.
 
-## Helpers
+## 🌐 Browser API Helpers
 
-Some helpers to abstract the browser's API are also included:
+**`@manapotion/browser`** provides helper functions to abstract some browser APIs:
 
 - `enterFullscreen`
 - `exitFullscreen`
@@ -161,39 +164,39 @@ Some helpers to abstract the browser's API are also included:
 For a fully immersive experience of an FPS game for example, when the player clicks Play or the Fullscreen button, you might want to call multiple helpers in a row like this:
 
 ```jsx
-<button
-  onClick={() => {
-    if (isFullscreen) {
-      exitFullscreen()
-      unlockKeys()
-      unlockOrientation()
-    } else {
-      enterFullscreen()
-      lockOrientation('landscape')
-      lockKeys(['Escape'])
-    }
-  }}
->
-  Toggle fullscreen
-</button>
+import {
+  enterFullscreen,
+  exitFullscreen,
+  lockOrientation,
+  unlockOrientation,
+  lockKeys,
+  unlockKeys,
+} from '@manapotion/browser'
+
+const FullscreenButton = () => (
+  <button
+    onClick={() => {
+      if (isFullscreen) {
+        exitFullscreen()
+        unlockKeys()
+        unlockOrientation()
+      } else {
+        enterFullscreen()
+        lockOrientation('landscape')
+        lockKeys(['Escape'])
+      }
+    }}
+  >
+    Toggle fullscreen
+  </button>
+)
 ```
 
 **Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.
 
-## WebGPU Canvas
+## ⚛️ React Three Fiber WebGPU Canvas
 
-```sh
-# NPM
-npm install @manapotion/r3f
-# Yarn
-yarn add @manapotion/r3f
-# PNPM
-pnpm add @manapotion/r3f
-# Bun
-bun add @manapotion/r3f
-```
-
-Wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
+**`@manapotion/r3f`** currently includes a single component: a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
 
 ```jsx
 import { Canvas } from '@manapotion/r3f'
@@ -239,17 +242,13 @@ With Tailwind:
 </html>
 ```
 
-# Utils
+# 🛠 General Gamedev Utilities
 
-A few utilities are included:
+**`@manapotion/util`** provides a few utility functions that are useful for JS gamedev in general.
 
 - `lerp`: Linear interpolation.
 - `clamp`: Clamps a number between a minimum and a maximum value.
-- `pi`: A less verbose `Math.PI`.
 - `throttle`: Throttles a function by a given time in ms.
 - `debounce`: Debounces a function by a given time in ms.
 - `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
-
-# Hooks
-
-- `useUIFrame`: Like R3F `useFrame` but for your UI updates.
+- `pi`: A less verbose `Math.PI`.
