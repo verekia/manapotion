@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/react",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "type": "module",
   "peerDependencies": {
     "react": ">=17.0.0"
