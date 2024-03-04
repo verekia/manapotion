@@ -144,8 +144,6 @@ You can provide custom event callbacks to `<Listeners />`.
 <Listeners onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
 ```
 
-**Note to myself**: Check that making them stable with `useCallback` is not necessary.
-
 ### Keys
 
 Keyboard `keys` are available in two versions,`keys.byCode` and `keys.byKey`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`byCode`) of the key or the character being typed as a key (`byKey`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
