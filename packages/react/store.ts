@@ -49,6 +49,7 @@ interface InputSlice {
   mouseY: number
   mouseMovementX: number
   mouseMovementY: number
+  mouseWheelDeltaY: number
   keys: {
     byCode: Record<string, KeyState>
     byKey: Record<string, KeyState>
@@ -59,6 +60,7 @@ interface InputSlice {
   setLeftMouseDown: (isLeftMouseDown: boolean) => void
   setMiddleMouseDown: (isMiddleMouseDown: boolean) => void
   setRightMouseDown: (isRightMouseDown: boolean) => void
+  setMouseWheelDeltaY: (deltaY: number) => void
   setKeyDown: (keyState: KeyState) => void
   setKeyUp: (key: string, code: string) => void
 }
@@ -71,6 +73,7 @@ const defaultInputState = {
   mouseY: 0,
   mouseMovementX: 0,
   mouseMovementY: 0,
+  mouseWheelDeltaY: 0,
   keys: {
     byCode: {},
     byKey: {},
@@ -88,6 +91,7 @@ const createInputSlice: StateCreator<InputSlice> = set => ({
   setLeftMouseDown: isLeftMouseDown => set(() => ({ isLeftMouseDown })),
   setMiddleMouseDown: isMiddleMouseDown => set(() => ({ isMiddleMouseDown })),
   setRightMouseDown: isRightMouseDown => set(() => ({ isRightMouseDown })),
+  setMouseWheelDeltaY: mouseWheelDeltaY => set(() => ({ mouseWheelDeltaY })),
   setKeyDown: (keyState: KeyState) =>
     set(state => ({
       keys: {

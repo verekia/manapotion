@@ -20,6 +20,7 @@
   },
   "scripts": {
     "tsup": "tsup *.ts *.tsx --dts --format esm,cjs --clean",
+    "watch": "tsup *.ts *.tsx --dts --format esm,cjs --clean --watch",
     "publint": "npx publint"
   },
   "dependencies": {

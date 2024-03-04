@@ -1,20 +1,20 @@
 import { useEffect, useRef } from 'react'
 
-import { throttleDebounce } from './util'
+import { throttleDebounce } from './react-util'
 import { KeyState, mp } from './store'
 
 export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
   reactiveMouseMoveThrottleDelay?: number
   onReactiveMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
-  onLiveMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
+  onMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
 }
 
 export const MouseMoveListener = ({
   mouseMovementResetDelay = 30,
   reactiveMouseMoveThrottleDelay = 100,
   onReactiveMouseMove,
-  onLiveMouseMove,
+  onMouseMove,
 }: MouseMoveListenerProps) => {
   const mouseMovementResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -45,7 +45,7 @@ export const MouseMoveListener = ({
       mp().mouseY = mouseY
       mp().mouseMovementX = mouseMovementX
       mp().mouseMovementY = mouseMovementY
-      onLiveMouseMove?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
+      onMouseMove?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
 
       mouseMovementResetTimeoutRef.current && clearTimeout(mouseMovementResetTimeoutRef.current)
 
@@ -53,7 +53,7 @@ export const MouseMoveListener = ({
         mouseMovementResetTimeoutRef.current = setTimeout(() => {
           mp().mouseMovementX = 0
           mp().mouseMovementY = 0
-          onLiveMouseMove?.(mouseX, mouseY, 0, 0)
+          onMouseMove?.(mouseX, mouseY, 0, 0)
         }, mouseMovementResetDelay)
       }
 
@@ -68,12 +68,7 @@ export const MouseMoveListener = ({
       }
       window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [
-    reactiveMouseMoveThrottleDelay,
-    onReactiveMouseMove,
-    onLiveMouseMove,
-    mouseMovementResetDelay,
-  ])
+  }, [reactiveMouseMoveThrottleDelay, onReactiveMouseMove, onMouseMove, mouseMovementResetDelay])
 
   return null
 }
@@ -178,13 +173,13 @@ export const FullscreenChangeListener = ({ onFullscreenChange }: FullscreenChang
 export type ResizeListenerProps = {
   reactiveResizeThrottleDelay?: number
   onReactiveResize?: (width: number, height: number) => void
-  onLiveResize?: (width: number, height: number) => void
+  onResize?: (width: number, height: number) => void
 }
 
 export const ResizeListener = ({
   reactiveResizeThrottleDelay = 100,
   onReactiveResize,
-  onLiveResize,
+  onResize,
 }: ResizeListenerProps) => {
   useEffect(() => {
     const throttledResize = throttleDebounce((width: number, height: number) => {
@@ -198,7 +193,7 @@ export const ResizeListener = ({
 
       mp().width = width
       mp().height = height
-      onLiveResize?.(width, height)
+      onResize?.(width, height)
 
       throttledResize(width, height)
     }
@@ -213,7 +208,7 @@ export const ResizeListener = ({
     window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [reactiveResizeThrottleDelay, onReactiveResize, onLiveResize])
+  }, [reactiveResizeThrottleDelay, onReactiveResize, onResize])
 
   return null
 }
@@ -358,6 +353,65 @@ export const KeyboardListener = ({ onKeydown, onKeyup }: KeyboardListenerProps) 
   return null
 }
 
+export type MouseScrollListenerProps = {
+  onScroll?: (deltaY: number) => void
+  onReactiveScroll?: (deltaY: number) => void
+  mouseScrollResetDelay?: number
+  reactiveScrollThrottleDelay?: number
+}
+
+export const MouseScrollListener = ({
+  onScroll,
+  onReactiveScroll,
+  mouseScrollResetDelay = 500,
+  reactiveScrollThrottleDelay = 100,
+}: MouseScrollListenerProps) => {
+  const mouseWheelResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    const throttledReactiveScroll = throttleDebounce((deltaY: number) => {
+      mp().setMouseWheelDeltaY(deltaY)
+      onReactiveScroll?.(deltaY)
+
+      if (mouseWheelResetTimeoutRef.current) {
+        clearTimeout(mouseWheelResetTimeoutRef.current)
+      }
+
+      if (mouseScrollResetDelay) {
+        mouseWheelResetTimeoutRef.current = setTimeout(() => {
+          mp().setMouseWheelDeltaY(0)
+          onReactiveScroll?.(0)
+        }, mouseScrollResetDelay)
+      }
+    }, reactiveScrollThrottleDelay)
+
+    const handleMouseScroll = (e: WheelEvent) => {
+      const deltaY = e.deltaY
+
+      onScroll?.(deltaY)
+      mp().mouseWheelDeltaY = deltaY
+      throttledReactiveScroll(deltaY)
+
+      if (mouseWheelResetTimeoutRef.current) {
+        clearTimeout(mouseWheelResetTimeoutRef.current)
+      }
+
+      if (mouseScrollResetDelay) {
+        mouseWheelResetTimeoutRef.current = setTimeout(() => {
+          onScroll?.(0)
+          mp().mouseWheelDeltaY = 0
+        }, mouseScrollResetDelay)
+      }
+    }
+
+    window.addEventListener('wheel', handleMouseScroll)
+
+    return () => window.removeEventListener('wheel', handleMouseScroll)
+  }, [onScroll, reactiveScrollThrottleDelay])
+
+  return null
+}
+
 export type ListenersProps = MouseMoveListenerProps &
   PageVisibilityListenerProps &
   PageFocusListenerProps &
@@ -366,13 +420,14 @@ export type ListenersProps = MouseMoveListenerProps &
   ResizeListenerProps &
   CanHoverListenerProps &
   MouseDownListenerProps &
-  KeyboardListenerProps
+  KeyboardListenerProps &
+  MouseScrollListenerProps
 
 export const Listeners = ({
   mouseMovementResetDelay = 30,
   reactiveMouseMoveThrottleDelay = 100,
   onReactiveMouseMove,
-  onLiveMouseMove,
+  onMouseMove,
   onVisibilityChange,
   onPageBlur,
   onPageFocus,
@@ -380,7 +435,7 @@ export const Listeners = ({
   onFullscreenChange,
   reactiveResizeThrottleDelay = 100,
   onReactiveResize,
-  onLiveResize,
+  onResize,
   canHoverIntervalDelay = 500,
   onCanHoverChange,
   onLeftMouseDown,
@@ -389,6 +444,10 @@ export const Listeners = ({
   onLeftMouseUp,
   onMiddleMouseUp,
   onRightMouseUp,
+  onScroll,
+  onReactiveScroll,
+  mouseScrollResetDelay = 100,
+  reactiveScrollThrottleDelay = 100,
   onKeydown,
   onKeyup,
 }: ListenersProps) => (
@@ -397,7 +456,7 @@ export const Listeners = ({
       mouseMovementResetDelay={mouseMovementResetDelay}
       reactiveMouseMoveThrottleDelay={reactiveMouseMoveThrottleDelay}
       onReactiveMouseMove={onReactiveMouseMove}
-      onLiveMouseMove={onLiveMouseMove}
+      onMouseMove={onMouseMove}
     />
     <PageVisibilityListener onVisibilityChange={onVisibilityChange} />
     <PageFocusListener onPageBlur={onPageBlur} onPageFocus={onPageFocus} />
@@ -406,7 +465,7 @@ export const Listeners = ({
     <ResizeListener
       reactiveResizeThrottleDelay={reactiveResizeThrottleDelay}
       onReactiveResize={onReactiveResize}
-      onLiveResize={onLiveResize}
+      onResize={onResize}
     />
     <CanHoverListener
       canHoverIntervalDelay={canHoverIntervalDelay}
@@ -421,5 +480,11 @@ export const Listeners = ({
       onRightMouseUp={onRightMouseUp}
     />
     <KeyboardListener onKeydown={onKeydown} onKeyup={onKeyup} />
+    <MouseScrollListener
+      onScroll={onScroll}
+      onReactiveScroll={onReactiveScroll}
+      mouseScrollResetDelay={mouseScrollResetDelay}
+      reactiveScrollThrottleDelay={reactiveScrollThrottleDelay}
+    />
   </>
 )

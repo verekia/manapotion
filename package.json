@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "cd example && npm run dev",
     "clean": "rm -rf packages/*/dist",
-    "tsup": "npm run tsup -ws",
+    "tsup": "npm run tsup -w @manapotion/util -w @manapotion/browser -w @manapotion/react -w @manapotion/r3f -w manapotion",
     "publint": "npm run publint -ws",
     "pub": "npm run tsup && npm run publint && lerna publish"
   },

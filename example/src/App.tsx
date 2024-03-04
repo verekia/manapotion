@@ -53,6 +53,7 @@ const App = () => {
   const mouseY = useMP(s => s.mouseY)
   const mouseMovementX = useMP(s => s.mouseMovementX)
   const mouseMovementY = useMP(s => s.mouseMovementY)
+  const mouseWheelDeltaY = useMP(s => s.mouseWheelDeltaY)
   const isLeftMouseDown = useMP(s => s.isLeftMouseDown)
   const isMiddleMouseDown = useMP(s => s.isMiddleMouseDown)
   const isRightMouseDown = useMP(s => s.isRightMouseDown)
@@ -66,6 +67,8 @@ const App = () => {
   const liveWidthRef = useRef<HTMLSpanElement>(null)
   const liveHeightRef = useRef<HTMLSpanElement>(null)
 
+  const liveScrollYRef = useRef<HTMLDivElement>(null)
+
   useUIFrame(() => {
     liveMouseXRef.current!.textContent = String(mp().mouseX)
     liveMouseYRef.current!.textContent = String(mp().mouseY)
@@ -73,6 +76,7 @@ const App = () => {
     liveMouseMovementYRef.current!.textContent = String(mp().mouseMovementY)
     liveWidthRef.current!.textContent = String(mp().width)
     liveHeightRef.current!.textContent = String(mp().height)
+    liveScrollYRef.current!.textContent = String(mp().mouseWheelDeltaY)
   })
 
   return (
@@ -161,6 +165,13 @@ const App = () => {
           Reactive throttled: {mouseMovementX} {mouseMovementY}
         </div>
         <div>
+          <b>Mouse wheel delta Y</b>
+        </div>
+        <div>Reactive throttled: {mouseWheelDeltaY}</div>
+        <div>
+          Non-reactive: <span ref={liveScrollYRef} />
+        </div>
+        <div>
           <div>
             <b>Keyboard</b>
           </div>
@@ -195,6 +206,7 @@ const App = () => {
         mouseMovementResetDelay={100}
         reactiveResizeThrottleDelay={200}
         onKeydown={keyState => console.log(keyState)}
+        reactiveScrollThrottleDelay={200}
       />
     </>
   )

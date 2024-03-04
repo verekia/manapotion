@@ -50,6 +50,7 @@ The listeners available are:
 
 - `<MouseDownListener />`
 - `<MouseMoveListener />`
+- `<MouseScrollListener />`
 - `<KeyboardListener />`
 - `<PointerLockListener />`
 - `<FullscreenChangeListener />`
@@ -133,7 +134,7 @@ Here is the list of available variables. Variables that are both reactive and no
 - ⚡️ `mouseY` (the bottom of the screen is 0)
 - ⚡️ `mouseMovementX`
 - ⚡️ `mouseMovementY` (going up is positive)
-- 🚧 Coming soon: Mouse scroll
+- ⚡️ `mouseWheelDeltaY`
 - 🚧 Coming soon: Gamepads
 
 ### Callbacks

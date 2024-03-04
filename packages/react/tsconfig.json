@@ -25,6 +25,6 @@
     "composite": true,
     "allowSyntheticDefaultImports": true,
   },
-  "include": ["index.ts", "hooks.ts", "Listeners.tsx", "store.ts", "util.ts"],
+  "include": ["index.ts", "hooks.ts", "Listeners.tsx", "store.ts", "react-util.ts"],
   "exclude": ["node_modules", "dist"],
 }
