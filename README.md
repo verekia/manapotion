@@ -118,6 +118,7 @@ Here is the list of available variables. Variables that are both reactive and no
 - `isPointerLocked`
 - `isFullscreen`
 - `isPageVisible`
+- `isPageFocused`
 - `canHover` (you can think of it as "is desktop". Mobile and touch devices will return `false`.)
 - ⚡️ `width` (of the window)
 - ⚡️ `height` (of the window)
