@@ -132,6 +132,8 @@ Here is the list of available variables. Variables that are both reactive and no
 - ⚡️ `mouseY` (the bottom of the screen is 0)
 - ⚡️ `mouseMovementX`
 - ⚡️ `mouseMovementY` (going up is positive)
+- 🚧 Coming soon: Mouse scroll
+- 🚧 Coming soon: Gamepads
 
 ### Callbacks
 
@@ -312,3 +314,13 @@ With Tailwind:
 - `debounce`: Debounces a function by a given time in ms.
 - `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
 - `pi`: A less verbose `Math.PI`.
+
+## License
+
+MIT
+
+## Author
+
+Created by [@verekia](https://twitter.com/verekia) for 🔮 [MiniMana.io](https://minimana.io/)
+
+Visit 🌐 [WebGameDev.com](https://webgamedev.com/) and [join the Web Game Dev](https://webgamedev.com/discord) community.

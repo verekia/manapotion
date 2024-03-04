@@ -2,6 +2,7 @@
   "name": "example",
   "private": true,
   "version": "0.2.1",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
