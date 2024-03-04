@@ -56,6 +56,7 @@ The listeners available are:
 - `<ResizeListener />`
 - `<CanHoverListener />`
 - `<PageVisibilityListener />`
+- `<PageFocusListener />`
 
 To enable them all, simply add `<Listeners />` to your app:
 

@@ -4,12 +4,14 @@ interface BrowserSlice {
   isPointerLocked: boolean
   isFullscreen: boolean
   isPageVisible: boolean
+  isPageFocused: boolean
   canHover?: boolean
   width: number
   height: number
   setPointerLocked: (isPointerLocked: boolean) => void
   setFullscreen: (isFullscreen: boolean) => void
   setPageVisible: (isPageVisible: boolean) => void
+  setPageFocused: (isFocused: boolean) => void
   setSize: (width: number, height: number) => void
   setCanHover: (canHover: boolean) => void
 }
@@ -18,12 +20,14 @@ const createBrowserSlice: StateCreator<BrowserSlice> = set => ({
   isPointerLocked: false,
   isFullscreen: false,
   isPageVisible: true,
+  isPageFocused: true,
   width: 0,
   height: 0,
   canHover: undefined,
   setPointerLocked: isPointerLocked => set(() => ({ isPointerLocked })),
   setFullscreen: isFullscreen => set(() => ({ isFullscreen })),
   setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
+  setPageFocused: isPageFocused => set(() => ({ isPageFocused })),
   setSize: (width, height) => set(() => ({ width, height })),
   setCanHover: canHover => set(() => ({ canHover })),
 })
@@ -49,6 +53,7 @@ interface InputSlice {
     byCode: Record<string, KeyState>
     byKey: Record<string, KeyState>
   }
+  clearInputs: () => void
   setMousePosition: (x: number, y: number) => void
   setMouseMovement: (x: number, y: number) => void
   setLeftMouseDown: (isLeftMouseDown: boolean) => void
@@ -58,7 +63,7 @@ interface InputSlice {
   setKeyUp: (key: string, code: string) => void
 }
 
-const createInputSlice: StateCreator<InputSlice> = set => ({
+const defaultInputState = {
   isLeftMouseDown: false,
   isMiddleMouseDown: false,
   isRightMouseDown: false,
@@ -70,6 +75,13 @@ const createInputSlice: StateCreator<InputSlice> = set => ({
     byCode: {},
     byKey: {},
   },
+}
+
+const createInputSlice: StateCreator<InputSlice> = set => ({
+  ...defaultInputState,
+  clearInputs: () => set(() => defaultInputState),
+  clearMouseButtons: () =>
+    set(() => ({ isLeftMouseDown: false, isMiddleMouseDown: false, isRightMouseDown: false })),
   setMousePosition: (mouseX, mouseY) => set(() => ({ mouseX, mouseY })),
   setMouseMovement: (mouseMovementX, mouseMovementY) =>
     set(() => ({ mouseMovementX, mouseMovementY })),

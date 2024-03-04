@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "dev": "cd example && npm run dev",
+    "clean": "rm -rf packages/*/dist",
     "tsup": "npm run tsup -ws",
     "publint": "npm run publint -ws",
     "pub": "npm run tsup && npm run publint && lerna publish"

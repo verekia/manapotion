@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
@@ -44,6 +44,7 @@ const App = () => {
   const toggleRenderer = () => setRenderer(renderer === 'WebGPU' ? 'WebGL' : 'WebGPU')
   const isFullscreen = useMP(s => s.isFullscreen)
   const isPageVisible = useMP(s => s.isPageVisible)
+  const isPageFocused = useMP(s => s.isPageFocused)
   const isPointerLocked = useMP(s => s.isPointerLocked)
   const width = useMP(s => s.width)
   const height = useMP(s => s.height)
@@ -64,11 +65,6 @@ const App = () => {
 
   const liveWidthRef = useRef<HTMLSpanElement>(null)
   const liveHeightRef = useRef<HTMLSpanElement>(null)
-
-  const handlePointerLockChange = useCallback(
-    (isPointerLocked: boolean) => console.log(isPointerLocked),
-    [],
-  )
 
   useUIFrame(() => {
     liveMouseXRef.current!.textContent = String(mp().mouseX)
@@ -129,6 +125,7 @@ const App = () => {
           </button>
         </div>
         <div>Page is visible: {isPageVisible ? 'Yes' : 'No'}</div>
+        <div>Page is focused: {isPageFocused ? 'Yes' : 'No'}</div>
         <div>Can hover (is desktop): {canHover ? 'Yes' : 'No'}</div>
         <div>
           <b>Mouse buttons</b>
@@ -193,7 +190,7 @@ const App = () => {
         <Box position={[1.2, 0, 0]} />
       </Canvas>
       <Listeners
-        onPointerLockChange={handlePointerLockChange}
+        onPointerLockChange={isPointerLocked => console.log('isPointerLocked', isPointerLocked)}
         reactiveMouseMoveThrottleDelay={200}
         mouseMovementResetDelay={100}
         reactiveResizeThrottleDelay={200}

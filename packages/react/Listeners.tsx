@@ -98,6 +98,43 @@ export const PageVisibilityListener = ({ onVisibilityChange }: PageVisibilityLis
   return null
 }
 
+export type PageFocusListenerProps = {
+  clearInputsOnBlur?: boolean
+  onPageBlur?: () => void
+  onPageFocus?: () => void
+}
+
+export const PageFocusListener = ({
+  onPageBlur,
+  onPageFocus,
+  clearInputsOnBlur = true,
+}: PageFocusListenerProps) => {
+  useEffect(() => {
+    const handleBlur = () => {
+      mp().setPageFocused(false)
+      onPageBlur?.()
+      if (clearInputsOnBlur) {
+        mp().clearInputs()
+      }
+    }
+
+    const handleFocus = () => {
+      mp().setPageFocused(true)
+      onPageFocus?.()
+    }
+
+    window.addEventListener('blur', handleBlur)
+    window.addEventListener('focus', handleFocus)
+
+    return () => {
+      window.removeEventListener('blur', handleBlur)
+      window.removeEventListener('focus', handleFocus)
+    }
+  }, [onPageFocus, onPageBlur])
+
+  return null
+}
+
 export type PointerLockListenerProps = {
   onPointerLockChange?: (isPointerLocked: boolean) => void
 }
@@ -323,6 +360,7 @@ export const KeyboardListener = ({ onKeydown, onKeyup }: KeyboardListenerProps) 
 
 export type ListenersProps = MouseMoveListenerProps &
   PageVisibilityListenerProps &
+  PageFocusListenerProps &
   PointerLockListenerProps &
   FullscreenChangeListenerProps &
   ResizeListenerProps &
@@ -336,6 +374,8 @@ export const Listeners = ({
   onReactiveMouseMove,
   onLiveMouseMove,
   onVisibilityChange,
+  onPageBlur,
+  onPageFocus,
   onPointerLockChange,
   onFullscreenChange,
   reactiveResizeThrottleDelay = 100,
@@ -360,6 +400,7 @@ export const Listeners = ({
       onLiveMouseMove={onLiveMouseMove}
     />
     <PageVisibilityListener onVisibilityChange={onVisibilityChange} />
+    <PageFocusListener onPageBlur={onPageBlur} onPageFocus={onPageFocus} />
     <PointerLockListener onPointerLockChange={onPointerLockChange} />
     <FullscreenChangeListener onFullscreenChange={onFullscreenChange} />
     <ResizeListener
