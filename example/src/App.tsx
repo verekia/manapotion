@@ -3,6 +3,7 @@ import { useRef, useState } from 'react'
 import { MeshProps, useFrame } from '@react-three/fiber'
 import {
   Canvas,
+  debounce,
   enterFullscreen,
   exitFullscreen,
   Listeners,
@@ -10,6 +11,8 @@ import {
   lockOrientation,
   lockPointer,
   mp,
+  throttle,
+  throttleDebounce,
   unlockKeys,
   unlockOrientation,
   useMP,
@@ -38,6 +41,19 @@ function Box(props: MeshProps) {
     </mesh>
   )
 }
+
+export const throttledHello = throttle(
+  (...args: any[]) => console.log('throttledHello', ...args),
+  1000,
+)
+export const debouncedHello = debounce(
+  (...args: any[]) => console.log('debouncedHello', ...args),
+  1000,
+)
+export const throttledDebouncedHello = throttleDebounce(
+  (...args: any[]) => console.log('throttledDebouncedHello', ...args),
+  1000,
+)
 
 const App = () => {
   const [renderer, setRenderer] = useState('WebGPU')
