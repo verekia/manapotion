@@ -25,6 +25,6 @@
     "composite": true,
     "allowSyntheticDefaultImports": true,
   },
-  "include": ["index.ts", "Canvas.tsx"],
+  "include": ["index.ts", "Canvas.tsx", "hooks.ts"],
   "exclude": ["node_modules", "dist"],
 }

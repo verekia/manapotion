@@ -9,9 +9,9 @@
   "scripts": {
     "dev": "cd example && npm run dev",
     "clean": "rm -rf packages/*/dist",
-    "tsup": "npm run tsup -w @manapotion/util -w @manapotion/browser -w @manapotion/react -w @manapotion/r3f -w manapotion",
+    "build": "npm run build -w @manapotion/util -w @manapotion/browser -w @manapotion/react -w @manapotion/r3f -w manapotion",
     "publint": "npm run publint -ws",
-    "pub": "npm run tsup && npm run publint && lerna publish"
+    "pub": "npm run build && npm run publint && lerna publish"
   },
   "devDependencies": {
     "lerna": "^8.1.2"

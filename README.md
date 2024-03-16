@@ -10,7 +10,7 @@ Mana Potion is a 🚧 **work-in-progress** 🚧 toolkit to make web game develop
 
 Mana Potion consists of:
 
-- [**`@manapotion/react`**](#react-listeners-store-and-hooks): React listeners, store, and hooks
+- [**`@manapotion/react`**](#react-listeners-and-store): React listeners and store
 - [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
 - [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas
 - [**`@manapotion/util`**](#utilities): General gamedev utilities
@@ -42,7 +42,7 @@ pnpm add @manapotion/react @manapotion/browser
 bun add @manapotion/react @manapotion/browser
 ```
 
-## React Listeners, Store, and Hooks
+## React Listeners and Store
 
 ⚛️ **`@manapotion/react`** is the main package of Mana Potion. It contains listeners that update a reactive store which you can use as a hook in your components or access directly in your imperative code.
 
@@ -178,22 +178,6 @@ const App = () => {
 }
 ```
 
-### Hooks
-
-- `useUIFrame` or `useAnimationFrame` (alias): Like R3F's [`useFrame`](https://docs.pmnd.rs/react-three-fiber/api/hooks#useframe) but for your UI updates. It will execute your callback at every frame without being tied to React's rendering cycle.
-
-```jsx
-const HealthBar = () => {
-  const ref = useRef()
-
-  useUIFrame(() => {
-    ref.current.textContent = `Health: ${entity.health}%`
-  })
-
-  return <div ref={ref} />
-}
-```
-
 ### Augmenting the store
 
 You can add your own variables to the store by augmenting the `CustomSlice` interface from `@manapotion/react` or from `manapotion` in a global definition file such as `global.d.ts` at the root of your project:
@@ -258,7 +242,7 @@ const FullscreenButton = () => (
 
 ## React Three Fiber
 
-⚛️ **`@manapotion/r3f`** currently includes a single component: a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
+⚛️ **`@manapotion/r3f`** includes a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
 
 ```jsx
 import { Canvas } from '@manapotion/r3f'
@@ -303,6 +287,30 @@ With Tailwind:
   </body>
 </html>
 ```
+
+There are also hooks available to run logic inside the main R3F `requestAnimationFrame` loop. They are simple hooks around [`addEffect`, `addAfterEffect`, and `addTail`](https://docs.pmnd.rs/react-three-fiber/api/additional-exports). See R3F [loop source](https://github.com/pmndrs/react-three-fiber/blob/master/packages/fiber/src/core/loop.ts).
+
+```jsx
+import { useFrameBefore, useFrameAfter, useFrameStop } from '@manapotion/r3f'
+
+const Scene = () => {
+  useFrameBefore(() => {
+    // Runs at the beginning of the animation loop
+  })
+
+  useFrameAfter(() => {
+    // Runs at the end of the animation loop
+  })
+
+  useFrameStop(() => {
+    // Runs when the animation loop stops
+  })
+
+  // ...
+}
+```
+
+You can use `useFrameBefore` or `useFrameAfter` to animate your UI outside of the `Canvas`.
 
 # Utilities
 

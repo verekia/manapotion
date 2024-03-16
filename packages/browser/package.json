@@ -19,8 +19,8 @@
     }
   },
   "scripts": {
-    "tsup": "tsup *.ts *.tsx --dts --format esm,cjs --clean --no-splitting",
-    "watch": "tsup *.ts *.tsx --dts --format esm,cjs --clean --no-splitting --watch",
+    "dev": "tsup *.ts *.tsx --dts --format esm,cjs --clean --no-splitting --watch",
+    "build": "tsup *.ts *.tsx --dts --format esm,cjs --clean --no-splitting",
     "publint": "npx publint"
   },
   "devDependencies": {
