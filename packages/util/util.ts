@@ -1,7 +1,19 @@
+export const pi = Math.PI
+export const sin = Math.sin
+export const cos = Math.cos
+export const abs = Math.abs
+export const sqrt = Math.sqrt
+export const pow = Math.pow
+export const atan2 = Math.atan2
+export const round = Math.round
+export const floor = Math.floor
+export const ceil = Math.ceil
+export const max = Math.max
+export const min = Math.min
+
 export const lerp = (a: number, b: number, t: number): number => a + (b - a) * t
 export const clamp = (value: number, limit: number): number =>
   Math.max(Math.min(value, limit), -limit)
-export const pi = Math.PI
 
 export const throttle = (
   callback: (...args: any[]) => void,

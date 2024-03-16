@@ -321,7 +321,25 @@ You can use `useFrameBefore` or `useFrameAfter` to animate your UI outside of th
 - `throttle`: Throttles a function by a given time in ms.
 - `debounce`: Debounces a function by a given time in ms.
 - `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
-- `pi`: A less verbose `Math.PI`.
+
+## Math
+
+The following `Math` properties and methods are available as named exports, so you don't have to type `Math.` every time:
+
+```js
+export const pi = Math.PI
+export const sin = Math.sin
+export const cos = Math.cos
+export const abs = Math.abs
+export const sqrt = Math.sqrt
+export const pow = Math.pow
+export const atan2 = Math.atan2
+export const round = Math.round
+export const floor = Math.floor
+export const ceil = Math.ceil
+export const max = Math.max
+export const min = Math.min
+```
 
 ## License
 
