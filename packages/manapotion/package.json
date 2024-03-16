@@ -1,6 +1,6 @@
 {
   "name": "manapotion",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -24,10 +24,10 @@
     "publint": "npx publint"
   },
   "dependencies": {
-    "@manapotion/browser": "^0.3.1",
-    "@manapotion/r3f": "^0.3.1",
-    "@manapotion/react": "^0.3.1",
-    "@manapotion/util": "^0.3.1"
+    "@manapotion/browser": "^0.4.0",
+    "@manapotion/r3f": "^0.4.0",
+    "@manapotion/react": "^0.4.0",
+    "@manapotion/util": "^0.4.0"
   },
   "devDependencies": {
     "publint": "^0.2.7",
