@@ -49,13 +49,23 @@ export const unlockOrientation = () => {
 }
 
 export const lockKeys = (keys: string[]) => {
-  if ('keyboard' in navigator && 'lock' in (navigator.keyboard as any)) {
+  if (
+    'keyboard' in navigator &&
+    navigator.keyboard &&
+    'lock' in (navigator.keyboard as any) &&
+    (navigator.keyboard as any).lock
+  ) {
     ;((navigator.keyboard as any).lock as any)(keys)
   }
 }
 
 export const unlockKeys = () => {
-  if ('keyboard' in navigator && 'unlock' in (navigator.keyboard as any)) {
+  if (
+    'keyboard' in navigator &&
+    navigator.keyboard &&
+    'unlock' in (navigator.keyboard as any) &&
+    (navigator.keyboard as any).unlock
+  ) {
     ;((navigator.keyboard as any).unlock as any)()
   }
 }
