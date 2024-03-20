@@ -2,14 +2,14 @@ import { useEffect } from 'react'
 
 import { addEffect, addAfterEffect, addTail, type GlobalRenderCallback } from '@react-three/fiber'
 
-export const useFrameBefore = (callback: GlobalRenderCallback) => {
+export const useFrameEffect = (callback: GlobalRenderCallback) => {
   useEffect(() => addEffect(callback), [callback])
 }
 
-export const useFrameAfter = (callback: GlobalRenderCallback) => {
+export const useFrameAfterEffect = (callback: GlobalRenderCallback) => {
   useEffect(() => addAfterEffect(callback), [callback])
 }
 
-export const useFrameStop = (callback: GlobalRenderCallback) => {
+export const useFrameTail = (callback: GlobalRenderCallback) => {
   useEffect(() => addTail(callback), [callback])
 }

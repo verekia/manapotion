@@ -309,18 +309,18 @@ With Tailwind:
 There are also hooks available to run logic inside the main R3F `requestAnimationFrame` loop. They are simple hooks around [`addEffect`, `addAfterEffect`, and `addTail`](https://docs.pmnd.rs/react-three-fiber/api/additional-exports). See R3F [loop source](https://github.com/pmndrs/react-three-fiber/blob/master/packages/fiber/src/core/loop.ts).
 
 ```jsx
-import { useFrameBefore, useFrameAfter, useFrameStop } from '@manapotion/r3f'
+import { useFrameEffect, useFrameAfterEffect, useFrameTail } from '@manapotion/r3f'
 
 const Scene = () => {
-  useFrameBefore(() => {
+  useFrameEffect(() => {
     // Runs at the beginning of the animation loop
   })
 
-  useFrameAfter(() => {
+  useFrameAfterEffect(() => {
     // Runs at the end of the animation loop
   })
 
-  useFrameStop(() => {
+  useFrameTail(() => {
     // Runs when the animation loop stops
   })
 
@@ -328,7 +328,7 @@ const Scene = () => {
 }
 ```
 
-You can use `useFrameBefore` or `useFrameAfter` to animate your UI outside of the `Canvas`.
+You can use `useFrameEffect` to animate your UI outside of the `Canvas`.
 
 # Utilities
 
