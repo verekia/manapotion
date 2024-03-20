@@ -200,6 +200,9 @@ const App = () => {
           <textarea readOnly className="w-[500px] h-[100px]" value={JSON.stringify(keys)} />
         </div>
       </div>
+      <div className="5xs:bg-green-500 4xs:bg-blue-500 3xs:bg-orange-500 2xs:bg-yellow-500 xs:bg-purple-500 3xl:bg-purple-500 4xl:bg-yellow-500 5xl:bg-pink-500  absolute top-0 right-0 z-10 rounded-bl-xl bg-red-500 px-5 py-2 text-white sm:bg-indigo-500 md:bg-red-500 lg:bg-green-500 xl:bg-blue-500 2xl:bg-orange-500">
+        Tailwind
+      </div>
       <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transform">
         {renderer}
         <button className="bg-slate-100 rounded-md px-2 py-1 ml-2" onClick={toggleRenderer}>

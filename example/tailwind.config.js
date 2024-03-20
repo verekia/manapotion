@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+import { tailwindTheme } from 'manapotion'
+
 export default {
   content: ['./index.html', './src/**/*.tsx'],
   theme: {
+    screens: tailwindTheme.screens,
     extend: {
-      screens: {
-        'hover-hover': { raw: '(hover: hover)' },
-        'hover-none': { raw: '(hover: none)' },
-      },
+      screens: tailwindTheme.extend.screens,
     },
   },
   plugins: [],
