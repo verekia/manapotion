@@ -14,6 +14,7 @@ Mana Potion consists of:
 - [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
 - [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas
 - [**`@manapotion/util`**](#utilities): General gamedev utilities
+- [**`@manapotion/tailwind`**](#tailwind): Tailwind theme for media queries
 - **`manapotion`**: All of the above in one package that exports everything
 
 If you are making a React Three Fiber game, the easiest option is to add `manapotion` to your project:
@@ -339,6 +340,55 @@ export const floor = Math.floor
 export const ceil = Math.ceil
 export const max = Math.max
 export const min = Math.min
+```
+
+# Tailwind
+
+🍃 **`@manapotion/tailwind`** provides a theme containing the following `screens` breakpoints:
+
+- 5xs: 192px
+- 4xs: 256px
+- 3xs: 320px
+- 2xs: 384px
+- xs: 512px
+- sm: 640px - Tailwind default
+- md: 768px - Tailwind default
+- lg: 1024px - Tailwind default
+- xl: 1280px - Tailwind default
+- xxl: 1536px - Tailwind default
+- 3xl: 1792px
+- 4xl: 2048px
+- 5xl: 2560px
+
+Making games often involves supporting landscape mode on mobile devices, which require height media queries. The same values are used for the height media queries, but with a `*-h` suffix. So you can do:
+
+- `xs-h:bg-red-500`: Only for screens taller than 512px.
+- `sm:xs-h:bg-red-500`: Only for screens wider than 640px and taller than 512px.
+- `sm:max-md:xs-h:max-sm-h:bg-red-500`: Only between 640px to 768px wide and 512px to 640px high.
+
+There is currently a [bug in Tailwind](https://github.com/tailwindlabs/tailwindcss/issues/13022) preventing `max-*` classes from being generated when using non-pixel values including raw queries, which prevents us from having height media queries. This package contains a fix for this issue.
+
+There are also `desktop` and `mobile` media queries that you can use to target mobile and desktop devices:
+
+- `desktop:bg-red-500`: Only for desktop devices.
+- `mobile:bg-red-500`: Only for mobile devices (includes tablets).
+
+To add the theme to your Tailwind config:
+
+```js
+/** @type {import('tailwindcss').Config} */
+import { theme } from '@manapotion/tailwind'
+// or import { tailwindTheme } from 'manapotion'
+
+export default {
+  content: ['./index.html', './src/**/*.tsx'],
+  theme: {
+    screens: theme.screens,
+    extend: {
+      screens: theme.extend.screens,
+    },
+  },
+}
 ```
 
 ## License
