@@ -57,6 +57,7 @@ The listeners available are:
 - `<FullscreenChangeListener />`
 - `<ResizeListener />`
 - `<DeviceTypeListener />`
+- `<ScreenOrientationListener />`
 - `<PageVisibilityListener />`
 - `<PageFocusListener />`
 
@@ -149,12 +150,14 @@ const Component = () => {
 - 🗿 `mouseMovementY` (going up is positive)
 - 🗿 `mouseWheelDeltaY`
 
-- 🚧 Coming soon: Joystick
-- 🚧 Coming soon: Gamepads
+### Coming soon
+
+- 🚧 Mobile joysticks
+- 🚧 Gamepads
 
 ### Callbacks
 
-You can provide custom event callbacks to `<Listeners />`.
+You can provide custom event callbacks to `<Listeners />` or to individual listeners:
 
 ```jsx
 <Listeners onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
