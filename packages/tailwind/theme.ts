@@ -13,19 +13,19 @@ const xxxxl = '2048px'
 const xxxxxl = '2560px'
 
 const screens = {
-  xxxxxs,
-  xxxxs,
-  xxxs,
-  xxs,
+  '5xs': xxxxxs,
+  '4xs': xxxxs,
+  '3xs': xxxs,
+  '2xs': xxs,
   xs,
   sm,
   md,
   lg,
   xl,
-  xxl,
-  xxxl,
-  xxxxl,
-  xxxxxl,
+  '2xl': xxl,
+  '3xl': xxxl,
+  '4xl': xxxxl,
+  '5xl': xxxxxl,
 }
 
 const extendScreens = {
