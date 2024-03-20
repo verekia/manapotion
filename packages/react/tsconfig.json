@@ -23,8 +23,8 @@
     "baseUrl": "src",
 
     "composite": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["index.ts", "hooks.ts", "Listeners.tsx", "store.ts", "react-util.ts"],
-  "exclude": ["node_modules", "dist"],
+  "include": ["index.ts", "hooks.ts", "Listeners.tsx", "store.ts"],
+  "exclude": ["node_modules", "dist"]
 }

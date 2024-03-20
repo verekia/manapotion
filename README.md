@@ -98,44 +98,58 @@ const myMainUpdateLoop = () => {
 }
 ```
 
-Some variables that update very frequently such as mouse position are available in two flavors:
+Here is the list of available variables.
 
-- Reactive but throttled via `useMP` for when you want to trigger React re-renders.
-- Non-reactive but always up-to-date via `mp` to use in your animation loops:
+🗿 **Non-reactive** are frequently updated variables that should be accessed imperatively in your main loop:
 
 ```jsx
-const Camera = () => {
-  useFrame(() => {
-    const { mouseMovementX, mouseMovementY } = mp()
-    // ...
-  })
-  // ...
+const animate = () => {
+  const { mouseMovementX } = mp()
+  // Move the camera
 }
 ```
 
-Here is the list of available variables. Variables that are both reactive and non-reactive are marked with a ⚡️.
+⚡️ **Reactive** variables can be accessed **either** imperatively or in components to trigger a re-render:
+
+```jsx
+const animate = () => {
+  if (mp().isRightMouseDown) {
+    // Some imperative logic
+  }
+}
+
+const Component = () => {
+  const isRightMouseDown = useMP(s => s.isRightMouseDown)
+
+  // Some reactive component
+  return ( /* ... */ )
+}
+```
 
 ### 🌐 General browser state
 
-- `isPointerLocked`
-- `isFullscreen`
-- `isPageVisible`
-- `isPageFocused`
-- `isDesktop` / `isMobile`
-- ⚡️ `windowWidth`
-- ⚡️ `windowHeight`
+- ⚡️ `isPointerLocked`
+- ⚡️ `isFullscreen`
+- ⚡️ `isPageVisible`
+- ⚡️ `isPageFocused`
+- ⚡️ `isDesktop` / `isMobile`
+- ⚡️ `isLandscape` / `isPortrait`
+- 🗿 `windowWidth`
+- 🗿 `windowHeight`
 
 ### 🕹 Inputs
 
-- `isLeftMouseDown`
-- `isMiddleMouseDown`
-- `isRightMouseDown`
-- `keys`
-- ⚡️ `mouseX`
-- ⚡️ `mouseY` (the bottom of the screen is 0)
-- ⚡️ `mouseMovementX`
-- ⚡️ `mouseMovementY` (going up is positive)
-- ⚡️ `mouseWheelDeltaY`
+- ⚡️ `isLeftMouseDown`
+- ⚡️ `isMiddleMouseDown`
+- ⚡️ `isRightMouseDown`
+- ⚡️ `keys`
+- 🗿 `mouseX`
+- 🗿 `mouseY` (the bottom of the screen is 0)
+- 🗿 `mouseMovementX`
+- 🗿 `mouseMovementY` (going up is positive)
+- 🗿 `mouseWheelDeltaY`
+
+- 🚧 Coming soon: Joystick
 - 🚧 Coming soon: Gamepads
 
 ### Callbacks
@@ -153,7 +167,7 @@ Keyboard `keys` are available in two versions,`keys.byCode` and `keys.byKey`. Th
 Here is how you would handle going forward when the user presses W (or Z on French keyboards):
 
 ```js
-const myMainLoop = () => {
+const animate = () => {
   if (mp().keys.byCode.KeyW) {
     // Go forward
   }

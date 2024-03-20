@@ -1,36 +1,19 @@
 import { useEffect, useRef } from 'react'
 
-import { throttleDebounce } from './react-util'
 import { KeyState, mp } from './store'
 
 export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
-  reactiveMouseMoveThrottleDelay?: number
   onMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
 }
 
 export const MouseMoveListener = ({
   mouseMovementResetDelay = 30,
-  reactiveMouseMoveThrottleDelay = 100,
   onMouseMove,
 }: MouseMoveListenerProps) => {
   const mouseMovementResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    const throttledMouseMove = throttleDebounce(
-      (x: number, y: number, movementX: number, movementY: number) => {
-        mp().setMousePosition(x, y)
-        mp().setMouseMovement(movementX, movementY)
-
-        if (mouseMovementResetDelay) {
-          mouseMovementResetTimeoutRef.current = setTimeout(() => {
-            mp().setMouseMovement(0, 0)
-          }, mouseMovementResetDelay)
-        }
-      },
-      reactiveMouseMoveThrottleDelay
-    )
-
     const handleMouseMove = (e: MouseEvent) => {
       const mouseX = e.clientX
       const mouseY = window.innerHeight - e.clientY
@@ -52,8 +35,6 @@ export const MouseMoveListener = ({
           onMouseMove?.(mouseX, mouseY, 0, 0)
         }, mouseMovementResetDelay)
       }
-
-      throttledMouseMove(mouseX, mouseY, mouseMovementX, mouseMovementY)
     }
 
     window.addEventListener('mousemove', handleMouseMove)
@@ -64,7 +45,7 @@ export const MouseMoveListener = ({
       }
       window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [reactiveMouseMoveThrottleDelay, onMouseMove, mouseMovementResetDelay])
+  }, [onMouseMove, mouseMovementResetDelay])
 
   return null
 }
@@ -167,7 +148,6 @@ export const FullscreenChangeListener = ({ onFullscreenChange }: FullscreenChang
 }
 
 export type ResizeListenerProps = {
-  reactiveResizeThrottleDelay?: number
   onResize?: (params: {
     width: number
     height: number
@@ -176,28 +156,8 @@ export type ResizeListenerProps = {
   }) => void
 }
 
-export const ResizeListener = ({
-  reactiveResizeThrottleDelay = 100,
-  onResize,
-}: ResizeListenerProps) => {
+export const ResizeListener = ({ onResize }: ResizeListenerProps) => {
   useEffect(() => {
-    const throttledResize = throttleDebounce(
-      ({
-        width,
-        height,
-        isLandscape,
-        isPortrait,
-      }: {
-        width: number
-        height: number
-        isLandscape: boolean
-        isPortrait: boolean
-      }) => {
-        mp().setSize({ windowWidth: width, windowHeight: height, isLandscape, isPortrait })
-      },
-      reactiveResizeThrottleDelay
-    )
-
     const handleResize = () => {
       const width = window.innerWidth
       const height = window.innerHeight
@@ -209,60 +169,76 @@ export const ResizeListener = ({
       mp().isPortrait = isPortrait
       mp().isLandscape = isLandscape
       onResize?.({ width, height, isPortrait, isLandscape })
-      throttledResize({ width, height, isPortrait, isLandscape })
     }
 
-    const widthInit = window.innerWidth
-    const heightInit = window.innerHeight
-    // In the CSS spec, portrait is greater or equal
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/@media/orientation
-    const isPortraitInit = heightInit >= widthInit
-    const isLandscapeInit = widthInit > heightInit
-    mp().setSize({
-      windowWidth: widthInit,
-      windowHeight: heightInit,
-      isPortrait: isPortraitInit,
-      isLandscape: isLandscapeInit,
-    })
+    handleResize()
 
     window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [reactiveResizeThrottleDelay, onResize])
+  }, [onResize])
 
   return null
 }
 
 export type DeviceTypeListenerProps = {
-  deviceTypeIntervalDelay?: number
   onDeviceTypeChange?: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) => void
 }
 
-export const DeviceTypeListener = ({
-  deviceTypeIntervalDelay = 500,
-  onDeviceTypeChange,
-}: DeviceTypeListenerProps) => {
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
-
+export const DeviceTypeListener = ({ onDeviceTypeChange }: DeviceTypeListenerProps) => {
   useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-      const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches
-      mp().setDeviceType(isDesktop, isMobile)
-      onDeviceTypeChange?.({ isDesktop, isMobile })
-    }, deviceTypeIntervalDelay)
+    const desktopQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const mobileQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
 
-    const isDesktopInit = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-    const isMobileInit = window.matchMedia('(hover: none) and (pointer: coarse)').matches
-    mp().setDeviceType(isDesktopInit, isMobileInit)
-    onDeviceTypeChange?.({ isDesktop: isDesktopInit, isMobile: isMobileInit })
+    const handleDeviceTypeChange = () => {
+      const isDesktop = desktopQuery.matches
+      const isMobile = mobileQuery.matches
+      mp().setDeviceType({ isDesktop, isMobile })
+      onDeviceTypeChange?.({ isDesktop, isMobile })
+    }
+
+    handleDeviceTypeChange()
+
+    desktopQuery.addEventListener('change', handleDeviceTypeChange)
+
+    return () => desktopQuery.removeEventListener('change', handleDeviceTypeChange)
+  }, [onDeviceTypeChange])
+
+  return null
+}
+
+export type ScreenOrientationListenerProps = {
+  onScreenOrientationChange?: ({
+    isLandscape,
+    isPortrait,
+  }: {
+    isLandscape: boolean
+    isPortrait: boolean
+  }) => void
+}
+
+export const ScreenOrientationListener = ({
+  onScreenOrientationChange,
+}: ScreenOrientationListenerProps) => {
+  useEffect(() => {
+    const landscapeQuery = window.matchMedia('(orientation: landscape)')
+    const portraitQuery = window.matchMedia('(orientation: portrait)')
+
+    const handleScreenOrientationChange = () => {
+      const isLandscape = landscapeQuery.matches
+      const isPortrait = portraitQuery.matches
+      mp().setScreenOrientation({ isLandscape, isPortrait })
+      onScreenOrientationChange?.({ isLandscape, isPortrait })
+    }
+
+    handleScreenOrientationChange()
+
+    landscapeQuery.addEventListener('change', handleScreenOrientationChange)
 
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-      }
+      landscapeQuery.removeEventListener('change', handleScreenOrientationChange)
     }
-  }, [deviceTypeIntervalDelay, onDeviceTypeChange])
+  }, [onScreenOrientationChange])
 
   return null
 }
@@ -378,37 +354,20 @@ export const KeyboardListener = ({ onKeydown, onKeyup }: KeyboardListenerProps) 
 export type MouseScrollListenerProps = {
   onScroll?: (deltaY: number) => void
   mouseScrollResetDelay?: number
-  reactiveScrollThrottleDelay?: number
 }
 
 export const MouseScrollListener = ({
   onScroll,
   mouseScrollResetDelay = 500,
-  reactiveScrollThrottleDelay = 100,
 }: MouseScrollListenerProps) => {
   const mouseWheelResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    const throttledReactiveScroll = throttleDebounce((deltaY: number) => {
-      mp().setMouseWheelDeltaY(deltaY)
-
-      if (mouseWheelResetTimeoutRef.current) {
-        clearTimeout(mouseWheelResetTimeoutRef.current)
-      }
-
-      if (mouseScrollResetDelay) {
-        mouseWheelResetTimeoutRef.current = setTimeout(() => {
-          mp().setMouseWheelDeltaY(0)
-        }, mouseScrollResetDelay)
-      }
-    }, reactiveScrollThrottleDelay)
-
     const handleMouseScroll = (e: WheelEvent) => {
       const deltaY = e.deltaY
 
       onScroll?.(deltaY)
       mp().mouseWheelDeltaY = deltaY
-      throttledReactiveScroll(deltaY)
 
       if (mouseWheelResetTimeoutRef.current) {
         clearTimeout(mouseWheelResetTimeoutRef.current)
@@ -425,7 +384,7 @@ export const MouseScrollListener = ({
     window.addEventListener('wheel', handleMouseScroll)
 
     return () => window.removeEventListener('wheel', handleMouseScroll)
-  }, [onScroll, reactiveScrollThrottleDelay])
+  }, [onScroll])
 
   return null
 }
@@ -437,23 +396,22 @@ export type ListenersProps = MouseMoveListenerProps &
   FullscreenChangeListenerProps &
   ResizeListenerProps &
   DeviceTypeListenerProps &
+  ScreenOrientationListenerProps &
   MouseDownListenerProps &
   KeyboardListenerProps &
   MouseScrollListenerProps
 
 export const Listeners = ({
   mouseMovementResetDelay = 30,
-  reactiveMouseMoveThrottleDelay = 100,
   onMouseMove,
   onVisibilityChange,
   onPageBlur,
   onPageFocus,
   onPointerLockChange,
   onFullscreenChange,
-  reactiveResizeThrottleDelay = 100,
   onResize,
-  deviceTypeIntervalDelay = 500,
   onDeviceTypeChange,
+  onScreenOrientationChange,
   onLeftMouseDown,
   onMiddleMouseDown,
   onRightMouseDown,
@@ -462,25 +420,21 @@ export const Listeners = ({
   onRightMouseUp,
   onScroll,
   mouseScrollResetDelay = 100,
-  reactiveScrollThrottleDelay = 100,
   onKeydown,
   onKeyup,
 }: ListenersProps) => (
   <>
     <MouseMoveListener
       mouseMovementResetDelay={mouseMovementResetDelay}
-      reactiveMouseMoveThrottleDelay={reactiveMouseMoveThrottleDelay}
       onMouseMove={onMouseMove}
     />
     <PageVisibilityListener onVisibilityChange={onVisibilityChange} />
     <PageFocusListener onPageBlur={onPageBlur} onPageFocus={onPageFocus} />
     <PointerLockListener onPointerLockChange={onPointerLockChange} />
     <FullscreenChangeListener onFullscreenChange={onFullscreenChange} />
-    <ResizeListener reactiveResizeThrottleDelay={reactiveResizeThrottleDelay} onResize={onResize} />
-    <DeviceTypeListener
-      deviceTypeIntervalDelay={deviceTypeIntervalDelay}
-      onDeviceTypeChange={onDeviceTypeChange}
-    />
+    <ResizeListener onResize={onResize} />
+    <DeviceTypeListener onDeviceTypeChange={onDeviceTypeChange} />
+    <ScreenOrientationListener onScreenOrientationChange={onScreenOrientationChange} />
     <MouseDownListener
       onLeftMouseDown={onLeftMouseDown}
       onMiddleMouseDown={onMiddleMouseDown}
@@ -490,10 +444,6 @@ export const Listeners = ({
       onRightMouseUp={onRightMouseUp}
     />
     <KeyboardListener onKeydown={onKeydown} onKeyup={onKeyup} />
-    <MouseScrollListener
-      onScroll={onScroll}
-      mouseScrollResetDelay={mouseScrollResetDelay}
-      reactiveScrollThrottleDelay={reactiveScrollThrottleDelay}
-    />
+    <MouseScrollListener onScroll={onScroll} mouseScrollResetDelay={mouseScrollResetDelay} />
   </>
 )

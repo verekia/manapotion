@@ -62,17 +62,10 @@ const App = () => {
   const isPageVisible = useMP(s => s.isPageVisible)
   const isPageFocused = useMP(s => s.isPageFocused)
   const isPointerLocked = useMP(s => s.isPointerLocked)
-  const windowWidth = useMP(s => s.windowWidth)
-  const windowHeight = useMP(s => s.windowHeight)
   const isDesktop = useMP(s => s.isDesktop)
   const isMobile = useMP(s => s.isMobile)
   const isPortrait = useMP(s => s.isPortrait)
   const isLandscape = useMP(s => s.isLandscape)
-  const mouseX = useMP(s => s.mouseX)
-  const mouseY = useMP(s => s.mouseY)
-  const mouseMovementX = useMP(s => s.mouseMovementX)
-  const mouseMovementY = useMP(s => s.mouseMovementY)
-  const mouseWheelDeltaY = useMP(s => s.mouseWheelDeltaY)
   const isLeftMouseDown = useMP(s => s.isLeftMouseDown)
   const isMiddleMouseDown = useMP(s => s.isMiddleMouseDown)
   const isRightMouseDown = useMP(s => s.isRightMouseDown)
@@ -156,42 +149,20 @@ const App = () => {
         <div>Middle: {isMiddleMouseDown ? 'Yes' : 'No'} </div>
         <div>Right: {isRightMouseDown ? 'Yes' : 'No'} </div>
         <div>
-          <b>Window size</b>
-        </div>
-        <div>
-          Non-reactive: <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
-        </div>
-        <div>
-          Reactive throttled: {windowWidth}x{windowHeight}
+          Window size: <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
         </div>
         <div>Is desktop: {isDesktop ? 'Yes' : 'No'}</div>
         <div>Is mobile: {isMobile ? 'Yes' : 'No'}</div>
         <div>Is portrait: {isPortrait ? 'Yes' : 'No'}</div>
         <div>Is landscape: {isLandscape ? 'Yes' : 'No'}</div>
         <div>
-          <b>Mouse position</b>
+          Mouse position: <span ref={liveMouseXRef} /> <span ref={liveMouseYRef} />
         </div>
         <div>
-          Non-reactive: <span ref={liveMouseXRef} /> <span ref={liveMouseYRef} />
+          Mouse movement: <span ref={liveMouseMovementXRef} /> <span ref={liveMouseMovementYRef} />
         </div>
         <div>
-          Reactive throttled: {mouseX} {mouseY}
-        </div>
-        <div>
-          <b>Mouse movement</b>
-        </div>
-        <div>
-          Non-reactive: <span ref={liveMouseMovementXRef} /> <span ref={liveMouseMovementYRef} />
-        </div>
-        <div>
-          Reactive throttled: {mouseMovementX} {mouseMovementY}
-        </div>
-        <div>
-          <b>Mouse wheel delta Y</b>
-        </div>
-        <div>Reactive throttled: {mouseWheelDeltaY}</div>
-        <div>
-          Non-reactive: <span ref={liveScrollYRef} />
+          Mouse wheel delta Y: <span ref={liveScrollYRef} />
         </div>
         <div>
           <div>
@@ -227,11 +198,8 @@ const App = () => {
       </Canvas>
       <Listeners
         onPointerLockChange={isPointerLocked => console.log('isPointerLocked', isPointerLocked)}
-        reactiveMouseMoveThrottleDelay={200}
         mouseMovementResetDelay={100}
-        reactiveResizeThrottleDelay={200}
         onKeydown={keyState => console.log(keyState)}
-        reactiveScrollThrottleDelay={200}
       />
     </>
   )

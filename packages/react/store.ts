@@ -15,13 +15,9 @@ interface BrowserSlice {
   setFullscreen: (isFullscreen: boolean) => void
   setPageVisible: (isPageVisible: boolean) => void
   setPageFocused: (isFocused: boolean) => void
-  setSize: (params: {
-    windowWidth: number
-    windowHeight: number
-    isPortrait: boolean
-    isLandscape: boolean
-  }) => void
-  setDeviceType: (isDesktop: boolean, isMobile: boolean) => void
+  setSize: (params: { windowWidth: number; windowHeight: number }) => void
+  setDeviceType: (params: { isDesktop: boolean; isMobile: boolean }) => void
+  setScreenOrientation: (params: { isPortrait: boolean; isLandscape: boolean }) => void
 }
 
 const createBrowserSlice: StateCreator<BrowserSlice> = set => ({
@@ -39,9 +35,9 @@ const createBrowserSlice: StateCreator<BrowserSlice> = set => ({
   setFullscreen: isFullscreen => set(() => ({ isFullscreen })),
   setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
   setPageFocused: isPageFocused => set(() => ({ isPageFocused })),
-  setSize: ({ windowWidth, windowHeight, isLandscape, isPortrait }) =>
-    set(() => ({ windowWidth, windowHeight, isLandscape, isPortrait })),
-  setDeviceType: (isDesktop, isMobile) => set(() => ({ isDesktop, isMobile })),
+  setSize: ({ windowWidth, windowHeight }) => set(() => ({ windowWidth, windowHeight })),
+  setDeviceType: ({ isDesktop, isMobile }) => set(() => ({ isDesktop, isMobile })),
+  setScreenOrientation: ({ isPortrait, isLandscape }) => set(() => ({ isPortrait, isLandscape })),
 })
 
 export type KeyState = {
