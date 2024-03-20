@@ -62,9 +62,12 @@ const App = () => {
   const isPageVisible = useMP(s => s.isPageVisible)
   const isPageFocused = useMP(s => s.isPageFocused)
   const isPointerLocked = useMP(s => s.isPointerLocked)
-  const width = useMP(s => s.width)
-  const height = useMP(s => s.height)
-  const canHover = useMP(s => s.canHover)
+  const windowWidth = useMP(s => s.windowWidth)
+  const windowHeight = useMP(s => s.windowHeight)
+  const isDesktop = useMP(s => s.isDesktop)
+  const isMobile = useMP(s => s.isMobile)
+  const isPortrait = useMP(s => s.isPortrait)
+  const isLandscape = useMP(s => s.isLandscape)
   const mouseX = useMP(s => s.mouseX)
   const mouseY = useMP(s => s.mouseY)
   const mouseMovementX = useMP(s => s.mouseMovementX)
@@ -90,8 +93,8 @@ const App = () => {
     liveMouseYRef.current!.textContent = String(mp().mouseY)
     liveMouseMovementXRef.current!.textContent = String(mp().mouseMovementX)
     liveMouseMovementYRef.current!.textContent = String(mp().mouseMovementY)
-    liveWidthRef.current!.textContent = String(mp().width)
-    liveHeightRef.current!.textContent = String(mp().height)
+    liveWidthRef.current!.textContent = String(mp().windowWidth)
+    liveHeightRef.current!.textContent = String(mp().windowHeight)
     liveScrollYRef.current!.textContent = String(mp().mouseWheelDeltaY)
   })
 
@@ -146,7 +149,6 @@ const App = () => {
         </div>
         <div>Page is visible: {isPageVisible ? 'Yes' : 'No'}</div>
         <div>Page is focused: {isPageFocused ? 'Yes' : 'No'}</div>
-        <div>Can hover (is desktop): {canHover ? 'Yes' : 'No'}</div>
         <div>
           <b>Mouse buttons</b>
         </div>
@@ -160,8 +162,12 @@ const App = () => {
           Non-reactive: <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
         </div>
         <div>
-          Reactive throttled: {width}x{height}
+          Reactive throttled: {windowWidth}x{windowHeight}
         </div>
+        <div>Is desktop: {isDesktop ? 'Yes' : 'No'}</div>
+        <div>Is mobile: {isMobile ? 'Yes' : 'No'}</div>
+        <div>Is portrait: {isPortrait ? 'Yes' : 'No'}</div>
+        <div>Is landscape: {isLandscape ? 'Yes' : 'No'}</div>
         <div>
           <b>Mouse position</b>
         </div>

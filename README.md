@@ -55,7 +55,7 @@ The listeners available are:
 - `<PointerLockListener />`
 - `<FullscreenChangeListener />`
 - `<ResizeListener />`
-- `<CanHoverListener />`
+- `<DeviceTypeListener />`
 - `<PageVisibilityListener />`
 - `<PageFocusListener />`
 
@@ -120,9 +120,9 @@ Here is the list of available variables. Variables that are both reactive and no
 - `isFullscreen`
 - `isPageVisible`
 - `isPageFocused`
-- `canHover` (you can think of it as "is desktop". Mobile and touch devices will return `false`.)
-- ⚡️ `width` (of the window)
-- ⚡️ `height` (of the window)
+- `isDesktop` / `isMobile`
+- ⚡️ `windowWidth`
+- ⚡️ `windowHeight`
 
 ### 🕹 Inputs
 

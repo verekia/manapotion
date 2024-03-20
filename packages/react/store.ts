@@ -5,15 +5,23 @@ interface BrowserSlice {
   isFullscreen: boolean
   isPageVisible: boolean
   isPageFocused: boolean
-  canHover?: boolean
-  width: number
-  height: number
+  isDesktop: boolean
+  isMobile: boolean
+  isPortrait: boolean
+  isLandscape: boolean
+  windowWidth: number
+  windowHeight: number
   setPointerLocked: (isPointerLocked: boolean) => void
   setFullscreen: (isFullscreen: boolean) => void
   setPageVisible: (isPageVisible: boolean) => void
   setPageFocused: (isFocused: boolean) => void
-  setSize: (width: number, height: number) => void
-  setCanHover: (canHover: boolean) => void
+  setSize: (params: {
+    windowWidth: number
+    windowHeight: number
+    isPortrait: boolean
+    isLandscape: boolean
+  }) => void
+  setDeviceType: (isDesktop: boolean, isMobile: boolean) => void
 }
 
 const createBrowserSlice: StateCreator<BrowserSlice> = set => ({
@@ -21,15 +29,19 @@ const createBrowserSlice: StateCreator<BrowserSlice> = set => ({
   isFullscreen: false,
   isPageVisible: true,
   isPageFocused: true,
-  width: 0,
-  height: 0,
-  canHover: undefined,
+  windowWidth: 0,
+  windowHeight: 0,
+  isDesktop: false,
+  isMobile: false,
+  isPortrait: false,
+  isLandscape: false,
   setPointerLocked: isPointerLocked => set(() => ({ isPointerLocked })),
   setFullscreen: isFullscreen => set(() => ({ isFullscreen })),
   setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
   setPageFocused: isPageFocused => set(() => ({ isPageFocused })),
-  setSize: (width, height) => set(() => ({ width, height })),
-  setCanHover: canHover => set(() => ({ canHover })),
+  setSize: ({ windowWidth, windowHeight, isLandscape, isPortrait }) =>
+    set(() => ({ windowWidth, windowHeight, isLandscape, isPortrait })),
+  setDeviceType: (isDesktop, isMobile) => set(() => ({ isDesktop, isMobile })),
 })
 
 export type KeyState = {
