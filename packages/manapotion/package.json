@@ -27,6 +27,7 @@
     "@manapotion/browser": "^0.7.0",
     "@manapotion/r3f": "^0.7.0",
     "@manapotion/react": "^0.7.0",
+    "@manapotion/tailwind": "^0.7.1",
     "@manapotion/util": "^0.7.0"
   },
   "devDependencies": {
