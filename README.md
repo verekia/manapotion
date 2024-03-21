@@ -232,10 +232,10 @@ Multitouch within a single area is not supported, but you can create multiple `<
 
 ### Augmenting the store
 
-You can add your own variables to the store by augmenting the `CustomSlice` interface from `@manapotion/react` or from `manapotion` in a global definition file such as `global.d.ts` at the root of your project:
+You can add your own variables to the store by augmenting the `ManaPotionState` interface from `@manapotion/react` or from `manapotion` in a global definition file such as `global.d.ts` at the root of your project:
 
 ```ts
-import '@manapotion/react'
+import { ManaPotionState } from '@manapotion/react'
 
 declare module '@manapotion/react' {
   interface ManaPotionState {
@@ -246,10 +246,10 @@ declare module '@manapotion/react' {
 
 You can then set it imperatively as `mp().foo = 3` or reactively with `mp().setCustom('foo', 3)`.
 
-For example, if you want to add your joysticks to the Mana Potion store, you can defined them like this in `global.d.ts`:
+For example, to add your joysticks to the Mana Potion store, you can define them like this in `global.d.ts`:
 
 ```ts
-import { Joystick } from '@manapotion/react'
+import { Joystick, ManaPotionState } from '@manapotion/react'
 
 declare module '@manapotion/react' {
   interface ManaPotionState {
@@ -340,7 +340,7 @@ import { Canvas } from '@manapotion/r3f'
 const App = () => <Canvas forceWebGL={false}>{/* Your scene */}</Canvas>
 ```
 
-👉 Due to the way Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/manapotion/blob/main/example/vite.config.ts)).
+👉 Due to how Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/manapotion/blob/main/example/vite.config.ts)).
 
 To know if your canvas is currently using WebGPU or WebGL, you can use `useThree` inside the canvas:
 
