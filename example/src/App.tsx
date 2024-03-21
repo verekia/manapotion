@@ -95,13 +95,57 @@ const App = () => {
 
   return (
     <>
-      <div className="space-x-2 absolute z-10">
-        <h1 className="text-center">Mana Potion</h1>
+      <div className="pt-5 container mx-auto px-5">
+        <div className="flex items-center gap-5 justify-center flex-col sm:flex-row mb-5">
+          <img src="/mana-potion.webp" className="w-20" alt="Logo" />
+          <div className="flex flex-col gap-3">
+            <h1 className="text-5xl font-medium">Mana Potion</h1>
+            <h2 className="text-left text-2xl max-w-72 text-pretty text-gray-300">
+              Game Dev Toolkit for React and React Three Fiber
+            </h2>
+          </div>
+        </div>
+        <div>
+          <div>
+            Current width range:
+            <span className="hidden max-5xs:inline">5xs and below</span>
+            <span className="hidden 5xs:max-4xs:inline">5xs to 4xs</span>
+            <span className="hidden 4xs:max-3xs:inline">4xs to 3xs</span>
+            <span className="hidden 3xs:max-2xs:inline">3xs to 2xs</span>
+            <span className="hidden 2xs:max-xs:inline">2xs to xs</span>
+            <span className="hidden xs:max-sm:inline">xs to sm</span>
+            <span className="hidden sm:max-md:inline">sm to md</span>
+            <span className="hidden md:max-lg:inline">md to lg</span>
+            <span className="hidden lg:max-xl:inline">lg to xl</span>
+            <span className="hidden xl:max-2xl:inline">xl to 2xl</span>
+            <span className="hidden 2xl:max-3xl:inline">2xl to 3xl</span>
+            <span className="hidden 3xl:max-4xl:inline">3xl to 4xl</span>
+            <span className="hidden 4xl:max-5xl:inline">4xl to 5xl</span>
+            <span className="hidden 5xl:inline">5xl and up</span>
+          </div>
+          <div>
+            Current height range:
+            <span className="hidden max-5xs-h:inline">5xs and below</span>
+            <span className="hidden 5xs-h:max-4xs-h:inline">5xs to 4xs</span>
+            <span className="hidden 4xs-h:max-3xs-h:inline">4xs to 3xs</span>
+            <span className="hidden 3xs-h:max-2xs-h:inline">3xs to 2xs</span>
+            <span className="hidden 2xs-h:max-xs-h:inline">2xs to xs</span>
+            <span className="hidden xs-h:max-sm-h:inline">xs to sm</span>
+            <span className="hidden sm-h:max-md-h:inline">sm to md</span>
+            <span className="hidden md-h:max-lg-h:inline">md to lg</span>
+            <span className="hidden lg-h:max-xl-h:inline">lg to xl</span>
+            <span className="hidden xl-h:max-2xl-h:inline">xl to 2xl</span>
+            <span className="hidden 2xl-h:max-3xl-h:inline">2xl to 3xl</span>
+            <span className="hidden 3xl-h:max-4xl-h:inline">3xl to 4xl</span>
+            <span className="hidden 4xl-h:max-5xl-h:inline">4xl to 5xl</span>
+            <span className="hidden 5xl-h:inline">5xl and up</span>
+          </div>
+        </div>
         <div>Switch to mobile mode in your devtools to see the mobile joystick.</div>
         <div>
           <h2>Fullscreen: {isFullscreen ? 'Yes' : 'No'}</h2>
           <button
-            className="bg-slate-100 rounded-md px-2 py-1"
+            className="bg-gray-700 rounded-md px-2 py-1"
             onClick={isFullscreen ? exitFullscreen : enterFullscreen}
           >
             Toggle Fullscreen
@@ -110,36 +154,36 @@ const App = () => {
         <div>
           <h2>Orientation (use after fullscreen on mobile)</h2>
           <button
-            className="bg-slate-100 rounded-md px-2 py-1"
+            className="bg-gray-700 rounded-md px-2 py-1"
             onClick={() => lockOrientation('landscape')}
           >
             Landscape
           </button>
           <button
-            className="bg-slate-100 rounded-md px-2 py-1"
+            className="bg-gray-700 rounded-md px-2 py-1"
             onClick={() => lockOrientation('portrait')}
           >
             Portrait
           </button>
-          <button className="bg-slate-100 rounded-md px-2 py-1" onClick={unlockOrientation}>
+          <button className="bg-gray-700 rounded-md px-2 py-1" onClick={unlockOrientation}>
             Unlock orientation
           </button>
         </div>
         <div>
           <h2>Keyboard lock (use after fullscreen on desktop)</h2>
           <button
-            className="bg-slate-100 rounded-md px-2 py-1"
+            className="bg-gray-700 rounded-md px-2 py-1"
             onClick={() => lockKeys(['Escape', 'KeyW', 'KeyA', 'KeyS', 'KeyD'])}
           >
             Lock Esc and WASD
           </button>
-          <button className="bg-slate-100 rounded-md px-2 py-1" onClick={() => unlockKeys()}>
+          <button className="bg-gray-700 rounded-md px-2 py-1" onClick={() => unlockKeys()}>
             Release keys
           </button>
         </div>
         <div>
           <h2>Pointer is locked: {isPointerLocked ? 'Yes' : 'No'}</h2>
-          <button className="bg-slate-100 rounded-md px-2 py-1" onClick={lockPointer}>
+          <button className="bg-gray-700 rounded-md px-2 py-1" onClick={lockPointer}>
             Lock pointer
           </button>
         </div>
@@ -171,15 +215,16 @@ const App = () => {
           <div>
             <b>Keyboard</b>
           </div>
-          <textarea readOnly className="w-[500px] h-[100px]" value={JSON.stringify(keys)} />
+          <textarea
+            readOnly
+            className="bg-gray-700 w-full max-w-[500px] h-[100px]"
+            value={JSON.stringify(keys)}
+          />
         </div>
-      </div>
-      <div className="5xs:bg-green-500 4xs:bg-blue-500 3xs:bg-orange-500 2xs:bg-yellow-500 xs:bg-purple-500 3xl:bg-purple-500 4xl:bg-yellow-500 5xl:bg-pink-500  absolute top-0 right-0 z-10 rounded-bl-xl bg-red-500 px-5 py-2 text-white sm:bg-indigo-500 md:bg-red-500 lg:bg-green-500 xl:bg-blue-500 2xl:bg-orange-500">
-        Tailwind
       </div>
       <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transform">
         {renderer}
-        <button className="bg-slate-100 rounded-md px-2 py-1 ml-2" onClick={toggleRenderer}>
+        <button className="bg-gray-700 rounded-md px-2 py-1 ml-2" onClick={toggleRenderer}>
           Change
         </button>
       </div>
