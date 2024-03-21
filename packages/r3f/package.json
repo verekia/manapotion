@@ -23,6 +23,12 @@
     "build": "tsup",
     "publint": "npx publint"
   },
+  "peerDependencies": {
+    "@react-three/fiber": ">=8.0.0",
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0",
+    "three": ">=0.160.0"
+  },
   "devDependencies": {
     "publint": "^0.2.7",
     "tsup": "^8.0.2",

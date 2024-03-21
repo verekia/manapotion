@@ -4,7 +4,7 @@
   <img src="/example/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
-Mana Potion is a 🚧 **work-in-progress** 🚧 toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well.
+Mana Potion is a toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well.
 
 ## Installation
 
@@ -12,9 +12,9 @@ Mana Potion consists of:
 
 - [**`@manapotion/react`**](#react-listeners-and-store): React listeners and store
 - [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
-- [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas
+- [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas and hook
 - [**`@manapotion/util`**](#utilities): General gamedev utilities
-- [**`@manapotion/tailwind`**](#tailwind): Tailwind theme for media queries
+- [**`@manapotion/tailwind`**](#tailwind): Tailwind media queries
 - **`manapotion`**: All of the above in one package that exports everything
 
 If you are making a React Three Fiber game, the easiest option is to add `manapotion` to your project:
@@ -29,6 +29,8 @@ pnpm add manapotion
 # Bun
 bun add manapotion
 ```
+
+Due to the way Three.js' `WebGPURenderer` is written, in order to use `manapotion` or `@manapotion/r3f` with Vite, you will need to add [top-level await support](https://github.com/verekia/manapotion/blob/main/example/vite.config.ts).
 
 For React projects that don't use R3F, non-React projects, or if you are not interested in all of the features of Mana Potion, install the packages that are relevant to you independently. For example:
 
@@ -65,8 +67,7 @@ To enable them all, simply add `<Listeners />` to your app:
 
 ```jsx
 import { Listeners } from '@manapotion/react'
-// or
-// import { Listeners } from 'manapotion
+// or import { Listeners } from 'manapotion
 
 const App = () => (
   <>
@@ -76,32 +77,9 @@ const App = () => (
 )
 ```
 
-Access reactive variables with the `useMP` hook. It is a [Zustand](https://github.com/pmndrs/zustand) store, so you must pass a selector to it:
+This will automatically give you access to some reactive and non-reactive variables.
 
-```jsx
-import { useMP } from 'manapotion'
-
-const Header = () => {
-  const isFullscreen = useMP(s => s.isFullscreen)
-
-  return <div>{isFullscreen ? 'You are fullscreen' : 'You are not fullscreen'}</div>
-}
-```
-
-If you need to access the state outside of a component's lifecycle, you can use `mp()`:
-
-```jsx
-import { mp } from 'manapotion'
-
-const myMainUpdateLoop = () => {
-  const { isRightMouseDown } = mp()
-  // ...
-}
-```
-
-Here is the list of available variables.
-
-🗿 **Non-reactive** are frequently updated variables that should be accessed imperatively in your main loop:
+🗿 **Non-reactive** variables may be frequently updated and should be accessed imperatively in your main loop:
 
 ```jsx
 const animate = () => {
@@ -110,14 +88,21 @@ const animate = () => {
 }
 ```
 
-⚡️ **Reactive** variables can be accessed **either** imperatively or in components to trigger a re-render:
+⚡️ **Reactive** variables can similarly be accessed imperatively:
 
 ```jsx
 const animate = () => {
-  if (mp().isRightMouseDown) {
+  const { isRightMouseDown } = mp()
+
+  if (isRightMouseDown) {
     // Some imperative logic
   }
 }
+```
+
+Or reactively in components to trigger a re-render with the `useMP` hook. It is a [Zustand](https://github.com/pmndrs/zustand) store, so you must pass a selector to it:
+
+```jsx
 
 const Component = () => {
   const isRightMouseDown = useMP(s => s.isRightMouseDown)
@@ -126,6 +111,8 @@ const Component = () => {
   return ( /* ... */ )
 }
 ```
+
+Here are the variables available:
 
 ### 🌐 General browser state
 
@@ -160,7 +147,9 @@ const Component = () => {
 You can provide custom event callbacks to `<Listeners />` or to individual listeners:
 
 ```jsx
-<Listeners onPointerLockChange={isPointerLocked => console.log(isPointerLocked)} />
+<Listeners onKeydown={handleKeyDown} />
+/* or */
+<KeyboardListener onKeydown={handleKeyDown} />
 ```
 
 ### Keys
@@ -214,7 +203,7 @@ You can then set it imperatively as `mp().joystick = joystickData` or reactively
 
 ## Browser API Helpers
 
-🌐 **`@manapotion/browser`** provides helper functions to abstract some browser APIs:
+🌐 **`@manapotion/browser`** provides helper functions to reduce some browser APIs boilerplate:
 
 - `enterFullscreen`
 - `exitFullscreen`
@@ -236,24 +225,29 @@ import {
   lockKeys,
   unlockKeys,
 } from '@manapotion/browser'
+import { useMp } from '@manapotion/react'
 
-const FullscreenButton = () => (
-  <button
-    onClick={() => {
-      if (isFullscreen) {
-        exitFullscreen()
-        unlockKeys()
-        unlockOrientation()
-      } else {
-        enterFullscreen()
-        lockOrientation('landscape')
-        lockKeys(['Escape', 'KeyW', 'KeyA', 'KeyS', 'KeyD'])
-      }
-    }}
-  >
-    Toggle fullscreen
-  </button>
-)
+const FullscreenButton = () => {
+  const isFullscreen = useMp(s => s.isFullscreen)
+
+  return (
+    <button
+      onClick={() => {
+        if (isFullscreen) {
+          exitFullscreen()
+          unlockKeys()
+          unlockOrientation()
+        } else {
+          enterFullscreen()
+          lockOrientation('landscape')
+          lockKeys(['Escape', 'KeyW', 'KeyA', 'KeyS', 'KeyD'])
+        }
+      }}
+    >
+      Toggle fullscreen
+    </button>
+  )
+}
 ```
 
 **Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.

@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  entry: ['index.ts', 'Canvas.tsx', 'hooks.ts'],
+  entry: ['index.ts', 'theme.ts'],
   splitting: false,
   dts: true,
   clean: true,
