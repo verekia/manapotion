@@ -10,7 +10,7 @@ Mana Potion is a toolkit to make web game development easier. It is currently ma
 
 Mana Potion consists of:
 
-- [**`@manapotion/react`**](#react-listeners-and-store): React listeners and store
+- [**`@manapotion/react`**](#react-listeners-store-and-virtual-joystick): React listeners, store, and virtual joystick
 - [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
 - [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas and hook
 - [**`@manapotion/util`**](#utilities): General gamedev utilities
@@ -45,7 +45,7 @@ pnpm add @manapotion/react @manapotion/browser
 bun add @manapotion/react @manapotion/browser
 ```
 
-## React Listeners and Store
+## React Listeners, Store, and Virtual Joystick
 
 ⚛️ **`@manapotion/react`** is the main package of Mana Potion. It contains listeners that update a reactive store which you can use as a hook in your components or access directly in your imperative code.
 
