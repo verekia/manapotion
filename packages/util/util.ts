@@ -12,8 +12,9 @@ export const max = Math.max
 export const min = Math.min
 
 export const lerp = (a: number, b: number, t: number): number => a + (b - a) * t
-export const clamp = (value: number, limit: number): number =>
-  Math.max(Math.min(value, limit), -limit)
+
+export const clamp = (value: number, min: number, max: number): number =>
+  value < min ? min : value > max ? max : value
 
 export const throttle = (
   callback: (...args: any[]) => void,
