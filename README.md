@@ -185,6 +185,52 @@ const App = () => {
 }
 ```
 
+### Mobile Joysticks
+
+Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. You must create a joystick object with `createJoystick()`, and pass it to `<JoystickArea />`. You can choose between 2 modes, follow or origin, by setting `maxFollowDistance` or `maxOriginDistance`:
+
+```jsx
+import { JoystickArea, createJoystick } from '@manapotion/react'
+
+const joystick = createJoystick()
+
+const MobileUI = () => {
+  return (
+    <JoystickArea
+      joystick={joystick}
+      maxFollowDistance={50}
+      // OR
+      maxOriginDistance={50}
+    />
+  )
+}
+```
+
+In follow mode, the joystick will follow the user's finger, which is good for player movement.
+
+Here are the properties that will be updated on your joystick object:
+
+- `isActive`
+- `identifier`
+- `originX`
+- `originY`
+- `originAngle`
+- `originDistance`
+- `originDistanceRatio`
+- `followX`
+- `followY`
+- `followAngle`
+- `followDistance`
+- `followDistanceRatio`
+- `currentX`
+- `currentY`
+- `movementX`
+- `movementY`
+
+See the [example of how to style your joystick](https://github.com/verekia/manapotion/blob/main/example/src/MobileJoystick.tsx).
+
+Multitouch within a single area is not supported, but you can create multiple `<JoystickArea />`. One for movement and one for camera rotation for example.
+
 ### Augmenting the store
 
 You can add your own variables to the store by augmenting the `CustomSlice` interface from `@manapotion/react` or from `manapotion` in a global definition file such as `global.d.ts` at the root of your project:
@@ -194,12 +240,39 @@ import '@manapotion/react'
 
 declare module '@manapotion/react' {
   interface CustomSlice {
-    joystick: { angle?: number; force?: number }
+    foo: number
   }
 }
 ```
 
-You can then set it imperatively as `mp().joystick = joystickData` or reactively with `mp().setCustom('joystick', joystickData)`.
+You can then set it imperatively as `mp().foo = 3` or reactively with `mp().setCustom('foo', 3)`.
+
+For example, if you want to add your joysticks to the Mana Potion store, you can defined them like this in `global.d.ts`:
+
+```ts
+import { Joystick } from '@manapotion/react'
+
+declare module '@manapotion/react' {
+  interface CustomSlice {
+    movementJoystick: Joystick
+    cameraJoystick: Joystick
+  }
+}
+```
+
+Then, initialize them somewhere in your app:
+
+```jsx
+mp().setCustom('movementJoystick', createJoystick())
+mp().setCustom('cameraJoystick', createJoystick())
+```
+
+Finally, pass them to your `<JoystickArea />` components:
+
+```jsx
+<JoystickArea joystick={mp().movementJoystick} maxFollowDistance={50} />
+<JoystickArea joystick={mp().cameraJoystick} maxFollowDistance={50} />
+```
 
 ## Browser API Helpers
 

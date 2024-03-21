@@ -25,6 +25,6 @@
     "composite": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["index.ts", "hooks.ts", "Listeners.tsx", "store.ts"],
+  "include": ["index.ts", "hooks.ts", "Listeners.tsx", "store.ts", "JoystickArea.tsx"],
   "exclude": ["node_modules", "dist"]
 }

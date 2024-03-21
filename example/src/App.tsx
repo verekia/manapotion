@@ -20,6 +20,8 @@ import {
 } from 'manapotion'
 import { Mesh } from 'three'
 
+import MobileJoystick from './MobileJoystick'
+
 function Box(props: MeshProps) {
   const meshRef = useRef<Mesh>(null)
   const [hovered, setHover] = useState(false)
@@ -95,6 +97,7 @@ const App = () => {
     <>
       <div className="space-x-2 absolute z-10">
         <h1 className="text-center">Mana Potion</h1>
+        <div>Switch to mobile mode in your devtools to see the mobile joystick.</div>
         <div>
           <h2>Fullscreen: {isFullscreen ? 'Yes' : 'No'}</h2>
           <button
@@ -201,6 +204,7 @@ const App = () => {
         mouseMovementResetDelay={100}
         onKeydown={keyState => console.log(keyState)}
       />
+      <MobileJoystick />
     </>
   )
 }
