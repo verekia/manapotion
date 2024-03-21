@@ -10,7 +10,7 @@
     "dev": "cd example/react && npm run dev",
     "dev-vue": "cd example/vue && npm run dev",
     "clean": "rm -rf packages/*/dist",
-    "build": "npm run build -w @manapotion/util -w @manapotion/tailwind -w @manapotion/browser -w @manapotion/store -w @manapotion/react -w @manapotion/r3f -w manapotion",
+    "build": "npm run build -w @manapotion/util -w @manapotion/tailwind -w @manapotion/browser -w @manapotion/store -w @manapotion/react -w @manapotion/r3f -w @manapotion/vue -w manapotion",
     "publint": "npm run publint -ws",
     "pub": "npm run build && npm run publint && lerna publish"
   },

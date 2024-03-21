@@ -1,5 +1,5 @@
 {
-  "name": "vue",
+  "name": "example-vue",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,6 +13,7 @@
     "@manapotion/store": "0.13.0",
     "@manapotion/tailwind": "0.13.0",
     "@manapotion/util": "0.13.0",
+    "@manapotion/vue": "0.0.1",
     "vue": "^3.4.21"
   },
   "devDependencies": {
