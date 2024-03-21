@@ -23,8 +23,8 @@
     "baseUrl": "src",
 
     "composite": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["index.ts", "Canvas.tsx", "hooks.ts"],
-  "exclude": ["node_modules", "dist"],
+  "exclude": ["node_modules", "dist"]
 }
