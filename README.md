@@ -270,8 +270,12 @@ mp().setCustom('cameraJoystick', createJoystick())
 Finally, pass them to your `<JoystickArea />` components:
 
 ```jsx
-<JoystickArea joystick={mp().movementJoystick} maxFollowDistance={50} />
-<JoystickArea joystick={mp().cameraJoystick} maxFollowDistance={50} />
+const MobileUI = () => (
+  <>
+    <JoystickArea joystick={mp().movementJoystick} maxFollowDistance={50} />
+    <JoystickArea joystick={mp().cameraJoystick} maxFollowDistance={50} />
+  </>
+)
 ```
 
 ## Browser API Helpers
