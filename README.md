@@ -262,8 +262,8 @@ declare module '@manapotion/react' {
 Then, initialize them somewhere in your app:
 
 ```jsx
-mp().setCustom('movementJoystick', createJoystick())
-mp().setCustom('cameraJoystick', createJoystick())
+mp().movementJoystick = createJoystick()
+mp().cameraJoystick = createJoystick()
 ```
 
 Finally, pass them to your `<JoystickArea />` components:
@@ -276,6 +276,8 @@ const MobileUI = () => (
   </>
 )
 ```
+
+Note that you don't have to do this, you can just make them a global variable somewhere in your app, or put them in your own store. This is just a way to keep all inputs in the Mana Potion store.
 
 ## Browser API Helpers
 
