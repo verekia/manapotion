@@ -4,7 +4,7 @@
   <img src="/example/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
-Mana Potion is a toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well.
+Mana Potion is a toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well. Vue support is in progress.
 
 ## Installation
 
