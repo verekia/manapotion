@@ -1,9 +1,8 @@
 {
-  "name": "@manapotion/react",
-  "version": "0.12.1",
+  "name": "@manapotion/store",
+  "version": "0.0.0",
   "license": "MIT",
   "type": "module",
-  "bump": 1,
   "files": [
     "dist"
   ],
@@ -25,10 +24,7 @@
     "publint": "npx publint"
   },
   "dependencies": {
-    "@manapotion/store": "^0.0.0"
-  },
-  "peerDependencies": {
-    "react": ">=17.0.0"
+    "zustand": "^4.5.1"
   },
   "devDependencies": {
     "publint": "^0.2.7",

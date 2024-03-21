@@ -238,7 +238,7 @@ You can add your own variables to the store by augmenting the `CustomSlice` inte
 import '@manapotion/react'
 
 declare module '@manapotion/react' {
-  interface CustomSlice {
+  interface ManaPotionState {
     foo: number
   }
 }
@@ -252,7 +252,7 @@ For example, if you want to add your joysticks to the Mana Potion store, you can
 import { Joystick } from '@manapotion/react'
 
 declare module '@manapotion/react' {
-  interface CustomSlice {
+  interface ManaPotionState {
     movementJoystick: Joystick
     cameraJoystick: Joystick
   }

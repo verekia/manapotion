@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-import { KeyState, mp } from './store'
+import { KeyState, mp } from '@manapotion/store'
 
 export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
