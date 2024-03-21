@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/vue",
-  "version": "0.0.1",
+  "version": "0.13.4",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -24,7 +24,7 @@
     "publint": "npx publint"
   },
   "dependencies": {
-    "@manapotion/store": "^0.13.0"
+    "@manapotion/store": "^0.13.4"
   },
   "peerDependencies": {
     "vue": ">=3.3.0",
