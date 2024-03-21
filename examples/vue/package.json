@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publint": ""
   },
   "dependencies": {
     "@manapotion/browser": "0.13.0",
