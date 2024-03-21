@@ -12,7 +12,7 @@ Mana Potion consists of:
 
 - [**`@manapotion/react`**](#react-listeners-store-and-virtual-joystick): React listeners, store, and virtual joystick
 - [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
-- [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas and hook
+- [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas and hooks
 - [**`@manapotion/util`**](#utilities): General gamedev utilities
 - [**`@manapotion/tailwind`**](#tailwind): Tailwind media queries
 - **`manapotion`**: All of the above in one package that exports everything
@@ -139,7 +139,6 @@ Here are the variables available:
 
 ### Coming soon
 
-- 🚧 Mobile joysticks
 - 🚧 Gamepads
 
 ### Callbacks
