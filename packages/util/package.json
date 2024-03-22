@@ -18,10 +18,22 @@
       "default": "./dist/index.cjs"
     }
   },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "splitting": false,
+    "dts": true,
+    "clean": true,
+    "format": [
+      "cjs",
+      "esm"
+    ]
+  },
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "publint": "npx publint"
+    "publint": "publint"
   },
   "devDependencies": {
     "publint": "^0.2.7",

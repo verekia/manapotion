@@ -20,11 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "baseUrl": "src",
-
-    "composite": true,
-    "allowSyntheticDefaultImports": true,
-  },
-  "include": ["index.ts", "util.ts"],
-  "exclude": ["node_modules", "dist"],
+    "allowSyntheticDefaultImports": true
+  }
 }
