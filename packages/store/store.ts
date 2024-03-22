@@ -1,4 +1,5 @@
 import { createStore } from 'zustand/vanilla'
+import { devtools } from 'zustand/middleware'
 
 export type KeyState = {
   code: string
@@ -71,54 +72,56 @@ const defaultInputState = {
   },
 }
 
-export const manaPotionStore = createStore<ManaPotionState>()(set => ({
-  // Browser
-  isPointerLocked: false,
-  isFullscreen: false,
-  isPageVisible: true,
-  isPageFocused: true,
-  windowWidth: 0,
-  windowHeight: 0,
-  isDesktop: false,
-  isMobile: false,
-  isPortrait: false,
-  isLandscape: false,
-  setPointerLocked: isPointerLocked => set(() => ({ isPointerLocked })),
-  setFullscreen: isFullscreen => set(() => ({ isFullscreen })),
-  setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
-  setPageFocused: isPageFocused => set(() => ({ isPageFocused })),
-  setSize: ({ windowWidth, windowHeight }) => set(() => ({ windowWidth, windowHeight })),
-  setDeviceType: ({ isDesktop, isMobile }) => set(() => ({ isDesktop, isMobile })),
-  setScreenOrientation: ({ isPortrait, isLandscape }) => set(() => ({ isPortrait, isLandscape })),
+export const manaPotionStore = createStore<ManaPotionState>()(
+  devtools(set => ({
+    // Browser
+    isPointerLocked: false,
+    isFullscreen: false,
+    isPageVisible: true,
+    isPageFocused: true,
+    windowWidth: 0,
+    windowHeight: 0,
+    isDesktop: false,
+    isMobile: false,
+    isPortrait: false,
+    isLandscape: false,
+    setPointerLocked: isPointerLocked => set(() => ({ isPointerLocked })),
+    setFullscreen: isFullscreen => set(() => ({ isFullscreen })),
+    setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
+    setPageFocused: isPageFocused => set(() => ({ isPageFocused })),
+    setSize: ({ windowWidth, windowHeight }) => set(() => ({ windowWidth, windowHeight })),
+    setDeviceType: ({ isDesktop, isMobile }) => set(() => ({ isDesktop, isMobile })),
+    setScreenOrientation: ({ isPortrait, isLandscape }) => set(() => ({ isPortrait, isLandscape })),
 
-  // Inputs
-  ...defaultInputState,
-  clearInputs: () => set(() => defaultInputState),
-  clearMouseButtons: () =>
-    set(() => ({ isLeftMouseDown: false, isMiddleMouseDown: false, isRightMouseDown: false })),
-  setMousePosition: (mouseX, mouseY) => set(() => ({ mouseX, mouseY })),
-  setMouseMovement: (mouseMovementX, mouseMovementY) =>
-    set(() => ({ mouseMovementX, mouseMovementY })),
-  setLeftMouseDown: isLeftMouseDown => set(() => ({ isLeftMouseDown })),
-  setMiddleMouseDown: isMiddleMouseDown => set(() => ({ isMiddleMouseDown })),
-  setRightMouseDown: isRightMouseDown => set(() => ({ isRightMouseDown })),
-  setMouseWheelDeltaY: mouseWheelDeltaY => set(() => ({ mouseWheelDeltaY })),
-  setKeyDown: (keyState: KeyState) =>
-    set(state => ({
-      keys: {
-        byCode: { ...state.keys.byCode, [keyState.code]: keyState },
-        byKey: { ...state.keys.byKey, [keyState.key]: keyState },
-      },
-    })),
-  setKeyUp: (code, key) =>
-    set(state => {
-      const { [code]: __, ...byCode } = state.keys.byCode
-      const { [key]: _, ...byKey } = state.keys.byKey
-      return { keys: { byCode, byKey } }
-    }),
+    // Inputs
+    ...defaultInputState,
+    clearInputs: () => set(() => defaultInputState),
+    clearMouseButtons: () =>
+      set(() => ({ isLeftMouseDown: false, isMiddleMouseDown: false, isRightMouseDown: false })),
+    setMousePosition: (mouseX, mouseY) => set(() => ({ mouseX, mouseY })),
+    setMouseMovement: (mouseMovementX, mouseMovementY) =>
+      set(() => ({ mouseMovementX, mouseMovementY })),
+    setLeftMouseDown: isLeftMouseDown => set(() => ({ isLeftMouseDown })),
+    setMiddleMouseDown: isMiddleMouseDown => set(() => ({ isMiddleMouseDown })),
+    setRightMouseDown: isRightMouseDown => set(() => ({ isRightMouseDown })),
+    setMouseWheelDeltaY: mouseWheelDeltaY => set(() => ({ mouseWheelDeltaY })),
+    setKeyDown: (keyState: KeyState) =>
+      set(state => ({
+        keys: {
+          byCode: { ...state.keys.byCode, [keyState.code]: keyState },
+          byKey: { ...state.keys.byKey, [keyState.key]: keyState },
+        },
+      })),
+    setKeyUp: (code, key) =>
+      set(state => {
+        const { [code]: __, ...byCode } = state.keys.byCode
+        const { [key]: _, ...byKey } = state.keys.byKey
+        return { keys: { byCode, byKey } }
+      }),
 
-  // Custom
-  setCustom: (key, value) => set(() => ({ [key]: value })),
-}))
+    // Custom
+    setCustom: (key, value) => set(() => ({ [key]: value })),
+  }))
+)
 
 export const mp = () => manaPotionStore.getState()

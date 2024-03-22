@@ -2,20 +2,18 @@ import { defineComponent, onMounted, onUnmounted } from 'vue'
 import { mp } from '@manapotion/store'
 
 export const Listeners = defineComponent({
-  emits: ['pointerLockChange'],
+  emits: ['fullscreenchange'],
   setup(_, { emit }) {
-    const handlePointerLockChange = () => {
-      const isPointerLocked = Boolean(document.pointerLockElement)
-      mp().setPointerLocked(isPointerLocked)
-      emit('pointerLockChange', isPointerLocked)
+    const handleFullscreenChange = () => {
+      const isFullscreen = Boolean(document.fullscreenElement)
+      mp().setFullscreen(isFullscreen)
+      emit('fullscreenchange', isFullscreen)
     }
 
-    onMounted(() => {
-      document.addEventListener('pointerlockchange', handlePointerLockChange)
-    })
-
-    onUnmounted(() => {
-      document.removeEventListener('pointerlockchange', handlePointerLockChange)
-    })
+    onMounted(() => document.addEventListener('fullscreenchange', handleFullscreenChange))
+    onUnmounted(() => document.removeEventListener('fullscreenchange', handleFullscreenChange))
+  },
+  render() {
+    return null
   },
 })
