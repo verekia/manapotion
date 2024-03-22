@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// @ts-expect-error TS can't find the module, but it works
-import { Listeners, isFullscreen } from '@manapotion/vue'
+import { Listeners } from '@manapotion/vue'
 import FullscreenButton from './FullscreenButton.vue'
 import PointerLockButton from './PointerLockButton.vue'
 
