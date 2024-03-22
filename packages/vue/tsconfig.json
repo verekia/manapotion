@@ -25,6 +25,6 @@
     "composite": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["index.ts", "Listeners.vue.ts"],
+  "include": ["index.ts", "Listeners.vue.ts", "store.ts"],
   "exclude": ["node_modules", "dist"]
 }

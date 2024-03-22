@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { enterFullscreen } from '@manapotion/browser'
+import { enterFullscreen, exitFullscreen } from '@manapotion/browser'
 // @ts-expect-error TS can't find the module, but it works
-import { Listeners } from '@manapotion/vue'
+import { Listeners, isFullscreen } from '@manapotion/vue'
 
 const handleFullscreenChange = (event: Event) => {
   console.log('Fullscreen change!', event)
@@ -9,6 +9,8 @@ const handleFullscreenChange = (event: Event) => {
 </script>
 
 <template>
-  <button @click="enterFullscreen">Enter Fullscreen</button>
+  <button @click="isFullscreen ? exitFullscreen() : enterFullscreen()">
+    {{ isFullscreen ? 'Exit' : 'Enter' }} fullscreen
+  </button>
   <Listeners @fullscreenchange="handleFullscreenChange"/>
 </template>
