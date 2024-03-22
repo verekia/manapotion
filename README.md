@@ -1,7 +1,7 @@
 <h1 align="center">Mana Potion</h1>
 
 <p align="center">
-  <img src="/example/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
+  <img src="/examples/react/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
 Mana Potion is a toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well. Vue support is in progress.
@@ -30,7 +30,7 @@ pnpm add manapotion
 bun add manapotion
 ```
 
-Due to the way Three.js' `WebGPURenderer` is written, in order to use `manapotion` or `@manapotion/r3f` with Vite, you will need to add [top-level await support](https://github.com/verekia/manapotion/blob/main/example/vite.config.ts).
+Due to the way Three.js' `WebGPURenderer` is written, in order to use `manapotion` or `@manapotion/r3f` with Vite, you will need to add [top-level await support](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts).
 
 For React projects that don't use R3F, non-React projects, or if you are not interested in all of the features of Mana Potion, install the packages that are relevant to you independently. For example:
 
@@ -226,7 +226,7 @@ Here are the properties that will be updated on your joystick object:
 - `movementX`
 - `movementY`
 
-See the [example of how to style your joystick](https://github.com/verekia/manapotion/blob/main/example/src/MobileJoystick.tsx).
+See the [example of how to style your joystick](https://github.com/verekia/manapotion/blob/main/examples/react/src/MobileJoystick.tsx).
 
 Multitouch within a single area is not supported, but you can create multiple `<JoystickArea />`. One for movement and one for camera rotation for example.
 
@@ -340,7 +340,7 @@ import { Canvas } from '@manapotion/r3f'
 const App = () => <Canvas forceWebGL={false}>{/* Your scene */}</Canvas>
 ```
 
-👉 Due to how Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/manapotion/blob/main/example/vite.config.ts)).
+👉 Due to how Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts)).
 
 To know if your canvas is currently using WebGPU or WebGL, you can use `useThree` inside the canvas:
 
