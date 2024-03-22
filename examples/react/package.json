@@ -1,7 +1,7 @@
 {
   "name": "example-react",
   "private": true,
-  "version": "0.15.0-alpha.0",
+  "version": "0.15.1-alpha.0",
   "license": "MIT",
   "bump": 1,
   "type": "module",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@react-three/fiber": "^8.15.16",
-    "manapotion": "^0.15.0-alpha.0",
+    "manapotion": "^0.15.1-alpha.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.161.0"
