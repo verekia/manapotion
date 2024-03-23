@@ -1,55 +1,17 @@
 import { useEffect, useRef } from 'react'
 
-import { handleMouseMove, KeyState, mouseMoveCleanup, mp } from '@manapotion/core'
+import { KeyState, mp } from '@manapotion/core'
 
-export type MouseMoveListenerProps = {
-  mouseMovementResetDelay?: number
-  onMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
-}
-
-export const MouseMoveListener = ({
-  mouseMovementResetDelay = 30,
-  onMouseMove,
-}: MouseMoveListenerProps) => {
-  const mouseMovementResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    const highOrderHandleMouseMove = handleMouseMove({
-      onMouseMove,
-      mouseMoveResetDelay: mouseMovementResetDelay,
-      mouseMoveResetTimeout: mouseMovementResetTimeoutRef.current,
-    })
-
-    window.addEventListener('mousemove', highOrderHandleMouseMove)
-
-    return () => {
-      mouseMoveCleanup(mouseMovementResetTimeoutRef.current)
-      window.removeEventListener('mousemove', highOrderHandleMouseMove)
-    }
-  }, [onMouseMove, mouseMovementResetDelay])
-
-  return null
-}
-
-export type PageVisibilityListenerProps = {
-  onVisibilityChange?: (isVisible: boolean) => void
-}
-
-export const PageVisibilityListener = ({ onVisibilityChange }: PageVisibilityListenerProps) => {
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      const isVisible = !document.hidden
-      mp().setPageVisible(isVisible)
-      onVisibilityChange?.(isVisible)
-    }
-
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
-  }, [onVisibilityChange])
-
-  return null
-}
+import {
+  FullscreenChangeListener,
+  FullscreenChangeListenerProps,
+} from './listeners/FullscreenChangeListener'
+import { MouseMoveListener, MouseMoveListenerProps } from './listeners/MouseMoveListener'
+import {
+  PageVisibilityListener,
+  PageVisibilityListenerProps,
+} from './listeners/PageVisibilityListener'
+import { PointerLockListener, PointerLockListenerProps } from './listeners/PointerLockListener'
 
 export type PageFocusListenerProps = {
   clearInputsOnBlur?: boolean
@@ -84,46 +46,6 @@ export const PageFocusListener = ({
       window.removeEventListener('focus', handleFocus)
     }
   }, [onPageFocus, onPageBlur])
-
-  return null
-}
-
-export type PointerLockListenerProps = {
-  onPointerLockChange?: (isPointerLocked: boolean) => void
-}
-
-export const PointerLockListener = ({ onPointerLockChange }: PointerLockListenerProps) => {
-  useEffect(() => {
-    const handlePointerLockChange = () => {
-      const isPointerLocked = Boolean(document.pointerLockElement)
-      mp().setPointerLocked(isPointerLocked)
-      onPointerLockChange?.(isPointerLocked)
-    }
-
-    document.addEventListener('pointerlockchange', handlePointerLockChange)
-
-    return () => document.removeEventListener('pointerlockchange', handlePointerLockChange)
-  }, [onPointerLockChange])
-
-  return null
-}
-
-export type FullscreenChangeListenerProps = {
-  onFullscreenChange?: (isFullscreen: boolean) => void
-}
-
-export const FullscreenChangeListener = ({ onFullscreenChange }: FullscreenChangeListenerProps) => {
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      const isFullscreen = Boolean(document.fullscreenElement)
-      mp().setFullscreen(isFullscreen)
-      onFullscreenChange?.(isFullscreen)
-    }
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange)
-
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
-  }, [onFullscreenChange])
 
   return null
 }

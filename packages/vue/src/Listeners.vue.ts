@@ -1,43 +1,12 @@
-import { defineComponent, h, onMounted, onUnmounted, ref } from 'vue'
+import { defineComponent, h } from 'vue'
 
-import { handleMouseMove, mouseMoveCleanup, mp } from '@manapotion/core'
+import { FullscreenChangeListener } from './listeners/FullscreenChangeListener.vue'
+import { MouseMoveListener } from './listeners/MouseMoveListener.vue'
+import { PageVisibilityListener } from './listeners/PageVisibilityListener.vue'
+import { PointerLockListener } from './listeners/PointerLockListener.vue'
 
-export const FullscreenChangeListener = defineComponent({
-  emits: ['fullscreenchange'],
-  setup(_, { emit }) {
-    const handleFullscreenChange = () => {
-      const isFullscreen = Boolean(document.fullscreenElement)
-      mp().setFullscreen(isFullscreen)
-      emit('fullscreenchange', isFullscreen)
-    }
-
-    onMounted(() => document.addEventListener('fullscreenchange', handleFullscreenChange))
-    onUnmounted(() => document.removeEventListener('fullscreenchange', handleFullscreenChange))
-  },
-  render() {
-    return null
-  },
-})
-
-export const PointerLockListener = defineComponent({
-  emits: ['pointerlockchange'],
-  setup(_, { emit }) {
-    const handlePointerLockChange = () => {
-      const isPointerLocked = Boolean(document.pointerLockElement)
-      mp().setPointerLocked(isPointerLocked)
-      emit('pointerlockchange', isPointerLocked)
-    }
-
-    onMounted(() => document.addEventListener('pointerlockchange', handlePointerLockChange))
-    onUnmounted(() => document.removeEventListener('pointerlockchange', handlePointerLockChange))
-  },
-  render() {
-    return null
-  },
-})
-
-export const MouseMoveListener = defineComponent({
-  emits: ['mousemove'],
+export const Listeners = defineComponent({
+  emits: ['fullscreenchange', 'pointerlockchange', 'mousemove', 'visibilitychange'],
   props: {
     mouseMoveResetDelay: {
       type: Number,
@@ -45,31 +14,6 @@ export const MouseMoveListener = defineComponent({
     },
   },
   setup(props, { emit }) {
-    const mouseMovementResetTimeoutRef = ref<number | undefined>()
-
-    const highOrderHandleMouseMove = handleMouseMove({
-      onMouseMove: (...args: any[]) => emit('mousemove', ...args),
-      mouseMoveResetDelay: props.mouseMoveResetDelay,
-      mouseMoveResetTimeout: mouseMovementResetTimeoutRef.value,
-    })
-
-    onMounted(() => {
-      document.addEventListener('mousemove', highOrderHandleMouseMove)
-    })
-
-    onUnmounted(() => {
-      document.removeEventListener('mousemove', highOrderHandleMouseMove)
-      mouseMoveCleanup(mouseMovementResetTimeoutRef.value)
-    })
-  },
-  render() {
-    return null
-  },
-})
-
-export const Listeners = defineComponent({
-  emits: ['fullscreenchange', 'pointerlockchange', 'mousemove'],
-  setup(_, { emit }) {
     return () => [
       h(FullscreenChangeListener, {
         onFullscreenchange: (isFullscreen: boolean) => emit('fullscreenchange', isFullscreen),
@@ -79,7 +23,12 @@ export const Listeners = defineComponent({
           emit('pointerlockchange', isPointerLocked),
       }),
       h(MouseMoveListener, {
-        onMousemove: (...args: any[]) => emit('mousemove', ...args),
+        onMousemove: (x: number, y: number, movementX: number, movementY: number) =>
+          emit('mousemove', x, y, movementX, movementY),
+        mouseMoveResetDelay: props.mouseMoveResetDelay,
+      }),
+      h(PageVisibilityListener, {
+        onVisibilitychange: (isVisible: boolean) => emit('visibilitychange', isVisible),
       }),
     ]
   },

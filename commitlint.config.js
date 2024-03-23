@@ -13,10 +13,10 @@ module.exports = {
         'vue-example',
         // Packages
         'browser',
+        'core',
         'manapotion',
         'r3f',
         'react',
-        'store',
         'tailwind',
         'util',
         'vue',

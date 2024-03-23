@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { Listeners, mp, useAnimationFrame } from '@manapotion/vue'
+import { isPageVisible, Listeners, mp, useAnimationFrame } from '@manapotion/vue'
 
 import FullscreenButton from './FullscreenButton.vue'
 import PointerLockButton from './PointerLockButton.vue'
@@ -10,8 +10,12 @@ const handleFullscreenChange = (event: Event) => {
   console.log('Fullscreen change!', event)
 }
 
-const handlePointerLockChange = (event: Event) => {
-  console.log('Pointer lock change!', event)
+const handlePointerLockChange = (isPointerLocked: boolean) => {
+  console.log('Pointer lock change!', isPointerLocked)
+}
+
+const handleMouseMove = (x: number, y: number, movementX: number, movementY: number) => {
+  console.log('Mouse move!', x, y, movementX, movementY)
 }
 
 const mouseXRef = ref<HTMLSpanElement | null>(null)
@@ -27,6 +31,16 @@ useAnimationFrame(() => {
   mouseMovementXRef.value!.textContent = String(mouseMovementX)
   mouseMovementYRef.value!.textContent = String(mouseMovementY)
 })
+
+const moveResetDelay = ref(1000)
+
+const handleToggleMoveResetDelay = () => {
+  moveResetDelay.value = moveResetDelay.value === 1000 ? 200 : 1000
+}
+
+const handlePageVisibilityChange = (isVisible: boolean) => {
+  console.log('Page visibility change!', isVisible)
+}
 </script>
 
 <template>
@@ -36,8 +50,15 @@ useAnimationFrame(() => {
   <div>
     Mouse movement: <span ref="mouseMovementXRef"></span> <span ref="mouseMovementYRef"></span>
   </div>
+  <div>Is page visible: {{ isPageVisible }}</div>
+  Toggle mouse reset delay between 1s and 200ms:
+  <button @click="handleToggleMoveResetDelay">{{ moveResetDelay }}ms</button>
+
   <Listeners
+    :mouseMoveResetDelay="moveResetDelay"
+    @mousemove="handleMouseMove"
     @fullscreenchange="handleFullscreenChange"
     @pointerlockchange="handlePointerLockChange"
+    @visibilitychange="handlePageVisibilityChange"
   />
 </template>
