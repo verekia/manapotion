@@ -17,6 +17,8 @@
     "prepare": "husky"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^19.1.0",
+    "commitlint": "^19.2.1",
     "husky": "^9.0.11",
     "lerna": "^8.1.2"
   }
