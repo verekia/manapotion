@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Listeners } from '@manapotion/vue'
+
 import FullscreenButton from './FullscreenButton.vue'
 import PointerLockButton from './PointerLockButton.vue'
 
@@ -15,5 +16,8 @@ const handlePointerLockChange = (event: Event) => {
 <template>
   <FullscreenButton />
   <PointerLockButton />
-  <Listeners @fullscreenchange="handleFullscreenChange" @pointerlockchange="handlePointerLockChange" />
+  <Listeners
+    @fullscreenchange="handleFullscreenChange"
+    @pointerlockchange="handlePointerLockChange"
+  />
 </template>
