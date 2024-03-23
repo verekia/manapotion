@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { isPageVisible, Listeners, mp, useAnimationFrame } from '@manapotion/vue'
+import { isPageFocused, isPageVisible, Listeners, mp, useAnimationFrame } from '@manapotion/vue'
 
 import FullscreenButton from './FullscreenButton.vue'
 import PointerLockButton from './PointerLockButton.vue'
@@ -51,6 +51,7 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
     Mouse movement: <span ref="mouseMovementXRef"></span> <span ref="mouseMovementYRef"></span>
   </div>
   <div>Is page visible: {{ isPageVisible }}</div>
+  <div>Is page focused: {{ isPageFocused }}</div>
   Toggle mouse reset delay between 1s and 200ms:
   <button @click="handleToggleMoveResetDelay">{{ moveResetDelay }}ms</button>
 

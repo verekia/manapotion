@@ -7,48 +7,12 @@ import {
   FullscreenChangeListenerProps,
 } from './listeners/FullscreenChangeListener'
 import { MouseMoveListener, MouseMoveListenerProps } from './listeners/MouseMoveListener'
+import { PageFocusListener, PageFocusListenerProps } from './listeners/PageFocusListener'
 import {
   PageVisibilityListener,
   PageVisibilityListenerProps,
 } from './listeners/PageVisibilityListener'
 import { PointerLockListener, PointerLockListenerProps } from './listeners/PointerLockListener'
-
-export type PageFocusListenerProps = {
-  clearInputsOnBlur?: boolean
-  onPageBlur?: () => void
-  onPageFocus?: () => void
-}
-
-export const PageFocusListener = ({
-  onPageBlur,
-  onPageFocus,
-  clearInputsOnBlur = true,
-}: PageFocusListenerProps) => {
-  useEffect(() => {
-    const handleBlur = () => {
-      mp().setPageFocused(false)
-      onPageBlur?.()
-      if (clearInputsOnBlur) {
-        mp().clearInputs()
-      }
-    }
-
-    const handleFocus = () => {
-      mp().setPageFocused(true)
-      onPageFocus?.()
-    }
-
-    window.addEventListener('blur', handleBlur)
-    window.addEventListener('focus', handleFocus)
-
-    return () => {
-      window.removeEventListener('blur', handleBlur)
-      window.removeEventListener('focus', handleFocus)
-    }
-  }, [onPageFocus, onPageBlur])
-
-  return null
-}
 
 export type ResizeListenerProps = {
   onResize?: (params: {

@@ -2,11 +2,19 @@ import { defineComponent, h } from 'vue'
 
 import { FullscreenChangeListener } from './listeners/FullscreenChangeListener.vue'
 import { MouseMoveListener } from './listeners/MouseMoveListener.vue'
+import { PageFocusListener } from './listeners/PageFocusListener.vue'
 import { PageVisibilityListener } from './listeners/PageVisibilityListener.vue'
 import { PointerLockListener } from './listeners/PointerLockListener.vue'
 
 export const Listeners = defineComponent({
-  emits: ['fullscreenchange', 'pointerlockchange', 'mousemove', 'visibilitychange'],
+  emits: [
+    'fullscreenchange',
+    'pointerlockchange',
+    'mousemove',
+    'visibilitychange',
+    'blur',
+    'focus',
+  ],
   props: {
     mouseMoveResetDelay: {
       type: Number,
@@ -29,6 +37,10 @@ export const Listeners = defineComponent({
       }),
       h(PageVisibilityListener, {
         onVisibilitychange: (isVisible: boolean) => emit('visibilitychange', isVisible),
+      }),
+      h(PageFocusListener, {
+        onBlur: () => emit('blur'),
+        onFocus: () => emit('focus'),
       }),
     ]
   },
