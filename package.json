@@ -12,9 +12,12 @@
     "clean": "rm -rf packages/*/dist",
     "build": "npm run build -w @manapotion/util -w @manapotion/tailwind -w @manapotion/browser -w @manapotion/store -w @manapotion/react -w @manapotion/r3f -w @manapotion/vue -w manapotion",
     "publint": "npm run publint -ws",
-    "pub": "npm run build && npm run publint && lerna publish"
+    "check-format": "npm run check-format -ws",
+    "pub": "npm run build && npm run publint && lerna publish",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.0.11",
     "lerna": "^8.1.2"
   }
 }

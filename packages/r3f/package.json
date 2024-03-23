@@ -34,6 +34,7 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
+    "check-format": "",
     "publint": "publint"
   },
   "peerDependencies": {
