@@ -1,4 +1,4 @@
 export * from './Listeners.vue'
-export * from './store'
+export * from './vue-store'
 
-export * from '@manapotion/store'
+export * from '@manapotion/core'

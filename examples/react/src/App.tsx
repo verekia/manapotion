@@ -15,7 +15,7 @@ import {
   throttleDebounce,
   unlockKeys,
   unlockOrientation,
-  useFrameEffect,
+  useAnimationFrame,
   useMP,
 } from 'manapotion'
 import { Mesh } from 'three'
@@ -83,7 +83,7 @@ const App = () => {
 
   const liveScrollYRef = useRef<HTMLDivElement>(null)
 
-  useFrameEffect(() => {
+  useAnimationFrame(() => {
     liveMouseXRef.current!.textContent = String(mp().mouseX)
     liveMouseYRef.current!.textContent = String(mp().mouseY)
     liveMouseMovementXRef.current!.textContent = String(mp().mouseMovementX)

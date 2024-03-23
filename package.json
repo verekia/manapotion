@@ -10,11 +10,13 @@
     "dev": "cd examples/react && npm run dev",
     "dev-vue": "cd examples/vue && npm run dev",
     "clean": "rm -rf packages/*/dist",
-    "build": "npm run build -w @manapotion/util -w @manapotion/tailwind -w @manapotion/browser -w @manapotion/store -w @manapotion/react -w @manapotion/r3f -w @manapotion/vue -w manapotion",
+    "build": "npm run build -w @manapotion/util -w @manapotion/tailwind -w @manapotion/browser -w @manapotion/core -w @manapotion/react -w @manapotion/r3f -w @manapotion/vue -w manapotion",
     "publint": "npm run publint -ws",
+    "typecheck": "npm run typecheck -ws",
     "format": "npm run format -ws",
     "format:check": "npm run format:check -ws",
     "pub": "npm run build && npm run publint && lerna publish",
+    "pre-push": "npm run typecheck && npm run format:check && npm run build && npm run publint",
     "prepare": "husky"
   },
   "devDependencies": {

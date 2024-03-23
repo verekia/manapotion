@@ -35,12 +35,13 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
+    "typecheck": "tsc",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/store": "^0.15.1-alpha.0"
+    "@manapotion/core": "^0.0.0"
   },
   "peerDependencies": {
     "react": ">=17.0.0",

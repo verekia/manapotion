@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-import { KeyState, mp } from '@manapotion/store'
+import { handleMouseMove, KeyState, mouseMoveCleanup, mp } from '@manapotion/core'
 
 export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
@@ -14,36 +14,17 @@ export const MouseMoveListener = ({
   const mouseMovementResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const mouseX = e.clientX
-      const mouseY = window.innerHeight - e.clientY
-      const mouseMovementX = e.movementX
-      const mouseMovementY = -e.movementY
+    const highOrderHandleMouseMove = handleMouseMove({
+      onMouseMove,
+      mouseMoveResetDelay: mouseMovementResetDelay,
+      mouseMoveResetTimeout: mouseMovementResetTimeoutRef.current,
+    })
 
-      mp().mouseX = mouseX
-      mp().mouseY = mouseY
-      mp().mouseMovementX = mouseMovementX
-      mp().mouseMovementY = mouseMovementY
-      onMouseMove?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
-
-      mouseMovementResetTimeoutRef.current && clearTimeout(mouseMovementResetTimeoutRef.current)
-
-      if (mouseMovementResetDelay) {
-        mouseMovementResetTimeoutRef.current = setTimeout(() => {
-          mp().mouseMovementX = 0
-          mp().mouseMovementY = 0
-          onMouseMove?.(mouseX, mouseY, 0, 0)
-        }, mouseMovementResetDelay)
-      }
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', highOrderHandleMouseMove)
 
     return () => {
-      if (mouseMovementResetTimeoutRef.current) {
-        clearTimeout(mouseMovementResetTimeoutRef.current)
-      }
-      window.removeEventListener('mousemove', handleMouseMove)
+      mouseMoveCleanup(mouseMovementResetTimeoutRef.current)
+      window.removeEventListener('mousemove', highOrderHandleMouseMove)
     }
   }, [onMouseMove, mouseMovementResetDelay])
 

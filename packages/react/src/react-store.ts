@@ -1,4 +1,4 @@
-import { ManaPotionState, manaPotionStore } from '@manapotion/store'
+import { ManaPotionState, manaPotionStore } from '@manapotion/core'
 import { useStore } from 'zustand'
 
 export function useMP(): ManaPotionState
