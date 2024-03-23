@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Canvas as R3FCanvas, CanvasProps } from '@react-three/fiber'
+import { CanvasProps, Canvas as R3FCanvas } from '@react-three/fiber'
 
 let WebGPURenderer: any
 

@@ -1,4 +1,5 @@
 import { defineComponent, h, onMounted, onUnmounted } from 'vue'
+
 import { mp } from '@manapotion/store'
 
 export const FullscreenChangeListener = defineComponent({

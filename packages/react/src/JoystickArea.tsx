@@ -59,7 +59,7 @@ type JoystickAreaProps = {
 
 // react-merge-refs v2.1.1
 function mergeRefs<T = any>(
-  refs: Array<React.MutableRefObject<T> | React.LegacyRef<T> | undefined | null>
+  refs: Array<React.MutableRefObject<T> | React.LegacyRef<T> | undefined | null>,
 ): React.RefCallback<T> {
   return value => {
     refs.forEach(ref => {
@@ -82,7 +82,7 @@ const JoystickAreaBase = (
     onEnd,
     ...props
   }: JoystickAreaProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ) => {
   const localRef = useRef<HTMLDivElement>(null)
   const resetMovementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -183,7 +183,7 @@ const JoystickAreaBase = (
         const fingerPositionY = rect.height - (touch.clientY - rect.top)
 
         const fingerOriginDistance = sqrt(
-          pow(fingerPositionX - joystick.originX, 2) + pow(fingerPositionY - joystick.originY, 2)
+          pow(fingerPositionX - joystick.originX, 2) + pow(fingerPositionY - joystick.originY, 2),
         )
 
         joystick.originAngle =
@@ -207,7 +207,7 @@ const JoystickAreaBase = (
         joystick.currentY = currentY
 
         joystick.originDistance = sqrt(
-          pow(currentX - joystick.originX, 2) + pow(currentY - joystick.originY, 2)
+          pow(currentX - joystick.originX, 2) + pow(currentY - joystick.originY, 2),
         )
 
         if (maxOriginDistance !== undefined) {
@@ -233,7 +233,7 @@ const JoystickAreaBase = (
               (2 * pi)
 
             joystick.followDistance = sqrt(
-              pow(currentX - joystick.followX, 2) + pow(currentY - joystick.followY, 2)
+              pow(currentX - joystick.followX, 2) + pow(currentY - joystick.followY, 2),
             )
             if (joystick.followDistance > maxFollowDistance - 0.01) {
               joystick.followDistance = maxFollowDistance
@@ -249,7 +249,7 @@ const JoystickAreaBase = (
             if (joystick.followDistance >= maxFollowDistance) {
               const oppositeFollowAngle = Math.atan2(
                 joystick.followY - currentY,
-                joystick.followX - currentX
+                joystick.followX - currentX,
               )
               joystick.followX = currentX + maxFollowDistance * cos(oppositeFollowAngle)
               joystick.followY = currentY + maxFollowDistance * sin(oppositeFollowAngle)

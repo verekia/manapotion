@@ -18,7 +18,7 @@ export const clamp = (value: number, min: number, max: number): number =>
 
 export const throttle = (
   callback: (...args: any[]) => void,
-  delay = 100
+  delay = 100,
 ): ((...args: any[]) => void) => {
   if (delay <= 0) return callback
 
@@ -34,7 +34,7 @@ export const throttle = (
 
 export const debounce = (
   callback: (...args: any[]) => void,
-  delay = 100
+  delay = 100,
 ): ((...args: any[]) => void) => {
   if (delay <= 0) return callback
 
@@ -50,7 +50,7 @@ export const debounce = (
 
 export const throttleDebounce = (
   callback: (...args: any[]) => void,
-  delay = 100
+  delay = 100,
 ): ((...args: any[]) => void) => {
   if (delay <= 0) return callback
 

@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
-import { addEffect, addAfterEffect, addTail, type GlobalRenderCallback } from '@react-three/fiber'
+import { addAfterEffect, addEffect, addTail } from '@react-three/fiber'
+
+import type { GlobalRenderCallback } from '@react-three/fiber'
 
 export const useFrameEffect = (callback: GlobalRenderCallback) => {
   useEffect(() => addEffect(callback), [callback])

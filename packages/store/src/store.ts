@@ -1,5 +1,5 @@
-import { createStore } from 'zustand/vanilla'
 import { devtools } from 'zustand/middleware'
+import { createStore } from 'zustand/vanilla'
 
 export type KeyState = {
   code: string
@@ -121,7 +121,7 @@ export const manaPotionStore = createStore<ManaPotionState>()(
 
     // Custom
     setCustom: (key, value) => set(() => ({ [key]: value })),
-  }))
+  })),
 )
 
 export const mp = () => manaPotionStore.getState()
