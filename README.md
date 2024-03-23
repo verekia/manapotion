@@ -480,6 +480,10 @@ export default {
 }
 ```
 
+## Contributing
+
+See the [contributing guide](https://github.com/verekia/manapotion/blob/main/CONTRIBUTING.md).
+
 ## License
 
 MIT

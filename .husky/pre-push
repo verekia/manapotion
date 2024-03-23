@@ -1,1 +1,1 @@
-npm run check-format
+npm run format:check

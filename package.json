@@ -12,7 +12,8 @@
     "clean": "rm -rf packages/*/dist",
     "build": "npm run build -w @manapotion/util -w @manapotion/tailwind -w @manapotion/browser -w @manapotion/store -w @manapotion/react -w @manapotion/r3f -w @manapotion/vue -w manapotion",
     "publint": "npm run publint -ws",
-    "check-format": "npm run check-format -ws",
+    "format": "npm run format -ws",
+    "format:check": "npm run format:check -ws",
     "pub": "npm run build && npm run publint && lerna publish",
     "prepare": "husky"
   },

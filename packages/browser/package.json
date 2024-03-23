@@ -34,7 +34,8 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "check-format": "prettier --check .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "publint": "publint"
   },
   "devDependencies": {
