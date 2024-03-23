@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@manapotion/browser": "^0.15.1-alpha.0",
-    "@manapotion/store": "^0.15.1-alpha.0",
     "@manapotion/tailwind": "^0.15.1-alpha.0",
     "@manapotion/util": "^0.15.1-alpha.0",
     "@manapotion/vue": "^0.15.1-alpha.0",
