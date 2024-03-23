@@ -1,6 +1,6 @@
-import { defineComponent, h, onMounted, onUnmounted } from 'vue'
+import { defineComponent, h, onMounted, onUnmounted, ref } from 'vue'
 
-import { mp } from '@manapotion/core'
+import { handleMouseMove, mouseMoveCleanup, mp } from '@manapotion/core'
 
 export const FullscreenChangeListener = defineComponent({
   emits: ['fullscreenchange'],
@@ -36,8 +36,39 @@ export const PointerLockListener = defineComponent({
   },
 })
 
+export const MouseMoveListener = defineComponent({
+  emits: ['mousemove'],
+  props: {
+    mouseMoveResetDelay: {
+      type: Number,
+      default: 30,
+    },
+  },
+  setup(props, { emit }) {
+    const mouseMovementResetTimeoutRef = ref<number | undefined>()
+
+    const highOrderHandleMouseMove = handleMouseMove({
+      onMouseMove: (...args: any[]) => emit('mousemove', ...args),
+      mouseMoveResetDelay: props.mouseMoveResetDelay,
+      mouseMoveResetTimeout: mouseMovementResetTimeoutRef.value,
+    })
+
+    onMounted(() => {
+      document.addEventListener('mousemove', highOrderHandleMouseMove)
+    })
+
+    onUnmounted(() => {
+      document.removeEventListener('mousemove', highOrderHandleMouseMove)
+      mouseMoveCleanup(mouseMovementResetTimeoutRef.value)
+    })
+  },
+  render() {
+    return null
+  },
+})
+
 export const Listeners = defineComponent({
-  emits: ['fullscreenchange', 'pointerlockchange'],
+  emits: ['fullscreenchange', 'pointerlockchange', 'mousemove'],
   setup(_, { emit }) {
     return () => [
       h(FullscreenChangeListener, {
@@ -46,6 +77,9 @@ export const Listeners = defineComponent({
       h(PointerLockListener, {
         onPointerlockchange: (isPointerLocked: boolean) =>
           emit('pointerlockchange', isPointerLocked),
+      }),
+      h(MouseMoveListener, {
+        onMousemove: (...args: any[]) => emit('mousemove', ...args),
       }),
     ]
   },

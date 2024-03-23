@@ -16,7 +16,8 @@
     "format": "npm run format -ws",
     "format:check": "npm run format:check -ws",
     "pub": "npm run build && npm run publint && lerna publish",
-    "pre-push": "npm run typecheck && npm run format:check && npm run build && npm run publint",
+    "check-all": "npm run typecheck && npm run format:check && npm run build && npm run publint",
+    "pre-push": "npm run check-all",
     "prepare": "husky"
   },
   "devDependencies": {
