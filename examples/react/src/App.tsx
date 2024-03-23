@@ -95,12 +95,12 @@ const App = () => {
 
   return (
     <>
-      <div className="pt-5 container mx-auto px-5">
-        <div className="flex items-center gap-5 justify-center flex-col sm:flex-row mb-5">
+      <div className="container mx-auto px-5 pt-5">
+        <div className="mb-5 flex flex-col items-center justify-center gap-5 sm:flex-row">
           <img src="/mana-potion.webp" className="w-20" alt="Logo" />
           <div className="flex flex-col gap-3">
             <h1 className="text-5xl font-medium">Mana Potion</h1>
-            <h2 className="text-left text-2xl max-w-72 text-pretty text-gray-300">
+            <h2 className="max-w-72 text-pretty text-left text-2xl text-gray-300">
               Game Dev Toolkit for React and React Three Fiber
             </h2>
           </div>
@@ -145,7 +145,7 @@ const App = () => {
         <div>
           <h2>Fullscreen: {isFullscreen ? 'Yes' : 'No'}</h2>
           <button
-            className="bg-gray-700 rounded-md px-2 py-1"
+            className="rounded-md bg-gray-700 px-2 py-1"
             onClick={isFullscreen ? exitFullscreen : enterFullscreen}
           >
             Toggle Fullscreen
@@ -154,36 +154,36 @@ const App = () => {
         <div>
           <h2>Orientation (use after fullscreen on mobile)</h2>
           <button
-            className="bg-gray-700 rounded-md px-2 py-1"
+            className="rounded-md bg-gray-700 px-2 py-1"
             onClick={() => lockOrientation('landscape')}
           >
             Landscape
           </button>
           <button
-            className="bg-gray-700 rounded-md px-2 py-1"
+            className="rounded-md bg-gray-700 px-2 py-1"
             onClick={() => lockOrientation('portrait')}
           >
             Portrait
           </button>
-          <button className="bg-gray-700 rounded-md px-2 py-1" onClick={unlockOrientation}>
+          <button className="rounded-md bg-gray-700 px-2 py-1" onClick={unlockOrientation}>
             Unlock orientation
           </button>
         </div>
         <div>
           <h2>Keyboard lock (use after fullscreen on desktop)</h2>
           <button
-            className="bg-gray-700 rounded-md px-2 py-1"
+            className="rounded-md bg-gray-700 px-2 py-1"
             onClick={() => lockKeys(['Escape', 'KeyW', 'KeyA', 'KeyS', 'KeyD'])}
           >
             Lock Esc and WASD
           </button>
-          <button className="bg-gray-700 rounded-md px-2 py-1" onClick={() => unlockKeys()}>
+          <button className="rounded-md bg-gray-700 px-2 py-1" onClick={() => unlockKeys()}>
             Release keys
           </button>
         </div>
         <div>
           <h2>Pointer is locked: {isPointerLocked ? 'Yes' : 'No'}</h2>
-          <button className="bg-gray-700 rounded-md px-2 py-1" onClick={lockPointer}>
+          <button className="rounded-md bg-gray-700 px-2 py-1" onClick={lockPointer}>
             Lock pointer
           </button>
         </div>
@@ -217,14 +217,14 @@ const App = () => {
           </div>
           <textarea
             readOnly
-            className="bg-gray-700 w-full max-w-[500px] h-[100px]"
+            className="h-[100px] w-full max-w-[500px] bg-gray-700"
             value={JSON.stringify(keys)}
           />
         </div>
       </div>
       <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transform">
         {renderer}
-        <button className="bg-gray-700 rounded-md px-2 py-1 ml-2" onClick={toggleRenderer}>
+        <button className="ml-2 rounded-md bg-gray-700 px-2 py-1" onClick={toggleRenderer}>
           Change
         </button>
       </div>

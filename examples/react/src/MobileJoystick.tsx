@@ -44,7 +44,7 @@ const MobileJoystick = () => {
     <JoystickArea
       joystick={joystick}
       maxFollowDistance={50}
-      className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 size-56 z-10 border desktop:hidden border-blue-500"
+      className="absolute left-1/2 top-1/2 z-10 size-56 -translate-x-1/2 -translate-y-1/2 border border-blue-500 desktop:hidden"
       onStart={() => setIsHelperShown(false)}
     >
       {isHelperShown && (
@@ -62,7 +62,7 @@ const MobileJoystick = () => {
       />
       <div
         ref={joystickFollowRef}
-        className="pointer-events-none absolute -bottom-6 -left-6 size-12 rounded-full bg-green-500 transition-opacity opacity-0"
+        className="pointer-events-none absolute -bottom-6 -left-6 size-12 rounded-full bg-green-500 opacity-0 transition-opacity"
       />
     </JoystickArea>
   )
