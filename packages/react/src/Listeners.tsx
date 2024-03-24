@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react'
 
-import { KeyState, mp } from '@manapotion/core'
+import { mp } from '@manapotion/core'
 
 import { DeviceTypeListener, DeviceTypeListenerProps } from './listeners/DeviceTypeListener'
 import { FullscreenListener, FullscreenListenerProps } from './listeners/FullscreenListener'
+import { KeyboardListener, KeyboardListenerProps } from './listeners/KeyboardListener'
 import { MouseButtonsListener, MouseButtonsListenerProps } from './listeners/MouseButtonsListener'
 import { MouseMoveListener, MouseMoveListenerProps } from './listeners/MouseMoveListener'
 import { PageFocusListener, PageFocusListenerProps } from './listeners/PageFocusListener'
@@ -17,51 +18,6 @@ import {
   ScreenOrientationListener,
   ScreenOrientationListenerProps,
 } from './listeners/ScreenOrientationListener'
-
-type KeyboardListenerProps = {
-  onKeydown?: (keyState: KeyState) => void
-  onKeyup?: (code: string, key: string) => void
-}
-
-// https://w3c.github.io/uievents/tools/key-event-viewer.html
-export const KeyboardListener = ({ onKeydown, onKeyup }: KeyboardListenerProps) => {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const { key, code } = e
-
-      if (mp().keys.byCode[code] || mp().keys.byKey[key]) {
-        return
-      }
-
-      const keyState = {
-        key,
-        code,
-        ctrl: e.ctrlKey,
-        shift: e.shiftKey,
-        alt: e.altKey,
-        meta: e.metaKey,
-      }
-
-      onKeydown?.(keyState)
-      mp().setKeyDown(keyState)
-    }
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      mp().setKeyUp(e.code, e.key)
-      onKeyup?.(e.code, e.key)
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    window.addEventListener('keyup', handleKeyUp)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-      window.removeEventListener('keyup', handleKeyUp)
-    }
-  }, [onKeydown, onKeyup])
-
-  return null
-}
 
 export type MouseScrollListenerProps = {
   onScroll?: (deltaY: number) => void
@@ -163,8 +119,8 @@ export const Listeners = ({
   onRightMouseUp,
   onScroll,
   mouseScrollResetDelay = 100,
-  onKeydown,
-  onKeyup,
+  onKeyDown,
+  onKeyUp,
 }: ListenersProps) => (
   <>
     <MouseMoveListener
@@ -186,7 +142,7 @@ export const Listeners = ({
       onMiddleMouseUp={onMiddleMouseUp}
       onRightMouseUp={onRightMouseUp}
     />
-    <KeyboardListener onKeydown={onKeydown} onKeyup={onKeyup} />
+    <KeyboardListener onKeyDown={onKeyDown} onKeyUp={onKeyUp} />
     <MouseScrollListener onScroll={onScroll} mouseScrollResetDelay={mouseScrollResetDelay} />
   </>
 )

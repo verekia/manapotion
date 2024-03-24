@@ -3,6 +3,7 @@ export * from './vue-store'
 export * from './vue-hooks'
 
 export * from './listeners/DeviceTypeListener.vue'
+export * from './listeners/KeyboardListener.vue'
 export * from './listeners/FullscreenListener.vue'
 export * from './listeners/MouseButtonsListener.vue'
 export * from './listeners/MouseMoveListener.vue'

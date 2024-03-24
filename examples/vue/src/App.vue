@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import {
   isDesktop,
@@ -11,6 +11,7 @@ import {
   isPageVisible,
   isPortrait,
   isRightMouseDown,
+  keys,
   Listeners,
   mp,
   useAnimationFrame,
@@ -48,6 +49,8 @@ useAnimationFrame(() => {
 const handlePageVisibilityChange = (isVisible: boolean) => {
   console.log('Page visibility change!', isVisible)
 }
+
+const jsonKeys = computed(() => JSON.stringify(keys.value))
 </script>
 
 <template>
@@ -67,6 +70,12 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
   <div>
     Mouse buttons: Left: {{ isLeftMouseDown }}, Middle: {{ isMiddleMouseDown }}, Right:
     {{ isRightMouseDown }}
+  </div>
+  <div>
+    <div>
+      <b>Keyboard</b>
+    </div>
+    <textarea readonly class="h-[100px] w-full max-w-[500px]" :value="jsonKeys" />
   </div>
 
   <Listeners

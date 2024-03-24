@@ -23,8 +23,11 @@
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@manapotion/tailwind": "^0.15.1-alpha.0",
     "@vitejs/plugin-vue": "^5.0.4",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5.4.3",
     "vite": "^5.2.0",
     "vue-tsc": "^2.0.6"

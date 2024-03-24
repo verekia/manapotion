@@ -288,12 +288,12 @@ const App = () => {
             `onPointerLockChange – isPointerLocked: ${isPointerLocked}`,
           )
         }
-        onKeydown={({ code, alt, ctrl, key, meta, shift }) =>
+        onKeyDown={({ code, alt, ctrl, key, meta, shift }) =>
           eventNotificationRef.current.setMessage(
             `onKeydown – code: ${code}, key: ${key}, alt: ${alt}, ctrl: ${ctrl}, meta: ${meta}, shift: ${shift}`,
           )
         }
-        onKeyup={(code, key) =>
+        onKeyUp={(code, key) =>
           eventNotificationRef.current.setMessage(`onKeyup – code: ${code}, key: ${key}`)
         }
         onMouseMoveUpdate={(x, y, movementX, movementY) =>

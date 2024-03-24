@@ -13,6 +13,7 @@ export const isDesktop = ref(manaPotionStore.getState().isDesktop)
 export const isLeftMouseDown = ref(manaPotionStore.getState().isLeftMouseDown)
 export const isMiddleMouseDown = ref(manaPotionStore.getState().isMiddleMouseDown)
 export const isRightMouseDown = ref(manaPotionStore.getState().isRightMouseDown)
+export const keys = ref(manaPotionStore.getState().keys)
 
 // TODO: Use reactive() to make a single object
 
@@ -28,4 +29,5 @@ manaPotionStore.subscribe(() => {
   isLeftMouseDown.value = manaPotionStore.getState().isLeftMouseDown
   isMiddleMouseDown.value = manaPotionStore.getState().isMiddleMouseDown
   isRightMouseDown.value = manaPotionStore.getState().isRightMouseDown
+  keys.value = manaPotionStore.getState().keys
 })

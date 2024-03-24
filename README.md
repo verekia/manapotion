@@ -242,6 +242,7 @@ const App = () => {
 
 The listeners that won't be an issue even with many re-renders are:
 
+- ✅ KeyboardListener
 - ✅ MouseButtonsListener
 - ✅ MouseMoveListener
 - ✅ PageFocusListener

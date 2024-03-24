@@ -2,7 +2,7 @@
 import { theme } from '@manapotion/tailwind'
 
 export default {
-  content: ['./index.html', './src/**/*.tsx'],
+  content: ['./index.html', './src/**/*.vue'],
   theme: {
     screens: theme.screens,
     extend: {

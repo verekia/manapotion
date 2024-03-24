@@ -1,7 +1,10 @@
 import { defineComponent, h } from 'vue'
 
+import { KeyState } from '@manapotion/core'
+
 import { DeviceTypeListener } from './listeners/DeviceTypeListener.vue'
 import { FullscreenListener } from './listeners/FullscreenListener.vue'
+import { KeyboardListener } from './listeners/KeyboardListener.vue'
 import { MouseButtonsListener } from './listeners/MouseButtonsListener.vue'
 import { MouseMoveListener } from './listeners/MouseMoveListener.vue'
 import { PageFocusListener } from './listeners/PageFocusListener.vue'
@@ -26,6 +29,8 @@ export const Listeners = defineComponent({
     'left-mouse-up',
     'middle-mouse-up',
     'right-mouse-up',
+    'key-down',
+    'key-up',
   ],
   props: {
     mouseMovementResetDelay: {
@@ -85,6 +90,10 @@ export const Listeners = defineComponent({
         onLeftMouseUp: () => emit('left-mouse-up'),
         onMiddleMouseUp: () => emit('middle-mouse-up'),
         onRightMouseUp: () => emit('right-mouse-up'),
+      }),
+      h(KeyboardListener, {
+        onKeyDown: (keyState: KeyState) => emit('key-down', keyState),
+        onKeyUp: (code: string, key: string) => emit('key-up', code, key),
       }),
     ]
   },
