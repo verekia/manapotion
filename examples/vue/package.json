@@ -1,7 +1,7 @@
 {
   "name": "example-vue",
   "private": true,
-  "version": "0.15.2-alpha.1",
+  "version": "0.16.0-alpha.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,7 +16,7 @@
     "@manapotion/browser": "^0.15.2-alpha.0",
     "@manapotion/tailwind": "^0.15.2-alpha.0",
     "@manapotion/util": "^0.15.2-alpha.0",
-    "@manapotion/vue": "^0.15.2-alpha.1",
+    "@manapotion/vue": "^0.16.0-alpha.0",
     "vue": "^3.4.21"
   },
   "devDependencies": {
