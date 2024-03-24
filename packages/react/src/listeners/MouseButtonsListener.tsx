@@ -20,14 +20,7 @@ export const MouseButtonsListener = ({
         onMiddleMouseUp,
         onRightMouseUp,
       }),
-    [
-      onLeftMouseDown,
-      onMiddleMouseDown,
-      onRightMouseDown,
-      onLeftMouseUp,
-      onMiddleMouseUp,
-      onRightMouseUp,
-    ],
+    [],
   )
 
   return null

@@ -6,7 +6,10 @@ export const MouseScrollListener = ({
   onScroll,
   mouseScrollResetDelay = 100,
 }: MouseScrollListenerProps) => {
-  useEffect(() => mountMouseScrollListener({ onScroll, mouseScrollResetDelay }), [onScroll])
+  useEffect(
+    () => mountMouseScrollListener({ onScroll, mouseScrollResetDelay }),
+    [mouseScrollResetDelay],
+  )
 
   return null
 }

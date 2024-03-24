@@ -6,11 +6,8 @@ export const PageFocusListener = ({
   onPageFocusChange,
   clearInputsOnBlur = true,
 }: PageFocusListenerProps) => {
-  useEffect(
-    () => mountBlurListener({ onPageFocusChange, clearInputsOnBlur }),
-    [onPageFocusChange, clearInputsOnBlur],
-  )
-  useEffect(() => mountFocusListener({ onPageFocusChange }), [onPageFocusChange])
+  useEffect(() => mountBlurListener({ onPageFocusChange, clearInputsOnBlur }), [clearInputsOnBlur])
+  useEffect(() => mountFocusListener({ onPageFocusChange }), [])
 
   return null
 }

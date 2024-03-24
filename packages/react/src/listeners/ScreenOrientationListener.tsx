@@ -5,10 +5,7 @@ import { mountScreenOrientationListener, ScreenOrientationListenerProps } from '
 export const ScreenOrientationListener = ({
   onScreenOrientationChange,
 }: ScreenOrientationListenerProps) => {
-  useEffect(
-    () => mountScreenOrientationListener({ onScreenOrientationChange }),
-    [onScreenOrientationChange],
-  )
+  useEffect(() => mountScreenOrientationListener({ onScreenOrientationChange }), [])
 
   return null
 }

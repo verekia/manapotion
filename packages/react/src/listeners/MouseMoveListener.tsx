@@ -8,7 +8,7 @@ export const MouseMoveListener = ({
 }: MouseMoveListenerProps) => {
   useEffect(
     () => mountMouseMoveListener({ onMouseMove, mouseMovementResetDelay }),
-    [onMouseMove, mouseMovementResetDelay],
+    [mouseMovementResetDelay],
   )
 
   return null

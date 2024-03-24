@@ -320,7 +320,7 @@ const JoystickAreaBase = (
       element.removeEventListener('touchmove', handleTouchMove)
       element.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [joystick, maxFollowDistance, maxOriginDistance, onEnd, onMove, onStart])
+  }, [joystick, maxFollowDistance, maxOriginDistance])
 
   if (!joystick) {
     console.error('JoystickArea: an joystick object is required')
