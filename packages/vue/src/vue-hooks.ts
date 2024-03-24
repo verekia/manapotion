@@ -1,25 +1,13 @@
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
+
+import { startAnimationFrame } from '@manapotion/core'
 
 export const useAnimationFrame = (callback: (deltaTime: number) => void) => {
-  const requestRef = ref<number | undefined>()
-  const previousTimeRef = ref<number | undefined>()
-
-  const animate = (time: number) => {
-    if (previousTimeRef.value !== undefined) {
-      const deltaTime = time - previousTimeRef.value
-      callback(deltaTime)
-    }
-    previousTimeRef.value = time
-    requestRef.value = requestAnimationFrame(animate)
-  }
+  let unsub = () => {}
 
   onMounted(() => {
-    requestRef.value = requestAnimationFrame(animate)
+    unsub = startAnimationFrame(callback)
   })
 
-  onUnmounted(() => {
-    if (requestRef.value !== undefined) {
-      cancelAnimationFrame(requestRef.value)
-    }
-  })
+  onUnmounted(unsub)
 }

@@ -11,6 +11,7 @@ module.exports = {
         // Examples
         'react-example',
         'vue-example',
+        'vanilla-example',
         // Packages
         'browser',
         'core',

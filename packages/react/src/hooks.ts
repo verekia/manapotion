@@ -1,20 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
+
+import { startAnimationFrame } from '@manapotion/core'
 
 export const useAnimationFrame = (callback: (deltaTime: number) => void) => {
-  const requestRef = useRef<number | undefined>()
-  const previousTimeRef = useRef<number | undefined>()
-
-  const animate = (time: number) => {
-    if (previousTimeRef.current !== undefined) {
-      const deltaTime = time - previousTimeRef.current
-      callback(deltaTime)
-    }
-    previousTimeRef.current = time
-    requestRef.current = requestAnimationFrame(animate)
-  }
-
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(requestRef.current!)
-  }, [])
+  useEffect(
+    () => startAnimationFrame(callback),
+    // By not including `callback` in the dependencies array, we ensure that the effect is
+    // only run once, at the cost of not being able to update the callback function.
+    [],
+  )
 }

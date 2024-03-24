@@ -13,9 +13,7 @@
     "publint": ""
   },
   "dependencies": {
-    "@manapotion/browser": "^0.16.0",
     "@manapotion/tailwind": "^0.16.0",
-    "@manapotion/util": "^0.16.0",
     "@manapotion/vue": "^0.16.0",
     "vue": "^3.4.21"
   },

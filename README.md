@@ -13,6 +13,7 @@ Mana Potion is a toolkit for JavaScript game development and interactive experie
 Mana Potion consists of:
 
 - [**Listeners and a reactive store**](#listeners-and-reactive-store)
+- [**Animation loops**](#animation-loops)
 - [**Headless virtual joysticks**](#virtual-joysticks)
 - [**Browser API helpers**](#browser-api-helpers)
 - [**General math and gamedev utilities**](#utilities)
@@ -79,7 +80,7 @@ import { Listeners } from '@manapotion/vue'
 ```js
 import { listeners } from '@manapotion/vanilla'
 
-const unsubscribe = listeners()
+const unsubscribe = listeners({})
 
 // call unsubscribe() to stop listening
 ```
@@ -327,7 +328,63 @@ listeners({
 })
 ```
 
-### Virtual joysticks
+## Animation loops
+
+If you are not using React Three Fiber or TresJS, you will need an animation loop to update your scene elements. You can use the `useAnimationFrame` hook to run your animation loop per component:
+
+**React**
+
+```jsx
+import { useRef } from 'react'
+import { useAnimationFrame } from '@manapotion/react'
+
+import player from './player'
+
+const Player = () => {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useAnimationFrame(() => {
+    ref.current!.style.transform = `translate(${player.x}px, ${player.y}px)`
+  })
+
+  return <div ref={ref}>Player</div>
+}
+```
+
+**Vue**
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useAnimationFrame } from '@manapotion/vue'
+
+import player from './player'
+
+const playerRef = ref<HTMLDivElement | null>(null)
+
+useAnimationFrame(() => {
+  playerRef.value!.style.transform = `translate(${player.x}px, ${player.y}px)`
+})
+</script>
+
+<template>
+  <div :ref="playerRef">Player</div>
+</template>
+```
+
+**Vanilla**
+
+```ts
+import { startAnimationFrame } from '@manapotion/vanilla'
+
+const unsubscribe = startAnimationFrame(() => {
+  // Your animation loop
+})
+
+// call unsubscribe() to stop the animation loop
+```
+
+## Virtual joysticks
 
 ⚠️ React-only for now ⚠️
 
