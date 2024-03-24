@@ -1,21 +1,15 @@
 import { mp } from '../store'
 
-let mouseMoveResetTimeout: ReturnType<typeof setTimeout> | null = null
+let mouseMovementResetTimeout: ReturnType<typeof setTimeout> | null = null
 
-export const handleMouseMove =
-  ({
-    onMove,
-    mouseMoveResetDelay,
-  }: {
-    onMove?: (
-      mouseX: number,
-      mouseY: number,
-      mouseMovementX: number,
-      mouseMovementY: number,
-    ) => void
-    mouseMoveResetDelay: number
-  }) =>
-  (e: MouseEvent) => {
+export const mountMouseMoveListener = ({
+  onMove,
+  mouseMovementResetDelay,
+}: {
+  onMove?: (mouseX: number, mouseY: number, mouseMovementX: number, mouseMovementY: number) => void
+  mouseMovementResetDelay: number
+}) => {
+  const handler = (e: MouseEvent) => {
     const mouseX = e.clientX
     const mouseY = window.innerHeight - e.clientY
     const mouseMovementX = e.movementX
@@ -27,17 +21,21 @@ export const handleMouseMove =
     mp().mouseMovementY = mouseMovementY
     onMove?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
 
-    mouseMoveResetTimeout && clearTimeout(mouseMoveResetTimeout)
+    mouseMovementResetTimeout && clearTimeout(mouseMovementResetTimeout)
 
-    if (mouseMoveResetDelay) {
-      mouseMoveResetTimeout = setTimeout(() => {
+    if (mouseMovementResetDelay) {
+      mouseMovementResetTimeout = setTimeout(() => {
         mp().mouseMovementX = 0
         mp().mouseMovementY = 0
         onMove?.(mouseX, mouseY, 0, 0)
-      }, mouseMoveResetDelay)
+      }, mouseMovementResetDelay)
     }
   }
 
-export const mouseMoveCleanup = () => {
-  mouseMoveResetTimeout && clearTimeout(mouseMoveResetTimeout)
+  window.addEventListener('mousemove', handler)
+
+  return () => {
+    mouseMovementResetTimeout && clearTimeout(mouseMovementResetTimeout)
+    window.removeEventListener('mousemove', handler)
+  }
 }

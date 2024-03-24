@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { handleMouseMove, mouseMoveCleanup } from '@manapotion/core'
+import { mountMouseMoveListener } from '@manapotion/core'
 
 export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
@@ -11,19 +11,10 @@ export const MouseMoveListener = ({
   mouseMovementResetDelay = 30,
   onMouseMove,
 }: MouseMoveListenerProps) => {
-  useEffect(() => {
-    const handler = handleMouseMove({
-      onMove: onMouseMove,
-      mouseMoveResetDelay: mouseMovementResetDelay,
-    })
-
-    window.addEventListener('mousemove', handler)
-
-    return () => {
-      mouseMoveCleanup()
-      window.removeEventListener('mousemove', handler)
-    }
-  }, [onMouseMove, mouseMovementResetDelay])
+  useEffect(
+    () => mountMouseMoveListener({ onMove: onMouseMove, mouseMovementResetDelay }),
+    [onMouseMove, mouseMovementResetDelay],
+  )
 
   return null
 }

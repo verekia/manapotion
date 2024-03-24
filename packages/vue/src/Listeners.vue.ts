@@ -16,7 +16,7 @@ export const Listeners = defineComponent({
     'focus',
   ],
   props: {
-    mouseMoveResetDelay: {
+    mouseMovementResetDelay: {
       type: Number,
       default: 30,
     },
@@ -33,7 +33,7 @@ export const Listeners = defineComponent({
       h(MouseMoveListener, {
         onMousemove: (x: number, y: number, movementX: number, movementY: number) =>
           emit('mousemove', x, y, movementX, movementY),
-        mouseMoveResetDelay: props.mouseMoveResetDelay,
+        mouseMovementResetDelay: props.mouseMovementResetDelay,
       }),
       h(PageVisibilityListener, {
         onVisibilitychange: (isVisible: boolean) => emit('visibilitychange', isVisible),

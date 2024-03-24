@@ -1,39 +1,38 @@
-import { defineComponent, onUnmounted, watchEffect } from 'vue'
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 
-import { handleMouseMove } from '@manapotion/core'
+import { mountMouseMoveListener } from '@manapotion/core'
 
 export const MouseMoveListener = defineComponent({
   emits: ['mousemove'],
   props: {
-    mouseMoveResetDelay: {
+    mouseMovementResetDelay: {
       type: Number,
       default: 30,
     },
   },
   setup(props, { emit }) {
-    let currentHandler: ((e: MouseEvent) => void) | null = null
-
-    watchEffect(() => {
-      if (currentHandler) {
-        document.removeEventListener('mousemove', currentHandler)
-        currentHandler = null
-      }
-
-      const newHandler = handleMouseMove({
+    let unsub = () => {}
+    onMounted(() => {
+      unsub = mountMouseMoveListener({
         onMove: (x: number, y: number, movementX: number, movementY: number) =>
           emit('mousemove', x, y, movementX, movementY),
-        mouseMoveResetDelay: props.mouseMoveResetDelay,
+        mouseMovementResetDelay: props.mouseMovementResetDelay,
       })
-
-      document.addEventListener('mousemove', newHandler)
-      currentHandler = newHandler
     })
 
-    onUnmounted(() => {
-      if (currentHandler) {
-        document.removeEventListener('mousemove', currentHandler)
-      }
-    })
+    watch(
+      () => props.mouseMovementResetDelay,
+      newDelay => {
+        unsub()
+        unsub = mountMouseMoveListener({
+          onMove: (x: number, y: number, movementX: number, movementY: number) =>
+            emit('mousemove', x, y, movementX, movementY),
+          mouseMovementResetDelay: newDelay,
+        })
+      },
+    )
+
+    onUnmounted(unsub)
   },
   render() {
     return null

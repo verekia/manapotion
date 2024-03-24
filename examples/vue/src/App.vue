@@ -52,7 +52,7 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
   <button @click="handleToggleMoveResetDelay">{{ moveResetDelay }}ms</button>
 
   <Listeners
-    :mouseMoveResetDelay="moveResetDelay"
+    :mouseMovementResetDelay="moveResetDelay"
     @fullscreenchange="handleFullscreenChange"
     @pointerlockchange="handlePointerLockChange"
     @visibilitychange="handlePageVisibilityChange"
