@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 import { manaPotionStore } from '@manapotion/core'
 
@@ -15,19 +15,32 @@ export const isMiddleMouseDown = ref(manaPotionStore.getState().isMiddleMouseDow
 export const isRightMouseDown = ref(manaPotionStore.getState().isRightMouseDown)
 export const keys = ref(manaPotionStore.getState().keys)
 
-// TODO: Use reactive() to make a single object
+export const mpRefs = reactive({
+  isFullscreen,
+  isPointerLocked,
+  isPageVisible,
+  isPageFocused,
+  isLandscape,
+  isPortrait,
+  isMobile,
+  isDesktop,
+  isLeftMouseDown,
+  isMiddleMouseDown,
+  isRightMouseDown,
+  keys,
+})
 
-manaPotionStore.subscribe(() => {
-  isFullscreen.value = manaPotionStore.getState().isFullscreen
-  isPointerLocked.value = manaPotionStore.getState().isPointerLocked
-  isPageVisible.value = manaPotionStore.getState().isPageVisible
-  isPageFocused.value = manaPotionStore.getState().isPageFocused
-  isLandscape.value = manaPotionStore.getState().isLandscape
-  isPortrait.value = manaPotionStore.getState().isPortrait
-  isMobile.value = manaPotionStore.getState().isMobile
-  isDesktop.value = manaPotionStore.getState().isDesktop
-  isLeftMouseDown.value = manaPotionStore.getState().isLeftMouseDown
-  isMiddleMouseDown.value = manaPotionStore.getState().isMiddleMouseDown
-  isRightMouseDown.value = manaPotionStore.getState().isRightMouseDown
-  keys.value = manaPotionStore.getState().keys
+manaPotionStore.subscribe(state => {
+  isFullscreen.value = state.isFullscreen
+  isPointerLocked.value = state.isPointerLocked
+  isPageVisible.value = state.isPageVisible
+  isPageFocused.value = state.isPageFocused
+  isLandscape.value = state.isLandscape
+  isPortrait.value = state.isPortrait
+  isMobile.value = state.isMobile
+  isDesktop.value = state.isDesktop
+  isLeftMouseDown.value = state.isLeftMouseDown
+  isMiddleMouseDown.value = state.isMiddleMouseDown
+  isRightMouseDown.value = state.isRightMouseDown
+  keys.value = state.keys
 })

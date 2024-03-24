@@ -4,7 +4,6 @@ import { computed, ref } from 'vue'
 import {
   isDesktop,
   isLandscape,
-  isLeftMouseDown,
   isMiddleMouseDown,
   isMobile,
   isPageFocused,
@@ -14,6 +13,7 @@ import {
   keys,
   Listeners,
   mp,
+  mpRefs,
   useAnimationFrame,
 } from '@manapotion/vue'
 
@@ -77,7 +77,7 @@ const jsonKeys = computed(() => JSON.stringify(keys.value))
   <div>Is landscape: {{ isLandscape }}</div>
   <div>Window size: <span ref="windowWidthRef" /> <span ref="windowHeightRef" /></div>
   <div>
-    Mouse buttons: Left: {{ isLeftMouseDown }}, Middle: {{ isMiddleMouseDown }}, Right:
+    Mouse buttons: Left: {{ mpRefs.isLeftMouseDown }}, Middle: {{ isMiddleMouseDown }}, Right:
     {{ isRightMouseDown }}
   </div>
   <div>

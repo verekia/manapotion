@@ -4,79 +4,33 @@
   <img src="/examples/react/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
-Mana Potion is a toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well. Vue support is in progress.
+Mana Potion is a toolkit for JavaScript game development and interactive experiences. It supports React, Vue, and vanilla JavaScript.
 
 **Important**: Mana Potion is in early development and the API is subject to change. Until we hit 1.0.0, expect breaking changes in minor versions.
 
-## Installation
+## What is Mana Potion?
 
 Mana Potion consists of:
 
-- [**`@manapotion/react`**](#react-listeners-store-and-virtual-joystick): React listeners, store, and virtual joystick
-- [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
-- [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas and hooks
-- [**`@manapotion/util`**](#utilities): General gamedev utilities
-- [**`@manapotion/vue`**](#vue-listeners-and-store): Vue listeners and store (WIP)
-- [**`@manapotion/vanilla`**](#vanilla-listeners-and-store): Framework-agnostic listeners and store (WIP)
-- [**`@manapotion/tailwind`**](#tailwind): Tailwind media queries
+- [**Listeners and a reactive store**](#listeners-and-reactive-store)
+- [**Headless virtual joysticks**](#virtual-joysticks)
+- [**Browser API helpers**](#browser-api-helpers)
+- [**General gamedev utilities**](#utilities)
+- [**Tailwind media queries**](#tailwind)
+- [**React Three Fiber WebGPU canvas and hooks**](#react-three-fiber)
 
-Due to the way Three.js' `WebGPURenderer` is written, in order to use `@manapotion/r3f` with Vite, you will need to add [top-level await support](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts).
+## Installation
 
-If you are making a React game without React Three Fiber, install `@manapotion/react`:
+- If you use React Three Fiber, install `@manapotion/r3f`
+- If you use React _without R3F_, install `@manapotion/react`
+- If you use Vue, install `@manapotion/vue`
+- If you don't use these frameworks, install `@manapotion/vanilla`
 
-```sh
-# NPM
-npm install @manapotion/react
-# Yarn
-yarn add @manapotion/react
-# PNPM
-pnpm add @manapotion/react
-# Bun
-bun add @manapotion/react
-```
+Note for R3F: Due to the way Three.js' `WebGPURenderer` is written, in order to use `@manapotion/r3f` with Vite, you will need to add [top-level await support](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts). If that's not possible, use `@manapotion/react` instead for now. If you do use `@manapotion/r3f`, all the imports from `@manapotion/react` are available directly from `@manapotion/r3f`.
 
-If you are making a React Three Fiber game, install `@manapotion/r3f` instead:
+## Listeners and reactive store
 
-```sh
-# NPM
-npm install @manapotion/r3f
-# Yarn
-yarn add @manapotion/r3f
-# PNPM
-pnpm add @manapotion/r3f
-# Bun
-bun add @manapotion/r3f
-```
-
-If you are making a Vue game, install `@manapotion/vue`:
-
-```sh
-# NPM
-npm install @manapotion/vue
-# Yarn
-yarn add @manapotion/vue
-# PNPM
-pnpm add @manapotion/vue
-# Bun
-bun add @manapotion/vue
-```
-
-If you are making a game without any of these frameworks, install `@manapotion/vanilla`:
-
-```sh
-# NPM
-npm install @manapotion/vanilla
-# Yarn
-yarn add @manapotion/vanilla
-# PNPM
-pnpm add @manapotion/vanilla
-# Bun
-bun add @manapotion/vanilla
-```
-
-## React Listeners, Store, and Virtual Joystick
-
-⚛️ **`@manapotion/react`** is the main package of Mana Potion. It contains listeners that update a reactive store which you can use as a hook in your components or access directly in your imperative code.
+At the heart of Mana Potion is a [Zustand](https://github.com/pmndrs/zustand) store that gets updated by event listeners. You can access this store imperatively in your animation loop or reactively in your components.
 
 The listeners available are:
 
@@ -94,6 +48,8 @@ The listeners available are:
 
 To enable them all, simply add `<Listeners />` to your app:
 
+**React**
+
 ```jsx
 import { Listeners } from '@manapotion/react'
 
@@ -105,11 +61,36 @@ const App = () => (
 )
 ```
 
+**Vue**
+
+```vue
+<script setup lang="ts">
+import { Listeners } from '@manapotion/vue'
+</script>
+
+<template>
+  <div>Your game</div>
+  <Listeners />
+</template>
+```
+
+**Vanilla**
+
+```js
+import { listeners } from '@manapotion/vanilla'
+
+const unsubscribe = listeners()
+
+// call unsubscribe() to stop listening
+```
+
 This will automatically give you access to some reactive and non-reactive variables.
 
 🗿 **Non-reactive** variables may be frequently updated and should be accessed imperatively in your main loop:
 
 ```jsx
+import { mp } from '@manapotion/react' // or /vue or /vanilla
+
 const animate = () => {
   const { mouseMovementX } = mp()
   // Move the camera
@@ -128,11 +109,18 @@ const animate = () => {
 }
 ```
 
-Or reactively in components to trigger a re-render with the `useMP` hook. It is a [Zustand](https://github.com/pmndrs/zustand) store, so you must pass a selector to it:
+Or reactively in components to trigger re-renders:
+
+**React**
+
+There are hooks available for all the reactive variables, but you can also use `useMP` by passing a selector to it:
 
 ```jsx
+import { useMP, useIsLeftMouseDown } from '@manapotion/react'
 
 const Component = () => {
+  const isLeftMouseDown = useIsLeftMouseDown()
+  // or
   const isRightMouseDown = useMP(s => s.isRightMouseDown)
 
   // Some reactive component
@@ -140,7 +128,36 @@ const Component = () => {
 }
 ```
 
+**Vue**
+
+All the reactive variables are available as refs, either individually or via `mpRefs`:
+
+```vue
+<script setup lang="ts">
+import { isLeftMouseDown, mpRefs } from '@manapotion/vue'
+</script>
+
+<template>
+  <div>{{ isLeftMouseDown }}</div>
+  <div>{{ mpRefs.isRightMouseDown }}</div>
+</template>
+```
+
+**Vanilla**
+
+There is no reactivity system in vanilla JavaScript, so you can use [callbacks](#callbacks) to update your app state when the store changes. You can also subscribe to the Zustand store directly to watch for changes:
+
+```js
+import { manaPotionStore } from '@manapotion/vanilla'
+
+const unsubscribe = manaPotionStore.subscribe(state => {
+  console.log(state.isLeftMouseDown)
+})
+```
+
 Here are the variables available:
+
+Legend: ⚡️ **Reactive**, 🗿 **Non-reactive**
 
 ### 🌐 General browser state
 
@@ -165,13 +182,44 @@ Here are the variables available:
 - 🗿 `mouseMovementY` (going up is positive)
 - 🗿 `mouseWheelDeltaY`
 
-### Coming soon
+### Keys
 
-- 🚧 Gamepads
+Keyboard `keys` are available in two versions,`keys.byCode` and `keys.byKey`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`byCode`) of the key or the character being typed as a key (`byKey`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
+
+Here is how you would handle going forward when the user presses W (or Z on French keyboards):
+
+```js
+const animate = () => {
+  if (mp().keys.byCode.KeyW) {
+    // Go forward
+  }
+}
+```
+
+For keyboard events, just like all other events, you can add a custom callback to `<Listeners />`:
+
+```jsx
+const App = () => {
+  const handleKeyDown = e => {
+    if (e.code === 'Space') {
+      jump()
+    }
+  }
+
+  return (
+    <>
+      <div>Your game</div>
+      <Listeners onKeyDown={handleKeyDown} />
+    </>
+  )
+}
+```
 
 ### Callbacks
 
 You can provide custom event callbacks to `<Listeners />` or to individual listeners:
+
+**React**
 
 ```jsx
 <Listeners onFullscreenUpdate={handleFullscreenUpdate} />
@@ -259,40 +307,29 @@ The Listeners that are called once when initialized and may need memoization dep
 
 This mechanism may be improved in the future.
 
-### Keys
+**Vue**
 
-Keyboard `keys` are available in two versions,`keys.byCode` and `keys.byKey`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`byCode`) of the key or the character being typed as a key (`byKey`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
-
-Here is how you would handle going forward when the user presses W (or Z on French keyboards):
-
-```js
-const animate = () => {
-  if (mp().keys.byCode.KeyW) {
-    // Go forward
-  }
-}
+```vue
+<Listeners @fullscreen-update="handleFullscreenUpdate" />
+<!-- or -->
+<FullscreenListener @fullscreen-update="handleFullscreenUpdate" />
 ```
 
-For keyboard events, just like all other events, you can add a custom callback to `<Listeners />`:
+Vue might have a similar issue as the one mentioned above for React. Let me know on [Discord](https://discord.gg/29RGwTBTay) if you have recommendations on how to handle this.
 
-```jsx
-const App = () => {
-  const handleKeyDown = e => {
-    if (e.code === 'Space') {
-      jump()
-    }
-  }
+**Vanilla**
 
-  return (
-    <>
-      <div>Your game</div>
-      <Listeners onKeyDown={handleKeyDown} />
-    </>
-  )
-}
+⚠️ Not implemented yet ⚠️
+
+```js
+listeners({
+  onFullscreenUpdate: handleFullscreenUpdate,
+})
 ```
 
 ### Mobile Joysticks
+
+⚠️ React-only for now ⚠️
 
 Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. You must create a joystick object with `createJoystick()`, and pass it to `<JoystickArea />`. You can choose between 2 modes, follow or origin, by setting `maxFollowDistance` or `maxOriginDistance`:
 
@@ -340,7 +377,7 @@ Multitouch within a single area is not supported, but you can create multiple `<
 
 ### Augmenting the store
 
-You can add your own variables to the store by augmenting the `ManaPotionState` interface from `@manapotion/react` or from `manapotion` in a global definition file such as `global.d.ts` at the root of your project:
+You can add your own variables to the store by augmenting the `ManaPotionState` interface from `@manapotion/react`, `@manapotion/vue`, or `@manapotion/vanilla` in a global definition file such as `global.d.ts` at the root of your project:
 
 ```ts
 import { ManaPotionState } from '@manapotion/react'
@@ -387,17 +424,9 @@ const MobileUI = () => (
 
 Note that you don't have to do this, you can just make them a global variable somewhere in your app, or put them in your own store. This is just a way to keep all inputs in the Mana Potion store.
 
-## Vue Listeners and Store
-
-This package is a work in progress.
-
-## Vanilla Listeners and Store
-
-This package is a work in progress.
-
 ## Browser API Helpers
 
-🌐 **`@manapotion/browser`** provides helper functions to reduce some browser APIs boilerplate:
+Mana Potion provides helper functions to reduce some browser APIs boilerplate:
 
 - `enterFullscreen`
 - `exitFullscreen`
@@ -418,11 +447,11 @@ import {
   unlockOrientation,
   lockKeys,
   unlockKeys,
-} from '@manapotion/browser'
-import { useMp } from '@manapotion/react'
+  useIsFullscreen,
+} from '@manapotion/react'
 
 const FullscreenButton = () => {
-  const isFullscreen = useMp(s => s.isFullscreen)
+  const isFullscreen = useIsFullscreen()
 
   return (
     <button
@@ -453,7 +482,7 @@ const FullscreenButton = () => {
 ```jsx
 import { Canvas } from '@manapotion/r3f'
 
-const App = () => <Canvas forceWebGL={false}>{/* Your scene */}</Canvas>
+const App = () => <Canvas>{/* Your scene */}</Canvas>
 ```
 
 👉 Due to how Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts)).
@@ -520,7 +549,7 @@ You can use `useFrameEffect` to animate your UI outside of the `Canvas`.
 
 # Utilities
 
-🛠 **`@manapotion/util`** provides a few utility functions that are useful for JS gamedev in general.
+Mana Potion provides a few utility functions that are useful for JS gamedev and animations in general.
 
 - `lerp`: Linear interpolation.
 - `clamp`: Clamps a number between a minimum and a maximum value.
