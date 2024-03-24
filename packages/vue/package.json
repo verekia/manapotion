@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/vue",
-  "version": "0.16.0-alpha.0",
+  "version": "0.16.0",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -40,9 +40,9 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/browser": "^0.15.2-alpha.0",
-    "@manapotion/core": "^0.16.0-alpha.0",
-    "@manapotion/util": "^0.15.2-alpha.0"
+    "@manapotion/browser": "^0.16.0",
+    "@manapotion/core": "^0.16.0",
+    "@manapotion/util": "^0.16.0"
   },
   "peerDependencies": {
     "vue": ">=3.3.0",
