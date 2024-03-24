@@ -7,6 +7,8 @@ export const mountFullscreenListener = (onChange?: (isFullscreen: boolean) => vo
     onChange?.(isFullscreen)
   }
 
+  handler()
+
   document.addEventListener('fullscreenchange', handler)
 
   return () => document.removeEventListener('fullscreenchange', handler)

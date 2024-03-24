@@ -1,6 +1,6 @@
 import { defineComponent, h } from 'vue'
 
-import { FullscreenChangeListener } from './listeners/FullscreenChangeListener.vue'
+import { FullscreenListener } from './listeners/FullscreenListener.vue'
 import { MouseMoveListener } from './listeners/MouseMoveListener.vue'
 import { PageFocusListener } from './listeners/PageFocusListener.vue'
 import { PageVisibilityListener } from './listeners/PageVisibilityListener.vue'
@@ -23,7 +23,7 @@ export const Listeners = defineComponent({
   },
   setup(props, { emit }) {
     return () => [
-      h(FullscreenChangeListener, {
+      h(FullscreenListener, {
         onFullscreenchange: (isFullscreen: boolean) => emit('fullscreenchange', isFullscreen),
       }),
       h(PointerLockListener, {

@@ -2,7 +2,7 @@ export * from './Listeners.vue'
 export * from './vue-store'
 export * from './vue-hooks'
 
-export * from './listeners/FullscreenChangeListener.vue'
+export * from './listeners/FullscreenListener.vue'
 export * from './listeners/MouseMoveListener.vue'
 export * from './listeners/PageFocusListener.vue'
 export * from './listeners/PageVisibilityListener.vue'

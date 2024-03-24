@@ -2,10 +2,7 @@ import { useEffect, useRef } from 'react'
 
 import { KeyState, mp } from '@manapotion/core'
 
-import {
-  FullscreenChangeListener,
-  FullscreenChangeListenerProps,
-} from './listeners/FullscreenChangeListener'
+import { FullscreenListener, FullscreenListenerProps } from './listeners/FullscreenListener'
 import { MouseMoveListener, MouseMoveListenerProps } from './listeners/MouseMoveListener'
 import { PageFocusListener, PageFocusListenerProps } from './listeners/PageFocusListener'
 import {
@@ -31,6 +28,7 @@ export const DeviceTypeListener = ({ onDeviceTypeChange }: DeviceTypeListenerPro
       onDeviceTypeChange?.({ isDesktop, isMobile })
     }
 
+    // The listeners that have an initial call like this are problematic because the call gets triggered at every rerender of Listeners because the function is recreated every time
     handleDeviceTypeChange()
 
     desktopQuery.addEventListener('change', handleDeviceTypeChange)
@@ -227,7 +225,7 @@ export type ListenersProps = MouseMoveListenerProps &
   PageVisibilityListenerProps &
   PageFocusListenerProps &
   PointerLockListenerProps &
-  FullscreenChangeListenerProps &
+  FullscreenListenerProps &
   ResizeListenerProps &
   DeviceTypeListenerProps &
   ScreenOrientationListenerProps &
@@ -265,7 +263,7 @@ export const Listeners = ({
     <PageVisibilityListener onVisibilityChange={onVisibilityChange} />
     <PageFocusListener onPageBlur={onPageBlur} onPageFocus={onPageFocus} />
     <PointerLockListener onPointerLockChange={onPointerLockChange} />
-    <FullscreenChangeListener onFullscreenChange={onFullscreenChange} />
+    <FullscreenListener onFullscreenChange={onFullscreenChange} />
     <ResizeListener onResize={onResize} />
     <DeviceTypeListener onDeviceTypeChange={onDeviceTypeChange} />
     <ScreenOrientationListener onScreenOrientationChange={onScreenOrientationChange} />

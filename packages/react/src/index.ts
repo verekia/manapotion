@@ -3,7 +3,7 @@ export * from './Listeners'
 export * from './react-store'
 export * from './JoystickArea'
 
-export * from './listeners/FullscreenChangeListener'
+export * from './listeners/FullscreenListener'
 export * from './listeners/MouseMoveListener'
 export * from './listeners/PageFocusListener'
 export * from './listeners/PageVisibilityListener'

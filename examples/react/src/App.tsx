@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { ForwardedRef, forwardRef, useImperativeHandle, useRef, useState } from 'react'
 
 import {
   Canvas,
@@ -57,6 +57,32 @@ export const throttledDebouncedHello = throttleDebounce(
   1000,
 )
 
+const EventNotificationBase = (_: any, ref: ForwardedRef<any>) => {
+  const messageRef = useRef<HTMLDivElement>(null)
+  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useImperativeHandle(ref, () => ({
+    setMessage: (message: string) => {
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current)
+      }
+      messageRef.current!.textContent = message
+      hideTimeoutRef.current = setTimeout(() => {
+        messageRef.current!.textContent = ''
+      }, 2000)
+    },
+  }))
+
+  return (
+    <div className="fixed bottom-3 right-3 w-full max-w-lg rounded-lg border p-4">
+      <div>Events:</div>
+      <div ref={messageRef} />
+    </div>
+  )
+}
+
+const EventNotification = forwardRef(EventNotificationBase)
+
 const App = () => {
   const [renderer, setRenderer] = useState('WebGPU')
   const toggleRenderer = () => setRenderer(renderer === 'WebGPU' ? 'WebGL' : 'WebGPU')
@@ -82,6 +108,8 @@ const App = () => {
   const liveHeightRef = useRef<HTMLSpanElement>(null)
 
   const liveScrollYRef = useRef<HTMLDivElement>(null)
+
+  const eventNotificationRef = useRef<any>(null)
 
   useAnimationFrame(() => {
     liveMouseXRef.current!.textContent = String(mp().mouseX)
@@ -245,11 +273,37 @@ const App = () => {
         <Box position={[1.2, 0, 0]} />
       </Canvas>
       <Listeners
-        onPointerLockChange={isPointerLocked => console.log('isPointerLocked', isPointerLocked)}
-        mouseMovementResetDelay={100}
-        onKeydown={keyState => console.log(keyState)}
+        onPointerLockChange={isPointerLocked =>
+          eventNotificationRef.current.setMessage(
+            `onPointerLockChange – isPointerLocked: ${isPointerLocked}`,
+          )
+        }
+        onKeydown={({ code, alt, ctrl, key, meta, shift }) =>
+          eventNotificationRef.current.setMessage(
+            `onKeydown – code: ${code}, key: ${key}, alt: ${alt}, ctrl: ${ctrl}, meta: ${meta}, shift: ${shift}`,
+          )
+        }
+        onKeyup={(code, key) =>
+          eventNotificationRef.current.setMessage(`onKeyup – code: ${code}, key: ${key}`)
+        }
+        onMouseMove={(x, y, movementX, movementY) =>
+          eventNotificationRef.current.setMessage(
+            `onMouseMove – x: ${x}, y: ${y}, movementX: ${movementX}, movementY: ${movementY}`,
+          )
+        }
+        onDeviceTypeChange={({ isDesktop, isMobile }) =>
+          eventNotificationRef.current.setMessage(
+            `onDeviceTypeChange – isDesktop: ${isDesktop}, isMobile: ${isMobile}`,
+          )
+        }
+        onFullscreenChange={isFullscreen =>
+          eventNotificationRef.current.setMessage(
+            `onFullscreenChange – isFullscreen: ${isFullscreen}`,
+          )
+        }
       />
       <MobileJoystick />
+      <EventNotification ref={eventNotificationRef} />
     </>
   )
 }

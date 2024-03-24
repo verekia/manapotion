@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { handleBlur, handleFocus } from '@manapotion/core'
+import { mountBlurListener, mountFocusListener } from '@manapotion/core'
 
 export type PageFocusListenerProps = {
   clearInputsOnBlur?: boolean
@@ -13,18 +13,12 @@ export const PageFocusListener = ({
   onPageFocus,
   clearInputsOnBlur = true,
 }: PageFocusListenerProps) => {
-  useEffect(() => {
-    const blurHandler = handleBlur({ onPageBlur, clearInputsOnBlur })
-    const focusHandler = handleFocus({ onPageFocus })
+  useEffect(
+    () => mountBlurListener({ onPageBlur, clearInputsOnBlur }),
+    [onPageBlur, clearInputsOnBlur],
+  )
 
-    window.addEventListener('blur', blurHandler)
-    window.addEventListener('focus', focusHandler)
-
-    return () => {
-      window.removeEventListener('blur', blurHandler)
-      window.removeEventListener('focus', focusHandler)
-    }
-  }, [onPageFocus, onPageBlur, clearInputsOnBlur])
+  useEffect(() => mountFocusListener(onPageFocus), [onPageFocus])
 
   return null
 }

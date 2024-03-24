@@ -1,6 +1,6 @@
-import { defineComponent, onMounted, onUnmounted } from 'vue'
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 
-import { handleBlur, handleFocus } from '@manapotion/core'
+import { mountBlurListener, mountFocusListener } from '@manapotion/core'
 
 export const PageFocusListener = defineComponent({
   emits: ['blur', 'focus'],
@@ -11,19 +11,31 @@ export const PageFocusListener = defineComponent({
     },
   },
   setup(props, { emit }) {
-    const blurHandler = handleBlur({
-      onPageBlur: () => emit('blur'),
-      clearInputsOnBlur: props.clearInputsOnBlur,
-    })
-    const focusHandler = handleFocus({ onPageFocus: () => emit('focus') })
+    let unsubBlur = () => {}
+    let unsubFocus = () => {}
 
     onMounted(() => {
-      window.addEventListener('blur', blurHandler)
-      window.addEventListener('focus', focusHandler)
+      unsubBlur = mountBlurListener({
+        onPageBlur: () => emit('blur'),
+        clearInputsOnBlur: props.clearInputsOnBlur,
+      })
+      unsubFocus = mountFocusListener(() => emit('focus'))
     })
+
+    watch(
+      () => props.clearInputsOnBlur,
+      newClearInputsOnBlur => {
+        unsubBlur()
+        unsubBlur = mountBlurListener({
+          onPageBlur: () => emit('blur'),
+          clearInputsOnBlur: newClearInputsOnBlur,
+        })
+      },
+    )
+
     onUnmounted(() => {
-      window.removeEventListener('blur', blurHandler)
-      window.removeEventListener('focus', focusHandler)
+      unsubBlur()
+      unsubFocus()
     })
   },
   render() {
