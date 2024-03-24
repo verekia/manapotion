@@ -245,6 +245,7 @@ The listeners that won't be an issue even with many re-renders are:
 - ✅ KeyboardListener
 - ✅ MouseButtonsListener
 - ✅ MouseMoveListener
+- ✅ MouseScrollListener
 - ✅ PageFocusListener
 
 The Listeners that are called once when initialized and may need memoization depending on your use case are:

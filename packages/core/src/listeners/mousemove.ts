@@ -1,6 +1,6 @@
 import { mp } from '../store'
 
-let mouseMovementResetTimeout: ReturnType<typeof setTimeout> | null = null
+let movementResetTimeout: ReturnType<typeof setTimeout> | null = null
 
 export const mountMouseMoveListener = ({
   onUpdate,
@@ -26,10 +26,10 @@ export const mountMouseMoveListener = ({
     mp().mouseMovementY = mouseMovementY
     onUpdate?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
 
-    mouseMovementResetTimeout && clearTimeout(mouseMovementResetTimeout)
+    movementResetTimeout && clearTimeout(movementResetTimeout)
 
     if (mouseMovementResetDelay) {
-      mouseMovementResetTimeout = setTimeout(() => {
+      movementResetTimeout = setTimeout(() => {
         mp().mouseMovementX = 0
         mp().mouseMovementY = 0
         onUpdate?.(mouseX, mouseY, 0, 0)
@@ -40,7 +40,7 @@ export const mountMouseMoveListener = ({
   window.addEventListener('mousemove', handler)
 
   return () => {
-    mouseMovementResetTimeout && clearTimeout(mouseMovementResetTimeout)
+    movementResetTimeout && clearTimeout(movementResetTimeout)
     window.removeEventListener('mousemove', handler)
   }
 }

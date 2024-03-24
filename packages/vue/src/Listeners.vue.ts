@@ -7,6 +7,7 @@ import { FullscreenListener } from './listeners/FullscreenListener.vue'
 import { KeyboardListener } from './listeners/KeyboardListener.vue'
 import { MouseButtonsListener } from './listeners/MouseButtonsListener.vue'
 import { MouseMoveListener } from './listeners/MouseMoveListener.vue'
+import { MouseScrollListener } from './listeners/MouseScrollListener.vue'
 import { PageFocusListener } from './listeners/PageFocusListener.vue'
 import { PageVisibilityListener } from './listeners/PageVisibilityListener.vue'
 import { PointerLockListener } from './listeners/PointerLockListener.vue'
@@ -31,6 +32,7 @@ export const Listeners = defineComponent({
     'right-mouse-up',
     'key-down',
     'key-up',
+    'scroll',
   ],
   props: {
     mouseMovementResetDelay: {
@@ -40,6 +42,10 @@ export const Listeners = defineComponent({
     clearInputsOnBlur: {
       type: Boolean,
       default: true,
+    },
+    mouseScrollResetDelay: {
+      type: Number,
+      default: 500,
     },
   },
   setup(props, { emit }) {
@@ -94,6 +100,10 @@ export const Listeners = defineComponent({
       h(KeyboardListener, {
         onKeyDown: (keyState: KeyState) => emit('key-down', keyState),
         onKeyUp: (code: string, key: string) => emit('key-up', code, key),
+      }),
+      h(MouseScrollListener, {
+        onScroll: (deltaY: number) => emit('scroll', deltaY),
+        mouseScrollResetDelay: props.mouseScrollResetDelay,
       }),
     ]
   },

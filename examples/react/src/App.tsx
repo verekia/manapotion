@@ -316,6 +316,13 @@ const App = () => {
             `onScreenOrientationChange – isPortrait: ${isPortrait}, isLandscape: ${isLandscape}`,
           )
         }
+        onLeftMouseDown={() => eventNotificationRef.current.setMessage('onLeftMouseDown')}
+        onMiddleMouseDown={() => eventNotificationRef.current.setMessage('onMiddleMouseDown')}
+        onRightMouseDown={() => eventNotificationRef.current.setMessage('onRightMouseDown')}
+        onLeftMouseUp={() => eventNotificationRef.current.setMessage('onLeftMouseUp')}
+        onMiddleMouseUp={() => eventNotificationRef.current.setMessage('onMiddleMouseUp')}
+        onRightMouseUp={() => eventNotificationRef.current.setMessage('onRightMouseUp')}
+        onScroll={deltaY => eventNotificationRef.current.setMessage(`onScroll – deltaY: ${deltaY}`)}
       />
     </>
   )

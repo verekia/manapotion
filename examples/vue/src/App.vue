@@ -34,9 +34,18 @@ const mouseMovementXRef = ref<HTMLSpanElement | null>(null)
 const mouseMovementYRef = ref<HTMLSpanElement | null>(null)
 const windowWidthRef = ref<HTMLSpanElement | null>(null)
 const windowHeightRef = ref<HTMLSpanElement | null>(null)
+const mouseScrollRef = ref<HTMLSpanElement | null>(null)
 
 useAnimationFrame(() => {
-  const { mouseX, mouseY, mouseMovementX, mouseMovementY, windowWidth, windowHeight } = mp()
+  const {
+    mouseX,
+    mouseY,
+    mouseMovementX,
+    mouseMovementY,
+    windowWidth,
+    windowHeight,
+    mouseWheelDeltaY,
+  } = mp()
 
   mouseXRef.value!.textContent = String(mouseX)
   mouseYRef.value!.textContent = String(mouseY)
@@ -44,6 +53,7 @@ useAnimationFrame(() => {
   mouseMovementYRef.value!.textContent = String(mouseMovementY)
   windowWidthRef.value!.textContent = String(windowWidth)
   windowHeightRef.value!.textContent = String(windowHeight)
+  mouseScrollRef.value!.textContent = String(mouseWheelDeltaY)
 })
 
 const handlePageVisibilityChange = (isVisible: boolean) => {
@@ -56,17 +66,16 @@ const jsonKeys = computed(() => JSON.stringify(keys.value))
 <template>
   <FullscreenButton />
   <PointerLockButton />
-  <div>Mouse position: <span ref="mouseXRef"></span> <span ref="mouseYRef"></span></div>
-  <div>
-    Mouse movement: <span ref="mouseMovementXRef"></span> <span ref="mouseMovementYRef"></span>
-  </div>
+  <div>Mouse position: <span ref="mouseXRef" /> <span ref="mouseYRef" /></div>
+  <div>Mouse movement: <span ref="mouseMovementXRef" /> <span ref="mouseMovementYRef" /></div>
+  <div>Mouse scroll: <span ref="mouseScrollRef" /></div>
   <div>Is page visible: {{ isPageVisible }}</div>
   <div>Is page focused: {{ isPageFocused }}</div>
   <div>Is mobile: {{ isMobile }}</div>
   <div>Is desktop: {{ isDesktop }}</div>
   <div>Is portrait: {{ isPortrait }}</div>
   <div>Is landscape: {{ isLandscape }}</div>
-  <div>Window size: <span ref="windowWidthRef"></span> <span ref="windowHeightRef"></span></div>
+  <div>Window size: <span ref="windowWidthRef" /> <span ref="windowHeightRef" /></div>
   <div>
     Mouse buttons: Left: {{ isLeftMouseDown }}, Middle: {{ isMiddleMouseDown }}, Right:
     {{ isRightMouseDown }}

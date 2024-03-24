@@ -1,12 +1,9 @@
-import { useEffect, useRef } from 'react'
-
-import { mp } from '@manapotion/core'
-
 import { DeviceTypeListener, DeviceTypeListenerProps } from './listeners/DeviceTypeListener'
 import { FullscreenListener, FullscreenListenerProps } from './listeners/FullscreenListener'
 import { KeyboardListener, KeyboardListenerProps } from './listeners/KeyboardListener'
 import { MouseButtonsListener, MouseButtonsListenerProps } from './listeners/MouseButtonsListener'
 import { MouseMoveListener, MouseMoveListenerProps } from './listeners/MouseMoveListener'
+import { MouseScrollListener, MouseScrollListenerProps } from './listeners/MouseScrollListener'
 import { PageFocusListener, PageFocusListenerProps } from './listeners/PageFocusListener'
 import {
   PageVisibilityListener,
@@ -18,44 +15,6 @@ import {
   ScreenOrientationListener,
   ScreenOrientationListenerProps,
 } from './listeners/ScreenOrientationListener'
-
-export type MouseScrollListenerProps = {
-  onScroll?: (deltaY: number) => void
-  mouseScrollResetDelay?: number
-}
-
-export const MouseScrollListener = ({
-  onScroll,
-  mouseScrollResetDelay = 500,
-}: MouseScrollListenerProps) => {
-  const mouseWheelResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => {
-    const handleMouseScroll = (e: WheelEvent) => {
-      const deltaY = e.deltaY
-
-      onScroll?.(deltaY)
-      mp().mouseWheelDeltaY = deltaY
-
-      if (mouseWheelResetTimeoutRef.current) {
-        clearTimeout(mouseWheelResetTimeoutRef.current)
-      }
-
-      if (mouseScrollResetDelay) {
-        mouseWheelResetTimeoutRef.current = setTimeout(() => {
-          onScroll?.(0)
-          mp().mouseWheelDeltaY = 0
-        }, mouseScrollResetDelay)
-      }
-    }
-
-    window.addEventListener('wheel', handleMouseScroll)
-
-    return () => window.removeEventListener('wheel', handleMouseScroll)
-  }, [onScroll])
-
-  return null
-}
 
 type ListenersMouseMoveProps = Omit<MouseMoveListenerProps, 'onUpdate'> & {
   onMouseMoveUpdate?: MouseMoveListenerProps['onUpdate']
@@ -102,7 +61,7 @@ export type ListenersProps = ListenersMouseMoveProps &
   MouseScrollListenerProps
 
 export const Listeners = ({
-  mouseMovementResetDelay = 30,
+  mouseMovementResetDelay,
   onMouseMoveUpdate,
   onPageVisibilityUpdate,
   onPageFocusUpdate,
@@ -118,7 +77,7 @@ export const Listeners = ({
   onMiddleMouseUp,
   onRightMouseUp,
   onScroll,
-  mouseScrollResetDelay = 100,
+  mouseScrollResetDelay,
   onKeyDown,
   onKeyUp,
 }: ListenersProps) => (
