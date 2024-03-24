@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/vanilla",
-  "version": "0.17.0",
+  "version": "0.17.1",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@manapotion/browser": "^0.17.0",
-    "@manapotion/core": "^0.17.0",
+    "@manapotion/core": "^0.17.1",
     "@manapotion/util": "^0.17.0"
   },
   "devDependencies": {
