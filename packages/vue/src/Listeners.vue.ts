@@ -7,6 +7,7 @@ import { PageFocusListener } from './listeners/PageFocusListener.vue'
 import { PageVisibilityListener } from './listeners/PageVisibilityListener.vue'
 import { PointerLockListener } from './listeners/PointerLockListener.vue'
 import { ResizeListener } from './listeners/ResizeListener.vue'
+import { ScreenOrientationListener } from './listeners/ScreenOrientationListener.vue'
 
 export const Listeners = defineComponent({
   emits: [
@@ -17,6 +18,7 @@ export const Listeners = defineComponent({
     'page-focus-update',
     'resize-update',
     'device-type-update',
+    'screen-orientation-update',
   ],
   props: {
     mouseMovementResetDelay: {
@@ -64,6 +66,10 @@ export const Listeners = defineComponent({
       h(DeviceTypeListener, {
         onUpdate: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) =>
           emit('device-type-update', { isDesktop, isMobile }),
+      }),
+      h(ScreenOrientationListener, {
+        onUpdate: ({ isPortrait, isLandscape }: { isPortrait: boolean; isLandscape: boolean }) =>
+          emit('screen-orientation-update', { isPortrait, isLandscape }),
       }),
     ]
   },

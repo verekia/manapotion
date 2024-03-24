@@ -311,6 +311,11 @@ const App = () => {
             `onFullscreenChange – isFullscreen: ${isFullscreen}`,
           )
         }
+        onScreenOrientationUpdate={({ isPortrait, isLandscape }) =>
+          eventNotificationRef.current.setMessage(
+            `onScreenOrientationChange – isPortrait: ${isPortrait}, isLandscape: ${isLandscape}`,
+          )
+        }
       />
     </>
   )

@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { isPageFocused, isPageVisible, Listeners, mp, useAnimationFrame } from '@manapotion/vue'
+import {
+  isDesktop,
+  isLandscape,
+  isMobile,
+  isPageFocused,
+  isPageVisible,
+  isPortrait,
+  Listeners,
+  mp,
+  useAnimationFrame,
+} from '@manapotion/vue'
 
 import FullscreenButton from './FullscreenButton.vue'
 import PointerLockButton from './PointerLockButton.vue'
@@ -46,6 +56,10 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
   </div>
   <div>Is page visible: {{ isPageVisible }}</div>
   <div>Is page focused: {{ isPageFocused }}</div>
+  <div>Is mobile: {{ isMobile }}</div>
+  <div>Is desktop: {{ isDesktop }}</div>
+  <div>Is portrait: {{ isPortrait }}</div>
+  <div>Is landscape: {{ isLandscape }}</div>
   <div>Window size: <span ref="windowWidthRef"></span> <span ref="windowHeightRef"></span></div>
 
   <Listeners

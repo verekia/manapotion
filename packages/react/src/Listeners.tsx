@@ -12,42 +12,10 @@ import {
 } from './listeners/PageVisibilityListener'
 import { PointerLockListener, PointerLockListenerProps } from './listeners/PointerLockListener'
 import { ResizeListener, ResizeListenerProps } from './listeners/ResizeListener'
-
-export type ScreenOrientationListenerProps = {
-  onScreenOrientationChange?: ({
-    isLandscape,
-    isPortrait,
-  }: {
-    isLandscape: boolean
-    isPortrait: boolean
-  }) => void
-}
-
-export const ScreenOrientationListener = ({
-  onScreenOrientationChange,
-}: ScreenOrientationListenerProps) => {
-  useEffect(() => {
-    const landscapeQuery = window.matchMedia('(orientation: landscape)')
-    const portraitQuery = window.matchMedia('(orientation: portrait)')
-
-    const handleScreenOrientationChange = () => {
-      const isLandscape = landscapeQuery.matches
-      const isPortrait = portraitQuery.matches
-      mp().setScreenOrientation({ isLandscape, isPortrait })
-      onScreenOrientationChange?.({ isLandscape, isPortrait })
-    }
-
-    handleScreenOrientationChange()
-
-    landscapeQuery.addEventListener('change', handleScreenOrientationChange)
-
-    return () => {
-      landscapeQuery.removeEventListener('change', handleScreenOrientationChange)
-    }
-  }, [onScreenOrientationChange])
-
-  return null
-}
+import {
+  ScreenOrientationListener,
+  ScreenOrientationListenerProps,
+} from './listeners/ScreenOrientationListener'
 
 export type MouseDownListenerProps = {
   onLeftMouseDown?: () => void
@@ -223,6 +191,10 @@ type ListenersDeviceTypeProps = Omit<DeviceTypeListenerProps, 'onUpdate'> & {
   onDeviceTypeUpdate?: DeviceTypeListenerProps['onUpdate']
 }
 
+type ListenersScreenOrientationProps = Omit<ScreenOrientationListenerProps, 'onUpdate'> & {
+  onScreenOrientationUpdate?: ScreenOrientationListenerProps['onUpdate']
+}
+
 export type ListenersProps = ListenersMouseMoveProps &
   ListenersPageVisibilityProps &
   ListenersPageFocusProps &
@@ -230,7 +202,7 @@ export type ListenersProps = ListenersMouseMoveProps &
   ListenersFullscreenProps &
   ListenersResizeProps &
   ListenersDeviceTypeProps &
-  ScreenOrientationListenerProps &
+  ListenersScreenOrientationProps &
   MouseDownListenerProps &
   KeyboardListenerProps &
   MouseScrollListenerProps
@@ -244,7 +216,7 @@ export const Listeners = ({
   onFullscreenUpdate,
   onResizeUpdate,
   onDeviceTypeUpdate,
-  onScreenOrientationChange,
+  onScreenOrientationUpdate,
   onLeftMouseDown,
   onMiddleMouseDown,
   onRightMouseDown,
@@ -267,7 +239,7 @@ export const Listeners = ({
     <FullscreenListener onUpdate={onFullscreenUpdate} />
     <ResizeListener onUpdate={onResizeUpdate} />
     <DeviceTypeListener onUpdate={onDeviceTypeUpdate} />
-    <ScreenOrientationListener onScreenOrientationChange={onScreenOrientationChange} />
+    <ScreenOrientationListener onUpdate={onScreenOrientationUpdate} />
     <MouseDownListener
       onLeftMouseDown={onLeftMouseDown}
       onMiddleMouseDown={onMiddleMouseDown}

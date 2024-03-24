@@ -252,6 +252,7 @@ The Listeners that are called once when initialized and may need memoization dep
 - ⚠️ PointerlockListener
 - ⚠️ ResizeListener
 - ⚠️ DeviceTypeListener
+- ⚠️ ScreenOrientationListener
 
 This mechanism may be improved in the future.
 
