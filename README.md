@@ -80,7 +80,7 @@ bun add @manapotion/vanilla
 
 The listeners available are:
 
-- `<MouseDownListener />`
+- `<MouseButtonsListener />`
 - `<MouseMoveListener />`
 - `<MouseScrollListener />`
 - `<KeyboardListener />`
@@ -242,6 +242,7 @@ const App = () => {
 
 The listeners that won't be an issue even with many re-renders are:
 
+- ✅ MouseButtonsListener
 - ✅ MouseMoveListener
 - ✅ PageFocusListener
 

@@ -2,6 +2,7 @@ import { defineComponent, h } from 'vue'
 
 import { DeviceTypeListener } from './listeners/DeviceTypeListener.vue'
 import { FullscreenListener } from './listeners/FullscreenListener.vue'
+import { MouseButtonsListener } from './listeners/MouseButtonsListener.vue'
 import { MouseMoveListener } from './listeners/MouseMoveListener.vue'
 import { PageFocusListener } from './listeners/PageFocusListener.vue'
 import { PageVisibilityListener } from './listeners/PageVisibilityListener.vue'
@@ -19,6 +20,12 @@ export const Listeners = defineComponent({
     'resize-update',
     'device-type-update',
     'screen-orientation-update',
+    'left-mouse-down',
+    'middle-mouse-down',
+    'right-mouse-down',
+    'left-mouse-up',
+    'middle-mouse-up',
+    'right-mouse-up',
   ],
   props: {
     mouseMovementResetDelay: {
@@ -70,6 +77,14 @@ export const Listeners = defineComponent({
       h(ScreenOrientationListener, {
         onUpdate: ({ isPortrait, isLandscape }: { isPortrait: boolean; isLandscape: boolean }) =>
           emit('screen-orientation-update', { isPortrait, isLandscape }),
+      }),
+      h(MouseButtonsListener, {
+        onLeftMouseDown: () => emit('left-mouse-down'),
+        onMiddleMouseDown: () => emit('middle-mouse-down'),
+        onRightMouseDown: () => emit('right-mouse-down'),
+        onLeftMouseUp: () => emit('left-mouse-up'),
+        onMiddleMouseUp: () => emit('middle-mouse-up'),
+        onRightMouseUp: () => emit('right-mouse-up'),
       }),
     ]
   },

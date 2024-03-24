@@ -4,6 +4,7 @@ export * from './vue-hooks'
 
 export * from './listeners/DeviceTypeListener.vue'
 export * from './listeners/FullscreenListener.vue'
+export * from './listeners/MouseButtonsListener.vue'
 export * from './listeners/MouseMoveListener.vue'
 export * from './listeners/PageFocusListener.vue'
 export * from './listeners/PageVisibilityListener.vue'

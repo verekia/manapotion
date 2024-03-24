@@ -4,6 +4,7 @@ import { KeyState, mp } from '@manapotion/core'
 
 import { DeviceTypeListener, DeviceTypeListenerProps } from './listeners/DeviceTypeListener'
 import { FullscreenListener, FullscreenListenerProps } from './listeners/FullscreenListener'
+import { MouseButtonsListener, MouseButtonsListenerProps } from './listeners/MouseButtonsListener'
 import { MouseMoveListener, MouseMoveListenerProps } from './listeners/MouseMoveListener'
 import { PageFocusListener, PageFocusListenerProps } from './listeners/PageFocusListener'
 import {
@@ -16,69 +17,6 @@ import {
   ScreenOrientationListener,
   ScreenOrientationListenerProps,
 } from './listeners/ScreenOrientationListener'
-
-export type MouseDownListenerProps = {
-  onLeftMouseDown?: () => void
-  onMiddleMouseDown?: () => void
-  onRightMouseDown?: () => void
-  onLeftMouseUp?: () => void
-  onMiddleMouseUp?: () => void
-  onRightMouseUp?: () => void
-}
-
-export const MouseDownListener = ({
-  onLeftMouseDown,
-  onMiddleMouseDown,
-  onRightMouseDown,
-  onLeftMouseUp,
-  onMiddleMouseUp,
-  onRightMouseUp,
-}: MouseDownListenerProps) => {
-  useEffect(() => {
-    const handleMouseDown = (e: MouseEvent) => {
-      if (e.button === 0) {
-        mp().setLeftMouseDown(true)
-        onLeftMouseDown?.()
-      } else if (e.button === 1) {
-        mp().setMiddleMouseDown(true)
-        onMiddleMouseDown?.()
-      } else if (e.button === 2) {
-        mp().setRightMouseDown(true)
-        onRightMouseDown?.()
-      }
-    }
-
-    const handleMouseUp = (e: MouseEvent) => {
-      if (e.button === 0) {
-        mp().setLeftMouseDown(false)
-        onLeftMouseUp?.()
-      } else if (e.button === 1) {
-        mp().setMiddleMouseDown(false)
-        onMiddleMouseUp?.()
-      } else if (e.button === 2) {
-        mp().setRightMouseDown(false)
-        onRightMouseUp?.()
-      }
-    }
-
-    window.addEventListener('mousedown', handleMouseDown)
-    window.addEventListener('mouseup', handleMouseUp)
-
-    return () => {
-      window.removeEventListener('mousedown', handleMouseDown)
-      window.removeEventListener('mouseup', handleMouseUp)
-    }
-  }, [
-    onLeftMouseDown,
-    onMiddleMouseDown,
-    onRightMouseDown,
-    onLeftMouseUp,
-    onMiddleMouseUp,
-    onRightMouseUp,
-  ])
-
-  return null
-}
 
 type KeyboardListenerProps = {
   onKeydown?: (keyState: KeyState) => void
@@ -203,7 +141,7 @@ export type ListenersProps = ListenersMouseMoveProps &
   ListenersResizeProps &
   ListenersDeviceTypeProps &
   ListenersScreenOrientationProps &
-  MouseDownListenerProps &
+  MouseButtonsListenerProps &
   KeyboardListenerProps &
   MouseScrollListenerProps
 
@@ -240,7 +178,7 @@ export const Listeners = ({
     <ResizeListener onUpdate={onResizeUpdate} />
     <DeviceTypeListener onUpdate={onDeviceTypeUpdate} />
     <ScreenOrientationListener onUpdate={onScreenOrientationUpdate} />
-    <MouseDownListener
+    <MouseButtonsListener
       onLeftMouseDown={onLeftMouseDown}
       onMiddleMouseDown={onMiddleMouseDown}
       onRightMouseDown={onRightMouseDown}

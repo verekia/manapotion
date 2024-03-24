@@ -5,6 +5,7 @@ export * from './JoystickArea'
 
 export * from './listeners/DeviceTypeListener'
 export * from './listeners/FullscreenListener'
+export * from './listeners/MouseButtonsListener'
 export * from './listeners/MouseMoveListener'
 export * from './listeners/PageFocusListener'
 export * from './listeners/PageVisibilityListener'

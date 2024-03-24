@@ -10,6 +10,9 @@ export const isLandscape = ref(manaPotionStore.getState().isLandscape)
 export const isPortrait = ref(manaPotionStore.getState().isPortrait)
 export const isMobile = ref(manaPotionStore.getState().isMobile)
 export const isDesktop = ref(manaPotionStore.getState().isDesktop)
+export const isLeftMouseDown = ref(manaPotionStore.getState().isLeftMouseDown)
+export const isMiddleMouseDown = ref(manaPotionStore.getState().isMiddleMouseDown)
+export const isRightMouseDown = ref(manaPotionStore.getState().isRightMouseDown)
 
 // TODO: Use reactive() to make a single object
 
@@ -22,4 +25,7 @@ manaPotionStore.subscribe(() => {
   isPortrait.value = manaPotionStore.getState().isPortrait
   isMobile.value = manaPotionStore.getState().isMobile
   isDesktop.value = manaPotionStore.getState().isDesktop
+  isLeftMouseDown.value = manaPotionStore.getState().isLeftMouseDown
+  isMiddleMouseDown.value = manaPotionStore.getState().isMiddleMouseDown
+  isRightMouseDown.value = manaPotionStore.getState().isRightMouseDown
 })

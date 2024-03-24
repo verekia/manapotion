@@ -4,10 +4,13 @@ import { ref } from 'vue'
 import {
   isDesktop,
   isLandscape,
+  isLeftMouseDown,
+  isMiddleMouseDown,
   isMobile,
   isPageFocused,
   isPageVisible,
   isPortrait,
+  isRightMouseDown,
   Listeners,
   mp,
   useAnimationFrame,
@@ -61,6 +64,10 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
   <div>Is portrait: {{ isPortrait }}</div>
   <div>Is landscape: {{ isLandscape }}</div>
   <div>Window size: <span ref="windowWidthRef"></span> <span ref="windowHeightRef"></span></div>
+  <div>
+    Mouse buttons: Left: {{ isLeftMouseDown }}, Middle: {{ isMiddleMouseDown }}, Right:
+    {{ isRightMouseDown }}
+  </div>
 
   <Listeners
     @fullscreenchange="handleFullscreenChange"
