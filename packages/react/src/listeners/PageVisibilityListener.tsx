@@ -1,19 +1,13 @@
 import { useEffect } from 'react'
 
-import { handleVisibilityChange } from '@manapotion/core'
+import { mountPageVisibilityListener } from '@manapotion/core'
 
 export type PageVisibilityListenerProps = {
-  onVisibilityChange?: (isVisible: boolean) => void
+  onUpdate?: (isVisible: boolean) => void
 }
 
-export const PageVisibilityListener = ({ onVisibilityChange }: PageVisibilityListenerProps) => {
-  useEffect(() => {
-    const handler = handleVisibilityChange({ onChange: onVisibilityChange })
-
-    document.addEventListener('visibilitychange', handler)
-
-    return () => document.removeEventListener('visibilitychange', handler)
-  }, [onVisibilityChange])
+export const PageVisibilityListener = ({ onUpdate }: PageVisibilityListenerProps) => {
+  useEffect(() => mountPageVisibilityListener({ onUpdate }), [onUpdate])
 
   return null
 }

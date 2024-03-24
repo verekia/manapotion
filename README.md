@@ -174,9 +174,9 @@ Here are the variables available:
 You can provide custom event callbacks to `<Listeners />` or to individual listeners:
 
 ```jsx
-<Listeners onFullscreenChange={handleFullscreenChange} />
+<Listeners onFullscreenUpdate={handleFullscreenUpdate} />
 /* or */
-<KeyboardListener onFullscreenChange={handleFullscreenChange} />
+<FullscreenListener onFullscreenUpdate={handleFullscreenUpdate} />
 ```
 
 Be careful however: if the parent component of `Listeners` is re-rendered and you didn't memoize the callback (`handleFullscreenChange` here), `Listeners` will also re-render. Some of Mana Potion's Listeners run once when initialized, which will cause your callback to be called as well.
@@ -185,14 +185,14 @@ Be careful however: if the parent component of `Listeners` is re-rendered and yo
 const App = () => {
   const [count, setCount] = useState(0)
 
-  const handleFullscreenChange = () => {
+  const handleFullscreenUpdate = () => {
     console.log('Fullscreen changed') // This will be logged every time we click the button
   }
 
   return (
     <>
       <button onClick={() => setCount(count + 1)} />
-      <Listeners onFullscreenChange={handleFullscreenChange} />
+      <Listeners onFullscreenUpdate={handleFullscreenUpdate} />
     </>
   )
 }
@@ -204,14 +204,14 @@ To avoid this, you can stabilize your functions with `useCallback`:
 const App = () => {
   const [count, setCount] = useState(0)
 
-  const handleFullscreenChange = useCallback(() => {
+  const handleFullscreenUpdate = useCallback(() => {
     console.log('Fullscreen changed') // This will be logged only when the fullscreen changes
   }, [])
 
   return (
     <>
       <button onClick={() => setCount(count + 1)} />
-      <Listeners onFullscreenChange={handleFullscreenChange} />
+      <Listeners onFullscreenUpdate={handleFullscreenUpdate} />
     </>
   )
 }
@@ -227,29 +227,32 @@ const UI = () => {
 }
 
 const App = () => {
-  const handleFullscreenChange = () => {
+  const handleFullscreenUpdate = () => {
     console.log('Fullscreen changed') // This will be logged every time the component re-renders
   }
 
   return (
     <>
       <UI />
-      <Listeners onFullscreenChange={handleFullscreenChange} />
+      <Listeners onFullscreenUpdate={handleFullscreenUpdate} />
     </>
   )
 }
 ```
 
+The listeners that won't be an issue even with many re-renders are:
+
+- ✅ MouseMoveListener
+- ✅ PageFocusListener
+
 The Listeners that are called once when initialized and may need memoization depending on your use case are:
 
-- FullscreenListener
-- PointerlockListener
-- ... WIP
+- ⚠️ FullscreenListener
+- ⚠️ PageVisibilityListener
+- ⚠️ PointerlockListener
+- ⚠️ ResizeListener
 
-The listeners that are only should not be an issue because they aren't called when initialized are:
-
-- MouseMoveListener
-- ... WIP
+This mechanism may be improved in the future.
 
 ### Keys
 

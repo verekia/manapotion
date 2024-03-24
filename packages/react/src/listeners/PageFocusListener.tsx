@@ -4,21 +4,15 @@ import { mountBlurListener, mountFocusListener } from '@manapotion/core'
 
 export type PageFocusListenerProps = {
   clearInputsOnBlur?: boolean
-  onPageBlur?: () => void
-  onPageFocus?: () => void
+  onUpdate?: (isPageFocused: boolean) => void
 }
 
 export const PageFocusListener = ({
-  onPageBlur,
-  onPageFocus,
+  onUpdate,
   clearInputsOnBlur = true,
 }: PageFocusListenerProps) => {
-  useEffect(
-    () => mountBlurListener({ onPageBlur, clearInputsOnBlur }),
-    [onPageBlur, clearInputsOnBlur],
-  )
-
-  useEffect(() => mountFocusListener(onPageFocus), [onPageFocus])
+  useEffect(() => mountBlurListener({ onUpdate, clearInputsOnBlur }), [onUpdate, clearInputsOnBlur])
+  useEffect(() => mountFocusListener({ onUpdate }), [onUpdate])
 
   return null
 }

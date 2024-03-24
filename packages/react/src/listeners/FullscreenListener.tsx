@@ -3,11 +3,11 @@ import { useEffect } from 'react'
 import { mountFullscreenListener } from '@manapotion/core'
 
 export type FullscreenListenerProps = {
-  onFullscreenChange?: (isFullscreen: boolean) => void
+  onUpdate?: (isFullscreen: boolean) => void
 }
 
-export const FullscreenListener = ({ onFullscreenChange }: FullscreenListenerProps) => {
-  useEffect(() => mountFullscreenListener(onFullscreenChange), [onFullscreenChange])
+export const FullscreenListener = ({ onUpdate }: FullscreenListenerProps) => {
+  useEffect(() => mountFullscreenListener({ onUpdate }), [onUpdate])
 
   return null
 }

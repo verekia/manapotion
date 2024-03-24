@@ -3,7 +3,12 @@ import { useEffect } from 'react'
 import { mountResizeListener } from '@manapotion/core'
 
 export type ResizeListenerProps = {
-  onResize?: (params: {
+  onUpdate?: ({
+    width,
+    height,
+    isLandscape,
+    isPortrait,
+  }: {
     width: number
     height: number
     isLandscape: boolean
@@ -11,8 +16,8 @@ export type ResizeListenerProps = {
   }) => void
 }
 
-export const ResizeListener = ({ onResize }: ResizeListenerProps) => {
-  useEffect(() => mountResizeListener(onResize), [onResize])
+export const ResizeListener = ({ onUpdate }: ResizeListenerProps) => {
+  useEffect(() => mountResizeListener({ onUpdate }), [onUpdate])
 
   return null
 }

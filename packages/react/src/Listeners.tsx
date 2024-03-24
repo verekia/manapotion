@@ -221,12 +221,36 @@ export const MouseScrollListener = ({
   return null
 }
 
-export type ListenersProps = MouseMoveListenerProps &
-  PageVisibilityListenerProps &
-  PageFocusListenerProps &
-  PointerLockListenerProps &
-  FullscreenListenerProps &
-  ResizeListenerProps &
+type ListenersMouseMoveProps = Omit<MouseMoveListenerProps, 'onUpdate'> & {
+  onMouseMoveUpdate?: MouseMoveListenerProps['onUpdate']
+}
+
+type ListenersPageVisibilityProps = Omit<PageVisibilityListenerProps, 'onUpdate'> & {
+  onPageVisibilityUpdate?: PageVisibilityListenerProps['onUpdate']
+}
+
+type ListenersPageFocusProps = Omit<PageFocusListenerProps, 'onUpdate'> & {
+  onPageFocusUpdate?: PageFocusListenerProps['onUpdate']
+}
+
+type ListenersPointerLockProps = Omit<PointerLockListenerProps, 'onUpdate'> & {
+  onPointerLockUpdate?: PointerLockListenerProps['onUpdate']
+}
+
+type ListenersResizeProps = Omit<ResizeListenerProps, 'onUpdate'> & {
+  onResizeUpdate?: ResizeListenerProps['onUpdate']
+}
+
+type ListenersFullscreenProps = Omit<FullscreenListenerProps, 'onUpdate'> & {
+  onFullscreenUpdate?: FullscreenListenerProps['onUpdate']
+}
+
+export type ListenersProps = ListenersMouseMoveProps &
+  ListenersPageVisibilityProps &
+  ListenersPageFocusProps &
+  ListenersPointerLockProps &
+  ListenersFullscreenProps &
+  ListenersResizeProps &
   DeviceTypeListenerProps &
   ScreenOrientationListenerProps &
   MouseDownListenerProps &
@@ -235,13 +259,12 @@ export type ListenersProps = MouseMoveListenerProps &
 
 export const Listeners = ({
   mouseMovementResetDelay = 30,
-  onMouseMove,
-  onVisibilityChange,
-  onPageBlur,
-  onPageFocus,
-  onPointerLockChange,
-  onFullscreenChange,
-  onResize,
+  onMouseMoveUpdate,
+  onPageVisibilityUpdate,
+  onPageFocusUpdate,
+  onPointerLockUpdate,
+  onFullscreenUpdate,
+  onResizeUpdate,
   onDeviceTypeChange,
   onScreenOrientationChange,
   onLeftMouseDown,
@@ -258,13 +281,13 @@ export const Listeners = ({
   <>
     <MouseMoveListener
       mouseMovementResetDelay={mouseMovementResetDelay}
-      onMouseMove={onMouseMove}
+      onUpdate={onMouseMoveUpdate}
     />
-    <PageVisibilityListener onVisibilityChange={onVisibilityChange} />
-    <PageFocusListener onPageBlur={onPageBlur} onPageFocus={onPageFocus} />
-    <PointerLockListener onPointerLockChange={onPointerLockChange} />
-    <FullscreenListener onFullscreenChange={onFullscreenChange} />
-    <ResizeListener onResize={onResize} />
+    <PageVisibilityListener onUpdate={onPageVisibilityUpdate} />
+    <PageFocusListener onUpdate={onPageFocusUpdate} />
+    <PointerLockListener onUpdate={onPointerLockUpdate} />
+    <FullscreenListener onUpdate={onFullscreenUpdate} />
+    <ResizeListener onUpdate={onResizeUpdate} />
     <DeviceTypeListener onDeviceTypeChange={onDeviceTypeChange} />
     <ScreenOrientationListener onScreenOrientationChange={onScreenOrientationChange} />
     <MouseDownListener

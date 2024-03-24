@@ -1,13 +1,20 @@
 import { mp } from '../store'
 
-export const mountResizeListener = (
-  onResize?: (params: {
+export const mountResizeListener = ({
+  onUpdate,
+}: {
+  onUpdate?: ({
+    width,
+    height,
+    isPortrait,
+    isLandscape,
+  }: {
     width: number
     height: number
     isLandscape: boolean
     isPortrait: boolean
-  }) => void,
-) => {
+  }) => void
+}) => {
   const handler = () => {
     const width = window.innerWidth
     const height = window.innerHeight
@@ -18,7 +25,7 @@ export const mountResizeListener = (
     const isLandscape = width > height
     mp().isPortrait = isPortrait
     mp().isLandscape = isLandscape
-    onResize?.({ width, height, isPortrait, isLandscape })
+    onUpdate?.({ width, height, isPortrait, isLandscape })
   }
 
   handler()

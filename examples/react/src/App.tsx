@@ -273,7 +273,7 @@ const App = () => {
         <Box position={[1.2, 0, 0]} />
       </Canvas>
       <Listeners
-        onPointerLockChange={isPointerLocked =>
+        onPointerLockUpdate={isPointerLocked =>
           eventNotificationRef.current.setMessage(
             `onPointerLockChange – isPointerLocked: ${isPointerLocked}`,
           )
@@ -286,7 +286,7 @@ const App = () => {
         onKeyup={(code, key) =>
           eventNotificationRef.current.setMessage(`onKeyup – code: ${code}, key: ${key}`)
         }
-        onMouseMove={(x, y, movementX, movementY) =>
+        onMouseMoveUpdate={(x, y, movementX, movementY) =>
           eventNotificationRef.current.setMessage(
             `onMouseMove – x: ${x}, y: ${y}, movementX: ${movementX}, movementY: ${movementY}`,
           )
@@ -296,7 +296,7 @@ const App = () => {
             `onDeviceTypeChange – isDesktop: ${isDesktop}, isMobile: ${isMobile}`,
           )
         }
-        onFullscreenChange={isFullscreen =>
+        onFullscreenUpdate={isFullscreen =>
           eventNotificationRef.current.setMessage(
             `onFullscreenChange – isFullscreen: ${isFullscreen}`,
           )

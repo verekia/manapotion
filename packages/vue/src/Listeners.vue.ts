@@ -9,48 +9,55 @@ import { ResizeListener } from './listeners/ResizeListener.vue'
 
 export const Listeners = defineComponent({
   emits: [
-    'fullscreenchange',
-    'pointerlockchange',
-    'mousemove',
-    'visibilitychange',
-    'blur',
-    'focus',
-    'resize',
+    'fullscreen-update',
+    'pointer-lock-update',
+    'mouse-move-update',
+    'page-visibility-update',
+    'page-focus-update',
+    'resize-update',
   ],
   props: {
     mouseMovementResetDelay: {
       type: Number,
       default: 30,
     },
+    clearInputsOnBlur: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props, { emit }) {
     return () => [
       h(FullscreenListener, {
-        onFullscreenchange: (isFullscreen: boolean) => emit('fullscreenchange', isFullscreen),
+        onUpdate: (isFullscreen: boolean) => emit('fullscreen-update', isFullscreen),
       }),
       h(PointerLockListener, {
-        onPointerlockchange: (isPointerLocked: boolean) =>
-          emit('pointerlockchange', isPointerLocked),
+        onUpdate: (isPointerLocked: boolean) => emit('pointer-lock-update', isPointerLocked),
       }),
       h(MouseMoveListener, {
-        onMousemove: (x: number, y: number, movementX: number, movementY: number) =>
-          emit('mousemove', x, y, movementX, movementY),
+        onUpdate: (x: number, y: number, movementX: number, movementY: number) =>
+          emit('mouse-move-update', x, y, movementX, movementY),
         mouseMovementResetDelay: props.mouseMovementResetDelay,
       }),
       h(PageVisibilityListener, {
-        onVisibilitychange: (isVisible: boolean) => emit('visibilitychange', isVisible),
+        onUpdate: (isVisible: boolean) => emit('page-visibility-update', isVisible),
       }),
       h(PageFocusListener, {
-        onBlur: () => emit('blur'),
-        onFocus: () => emit('focus'),
+        onUpdate: (isPageFocused: boolean) => emit('page-focus-update', isPageFocused),
+        clearInputsOnBlur: props.clearInputsOnBlur,
       }),
       h(ResizeListener, {
-        onResize: (params: {
+        onUpdate: ({
+          width,
+          height,
+          isLandscape,
+          isPortrait,
+        }: {
           width: number
           height: number
           isLandscape: boolean
           isPortrait: boolean
-        }) => emit('resize', params),
+        }) => emit('resize-update', { width, height, isLandscape, isPortrait }),
       }),
     ]
   },
