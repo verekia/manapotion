@@ -1,6 +1,6 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountFullscreenListener } from '@manapotion/core'
+import { FullscreenListenerProps, mountFullscreenListener } from '@manapotion/core'
 
 export const FullscreenListener = defineComponent({
   emits: ['update'],
@@ -9,8 +9,8 @@ export const FullscreenListener = defineComponent({
 
     onMounted(() => {
       unsub = mountFullscreenListener({
-        onUpdate: (isFullscreen: boolean) => emit('update', isFullscreen),
-      })
+        onUpdate: isFullscreen => emit('update', isFullscreen),
+      } satisfies FullscreenListenerProps)
     })
 
     onUnmounted(unsub)

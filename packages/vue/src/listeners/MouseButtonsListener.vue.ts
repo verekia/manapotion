@@ -1,6 +1,6 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountMouseButtonsListener } from '@manapotion/core'
+import { mountMouseButtonsListener, MouseButtonsListenerProps } from '@manapotion/core'
 
 export const MouseButtonsListener = defineComponent({
   emits: [
@@ -22,7 +22,7 @@ export const MouseButtonsListener = defineComponent({
         onLeftMouseUp: () => emit('left-mouse-up'),
         onMiddleMouseUp: () => emit('middle-mouse-up'),
         onRightMouseUp: () => emit('right-mouse-up'),
-      })
+      } satisfies MouseButtonsListenerProps)
     })
 
     onUnmounted(unsub)

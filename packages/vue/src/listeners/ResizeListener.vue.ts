@@ -1,6 +1,6 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountResizeListener } from '@manapotion/core'
+import { mountResizeListener, ResizeListenerProps } from '@manapotion/core'
 
 export const ResizeListener = defineComponent({
   emits: ['update'],
@@ -9,18 +9,9 @@ export const ResizeListener = defineComponent({
 
     onMounted(() => {
       unsub = mountResizeListener({
-        onUpdate: ({
-          width,
-          height,
-          isLandscape,
-          isPortrait,
-        }: {
-          width: number
-          height: number
-          isLandscape: boolean
-          isPortrait: boolean
-        }) => emit('update', { width, height, isLandscape, isPortrait }),
-      })
+        onUpdate: ({ width, height, isLandscape, isPortrait }) =>
+          emit('update', { width, height, isLandscape, isPortrait }),
+      } satisfies ResizeListenerProps)
     })
 
     onUnmounted(unsub)

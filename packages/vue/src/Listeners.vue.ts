@@ -1,6 +1,18 @@
 import { defineComponent, h } from 'vue'
 
-import { KeyState } from '@manapotion/core'
+import {
+  DeviceTypeListenerProps,
+  FullscreenListenerProps,
+  KeyboardListenerProps,
+  MouseButtonsListenerProps,
+  MouseMoveListenerProps,
+  MouseScrollListenerProps,
+  PageFocusListenerProps,
+  PageVisibilityListenerProps,
+  PointerLockListenerProps,
+  ResizeListenerProps,
+  ScreenOrientationListenerProps,
+} from '@manapotion/core'
 
 import { DeviceTypeListener } from './listeners/DeviceTypeListener.vue'
 import { FullscreenListener } from './listeners/FullscreenListener.vue'
@@ -51,44 +63,42 @@ export const Listeners = defineComponent({
   setup(props, { emit }) {
     return () => [
       h(FullscreenListener, {
-        onUpdate: (isFullscreen: boolean) => emit('fullscreen-update', isFullscreen),
-      }),
+        onUpdate: isFullscreen => emit('fullscreen-update', isFullscreen),
+      } satisfies FullscreenListenerProps),
+
       h(PointerLockListener, {
-        onUpdate: (isPointerLocked: boolean) => emit('pointer-lock-update', isPointerLocked),
-      }),
+        onUpdate: isPointerLocked => emit('pointer-lock-update', isPointerLocked),
+      } satisfies PointerLockListenerProps),
+
       h(MouseMoveListener, {
-        onUpdate: (x: number, y: number, movementX: number, movementY: number) =>
+        onUpdate: (x, y, movementX, movementY) =>
           emit('mouse-move-update', x, y, movementX, movementY),
         mouseMovementResetDelay: props.mouseMovementResetDelay,
-      }),
+      } satisfies MouseMoveListenerProps),
+
       h(PageVisibilityListener, {
-        onUpdate: (isVisible: boolean) => emit('page-visibility-update', isVisible),
-      }),
+        onUpdate: isVisible => emit('page-visibility-update', isVisible),
+      } satisfies PageVisibilityListenerProps),
+
       h(PageFocusListener, {
-        onUpdate: (isPageFocused: boolean) => emit('page-focus-update', isPageFocused),
+        onUpdate: isPageFocused => emit('page-focus-update', isPageFocused),
         clearInputsOnBlur: props.clearInputsOnBlur,
-      }),
+      } satisfies PageFocusListenerProps),
+
       h(ResizeListener, {
-        onUpdate: ({
-          width,
-          height,
-          isLandscape,
-          isPortrait,
-        }: {
-          width: number
-          height: number
-          isLandscape: boolean
-          isPortrait: boolean
-        }) => emit('resize-update', { width, height, isLandscape, isPortrait }),
-      }),
+        onUpdate: ({ width, height, isLandscape, isPortrait }) =>
+          emit('resize-update', { width, height, isLandscape, isPortrait }),
+      } satisfies ResizeListenerProps),
+
       h(DeviceTypeListener, {
-        onUpdate: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) =>
-          emit('device-type-update', { isDesktop, isMobile }),
-      }),
+        onUpdate: ({ isDesktop, isMobile }) => emit('device-type-update', { isDesktop, isMobile }),
+      } satisfies DeviceTypeListenerProps),
+
       h(ScreenOrientationListener, {
-        onUpdate: ({ isPortrait, isLandscape }: { isPortrait: boolean; isLandscape: boolean }) =>
+        onUpdate: ({ isPortrait, isLandscape }) =>
           emit('screen-orientation-update', { isPortrait, isLandscape }),
-      }),
+      } satisfies ScreenOrientationListenerProps),
+
       h(MouseButtonsListener, {
         onLeftMouseDown: () => emit('left-mouse-down'),
         onMiddleMouseDown: () => emit('middle-mouse-down'),
@@ -96,15 +106,17 @@ export const Listeners = defineComponent({
         onLeftMouseUp: () => emit('left-mouse-up'),
         onMiddleMouseUp: () => emit('middle-mouse-up'),
         onRightMouseUp: () => emit('right-mouse-up'),
-      }),
+      } satisfies MouseButtonsListenerProps),
+
       h(KeyboardListener, {
-        onKeyDown: (keyState: KeyState) => emit('key-down', keyState),
-        onKeyUp: (code: string, key: string) => emit('key-up', code, key),
-      }),
+        onKeyDown: keyState => emit('key-down', keyState),
+        onKeyUp: (code, key) => emit('key-up', code, key),
+      } satisfies KeyboardListenerProps),
+
       h(MouseScrollListener, {
-        onScroll: (deltaY: number) => emit('scroll', deltaY),
+        onScroll: deltaY => emit('scroll', deltaY),
         mouseScrollResetDelay: props.mouseScrollResetDelay,
-      }),
+      } satisfies MouseScrollListenerProps),
     ]
   },
 })

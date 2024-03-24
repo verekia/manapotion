@@ -1,6 +1,6 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { KeyState, mountKeyboardListener } from '@manapotion/core'
+import { KeyboardListenerProps, mountKeyboardListener } from '@manapotion/core'
 
 export const KeyboardListener = defineComponent({
   emits: ['key-down', 'key-up'],
@@ -9,9 +9,9 @@ export const KeyboardListener = defineComponent({
 
     onMounted(() => {
       unsub = mountKeyboardListener({
-        onKeyDown: (keyState: KeyState) => emit('key-down', keyState),
-        onKeyUp: (code: string, key: string) => emit('key-up', code, key),
-      })
+        onKeyDown: keyState => emit('key-down', keyState),
+        onKeyUp: (code, key) => emit('key-up', code, key),
+      } satisfies KeyboardListenerProps)
     })
 
     onUnmounted(unsub)
