@@ -122,13 +122,17 @@ const UI = () => {
   return (
     <>
       <div className="container mx-auto px-5 pt-5">
-        <div className="mb-5 flex flex-col items-center justify-center gap-5 sm:flex-row">
-          <img src="/mana-potion.webp" className="w-20" alt="Logo" />
+        <div className="mb-5 flex flex-col items-center justify-center gap-6 sm:flex-row">
+          <img src="/mana-potion.webp" className="w-28" alt="Logo" />
           <div className="flex flex-col gap-3">
-            <h1 className="text-5xl font-medium">Mana Potion</h1>
-            <h2 className="max-w-72 text-pretty text-left text-2xl text-gray-300">
-              Game Dev Toolkit for React and React Three Fiber
+            <h1 className="text-center text-5xl font-medium sm:text-left">Mana Potion</h1>
+            <h2 className="max-w-80 text-pretty text-center text-xl text-gray-300 sm:text-left">
+              Toolkit for JavaScript game development and interactive experiences (React, Vue,
+              vanilla)
             </h2>
+            <p className="text-center italic text-gray-400 sm:text-left">
+              Sorry for the ugly demo!
+            </p>
           </div>
         </div>
         <div>
