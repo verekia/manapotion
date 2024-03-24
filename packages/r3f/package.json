@@ -39,6 +39,9 @@
     "format:check": "prettier --check .",
     "publint": "publint"
   },
+  "dependencies": {
+    "@manapotion/react": "^0.15.2-alpha.0"
+  },
   "peerDependencies": {
     "@react-three/fiber": ">=8.0.0",
     "react": ">=17.0.0",

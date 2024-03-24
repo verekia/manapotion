@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 
-import { MeshProps, useFrame } from '@react-three/fiber'
 import {
   Canvas,
   debounce,
@@ -17,7 +16,8 @@ import {
   unlockOrientation,
   useAnimationFrame,
   useMP,
-} from 'manapotion'
+} from '@manapotion/r3f'
+import { MeshProps, useFrame } from '@react-three/fiber'
 import { Mesh } from 'three'
 
 import MobileJoystick from './MobileJoystick'

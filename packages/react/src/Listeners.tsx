@@ -13,40 +13,7 @@ import {
   PageVisibilityListenerProps,
 } from './listeners/PageVisibilityListener'
 import { PointerLockListener, PointerLockListenerProps } from './listeners/PointerLockListener'
-
-export type ResizeListenerProps = {
-  onResize?: (params: {
-    width: number
-    height: number
-    isLandscape: boolean
-    isPortrait: boolean
-  }) => void
-}
-
-export const ResizeListener = ({ onResize }: ResizeListenerProps) => {
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth
-      const height = window.innerHeight
-
-      mp().windowWidth = width
-      mp().windowHeight = height
-      const isPortrait = height >= width
-      const isLandscape = width > height
-      mp().isPortrait = isPortrait
-      mp().isLandscape = isLandscape
-      onResize?.({ width, height, isPortrait, isLandscape })
-    }
-
-    handleResize()
-
-    window.addEventListener('resize', handleResize)
-
-    return () => window.removeEventListener('resize', handleResize)
-  }, [onResize])
-
-  return null
-}
+import { ResizeListener, ResizeListenerProps } from './listeners/ResizeListener'
 
 export type DeviceTypeListenerProps = {
   onDeviceTypeChange?: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) => void

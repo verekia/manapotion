@@ -19,6 +19,7 @@ module.exports = {
         'react',
         'tailwind',
         'util',
+        'vanilla',
         'vue',
       ],
     ],

@@ -6,6 +6,8 @@
 
 Mana Potion is a toolkit to make web game development easier. It is currently mainly aimed at React and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) projects, but it can be used in non-React projects as well. Vue support is in progress.
 
+**Important**: Mana Potion is in early development and the API is subject to change. Until we hit 1.0.0, expect breaking changes in minor versions.
+
 ## Installation
 
 Mana Potion consists of:
@@ -14,35 +16,62 @@ Mana Potion consists of:
 - [**`@manapotion/browser`**](#browser-api-helpers): Browser API helpers
 - [**`@manapotion/r3f`**](#react-three-fiber): React Three Fiber WebGPU canvas and hooks
 - [**`@manapotion/util`**](#utilities): General gamedev utilities
+- [**`@manapotion/vue`**](#vue-listeners-and-store): Vue listeners and store (WIP)
+- [**`@manapotion/vanilla`**](#vanilla-listeners-and-store): Framework-agnostic listeners and store (WIP)
 - [**`@manapotion/tailwind`**](#tailwind): Tailwind media queries
-- **`manapotion`**: All of the above in one package that exports everything
 
-If you are making a React Three Fiber game, the easiest option is to add `manapotion` to your project:
+Due to the way Three.js' `WebGPURenderer` is written, in order to use `@manapotion/r3f` with Vite, you will need to add [top-level await support](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts).
+
+If you are making a React game without React Three Fiber, install `@manapotion/react`:
 
 ```sh
 # NPM
-npm install manapotion
+npm install @manapotion/react
 # Yarn
-yarn add manapotion
+yarn add @manapotion/react
 # PNPM
-pnpm add manapotion
+pnpm add @manapotion/react
 # Bun
-bun add manapotion
+bun add @manapotion/react
 ```
 
-Due to the way Three.js' `WebGPURenderer` is written, in order to use `manapotion` or `@manapotion/r3f` with Vite, you will need to add [top-level await support](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts).
-
-For React projects that don't use R3F, non-React projects, or if you are not interested in all of the features of Mana Potion, install the packages that are relevant to you independently. For example:
+If you are making a React Three Fiber game, install `@manapotion/r3f` instead:
 
 ```sh
 # NPM
-npm install @manapotion/react @manapotion/browser
+npm install @manapotion/r3f
 # Yarn
-yarn add @manapotion/react @manapotion/browser
+yarn add @manapotion/r3f
 # PNPM
-pnpm add @manapotion/react @manapotion/browser
+pnpm add @manapotion/r3f
 # Bun
-bun add @manapotion/react @manapotion/browser
+bun add @manapotion/r3f
+```
+
+If you are making a Vue game, install `@manapotion/vue`:
+
+```sh
+# NPM
+npm install @manapotion/vue
+# Yarn
+yarn add @manapotion/vue
+# PNPM
+pnpm add @manapotion/vue
+# Bun
+bun add @manapotion/vue
+```
+
+If you are making a game without any of these frameworks, install `@manapotion/vanilla`:
+
+```sh
+# NPM
+npm install @manapotion/vanilla
+# Yarn
+yarn add @manapotion/vanilla
+# PNPM
+pnpm add @manapotion/vanilla
+# Bun
+bun add @manapotion/vanilla
 ```
 
 ## React Listeners, Store, and Virtual Joystick
@@ -67,7 +96,6 @@ To enable them all, simply add `<Listeners />` to your app:
 
 ```jsx
 import { Listeners } from '@manapotion/react'
-// or import { Listeners } from 'manapotion
 
 const App = () => (
   <>
@@ -279,6 +307,14 @@ const MobileUI = () => (
 
 Note that you don't have to do this, you can just make them a global variable somewhere in your app, or put them in your own store. This is just a way to keep all inputs in the Mana Potion store.
 
+## Vue Listeners and Store
+
+This package is a work in progress.
+
+## Vanilla Listeners and Store
+
+This package is a work in progress.
+
 ## Browser API Helpers
 
 🌐 **`@manapotion/browser`** provides helper functions to reduce some browser APIs boilerplate:
@@ -433,7 +469,7 @@ export const min = Math.min
 
 # Tailwind
 
-🍃 **`@manapotion/tailwind`** provides a theme containing the following `screens` breakpoints:
+🍃 **`@manapotion/tailwind`** is a package that needs to be installed separately and provides a theme containing the following `screens` breakpoints:
 
 - 5xs: 192px
 - 4xs: 256px
@@ -467,7 +503,6 @@ To add the theme to your Tailwind config:
 ```js
 /** @type {import('tailwindcss').Config} */
 import { theme } from '@manapotion/tailwind'
-// or import { tailwindTheme } from 'manapotion'
 
 export default {
   content: ['./index.html', './src/**/*.tsx'],

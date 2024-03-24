@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-import { tailwindTheme } from 'manapotion'
+import { theme } from '@manapotion/tailwind'
 
 export default {
   content: ['./index.html', './src/**/*.tsx'],
   theme: {
-    screens: tailwindTheme.screens,
+    screens: theme.screens,
     extend: {
-      screens: tailwindTheme.extend.screens,
+      screens: theme.extend.screens,
     },
   },
   plugins: [],
