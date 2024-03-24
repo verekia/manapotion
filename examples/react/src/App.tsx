@@ -83,7 +83,7 @@ const EventNotificationBase = (_: any, ref: ForwardedRef<any>) => {
 
 const EventNotification = forwardRef(EventNotificationBase)
 
-const App = () => {
+const UI = () => {
   const [renderer, setRenderer] = useState('WebGPU')
   const toggleRenderer = () => setRenderer(renderer === 'WebGPU' ? 'WebGL' : 'WebGPU')
   const isFullscreen = useMP(s => s.isFullscreen)
@@ -108,8 +108,6 @@ const App = () => {
   const liveHeightRef = useRef<HTMLSpanElement>(null)
 
   const liveScrollYRef = useRef<HTMLDivElement>(null)
-
-  const eventNotificationRef = useRef<any>(null)
 
   useAnimationFrame(() => {
     liveMouseXRef.current!.textContent = String(mp().mouseX)
@@ -272,6 +270,18 @@ const App = () => {
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
       </Canvas>
+      <MobileJoystick />
+    </>
+  )
+}
+
+const App = () => {
+  const eventNotificationRef = useRef<any>(null)
+
+  return (
+    <>
+      <UI />
+      <EventNotification ref={eventNotificationRef} />
       <Listeners
         onPointerLockUpdate={isPointerLocked =>
           eventNotificationRef.current.setMessage(
@@ -302,8 +312,6 @@ const App = () => {
           )
         }
       />
-      <MobileJoystick />
-      <EventNotification ref={eventNotificationRef} />
     </>
   )
 }

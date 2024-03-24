@@ -32,12 +32,6 @@ useAnimationFrame(() => {
   windowHeightRef.value!.textContent = String(windowHeight)
 })
 
-const moveResetDelay = ref(1000)
-
-const handleToggleMoveResetDelay = () => {
-  moveResetDelay.value = moveResetDelay.value === 1000 ? 200 : 1000
-}
-
 const handlePageVisibilityChange = (isVisible: boolean) => {
   console.log('Page visibility change!', isVisible)
 }
@@ -53,11 +47,8 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
   <div>Is page visible: {{ isPageVisible }}</div>
   <div>Is page focused: {{ isPageFocused }}</div>
   <div>Window size: <span ref="windowWidthRef"></span> <span ref="windowHeightRef"></span></div>
-  Toggle mouse reset delay between 1s and 200ms:
-  <button @click="handleToggleMoveResetDelay">{{ moveResetDelay }}ms</button>
 
   <Listeners
-    :mouseMovementResetDelay="moveResetDelay"
     @fullscreenchange="handleFullscreenChange"
     @pointerlockchange="handlePointerLockChange"
     @visibilitychange="handlePageVisibilityChange"
