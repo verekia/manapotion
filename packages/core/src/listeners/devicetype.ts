@@ -1,10 +1,10 @@
 import { mp } from '../store'
 
 export type DeviceTypeListenerProps = {
-  onUpdate?: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) => void
+  onDeviceTypeChange?: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) => void
 }
 
-export const mountDeviceTypeListener = ({ onUpdate }: DeviceTypeListenerProps) => {
+export const mountDeviceTypeListener = ({ onDeviceTypeChange }: DeviceTypeListenerProps) => {
   const desktopQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
   const mobileQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
 
@@ -12,7 +12,7 @@ export const mountDeviceTypeListener = ({ onUpdate }: DeviceTypeListenerProps) =
     const isDesktop = desktopQuery.matches
     const isMobile = mobileQuery.matches
     mp().setDeviceType({ isDesktop, isMobile })
-    onUpdate?.({ isDesktop, isMobile })
+    onDeviceTypeChange?.({ isDesktop, isMobile })
   }
 
   handler()

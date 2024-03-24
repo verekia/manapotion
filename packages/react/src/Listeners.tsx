@@ -24,46 +24,14 @@ import { PointerLockListener } from './listeners/PointerLockListener'
 import { ResizeListener } from './listeners/ResizeListener'
 import { ScreenOrientationListener } from './listeners/ScreenOrientationListener'
 
-type ListenersMouseMoveProps = Omit<MouseMoveListenerProps, 'onUpdate'> & {
-  onMouseMoveUpdate?: MouseMoveListenerProps['onUpdate']
-}
-
-type ListenersPageVisibilityProps = Omit<PageVisibilityListenerProps, 'onUpdate'> & {
-  onPageVisibilityUpdate?: PageVisibilityListenerProps['onUpdate']
-}
-
-type ListenersPageFocusProps = Omit<PageFocusListenerProps, 'onUpdate'> & {
-  onPageFocusUpdate?: PageFocusListenerProps['onUpdate']
-}
-
-type ListenersPointerLockProps = Omit<PointerLockListenerProps, 'onUpdate'> & {
-  onPointerLockUpdate?: PointerLockListenerProps['onUpdate']
-}
-
-type ListenersResizeProps = Omit<ResizeListenerProps, 'onUpdate'> & {
-  onResizeUpdate?: ResizeListenerProps['onUpdate']
-}
-
-type ListenersFullscreenProps = Omit<FullscreenListenerProps, 'onUpdate'> & {
-  onFullscreenUpdate?: FullscreenListenerProps['onUpdate']
-}
-
-type ListenersDeviceTypeProps = Omit<DeviceTypeListenerProps, 'onUpdate'> & {
-  onDeviceTypeUpdate?: DeviceTypeListenerProps['onUpdate']
-}
-
-type ListenersScreenOrientationProps = Omit<ScreenOrientationListenerProps, 'onUpdate'> & {
-  onScreenOrientationUpdate?: ScreenOrientationListenerProps['onUpdate']
-}
-
-export type ListenersProps = ListenersMouseMoveProps &
-  ListenersPageVisibilityProps &
-  ListenersPageFocusProps &
-  ListenersPointerLockProps &
-  ListenersFullscreenProps &
-  ListenersResizeProps &
-  ListenersDeviceTypeProps &
-  ListenersScreenOrientationProps &
+export type ListenersProps = MouseMoveListenerProps &
+  PageVisibilityListenerProps &
+  PageFocusListenerProps &
+  PointerLockListenerProps &
+  FullscreenListenerProps &
+  ResizeListenerProps &
+  DeviceTypeListenerProps &
+  ScreenOrientationListenerProps &
   MouseButtonsListenerProps &
   KeyboardListenerProps &
   MouseScrollListenerProps
@@ -71,14 +39,14 @@ export type ListenersProps = ListenersMouseMoveProps &
 export const Listeners = ({
   clearInputsOnBlur,
   mouseMovementResetDelay,
-  onMouseMoveUpdate,
-  onPageVisibilityUpdate,
-  onPageFocusUpdate,
-  onPointerLockUpdate,
-  onFullscreenUpdate,
-  onResizeUpdate,
-  onDeviceTypeUpdate,
-  onScreenOrientationUpdate,
+  onMouseMove,
+  onPageVisibilityChange,
+  onPageFocusChange,
+  onPointerLockChange,
+  onFullscreenChange,
+  onResize,
+  onDeviceTypeChange,
+  onScreenOrientationChange,
   onLeftMouseDown,
   onMiddleMouseDown,
   onRightMouseDown,
@@ -93,15 +61,18 @@ export const Listeners = ({
   <>
     <MouseMoveListener
       mouseMovementResetDelay={mouseMovementResetDelay}
-      onUpdate={onMouseMoveUpdate}
+      onMouseMove={onMouseMove}
     />
-    <PageVisibilityListener onUpdate={onPageVisibilityUpdate} />
-    <PageFocusListener onUpdate={onPageFocusUpdate} clearInputsOnBlur={clearInputsOnBlur} />
-    <PointerLockListener onUpdate={onPointerLockUpdate} />
-    <FullscreenListener onUpdate={onFullscreenUpdate} />
-    <ResizeListener onUpdate={onResizeUpdate} />
-    <DeviceTypeListener onUpdate={onDeviceTypeUpdate} />
-    <ScreenOrientationListener onUpdate={onScreenOrientationUpdate} />
+    <PageVisibilityListener onPageVisibilityChange={onPageVisibilityChange} />
+    <PageFocusListener
+      onPageFocusChange={onPageFocusChange}
+      clearInputsOnBlur={clearInputsOnBlur}
+    />
+    <PointerLockListener onPointerLockChange={onPointerLockChange} />
+    <FullscreenListener onFullscreenChange={onFullscreenChange} />
+    <ResizeListener onResize={onResize} />
+    <DeviceTypeListener onDeviceTypeChange={onDeviceTypeChange} />
+    <ScreenOrientationListener onScreenOrientationChange={onScreenOrientationChange} />
     <MouseButtonsListener
       onLeftMouseDown={onLeftMouseDown}
       onMiddleMouseDown={onMiddleMouseDown}

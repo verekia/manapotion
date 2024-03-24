@@ -283,7 +283,7 @@ const App = () => {
       <UI />
       <EventNotification ref={eventNotificationRef} />
       <Listeners
-        onPointerLockUpdate={isPointerLocked =>
+        onPointerLockChange={isPointerLocked =>
           eventNotificationRef.current.setMessage(
             `onPointerLockChange – isPointerLocked: ${isPointerLocked}`,
           )
@@ -296,22 +296,22 @@ const App = () => {
         onKeyUp={(code, key) =>
           eventNotificationRef.current.setMessage(`onKeyup – code: ${code}, key: ${key}`)
         }
-        onMouseMoveUpdate={(x, y, movementX, movementY) =>
+        onMouseMove={(x, y, movementX, movementY) =>
           eventNotificationRef.current.setMessage(
             `onMouseMove – x: ${x}, y: ${y}, movementX: ${movementX}, movementY: ${movementY}`,
           )
         }
-        onDeviceTypeUpdate={({ isDesktop, isMobile }) =>
+        onDeviceTypeChange={({ isDesktop, isMobile }) =>
           eventNotificationRef.current.setMessage(
             `onDeviceTypeChange – isDesktop: ${isDesktop}, isMobile: ${isMobile}`,
           )
         }
-        onFullscreenUpdate={isFullscreen =>
+        onFullscreenChange={isFullscreen =>
           eventNotificationRef.current.setMessage(
             `onFullscreenChange – isFullscreen: ${isFullscreen}`,
           )
         }
-        onScreenOrientationUpdate={({ isPortrait, isLandscape }) =>
+        onScreenOrientationChange={({ isPortrait, isLandscape }) =>
           eventNotificationRef.current.setMessage(
             `onScreenOrientationChange – isPortrait: ${isPortrait}, isLandscape: ${isLandscape}`,
           )

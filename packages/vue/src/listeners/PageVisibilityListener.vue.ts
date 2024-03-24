@@ -3,13 +3,13 @@ import { defineComponent, onMounted, onUnmounted } from 'vue'
 import { mountPageVisibilityListener, PageVisibilityListenerProps } from '@manapotion/core'
 
 export const PageVisibilityListener = defineComponent({
-  emits: ['update'],
+  emits: ['page-visibility-change'],
   setup(_, { emit }) {
     let unsub = () => {}
 
     onMounted(() => {
       unsub = mountPageVisibilityListener({
-        onUpdate: isVisible => emit('update', isVisible),
+        onPageVisibilityChange: isVisible => emit('page-visibility-change', isVisible),
       } satisfies PageVisibilityListenerProps)
     })
 

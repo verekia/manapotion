@@ -1,7 +1,7 @@
 import { mp } from '../store'
 
 export type ResizeListenerProps = {
-  onUpdate?: ({
+  onResize?: ({
     width,
     height,
     isLandscape,
@@ -14,7 +14,7 @@ export type ResizeListenerProps = {
   }) => void
 }
 
-export const mountResizeListener = ({ onUpdate }: ResizeListenerProps) => {
+export const mountResizeListener = ({ onResize }: ResizeListenerProps) => {
   const handler = () => {
     const width = window.innerWidth
     const height = window.innerHeight
@@ -25,7 +25,7 @@ export const mountResizeListener = ({ onUpdate }: ResizeListenerProps) => {
     const isLandscape = width > height
     mp().isPortrait = isPortrait
     mp().isLandscape = isLandscape
-    onUpdate?.({ width, height, isPortrait, isLandscape })
+    onResize?.({ width, height, isPortrait, isLandscape })
   }
 
   handler()

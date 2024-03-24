@@ -3,13 +3,13 @@ import { defineComponent, onMounted, onUnmounted } from 'vue'
 import { mountPointerLockListener, PointerLockListenerProps } from '@manapotion/core'
 
 export const PointerLockListener = defineComponent({
-  emits: ['update'],
+  emits: ['pointer-lock-change'],
   setup(_, { emit }) {
     let unsub = () => {}
 
     onMounted(() => {
       unsub = mountPointerLockListener({
-        onUpdate: isPointerLocked => emit('update', isPointerLocked),
+        onPointerLockChange: isPointerLocked => emit('pointer-lock-change', isPointerLocked),
       } satisfies PointerLockListenerProps)
     })
 

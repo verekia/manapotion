@@ -3,11 +3,14 @@ import { useEffect } from 'react'
 import { mountBlurListener, mountFocusListener, PageFocusListenerProps } from '@manapotion/core'
 
 export const PageFocusListener = ({
-  onUpdate,
+  onPageFocusChange,
   clearInputsOnBlur = true,
 }: PageFocusListenerProps) => {
-  useEffect(() => mountBlurListener({ onUpdate, clearInputsOnBlur }), [onUpdate, clearInputsOnBlur])
-  useEffect(() => mountFocusListener({ onUpdate }), [onUpdate])
+  useEffect(
+    () => mountBlurListener({ onPageFocusChange, clearInputsOnBlur }),
+    [onPageFocusChange, clearInputsOnBlur],
+  )
+  useEffect(() => mountFocusListener({ onPageFocusChange }), [onPageFocusChange])
 
   return null
 }

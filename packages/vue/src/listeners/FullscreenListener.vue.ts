@@ -3,13 +3,13 @@ import { defineComponent, onMounted, onUnmounted } from 'vue'
 import { FullscreenListenerProps, mountFullscreenListener } from '@manapotion/core'
 
 export const FullscreenListener = defineComponent({
-  emits: ['update'],
+  emits: ['fullscreen-change'],
   setup(_, { emit }) {
     let unsub = () => {}
 
     onMounted(() => {
       unsub = mountFullscreenListener({
-        onUpdate: isFullscreen => emit('update', isFullscreen),
+        onFullscreenChange: isFullscreen => emit('fullscreen-change', isFullscreen),
       } satisfies FullscreenListenerProps)
     })
 

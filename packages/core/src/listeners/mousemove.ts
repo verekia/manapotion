@@ -4,11 +4,11 @@ let movementResetTimeout: ReturnType<typeof setTimeout> | null = null
 
 export type MouseMoveListenerProps = {
   mouseMovementResetDelay?: number
-  onUpdate?: (x: number, y: number, movementX: number, movementY: number) => void
+  onMouseMove?: (x: number, y: number, movementX: number, movementY: number) => void
 }
 
 export const mountMouseMoveListener = ({
-  onUpdate,
+  onMouseMove,
   mouseMovementResetDelay,
 }: MouseMoveListenerProps) => {
   const handler = (e: MouseEvent) => {
@@ -21,7 +21,7 @@ export const mountMouseMoveListener = ({
     mp().mouseY = mouseY
     mp().mouseMovementX = mouseMovementX
     mp().mouseMovementY = mouseMovementY
-    onUpdate?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
+    onMouseMove?.(mouseX, mouseY, mouseMovementX, mouseMovementY)
 
     movementResetTimeout && clearTimeout(movementResetTimeout)
 
@@ -29,7 +29,7 @@ export const mountMouseMoveListener = ({
       movementResetTimeout = setTimeout(() => {
         mp().mouseMovementX = 0
         mp().mouseMovementY = 0
-        onUpdate?.(mouseX, mouseY, 0, 0)
+        onMouseMove?.(mouseX, mouseY, 0, 0)
       }, mouseMovementResetDelay)
     }
   }

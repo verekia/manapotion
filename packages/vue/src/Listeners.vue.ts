@@ -63,39 +63,40 @@ export const Listeners = defineComponent({
   setup(props, { emit }) {
     return () => [
       h(FullscreenListener, {
-        onUpdate: isFullscreen => emit('fullscreen-update', isFullscreen),
+        onFullscreenChange: isFullscreen => emit('fullscreen-update', isFullscreen),
       } satisfies FullscreenListenerProps),
 
       h(PointerLockListener, {
-        onUpdate: isPointerLocked => emit('pointer-lock-update', isPointerLocked),
+        onPointerLockChange: isPointerLocked => emit('pointer-lock-update', isPointerLocked),
       } satisfies PointerLockListenerProps),
 
       h(MouseMoveListener, {
-        onUpdate: (x, y, movementX, movementY) =>
+        onMouseMove: (x, y, movementX, movementY) =>
           emit('mouse-move-update', x, y, movementX, movementY),
         mouseMovementResetDelay: props.mouseMovementResetDelay,
       } satisfies MouseMoveListenerProps),
 
       h(PageVisibilityListener, {
-        onUpdate: isVisible => emit('page-visibility-update', isVisible),
+        onPageVisibilityChange: isVisible => emit('page-visibility-update', isVisible),
       } satisfies PageVisibilityListenerProps),
 
       h(PageFocusListener, {
-        onUpdate: isPageFocused => emit('page-focus-update', isPageFocused),
+        onPageFocusChange: isPageFocused => emit('page-focus-update', isPageFocused),
         clearInputsOnBlur: props.clearInputsOnBlur,
       } satisfies PageFocusListenerProps),
 
       h(ResizeListener, {
-        onUpdate: ({ width, height, isLandscape, isPortrait }) =>
+        onResize: ({ width, height, isLandscape, isPortrait }) =>
           emit('resize-update', { width, height, isLandscape, isPortrait }),
       } satisfies ResizeListenerProps),
 
       h(DeviceTypeListener, {
-        onUpdate: ({ isDesktop, isMobile }) => emit('device-type-update', { isDesktop, isMobile }),
+        onDeviceTypeChange: ({ isDesktop, isMobile }) =>
+          emit('device-type-update', { isDesktop, isMobile }),
       } satisfies DeviceTypeListenerProps),
 
       h(ScreenOrientationListener, {
-        onUpdate: ({ isPortrait, isLandscape }) =>
+        onScreenOrientationChange: ({ isPortrait, isLandscape }) =>
           emit('screen-orientation-update', { isPortrait, isLandscape }),
       } satisfies ScreenOrientationListenerProps),
 

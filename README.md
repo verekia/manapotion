@@ -227,6 +227,8 @@ You can provide custom event callbacks to `<Listeners />` or to individual liste
 <FullscreenListener onFullscreenUpdate={handleFullscreenUpdate} />
 ```
 
+Please check the TypeScript types for the available callbacks.
+
 Be careful however: if the parent component of `Listeners` is re-rendered and you didn't memoize the callback (`handleFullscreenChange` here), `Listeners` will also re-render. Some of Mana Potion's Listeners run once when initialized, which will cause your callback to be called as well.
 
 ```jsx

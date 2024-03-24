@@ -4,11 +4,11 @@ import { mountMouseMoveListener, MouseMoveListenerProps } from '@manapotion/core
 
 export const MouseMoveListener = ({
   mouseMovementResetDelay = 30,
-  onUpdate,
+  onMouseMove,
 }: MouseMoveListenerProps) => {
   useEffect(
-    () => mountMouseMoveListener({ onUpdate, mouseMovementResetDelay }),
-    [onUpdate, mouseMovementResetDelay],
+    () => mountMouseMoveListener({ onMouseMove, mouseMovementResetDelay }),
+    [onMouseMove, mouseMovementResetDelay],
   )
 
   return null

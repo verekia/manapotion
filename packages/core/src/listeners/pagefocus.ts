@@ -2,16 +2,16 @@ import { mp } from '../store'
 
 export type PageFocusListenerProps = {
   clearInputsOnBlur?: boolean
-  onUpdate?: (isPageFocused: boolean) => void
+  onPageFocusChange?: (isPageFocused: boolean) => void
 }
 
 export const mountBlurListener = ({
-  onUpdate,
+  onPageFocusChange,
   clearInputsOnBlur = true,
 }: PageFocusListenerProps) => {
   const handler = () => {
     mp().setPageFocused(false)
-    onUpdate?.(false)
+    onPageFocusChange?.(false)
     if (clearInputsOnBlur) {
       mp().clearInputs()
     }
@@ -24,14 +24,10 @@ export const mountBlurListener = ({
   }
 }
 
-export const mountFocusListener = ({
-  onUpdate,
-}: {
-  onUpdate?: (isPageFocused: boolean) => void
-}) => {
+export const mountFocusListener = ({ onPageFocusChange }: PageFocusListenerProps) => {
   const handler = () => {
     mp().setPageFocused(true)
-    onUpdate?.(true)
+    onPageFocusChange?.(true)
   }
 
   window.addEventListener('focus', handler)

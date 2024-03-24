@@ -3,13 +3,14 @@ import { defineComponent, onMounted, onUnmounted } from 'vue'
 import { DeviceTypeListenerProps, mountDeviceTypeListener } from '@manapotion/core'
 
 export const DeviceTypeListener = defineComponent({
-  emits: ['update'],
+  emits: ['device-type-change'],
   setup(_, { emit }) {
     let unsub = () => {}
 
     onMounted(() => {
       unsub = mountDeviceTypeListener({
-        onUpdate: ({ isDesktop, isMobile }) => emit('update', { isDesktop, isMobile }),
+        onDeviceTypeChange: ({ isDesktop, isMobile }) =>
+          emit('device-type-change', { isDesktop, isMobile }),
       } satisfies DeviceTypeListenerProps)
     })
 
