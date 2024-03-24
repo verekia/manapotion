@@ -595,6 +595,10 @@ export default {
 }
 ```
 
+## Community
+
+Join the [Mana Potion Discord server](https://discord.gg/29RGwTBTay).
+
 ## Contributing
 
 See the [contributing guide](https://github.com/verekia/manapotion/blob/main/CONTRIBUTING.md).
