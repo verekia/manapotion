@@ -9,6 +9,7 @@ export * from './listeners/PageFocusListener'
 export * from './listeners/PageVisibilityListener'
 export * from './listeners/PointerLockListener'
 export * from './listeners/ResizeListener'
+export * from './listeners/DeviceTypeListener'
 
 export * from '@manapotion/browser'
 export * from '@manapotion/core'

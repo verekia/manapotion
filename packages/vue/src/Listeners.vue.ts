@@ -1,5 +1,6 @@
 import { defineComponent, h } from 'vue'
 
+import { DeviceTypeListener } from './listeners/DeviceTypeListener.vue'
 import { FullscreenListener } from './listeners/FullscreenListener.vue'
 import { MouseMoveListener } from './listeners/MouseMoveListener.vue'
 import { PageFocusListener } from './listeners/PageFocusListener.vue'
@@ -15,6 +16,7 @@ export const Listeners = defineComponent({
     'page-visibility-update',
     'page-focus-update',
     'resize-update',
+    'device-type-update',
   ],
   props: {
     mouseMovementResetDelay: {
@@ -58,6 +60,10 @@ export const Listeners = defineComponent({
           isLandscape: boolean
           isPortrait: boolean
         }) => emit('resize-update', { width, height, isLandscape, isPortrait }),
+      }),
+      h(DeviceTypeListener, {
+        onUpdate: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) =>
+          emit('device-type-update', { isDesktop, isMobile }),
       }),
     ]
   },

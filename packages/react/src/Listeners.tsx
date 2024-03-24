@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 
 import { KeyState, mp } from '@manapotion/core'
 
+import { DeviceTypeListener, DeviceTypeListenerProps } from './listeners/DeviceTypeListener'
 import { FullscreenListener, FullscreenListenerProps } from './listeners/FullscreenListener'
 import { MouseMoveListener, MouseMoveListenerProps } from './listeners/MouseMoveListener'
 import { PageFocusListener, PageFocusListenerProps } from './listeners/PageFocusListener'
@@ -11,33 +12,6 @@ import {
 } from './listeners/PageVisibilityListener'
 import { PointerLockListener, PointerLockListenerProps } from './listeners/PointerLockListener'
 import { ResizeListener, ResizeListenerProps } from './listeners/ResizeListener'
-
-export type DeviceTypeListenerProps = {
-  onDeviceTypeChange?: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) => void
-}
-
-export const DeviceTypeListener = ({ onDeviceTypeChange }: DeviceTypeListenerProps) => {
-  useEffect(() => {
-    const desktopQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
-    const mobileQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
-
-    const handleDeviceTypeChange = () => {
-      const isDesktop = desktopQuery.matches
-      const isMobile = mobileQuery.matches
-      mp().setDeviceType({ isDesktop, isMobile })
-      onDeviceTypeChange?.({ isDesktop, isMobile })
-    }
-
-    // The listeners that have an initial call like this are problematic because the call gets triggered at every rerender of Listeners because the function is recreated every time
-    handleDeviceTypeChange()
-
-    desktopQuery.addEventListener('change', handleDeviceTypeChange)
-
-    return () => desktopQuery.removeEventListener('change', handleDeviceTypeChange)
-  }, [onDeviceTypeChange])
-
-  return null
-}
 
 export type ScreenOrientationListenerProps = {
   onScreenOrientationChange?: ({
@@ -245,13 +219,17 @@ type ListenersFullscreenProps = Omit<FullscreenListenerProps, 'onUpdate'> & {
   onFullscreenUpdate?: FullscreenListenerProps['onUpdate']
 }
 
+type ListenersDeviceTypeProps = Omit<DeviceTypeListenerProps, 'onUpdate'> & {
+  onDeviceTypeUpdate?: DeviceTypeListenerProps['onUpdate']
+}
+
 export type ListenersProps = ListenersMouseMoveProps &
   ListenersPageVisibilityProps &
   ListenersPageFocusProps &
   ListenersPointerLockProps &
   ListenersFullscreenProps &
   ListenersResizeProps &
-  DeviceTypeListenerProps &
+  ListenersDeviceTypeProps &
   ScreenOrientationListenerProps &
   MouseDownListenerProps &
   KeyboardListenerProps &
@@ -265,7 +243,7 @@ export const Listeners = ({
   onPointerLockUpdate,
   onFullscreenUpdate,
   onResizeUpdate,
-  onDeviceTypeChange,
+  onDeviceTypeUpdate,
   onScreenOrientationChange,
   onLeftMouseDown,
   onMiddleMouseDown,
@@ -288,7 +266,7 @@ export const Listeners = ({
     <PointerLockListener onUpdate={onPointerLockUpdate} />
     <FullscreenListener onUpdate={onFullscreenUpdate} />
     <ResizeListener onUpdate={onResizeUpdate} />
-    <DeviceTypeListener onDeviceTypeChange={onDeviceTypeChange} />
+    <DeviceTypeListener onUpdate={onDeviceTypeUpdate} />
     <ScreenOrientationListener onScreenOrientationChange={onScreenOrientationChange} />
     <MouseDownListener
       onLeftMouseDown={onLeftMouseDown}

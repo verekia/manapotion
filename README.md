@@ -251,6 +251,7 @@ The Listeners that are called once when initialized and may need memoization dep
 - ⚠️ PageVisibilityListener
 - ⚠️ PointerlockListener
 - ⚠️ ResizeListener
+- ⚠️ DeviceTypeListener
 
 This mechanism may be improved in the future.
 

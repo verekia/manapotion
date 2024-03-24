@@ -301,7 +301,7 @@ const App = () => {
             `onMouseMove – x: ${x}, y: ${y}, movementX: ${movementX}, movementY: ${movementY}`,
           )
         }
-        onDeviceTypeChange={({ isDesktop, isMobile }) =>
+        onDeviceTypeUpdate={({ isDesktop, isMobile }) =>
           eventNotificationRef.current.setMessage(
             `onDeviceTypeChange – isDesktop: ${isDesktop}, isMobile: ${isMobile}`,
           )
