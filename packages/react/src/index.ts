@@ -1,4 +1,4 @@
-export * from './hooks'
+export * from './react-loops'
 export * from './Listeners'
 export * from './react-store'
 export * from './JoystickArea'

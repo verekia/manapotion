@@ -343,7 +343,7 @@ import player from './player'
 const Player = () => {
   const ref = useRef<HTMLDivElement>(null)
 
-  useAnimationFrame(() => {
+  useAnimationFrame(({ delta, elapsed }) => {
     ref.current!.style.transform = `translate(${player.x}px, ${player.y}px)`
   })
 
@@ -362,7 +362,7 @@ import player from './player'
 
 const playerRef = ref<HTMLDivElement | null>(null)
 
-useAnimationFrame(() => {
+useAnimationFrame(({ delta, elapsed }) => {
   playerRef.value!.style.transform = `translate(${player.x}px, ${player.y}px)`
 })
 </script>
@@ -377,7 +377,7 @@ useAnimationFrame(() => {
 ```ts
 import { startAnimationFrame } from '@manapotion/vanilla'
 
-const unsubscribe = startAnimationFrame(() => {
+const unsubscribe = startAnimationFrame(({ delta, elapsed }) => {
   // Your animation loop
 })
 

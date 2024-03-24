@@ -1,8 +1,8 @@
 import { onMounted, onUnmounted } from 'vue'
 
-import { startAnimationFrame } from '@manapotion/core'
+import { FrameCallback, startAnimationFrame } from '@manapotion/core'
 
-export const useAnimationFrame = (callback: (deltaTime: number) => void) => {
+export const useAnimationFrame = (callback: FrameCallback) => {
   let unsub = () => {}
 
   onMounted(() => {
