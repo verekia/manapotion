@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
 import { theme } from '@manapotion/tailwind'
+
+import type { Config } from 'tailwindcss'
 
 export default {
   content: ['./index.html', './src/**/*.vue'],
@@ -11,4 +12,4 @@ export default {
   },
   plugins: [],
   future: { hoverOnlyWhenSupported: true },
-}
+} satisfies Config

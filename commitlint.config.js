@@ -9,6 +9,7 @@ module.exports = {
         'global',
         'root',
         // Examples
+        'examples',
         'react-example',
         'vue-example',
         'vanilla-example',
