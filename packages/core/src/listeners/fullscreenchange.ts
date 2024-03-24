@@ -1,9 +1,13 @@
 import { mp } from '../store'
 
-export const handleFullscreenChange =
-  ({ onChange }: { onChange?: (isFullscreen: boolean) => void }) =>
-  (_: Event) => {
+export const mountFullscreenListener = (onChange?: (isFullscreen: boolean) => void) => {
+  const handler = () => {
     const isFullscreen = Boolean(document.fullscreenElement)
     mp().setFullscreen(isFullscreen)
     onChange?.(isFullscreen)
   }
+
+  document.addEventListener('fullscreenchange', handler)
+
+  return () => document.removeEventListener('fullscreenchange', handler)
+}

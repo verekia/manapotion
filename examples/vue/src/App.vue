@@ -14,10 +14,6 @@ const handlePointerLockChange = (isPointerLocked: boolean) => {
   console.log('Pointer lock change!', isPointerLocked)
 }
 
-const handleMouseMove = (x: number, y: number, movementX: number, movementY: number) => {
-  console.log('Mouse move!', x, y, movementX, movementY)
-}
-
 const mouseXRef = ref<HTMLSpanElement | null>(null)
 const mouseYRef = ref<HTMLSpanElement | null>(null)
 const mouseMovementXRef = ref<HTMLSpanElement | null>(null)
@@ -57,7 +53,6 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
 
   <Listeners
     :mouseMoveResetDelay="moveResetDelay"
-    @mousemove="handleMouseMove"
     @fullscreenchange="handleFullscreenChange"
     @pointerlockchange="handlePointerLockChange"
     @visibilitychange="handlePageVisibilityChange"
