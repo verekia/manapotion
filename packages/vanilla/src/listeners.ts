@@ -2,6 +2,18 @@ import {
   DeviceTypeListenerProps,
   FullscreenListenerProps,
   KeyboardListenerProps,
+  mountBlurListener,
+  mountDeviceTypeListener,
+  mountFocusListener,
+  mountFullscreenListener,
+  mountKeyboardListener,
+  mountMouseButtonsListener,
+  mountMouseMoveListener,
+  mountMouseScrollListener,
+  mountPageVisibilityListener,
+  mountPointerLockListener,
+  mountResizeListener,
+  mountScreenOrientationListener,
   MouseButtonsListenerProps,
   MouseMoveListenerProps,
   MouseScrollListenerProps,
@@ -11,18 +23,6 @@ import {
   ResizeListenerProps,
   ScreenOrientationListenerProps,
 } from '@manapotion/core'
-
-import { DeviceTypeListener } from './listeners/DeviceTypeListener'
-import { FullscreenListener } from './listeners/FullscreenListener'
-import { KeyboardListener } from './listeners/KeyboardListener'
-import { MouseButtonsListener } from './listeners/MouseButtonsListener'
-import { MouseMoveListener } from './listeners/MouseMoveListener'
-import { MouseScrollListener } from './listeners/MouseScrollListener'
-import { PageFocusListener } from './listeners/PageFocusListener'
-import { PageVisibilityListener } from './listeners/PageVisibilityListener'
-import { PointerLockListener } from './listeners/PointerLockListener'
-import { ResizeListener } from './listeners/ResizeListener'
-import { ScreenOrientationListener } from './listeners/ScreenOrientationListener'
 
 type ListenersMouseMoveProps = Omit<MouseMoveListenerProps, 'onUpdate'> & {
   onMouseMoveUpdate?: MouseMoveListenerProps['onUpdate']
@@ -68,7 +68,7 @@ export type ListenersProps = ListenersMouseMoveProps &
   KeyboardListenerProps &
   MouseScrollListenerProps
 
-export const Listeners = ({
+export const listeners = ({
   clearInputsOnBlur,
   mouseMovementResetDelay,
   onMouseMoveUpdate,
@@ -89,28 +89,44 @@ export const Listeners = ({
   mouseScrollResetDelay,
   onKeyDown,
   onKeyUp,
-}: ListenersProps) => (
-  <>
-    <MouseMoveListener
-      mouseMovementResetDelay={mouseMovementResetDelay}
-      onUpdate={onMouseMoveUpdate}
-    />
-    <PageVisibilityListener onUpdate={onPageVisibilityUpdate} />
-    <PageFocusListener onUpdate={onPageFocusUpdate} clearInputsOnBlur={clearInputsOnBlur} />
-    <PointerLockListener onUpdate={onPointerLockUpdate} />
-    <FullscreenListener onUpdate={onFullscreenUpdate} />
-    <ResizeListener onUpdate={onResizeUpdate} />
-    <DeviceTypeListener onUpdate={onDeviceTypeUpdate} />
-    <ScreenOrientationListener onUpdate={onScreenOrientationUpdate} />
-    <MouseButtonsListener
-      onLeftMouseDown={onLeftMouseDown}
-      onMiddleMouseDown={onMiddleMouseDown}
-      onRightMouseDown={onRightMouseDown}
-      onLeftMouseUp={onLeftMouseUp}
-      onMiddleMouseUp={onMiddleMouseUp}
-      onRightMouseUp={onRightMouseUp}
-    />
-    <KeyboardListener onKeyDown={onKeyDown} onKeyUp={onKeyUp} />
-    <MouseScrollListener onScroll={onScroll} mouseScrollResetDelay={mouseScrollResetDelay} />
-  </>
-)
+}: ListenersProps) => {
+  const unsubDeviceType = mountDeviceTypeListener({ onUpdate: onDeviceTypeUpdate })
+  const unsubBlur = mountBlurListener({ clearInputsOnBlur, onUpdate: onPageFocusUpdate })
+  const unsubFocus = mountFocusListener({ onUpdate: onPageFocusUpdate })
+  const unsubFullscreen = mountFullscreenListener({ onUpdate: onFullscreenUpdate })
+  const unsubMouseButtons = mountMouseButtonsListener({
+    onLeftMouseDown,
+    onMiddleMouseDown,
+    onRightMouseDown,
+    onLeftMouseUp,
+    onMiddleMouseUp,
+    onRightMouseUp,
+  })
+  const unsubMouseMove = mountMouseMoveListener({
+    onUpdate: onMouseMoveUpdate,
+    mouseMovementResetDelay,
+  })
+  const unsubKeyboard = mountKeyboardListener({ onKeyDown, onKeyUp })
+  const unsubScroll = mountMouseScrollListener({ onScroll, mouseScrollResetDelay })
+  const unsubPointerLock = mountPointerLockListener({ onUpdate: onPointerLockUpdate })
+  const unsubResize = mountResizeListener({ onUpdate: onResizeUpdate })
+  const unsubScreenOrientation = mountScreenOrientationListener({
+    onUpdate: onScreenOrientationUpdate,
+  })
+  const unsubPageVisibility = mountPageVisibilityListener({ onUpdate: onPageVisibilityUpdate })
+
+  return () => {
+    unsubDeviceType()
+    unsubBlur()
+    unsubFocus()
+    unsubFullscreen()
+    unsubMouseButtons()
+    unsubMouseMove()
+    unsubKeyboard()
+    unsubScroll()
+    unsubPointerLock()
+    unsubResize()
+    unsubScreenOrientation()
+    unsubPageVisibility()
+  }
+}

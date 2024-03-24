@@ -1,10 +1,10 @@
 import { mp } from '../store'
 
-export const mountFullscreenListener = ({
-  onUpdate,
-}: {
+export type FullscreenListenerProps = {
   onUpdate?: (isFullscreen: boolean) => void
-}) => {
+}
+
+export const mountFullscreenListener = ({ onUpdate }: FullscreenListenerProps) => {
   const handler = () => {
     const isFullscreen = Boolean(document.fullscreenElement)
     mp().setFullscreen(isFullscreen)

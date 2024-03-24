@@ -1,10 +1,6 @@
 import { useEffect } from 'react'
 
-import { mountPageVisibilityListener } from '@manapotion/core'
-
-export type PageVisibilityListenerProps = {
-  onUpdate?: (isVisible: boolean) => void
-}
+import { mountPageVisibilityListener, PageVisibilityListenerProps } from '@manapotion/core'
 
 export const PageVisibilityListener = ({ onUpdate }: PageVisibilityListenerProps) => {
   useEffect(() => mountPageVisibilityListener({ onUpdate }), [onUpdate])

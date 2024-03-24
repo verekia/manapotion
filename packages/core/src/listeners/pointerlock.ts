@@ -1,10 +1,10 @@
 import { mp } from '../store'
 
-export const mountPointerLockListener = ({
-  onUpdate,
-}: {
+export type PointerLockListenerProps = {
   onUpdate?: (isPointerLocked: boolean) => void
-}) => {
+}
+
+export const mountPointerLockListener = ({ onUpdate }: PointerLockListenerProps) => {
   const handler = () => {
     const isPointerLocked = Boolean(document.pointerLockElement)
     mp().setPointerLocked(isPointerLocked)

@@ -1,10 +1,10 @@
 import { mp } from '../store'
 
-export const mountScreenOrientationListener = ({
-  onUpdate,
-}: {
+export type ScreenOrientationListenerProps = {
   onUpdate?: ({ isLandscape, isPortrait }: { isLandscape: boolean; isPortrait: boolean }) => void
-}) => {
+}
+
+export const mountScreenOrientationListener = ({ onUpdate }: ScreenOrientationListenerProps) => {
   const landscapeQuery = window.matchMedia('(orientation: landscape)')
   const portraitQuery = window.matchMedia('(orientation: portrait)')
 

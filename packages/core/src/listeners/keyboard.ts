@@ -1,12 +1,13 @@
 import { KeyState, mp } from '../store'
 
-export const mountKeyboardListener = ({
-  onKeyUp,
-  onKeyDown,
-}: {
+export type KeyboardListenerProps = {
   onKeyDown?: (keyState: KeyState) => void
   onKeyUp?: (code: string, key: string) => void
-}) => {
+}
+
+// https://w3c.github.io/uievents/tools/key-event-viewer.html
+
+export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerProps) => {
   const downHandler = (e: KeyboardEvent) => {
     const { key, code } = e
 

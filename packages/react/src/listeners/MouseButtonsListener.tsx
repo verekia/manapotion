@@ -1,15 +1,6 @@
 import { useEffect } from 'react'
 
-import { mountMouseButtonsListener } from '@manapotion/core'
-
-export type MouseButtonsListenerProps = {
-  onLeftMouseDown?: () => void
-  onMiddleMouseDown?: () => void
-  onRightMouseDown?: () => void
-  onLeftMouseUp?: () => void
-  onMiddleMouseUp?: () => void
-  onRightMouseUp?: () => void
-}
+import { mountMouseButtonsListener, MouseButtonsListenerProps } from '@manapotion/core'
 
 export const MouseButtonsListener = ({
   onLeftMouseDown,

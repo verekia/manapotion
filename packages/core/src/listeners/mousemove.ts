@@ -2,18 +2,15 @@ import { mp } from '../store'
 
 let movementResetTimeout: ReturnType<typeof setTimeout> | null = null
 
+export type MouseMoveListenerProps = {
+  mouseMovementResetDelay?: number
+  onUpdate?: (x: number, y: number, movementX: number, movementY: number) => void
+}
+
 export const mountMouseMoveListener = ({
   onUpdate,
   mouseMovementResetDelay,
-}: {
-  onUpdate?: (
-    mouseX: number,
-    mouseY: number,
-    mouseMovementX: number,
-    mouseMovementY: number,
-  ) => void
-  mouseMovementResetDelay: number
-}) => {
+}: MouseMoveListenerProps) => {
   const handler = (e: MouseEvent) => {
     const mouseX = e.clientX
     const mouseY = window.innerHeight - e.clientY

@@ -1,10 +1,10 @@
 import { mp } from '../store'
 
-export const mountPageVisibilityListener = ({
-  onUpdate,
-}: {
+export type PageVisibilityListenerProps = {
   onUpdate?: (isVisible: boolean) => void
-}) => {
+}
+
+export const mountPageVisibilityListener = ({ onUpdate }: PageVisibilityListenerProps) => {
   const handler = () => {
     const isVisible = !document.hidden
     mp().setPageVisible(isVisible)

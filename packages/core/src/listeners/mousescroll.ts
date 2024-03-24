@@ -2,13 +2,15 @@ import { mp } from '../store'
 
 let resetTimeout: ReturnType<typeof setTimeout> | null = null
 
+export type MouseScrollListenerProps = {
+  onScroll?: (deltaY: number) => void
+  mouseScrollResetDelay?: number
+}
+
 export const mountMouseScrollListener = ({
   onScroll,
   mouseScrollResetDelay,
-}: {
-  onScroll?: (deltaY: number) => void
-  mouseScrollResetDelay?: number
-}) => {
+}: MouseScrollListenerProps) => {
   const handler = (e: WheelEvent) => {
     const deltaY = e.deltaY
 

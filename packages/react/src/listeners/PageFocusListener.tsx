@@ -1,11 +1,6 @@
 import { useEffect } from 'react'
 
-import { mountBlurListener, mountFocusListener } from '@manapotion/core'
-
-export type PageFocusListenerProps = {
-  clearInputsOnBlur?: boolean
-  onUpdate?: (isPageFocused: boolean) => void
-}
+import { mountBlurListener, mountFocusListener, PageFocusListenerProps } from '@manapotion/core'
 
 export const PageFocusListener = ({
   onUpdate,

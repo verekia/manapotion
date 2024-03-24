@@ -1,10 +1,10 @@
 import { mp } from '../store'
 
-export const mountDeviceTypeListener = ({
-  onUpdate,
-}: {
+export type DeviceTypeListenerProps = {
   onUpdate?: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) => void
-}) => {
+}
+
+export const mountDeviceTypeListener = ({ onUpdate }: DeviceTypeListenerProps) => {
   const desktopQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
   const mobileQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
 

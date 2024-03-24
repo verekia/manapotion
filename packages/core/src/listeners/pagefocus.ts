@@ -1,12 +1,14 @@
 import { mp } from '../store'
 
+export type PageFocusListenerProps = {
+  clearInputsOnBlur?: boolean
+  onUpdate?: (isPageFocused: boolean) => void
+}
+
 export const mountBlurListener = ({
   onUpdate,
   clearInputsOnBlur = true,
-}: {
-  onUpdate?: (isPageFocused: boolean) => void
-  clearInputsOnBlur?: boolean
-}) => {
+}: PageFocusListenerProps) => {
   const handler = () => {
     mp().setPageFocused(false)
     onUpdate?.(false)

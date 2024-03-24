@@ -1,11 +1,6 @@
 import { useEffect } from 'react'
 
-import { mountMouseMoveListener } from '@manapotion/core'
-
-export type MouseMoveListenerProps = {
-  mouseMovementResetDelay?: number
-  onUpdate?: (x: number, y: number, movementX: number, movementY: number) => void
-}
+import { mountMouseMoveListener, MouseMoveListenerProps } from '@manapotion/core'
 
 export const MouseMoveListener = ({
   mouseMovementResetDelay = 30,

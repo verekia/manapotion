@@ -1,5 +1,14 @@
 import { mp } from '../store'
 
+export type MouseButtonsListenerProps = {
+  onLeftMouseDown?: () => void
+  onMiddleMouseDown?: () => void
+  onRightMouseDown?: () => void
+  onLeftMouseUp?: () => void
+  onMiddleMouseUp?: () => void
+  onRightMouseUp?: () => void
+}
+
 export const mountMouseButtonsListener = ({
   onLeftMouseDown,
   onMiddleMouseDown,
@@ -7,14 +16,7 @@ export const mountMouseButtonsListener = ({
   onLeftMouseUp,
   onMiddleMouseUp,
   onRightMouseUp,
-}: {
-  onLeftMouseDown?: () => void
-  onMiddleMouseDown?: () => void
-  onRightMouseDown?: () => void
-  onLeftMouseUp?: () => void
-  onMiddleMouseUp?: () => void
-  onRightMouseUp?: () => void
-}) => {
+}: MouseButtonsListenerProps) => {
   const downHandler = (e: MouseEvent) => {
     if (e.button === 0) {
       mp().setLeftMouseDown(true)

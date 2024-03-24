@@ -1,10 +1,6 @@
 import { useEffect } from 'react'
 
-import { mountScreenOrientationListener } from '@manapotion/core'
-
-export type ScreenOrientationListenerProps = {
-  onUpdate?: ({ isLandscape, isPortrait }: { isLandscape: boolean; isPortrait: boolean }) => void
-}
+import { mountScreenOrientationListener, ScreenOrientationListenerProps } from '@manapotion/core'
 
 export const ScreenOrientationListener = ({ onUpdate }: ScreenOrientationListenerProps) => {
   useEffect(() => mountScreenOrientationListener({ onUpdate }), [onUpdate])

@@ -319,8 +319,6 @@ Vue might have a similar issue as the one mentioned above for React. Let me know
 
 **Vanilla**
 
-⚠️ Not implemented yet ⚠️
-
 ```js
 listeners({
   onFullscreenUpdate: handleFullscreenUpdate,

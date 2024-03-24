@@ -1,10 +1,6 @@
 import { useEffect } from 'react'
 
-import { mountPointerLockListener } from '@manapotion/core'
-
-export type PointerLockListenerProps = {
-  onUpdate?: (isPointerLocked: boolean) => void
-}
+import { mountPointerLockListener, PointerLockListenerProps } from '@manapotion/core'
 
 export const PointerLockListener = ({ onUpdate }: PointerLockListenerProps) => {
   useEffect(() => mountPointerLockListener({ onUpdate }), [onUpdate])

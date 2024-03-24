@@ -1,11 +1,6 @@
 import { useEffect } from 'react'
 
-import { mountMouseScrollListener } from '@manapotion/core'
-
-export type MouseScrollListenerProps = {
-  onScroll?: (deltaY: number) => void
-  mouseScrollResetDelay?: number
-}
+import { mountMouseScrollListener, MouseScrollListenerProps } from '@manapotion/core'
 
 export const MouseScrollListener = ({
   onScroll,
