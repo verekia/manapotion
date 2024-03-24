@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { handleResize } from '@manapotion/core'
+import { mountResizeListener } from '@manapotion/core'
 
 export type ResizeListenerProps = {
   onResize?: (params: {
@@ -12,15 +12,7 @@ export type ResizeListenerProps = {
 }
 
 export const ResizeListener = ({ onResize }: ResizeListenerProps) => {
-  useEffect(() => {
-    const handler = handleResize({ onResize })
-
-    handler()
-
-    window.addEventListener('resize', handler)
-
-    return () => window.removeEventListener('resize', handler)
-  }, [onResize])
+  useEffect(() => mountResizeListener(onResize), [onResize])
 
   return null
 }

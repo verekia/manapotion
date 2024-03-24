@@ -18,14 +18,18 @@ const mouseXRef = ref<HTMLSpanElement | null>(null)
 const mouseYRef = ref<HTMLSpanElement | null>(null)
 const mouseMovementXRef = ref<HTMLSpanElement | null>(null)
 const mouseMovementYRef = ref<HTMLSpanElement | null>(null)
+const windowWidthRef = ref<HTMLSpanElement | null>(null)
+const windowHeightRef = ref<HTMLSpanElement | null>(null)
 
 useAnimationFrame(() => {
-  const { mouseX, mouseY, mouseMovementX, mouseMovementY } = mp()
+  const { mouseX, mouseY, mouseMovementX, mouseMovementY, windowWidth, windowHeight } = mp()
 
   mouseXRef.value!.textContent = String(mouseX)
   mouseYRef.value!.textContent = String(mouseY)
   mouseMovementXRef.value!.textContent = String(mouseMovementX)
   mouseMovementYRef.value!.textContent = String(mouseMovementY)
+  windowWidthRef.value!.textContent = String(windowWidth)
+  windowHeightRef.value!.textContent = String(windowHeight)
 })
 
 const moveResetDelay = ref(1000)
@@ -48,6 +52,7 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
   </div>
   <div>Is page visible: {{ isPageVisible }}</div>
   <div>Is page focused: {{ isPageFocused }}</div>
+  <div>Window size: <span ref="windowWidthRef"></span> <span ref="windowHeightRef"></span></div>
   Toggle mouse reset delay between 1s and 200ms:
   <button @click="handleToggleMoveResetDelay">{{ moveResetDelay }}ms</button>
 

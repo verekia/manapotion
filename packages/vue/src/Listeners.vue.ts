@@ -5,6 +5,7 @@ import { MouseMoveListener } from './listeners/MouseMoveListener.vue'
 import { PageFocusListener } from './listeners/PageFocusListener.vue'
 import { PageVisibilityListener } from './listeners/PageVisibilityListener.vue'
 import { PointerLockListener } from './listeners/PointerLockListener.vue'
+import { ResizeListener } from './listeners/ResizeListener.vue'
 
 export const Listeners = defineComponent({
   emits: [
@@ -14,6 +15,7 @@ export const Listeners = defineComponent({
     'visibilitychange',
     'blur',
     'focus',
+    'resize',
   ],
   props: {
     mouseMovementResetDelay: {
@@ -41,6 +43,14 @@ export const Listeners = defineComponent({
       h(PageFocusListener, {
         onBlur: () => emit('blur'),
         onFocus: () => emit('focus'),
+      }),
+      h(ResizeListener, {
+        onResize: (params: {
+          width: number
+          height: number
+          isLandscape: boolean
+          isPortrait: boolean
+        }) => emit('resize', params),
       }),
     ]
   },

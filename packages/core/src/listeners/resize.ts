@@ -1,17 +1,14 @@
 import { mp } from '../store'
 
-export const handleResize =
-  ({
-    onResize,
-  }: {
-    onResize?: (params: {
-      width: number
-      height: number
-      isLandscape: boolean
-      isPortrait: boolean
-    }) => void
-  }) =>
-  () => {
+export const mountResizeListener = (
+  onResize?: (params: {
+    width: number
+    height: number
+    isLandscape: boolean
+    isPortrait: boolean
+  }) => void,
+) => {
+  const handler = () => {
     const width = window.innerWidth
     const height = window.innerHeight
 
@@ -23,3 +20,10 @@ export const handleResize =
     mp().isLandscape = isLandscape
     onResize?.({ width, height, isPortrait, isLandscape })
   }
+
+  handler()
+
+  window.addEventListener('resize', handler)
+
+  return () => window.removeEventListener('resize', handler)
+}
