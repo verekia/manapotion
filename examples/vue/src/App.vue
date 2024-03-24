@@ -88,8 +88,8 @@ const jsonKeys = computed(() => JSON.stringify(keys.value))
   </div>
 
   <Listeners
-    @fullscreenchange="handleFullscreenChange"
-    @pointerlockchange="handlePointerLockChange"
-    @visibilitychange="handlePageVisibilityChange"
+    @fullscreenChange="handleFullscreenChange"
+    @pointerLockChange="handlePointerLockChange"
+    @pageVisibilityChange="handlePageVisibilityChange"
   />
 </template>

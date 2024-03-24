@@ -3,7 +3,7 @@ import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 import { mountBlurListener, mountFocusListener, PageFocusListenerProps } from '@manapotion/core'
 
 export const PageFocusListener = defineComponent({
-  emits: ['page-focus-change'],
+  emits: ['pageFocusChange'],
   props: { clearInputsOnBlur: { type: Boolean, default: true } },
   setup(props, { emit }) {
     let unsubBlur = () => {}
@@ -11,12 +11,12 @@ export const PageFocusListener = defineComponent({
 
     onMounted(() => {
       unsubBlur = mountBlurListener({
-        onPageFocusChange: isPageFocused => emit('page-focus-change', isPageFocused),
+        onPageFocusChange: isPageFocused => emit('pageFocusChange', isPageFocused),
         clearInputsOnBlur: props.clearInputsOnBlur,
       } satisfies PageFocusListenerProps)
 
       unsubFocus = mountFocusListener({
-        onPageFocusChange: isPageFocused => emit('page-focus-change', isPageFocused),
+        onPageFocusChange: isPageFocused => emit('pageFocusChange', isPageFocused),
       } satisfies PageFocusListenerProps)
     })
 
@@ -25,7 +25,7 @@ export const PageFocusListener = defineComponent({
       newClearInputsOnBlur => {
         unsubBlur()
         unsubBlur = mountBlurListener({
-          onPageFocusChange: isPageFocused => emit('page-focus-change', isPageFocused),
+          onPageFocusChange: isPageFocused => emit('pageFocusChange', isPageFocused),
           clearInputsOnBlur: newClearInputsOnBlur,
         } satisfies PageFocusListenerProps)
       },

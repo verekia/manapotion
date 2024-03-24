@@ -3,14 +3,14 @@ import { defineComponent, onMounted, onUnmounted } from 'vue'
 import { mountScreenOrientationListener, ScreenOrientationListenerProps } from '@manapotion/core'
 
 export const ScreenOrientationListener = defineComponent({
-  emits: ['screen-orientation-change'],
+  emits: ['screenOrientationChange'],
   setup(_, { emit }) {
     let unsub = () => {}
 
     onMounted(() => {
       unsub = mountScreenOrientationListener({
         onScreenOrientationChange: ({ isPortrait, isLandscape }) =>
-          emit('screen-orientation-change', { isPortrait, isLandscape }),
+          emit('screenOrientationChange', { isPortrait, isLandscape }),
       } satisfies ScreenOrientationListenerProps)
     })
 

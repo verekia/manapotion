@@ -4,24 +4,24 @@ import { mountMouseButtonsListener, MouseButtonsListenerProps } from '@manapotio
 
 export const MouseButtonsListener = defineComponent({
   emits: [
-    'left-mouse-down',
-    'middle-mouse-down',
-    'right-mouse-down',
-    'left-mouse-up',
-    'middle-mouse-up',
-    'right-mouse-up',
+    'leftMouseDown',
+    'middleMouseDown',
+    'rightMouseDown',
+    'leftMouseUp',
+    'middleMouseUp',
+    'rightMouseUp',
   ],
   setup(_, { emit }) {
     let unsub = () => {}
 
     onMounted(() => {
       unsub = mountMouseButtonsListener({
-        onLeftMouseDown: () => emit('left-mouse-down'),
-        onMiddleMouseDown: () => emit('middle-mouse-down'),
-        onRightMouseDown: () => emit('right-mouse-down'),
-        onLeftMouseUp: () => emit('left-mouse-up'),
-        onMiddleMouseUp: () => emit('middle-mouse-up'),
-        onRightMouseUp: () => emit('right-mouse-up'),
+        onLeftMouseDown: () => emit('leftMouseDown'),
+        onMiddleMouseDown: () => emit('middleMouseDown'),
+        onRightMouseDown: () => emit('rightMouseDown'),
+        onLeftMouseUp: () => emit('leftMouseUp'),
+        onMiddleMouseUp: () => emit('middleMouseUp'),
+        onRightMouseUp: () => emit('rightMouseUp'),
       } satisfies MouseButtonsListenerProps)
     })
 
