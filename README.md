@@ -228,25 +228,25 @@ You can provide custom event callbacks to `<Listeners />` or to individual liste
 <FullscreenListener onFullscreenUpdate={handleFullscreenUpdate} />
 ```
 
-Please check the TypeScript types for the available callbacks.
-
-Once mounted, you cannot modify the callbacks dynamically. If you need to change them, you will need to unmount and remount the component. If you have use cases of callbacks changed dynamically, please let me know on [Discord](https://discord.gg/29RGwTBTay),
-
 **Vue**
 
 ```vue
-<Listeners @fullscreen-update="handleFullscreenUpdate" />
+<Listeners @fullscreenUpdate="handleFullscreenUpdate" />
 <!-- or -->
-<FullscreenListener @fullscreen-update="handleFullscreenUpdate" />
+<FullscreenListener @fullscreenUpdate="handleFullscreenUpdate" />
 ```
 
 **Vanilla**
 
 ```js
-listeners({
-  onFullscreenUpdate: handleFullscreenUpdate,
-})
+listeners({ onFullscreenUpdate: handleFullscreenUpdate })
+// or
+mountFullscreenListener({ onFullscreenUpdate: handleFullscreenUpdate })
 ```
+
+Please check the TypeScript types for the available callbacks.
+
+Once mounted, you cannot modify the callbacks dynamically. If you need to change them, you will need to unmount and remount the component. If you have use cases of callbacks changed dynamically, please let me know on [Discord](https://discord.gg/29RGwTBTay).
 
 ## Animation loops
 
