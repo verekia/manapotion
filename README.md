@@ -4,7 +4,7 @@
   <img src="/examples/react/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
-Mana Potion is a toolkit for JavaScript game development and interactive experiences. It supports React, Vue, and vanilla JavaScript.
+Mana Potion is a toolkit for JavaScript game development and interactive experiences. It supports React, Vue, and vanilla JavaScript. Svelte coming soon.
 
 **Important**: Mana Potion is in early development and the API is subject to change. Until we hit 1.0.0, expect breaking changes in minor versions.
 
@@ -15,7 +15,7 @@ Mana Potion consists of:
 - [**Listeners and a reactive store**](#listeners-and-reactive-store)
 - [**Headless virtual joysticks**](#virtual-joysticks)
 - [**Browser API helpers**](#browser-api-helpers)
-- [**General gamedev utilities**](#utilities)
+- [**General math and gamedev utilities**](#utilities)
 - [**Tailwind media queries**](#tailwind)
 - [**React Three Fiber WebGPU canvas and hooks**](#react-three-fiber)
 
@@ -327,7 +327,7 @@ listeners({
 })
 ```
 
-### Mobile Joysticks
+### Virtual joysticks
 
 ⚠️ React-only for now ⚠️
 
@@ -475,9 +475,86 @@ const FullscreenButton = () => {
 
 **Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.
 
+# Utilities
+
+Mana Potion provides a few utility functions that are useful for JS gamedev and animations in general.
+
+- `lerp`: Linear interpolation.
+- `clamp`: Clamps a number between a minimum and a maximum value.
+- `throttle`: Throttles a function by a given time in ms.
+- `debounce`: Debounces a function by a given time in ms.
+- `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
+
+## Math
+
+The following `Math` properties and methods are available as named exports, so you don't have to type `Math.` every time:
+
+```js
+export const pi = Math.PI
+export const sin = Math.sin
+export const cos = Math.cos
+export const abs = Math.abs
+export const sqrt = Math.sqrt
+export const pow = Math.pow
+export const atan2 = Math.atan2
+export const round = Math.round
+export const floor = Math.floor
+export const ceil = Math.ceil
+export const max = Math.max
+export const min = Math.min
+```
+
+# Tailwind
+
+**`@manapotion/tailwind`** is a package that needs to be installed separately and provides a theme containing the following `screens` breakpoints:
+
+- 5xs: 192px
+- 4xs: 256px
+- 3xs: 320px
+- 2xs: 384px
+- xs: 512px
+- sm: 640px - Tailwind default
+- md: 768px - Tailwind default
+- lg: 1024px - Tailwind default
+- xl: 1280px - Tailwind default
+- xxl: 1536px - Tailwind default
+- 3xl: 1792px
+- 4xl: 2048px
+- 5xl: 2560px
+
+Making games often involves supporting landscape mode on mobile devices, which require height media queries. The same values are used for the height media queries, but with a `*-h` suffix. So you can do:
+
+- `xs-h:bg-red-500`: Only for screens taller than 512px.
+- `sm:xs-h:bg-red-500`: Only for screens wider than 640px and taller than 512px.
+- `sm:max-md:xs-h:max-sm-h:bg-red-500`: Only between 640px to 768px wide and 512px to 640px high.
+
+There is currently a [bug in Tailwind](https://github.com/tailwindlabs/tailwindcss/issues/13022) preventing `max-*` classes from being generated when using non-pixel values including raw queries, which prevents us from having height media queries. This package contains a fix for this issue.
+
+There are also `desktop` and `mobile` media queries that you can use to target mobile and desktop devices:
+
+- `desktop:bg-red-500`: Only for desktop devices.
+- `mobile:bg-red-500`: Only for mobile devices (includes tablets).
+
+To add the theme to your Tailwind config:
+
+```js
+/** @type {import('tailwindcss').Config} */
+import { theme } from '@manapotion/tailwind'
+
+export default {
+  content: ['./index.html', './src/**/*.tsx'],
+  theme: {
+    screens: theme.screens,
+    extend: {
+      screens: theme.extend.screens,
+    },
+  },
+}
+```
+
 ## React Three Fiber
 
-⚛️ **`@manapotion/r3f`** includes a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
+**`@manapotion/r3f`** includes a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
 
 ```jsx
 import { Canvas } from '@manapotion/r3f'
@@ -546,83 +623,6 @@ const Scene = () => {
 ```
 
 You can use `useFrameEffect` to animate your UI outside of the `Canvas`.
-
-# Utilities
-
-Mana Potion provides a few utility functions that are useful for JS gamedev and animations in general.
-
-- `lerp`: Linear interpolation.
-- `clamp`: Clamps a number between a minimum and a maximum value.
-- `throttle`: Throttles a function by a given time in ms.
-- `debounce`: Debounces a function by a given time in ms.
-- `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
-
-## Math
-
-The following `Math` properties and methods are available as named exports, so you don't have to type `Math.` every time:
-
-```js
-export const pi = Math.PI
-export const sin = Math.sin
-export const cos = Math.cos
-export const abs = Math.abs
-export const sqrt = Math.sqrt
-export const pow = Math.pow
-export const atan2 = Math.atan2
-export const round = Math.round
-export const floor = Math.floor
-export const ceil = Math.ceil
-export const max = Math.max
-export const min = Math.min
-```
-
-# Tailwind
-
-🍃 **`@manapotion/tailwind`** is a package that needs to be installed separately and provides a theme containing the following `screens` breakpoints:
-
-- 5xs: 192px
-- 4xs: 256px
-- 3xs: 320px
-- 2xs: 384px
-- xs: 512px
-- sm: 640px - Tailwind default
-- md: 768px - Tailwind default
-- lg: 1024px - Tailwind default
-- xl: 1280px - Tailwind default
-- xxl: 1536px - Tailwind default
-- 3xl: 1792px
-- 4xl: 2048px
-- 5xl: 2560px
-
-Making games often involves supporting landscape mode on mobile devices, which require height media queries. The same values are used for the height media queries, but with a `*-h` suffix. So you can do:
-
-- `xs-h:bg-red-500`: Only for screens taller than 512px.
-- `sm:xs-h:bg-red-500`: Only for screens wider than 640px and taller than 512px.
-- `sm:max-md:xs-h:max-sm-h:bg-red-500`: Only between 640px to 768px wide and 512px to 640px high.
-
-There is currently a [bug in Tailwind](https://github.com/tailwindlabs/tailwindcss/issues/13022) preventing `max-*` classes from being generated when using non-pixel values including raw queries, which prevents us from having height media queries. This package contains a fix for this issue.
-
-There are also `desktop` and `mobile` media queries that you can use to target mobile and desktop devices:
-
-- `desktop:bg-red-500`: Only for desktop devices.
-- `mobile:bg-red-500`: Only for mobile devices (includes tablets).
-
-To add the theme to your Tailwind config:
-
-```js
-/** @type {import('tailwindcss').Config} */
-import { theme } from '@manapotion/tailwind'
-
-export default {
-  content: ['./index.html', './src/**/*.tsx'],
-  theme: {
-    screens: theme.screens,
-    extend: {
-      screens: theme.extend.screens,
-    },
-  },
-}
-```
 
 ## Community
 
