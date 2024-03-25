@@ -5,15 +5,9 @@ module.exports = {
       2,
       'always',
       [
-        // General
         'global',
         'root',
-        // Examples
-        'examples',
-        'react-example',
-        'vue-example',
-        'vanilla-example',
-        // Packages
+        'example',
         'core',
         'manapotion',
         'r3f',
@@ -23,6 +17,5 @@ module.exports = {
         'vue',
       ],
     ],
-    'scope-empty': [2, 'never'],
   },
 }
