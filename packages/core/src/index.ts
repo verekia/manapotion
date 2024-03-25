@@ -1,5 +1,7 @@
 export * from './store'
 export * from './loops'
+export * from './browser'
+export * from './util'
 
 export * from './listeners/devicetype'
 export * from './listeners/fullscreen'

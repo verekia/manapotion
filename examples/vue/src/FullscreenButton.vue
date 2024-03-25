@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUpdate } from 'vue'
 
-import { enterFullscreen, exitFullscreen } from '@manapotion/browser'
-import { isFullscreen } from '@manapotion/vue'
+import { enterFullscreen, exitFullscreen, isFullscreen } from '@manapotion/vue'
 
 onBeforeUpdate(() => {
   console.log('FullscreenButton re-render ')

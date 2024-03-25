@@ -41,9 +41,7 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/browser": "^0.18.0",
-    "@manapotion/core": "^0.18.0",
-    "@manapotion/util": "^0.18.0"
+    "@manapotion/core": "^0.18.0"
   },
   "peerDependencies": {
     "react": ">=17.0.0",

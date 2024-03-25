@@ -40,9 +40,7 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/browser": "^0.18.0",
-    "@manapotion/core": "^0.18.0",
-    "@manapotion/util": "^0.18.0"
+    "@manapotion/core": "^0.18.0"
   },
   "peerDependencies": {
     "vue": ">=3.3.0",

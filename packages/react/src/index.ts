@@ -15,6 +15,4 @@ export * from './listeners/PointerLockListener'
 export * from './listeners/ResizeListener'
 export * from './listeners/ScreenOrientationListener'
 
-export * from '@manapotion/browser'
 export * from '@manapotion/core'
-export * from '@manapotion/util'

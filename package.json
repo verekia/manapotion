@@ -11,7 +11,7 @@
     "dev-vue": "cd examples/vue && npm run dev",
     "dev-vanilla": "cd examples/vanilla && npm run dev",
     "clean": "rm -rf packages/*/dist",
-    "build": "npm run build -w @manapotion/util -w @manapotion/tailwind -w @manapotion/browser -w @manapotion/core -w @manapotion/vanilla -w @manapotion/react -w @manapotion/vue -w @manapotion/r3f",
+    "build": "npm run build -w @manapotion/tailwind -w @manapotion/core -w @manapotion/vanilla -w @manapotion/react -w @manapotion/vue -w @manapotion/r3f",
     "publint": "npm run publint -ws",
     "typecheck": "npm run typecheck -ws",
     "format": "npm run format -ws",

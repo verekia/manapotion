@@ -14,6 +14,4 @@ export * from './listeners/PointerLockListener.vue'
 export * from './listeners/ResizeListener.vue'
 export * from './listeners/ScreenOrientationListener.vue'
 
-export * from '@manapotion/browser'
 export * from '@manapotion/core'
-export * from '@manapotion/util'
