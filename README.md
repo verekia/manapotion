@@ -462,25 +462,6 @@ Mana Potion provides a few utility functions that are useful for JS gamedev and 
 - `debounce`: Debounces a function by a given time in ms.
 - `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
 
-## Math
-
-The following `Math` properties and methods are available as named exports, so you don't have to type `Math.` every time:
-
-```js
-export const pi = Math.PI
-export const sin = Math.sin
-export const cos = Math.cos
-export const abs = Math.abs
-export const sqrt = Math.sqrt
-export const pow = Math.pow
-export const atan2 = Math.atan2
-export const round = Math.round
-export const floor = Math.floor
-export const ceil = Math.ceil
-export const max = Math.max
-export const min = Math.min
-```
-
 # Tailwind
 
 **`@manapotion/tailwind`** is a package that needs to be installed separately and provides a theme containing the following `screens` breakpoints:
