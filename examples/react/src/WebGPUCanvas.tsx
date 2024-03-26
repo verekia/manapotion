@@ -4,7 +4,21 @@ import { CanvasProps, Canvas as R3FCanvas } from '@react-three/fiber'
 
 let WebGPURenderer: any
 
-export const Canvas = ({
+// With Vite, you need to enable top-level await:
+
+// import topLevelAwait from 'vite-plugin-top-level-await'
+//
+//   plugins: [
+//     // For Three.js WebGPU support
+//     topLevelAwait({
+//       promiseExportName: '__tla',
+//       promiseImportName: i => `__tla_${i}`,
+//     }),
+//   ],
+//   // ...
+// })
+
+export const WebGPUCanvas = ({
   children,
   forceWebGL = false,
   ...props

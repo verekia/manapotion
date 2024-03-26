@@ -1,7 +1,6 @@
 import { ForwardedRef, forwardRef, useImperativeHandle, useRef, useState } from 'react'
 
 import {
-  Canvas,
   debounce,
   enterFullscreen,
   exitFullscreen,
@@ -17,7 +16,7 @@ import {
   useAnimationFrame,
   useMP,
 } from '@manapotion/r3f'
-import { MeshProps, useFrame } from '@react-three/fiber'
+import { Canvas, MeshProps, useFrame } from '@react-three/fiber'
 import { Mesh } from 'three'
 
 import MobileJoystick from './MobileJoystick'
@@ -258,10 +257,7 @@ const UI = () => {
           Change
         </button>
       </div>
-      <Canvas
-        forceWebGL={renderer === 'WebGL' || Boolean(import.meta.env.VITE_FORCE_WEBGL)}
-        onContextMenu={e => e.preventDefault()}
-      >
+      <Canvas onContextMenu={e => e.preventDefault()}>
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
           position={[10, 10, 10]}

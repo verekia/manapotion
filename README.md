@@ -18,7 +18,7 @@ Mana Potion consists of:
 - [**Browser API helpers**](#browser-api-helpers)
 - [**General math and gamedev utilities**](#utilities)
 - [**Tailwind media queries**](#tailwind)
-- [**React Three Fiber WebGPU canvas and hooks**](#react-three-fiber)
+- [**Extra hooks for React Three Fiber**](#react-three-fiber)
 
 ## Installation
 
@@ -26,8 +26,6 @@ Mana Potion consists of:
 - If you use React _without R3F_, install `@manapotion/react`
 - If you use Vue, install `@manapotion/vue`
 - If you don't use these frameworks, install `@manapotion/vanilla`
-
-Note for R3F: Due to the way Three.js' `WebGPURenderer` is written, in order to use `@manapotion/r3f` with Vite, you will need to add [top-level await support](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts). If that's not possible, use `@manapotion/react` instead for now. If you do use `@manapotion/r3f`, all the imports from `@manapotion/react` are available directly from `@manapotion/r3f`.
 
 ## Listeners and reactive store
 
@@ -512,53 +510,7 @@ export default {
 
 ## React Three Fiber
 
-**`@manapotion/r3f`** includes a wrapper around R3F's `Canvas` that automatically enables WebGPU if supported.
-
-```jsx
-import { Canvas } from '@manapotion/r3f'
-
-const App = () => <Canvas>{/* Your scene */}</Canvas>
-```
-
-👉 Due to how Three.js' WebGPURenderer is written, your bundler must support **top-level await** ([Vite example](https://github.com/verekia/manapotion/blob/main/examples/react/vite.config.ts)).
-
-To know if your canvas is currently using WebGPU or WebGL, you can use `useThree` inside the canvas:
-
-```jsx
-const Scene = () => {
-  const gl = useThree(s => s.gl)
-
-  console.log(gl.isWebGLRenderer)
-  console.log(gl.isWebGPURenderer)
-
-  // ...
-}
-```
-
-For a canvas that takes up the entire screen and resizes nicely on mobile, you can use:
-
-```css
-html {
-  height: 100dvh;
-}
-
-body,
-#root {
-  height: 100%;
-}
-```
-
-With Tailwind:
-
-```html
-<html class="h-dvh">
-  <body class="h-full">
-    <div id="root" class="h-full"><!-- App --></div>
-  </body>
-</html>
-```
-
-There are also hooks available to run logic inside the main R3F `requestAnimationFrame` loop. They are simple hooks around [`addEffect`, `addAfterEffect`, and `addTail`](https://docs.pmnd.rs/react-three-fiber/api/additional-exports). See R3F [loop source](https://github.com/pmndrs/react-three-fiber/blob/master/packages/fiber/src/core/loop.ts).
+**`@manapotion/r3f`** includes hooks to run logic inside the main R3F `requestAnimationFrame` loop. They are simple hooks around [`addEffect`, `addAfterEffect`, and `addTail`](https://docs.pmnd.rs/react-three-fiber/api/additional-exports). See R3F [loop source](https://github.com/pmndrs/react-three-fiber/blob/master/packages/fiber/src/core/loop.ts).
 
 ```jsx
 import { useFrameEffect, useFrameAfterEffect, useFrameTail } from '@manapotion/r3f'
