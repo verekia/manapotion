@@ -244,7 +244,7 @@ mountFullscreenListener({ onFullscreenUpdate: handleFullscreenUpdate })
 
 Please check the TypeScript types for the available callbacks.
 
-Once mounted, you cannot modify the callbacks dynamically. If you need to change them, you will need to unmount and remount the component. If you have use cases of callbacks changed dynamically, please let me know on [Discord](https://discord.gg/29RGwTBTay).
+Once mounted, you cannot modify the callbacks dynamically. If you need to change them, you will need to unmount and remount the component. If you have use cases of callbacks changed dynamically, please let me know on [Discord](https://discord.gg/VXYxGrP8EJ).
 
 ## Animation loops
 
@@ -536,7 +536,7 @@ You can use `useFrameEffect` to animate your UI outside of the `Canvas`.
 
 ## Community
 
-Join the [Mana Potion Discord server](https://discord.gg/29RGwTBTay).
+Join the [Mana Potion Discord server](https://discord.gg/VXYxGrP8EJ).
 
 ## Contributing
 
