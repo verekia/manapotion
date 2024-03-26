@@ -221,25 +221,25 @@ You can provide custom event callbacks to `<Listeners />` or to individual liste
 **React**
 
 ```jsx
-<Listeners onFullscreenUpdate={handleFullscreenUpdate} />
+<Listeners onFullscreenChange={handleFullscreenChange} />
 /* or */
-<FullscreenListener onFullscreenUpdate={handleFullscreenUpdate} />
+<FullscreenListener onFullscreenChange={handleFullscreenChange} />
 ```
 
 **Vue**
 
 ```vue
-<Listeners @fullscreenUpdate="handleFullscreenUpdate" />
+<Listeners @fullscreenChange="handleFullscreenChange" />
 <!-- or -->
-<FullscreenListener @fullscreenUpdate="handleFullscreenUpdate" />
+<FullscreenListener @fullscreenChange="handleFullscreenChange" />
 ```
 
 **Vanilla**
 
 ```js
-listeners({ onFullscreenUpdate: handleFullscreenUpdate })
+listeners({ onFullscreenChange: handleFullscreenChange })
 // or
-mountFullscreenListener({ onFullscreenUpdate: handleFullscreenUpdate })
+mountFullscreenListener({ onFullscreenChange: handleFullscreenChange })
 ```
 
 Please check the TypeScript types for the available callbacks.
