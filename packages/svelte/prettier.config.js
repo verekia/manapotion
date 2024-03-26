@@ -7,11 +7,7 @@ export default {
   semi: false,
   singleQuote: true,
   arrowParens: 'avoid',
-  plugins: [
-    '@ianvs/prettier-plugin-sort-imports',
-    'prettier-plugin-tailwindcss',
-    'prettier-plugin-svelte',
-  ],
+  plugins: ['@ianvs/prettier-plugin-sort-imports'],
   importOrder: [
     '<BUILTIN_MODULES>',
     '',
@@ -26,6 +22,4 @@ export default {
   ],
   importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
   importOrderTypeScriptVersion: '5.0.0',
-  pluginSearchDirs: ['.'], // should be removed in v3
-  overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
 }

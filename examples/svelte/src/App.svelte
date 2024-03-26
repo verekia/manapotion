@@ -1,5 +1,11 @@
 <script lang="ts">
+  import { useAnimationFrame } from '@manapotion/svelte'
+
   import Counter from './lib/Counter.svelte'
+
+  useAnimationFrame(() => {
+    console.log('Frame')
+  })
 </script>
 
 <main>
