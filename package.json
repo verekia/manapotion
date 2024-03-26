@@ -1,5 +1,6 @@
 {
   "name": "manapotion-monorepo",
+  "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "workspaces": [
@@ -17,7 +18,9 @@
     "format": "npm run format -ws",
     "format:check": "npm run format:check -ws",
     "pub": "npm run build && npm run publint && lerna publish",
+    "pub-recovery": "npm run build && npm run publint && lerna publish from-package",
     "check-all": "npm run typecheck && npm run format:check && npm run build && npm run publint",
+    "syncpack": "syncpack list",
     "pre-push": "npm run check-all",
     "prepare": "husky"
   },
@@ -25,6 +28,7 @@
     "@commitlint/config-conventional": "^19.1.0",
     "commitlint": "^19.2.1",
     "husky": "^9.0.11",
-    "lerna": "^8.1.2"
+    "lerna": "^8.1.2",
+    "syncpack": "^12.3.0"
   }
 }
