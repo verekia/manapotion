@@ -19,7 +19,7 @@ import {
 import { Canvas, MeshProps, useFrame } from '@react-three/fiber'
 import { Mesh } from 'three'
 
-// import MobileJoystick from './MobileJoystick'
+import MobileJoystick from './MobileJoystick'
 
 function Box(props: MeshProps) {
   const meshRef = useRef<Mesh>(null)
@@ -270,7 +270,7 @@ const UI = () => {
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
       </Canvas>
-      {/* <MobileJoystick /> */}
+      <MobileJoystick />
     </>
   )
 }
