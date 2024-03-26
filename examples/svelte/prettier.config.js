@@ -26,6 +26,5 @@ export default {
   ],
   importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
   importOrderTypeScriptVersion: '5.0.0',
-  pluginSearchDirs: ['.'], // should be removed in v3
   overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
 }
