@@ -4,13 +4,11 @@
   <img src="/examples/react/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
-🧪 **Mana Potion** is a toolkit for JavaScript game development and interactive experiences. It is _not_ a game engine or framework, but a collection of low-level utilities and helpers that are commonly needed when building games. Mana Potion supports React, Vue, and vanilla JavaScript. Svelte coming soon.
+🧪 **Mana Potion** is a toolkit for JavaScript game development and interactive experiences. It is _not_ a game engine or framework but a collection of **low-level utilities and helpers** that are commonly needed when building games.
 
-**Important**: Until we hit 1.0.0, expect breaking changes in minor versions.
+Mana Potion supports React, Vue, and vanilla JavaScript. Svelte coming soon.
 
-## What is Mana Potion?
-
-Mana Potion consists of:
+The library consists of:
 
 - [**Listeners and a reactive store for inputs and browser state**](#listeners-and-reactive-store)
 - [**Animation loops**](#animation-loops)
@@ -19,6 +17,8 @@ Mana Potion consists of:
 - [**General math and gamedev utilities**](#utilities)
 - [**Tailwind media queries**](#tailwind)
 - [**Extra hooks for React Three Fiber**](#react-three-fiber)
+
+**Important**: Until we hit 1.0.0, expect breaking changes in minor versions.
 
 ## Installation
 
