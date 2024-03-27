@@ -1,13 +1,12 @@
 import { mp } from '../store'
 
+export type ScreenOrientationChangePayload = {
+  isLandscape: boolean
+  isPortrait: boolean
+}
+
 export type ScreenOrientationListenerProps = {
-  onScreenOrientationChange?: ({
-    isLandscape,
-    isPortrait,
-  }: {
-    isLandscape: boolean
-    isPortrait: boolean
-  }) => void
+  onScreenOrientationChange?: ({ isLandscape, isPortrait }: ScreenOrientationChangePayload) => void
 }
 
 export const mountScreenOrientationListener = ({

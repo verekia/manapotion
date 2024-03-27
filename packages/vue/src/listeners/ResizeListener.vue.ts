@@ -1,14 +1,13 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountResizeListener } from '@manapotion/core'
+import { mountResizeListener, ResizePayload } from '@manapotion/core'
 
 export const ResizeListener = defineComponent({
-  emits: ['resize'],
+  emits: { resize: (payload: ResizePayload) => payload },
   setup: (_, { emit }) => {
     onMounted(() => {
       const unsub = mountResizeListener({
-        onResize: ({ width, height, isLandscape, isPortrait }) =>
-          emit('resize', { width, height, isLandscape, isPortrait }),
+        onResize: payload => emit('resize', payload),
       })
       onUnmounted(unsub)
     })

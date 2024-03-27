@@ -2,7 +2,9 @@
 import { computed, ref } from 'vue'
 
 import {
+  DeviceTypeChangePayload,
   DeviceTypeListener,
+  FullscreenChangePayload,
   isDesktop,
   isLandscape,
   isMiddleMouseDown,
@@ -21,8 +23,8 @@ import {
 import FullscreenButton from './FullscreenButton.vue'
 import PointerLockButton from './PointerLockButton.vue'
 
-const handleFullscreenChange = (event: Event) => {
-  console.log('Fullscreen change!', event)
+const handleFullscreenChange = (isFullscreen: FullscreenChangePayload) => {
+  console.log('Fullscreen change!', isFullscreen)
 }
 
 const handlePointerLockChange = (isPointerLocked: boolean) => {
@@ -61,8 +63,8 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
   console.log('Page visibility change!', isVisible)
 }
 
-const handleDT = (x: string) => {
-  console.log(x)
+const handleDT = (payload: DeviceTypeChangePayload) => {
+  console.log(payload)
 }
 
 const jsonKeys = computed(() => JSON.stringify(keys.value))
@@ -96,6 +98,7 @@ const jsonKeys = computed(() => JSON.stringify(keys.value))
     @fullscreenChange="handleFullscreenChange"
     @pointerLockChange="handlePointerLockChange"
     @pageVisibilityChange="handlePageVisibilityChange"
+    @deviceTypeChange="handleDT"
   />
   <DeviceTypeListener @deviceTypeChange="handleDT" />
 </template>

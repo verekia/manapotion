@@ -1,20 +1,24 @@
 import { mp } from '../store'
 
+export type ResizePayload = {
+  width: number
+  height: number
+  isLandscape: boolean
+  isPortrait: boolean
+}
+
 export type ResizeListenerProps = {
-  onResize?: ({
-    width,
-    height,
-    isLandscape,
-    isPortrait,
-  }: {
-    width: number
-    height: number
-    isLandscape: boolean
-    isPortrait: boolean
-  }) => void
+  onResize?: ({ width, height, isLandscape, isPortrait }: ResizePayload) => void
 }
 
 export const mountResizeListener = ({ onResize }: ResizeListenerProps) => {
+  const payload: ResizePayload = {
+    width: 0,
+    height: 0,
+    isPortrait: false,
+    isLandscape: false,
+  }
+
   const handler = () => {
     const width = window.innerWidth
     const height = window.innerHeight
@@ -25,7 +29,12 @@ export const mountResizeListener = ({ onResize }: ResizeListenerProps) => {
     const isLandscape = width > height
     mp().isPortrait = isPortrait
     mp().isLandscape = isLandscape
-    onResize?.({ width, height, isPortrait, isLandscape })
+
+    payload.width = width
+    payload.height = height
+    payload.isPortrait = isPortrait
+    payload.isLandscape = isLandscape
+    onResize?.(payload)
   }
 
   handler()

@@ -1,8 +1,10 @@
 import { mp } from '../store'
 
+export type PageFocusChangePayload = boolean
+
 export type PageFocusListenerProps = {
   clearInputsOnBlur?: boolean
-  onPageFocusChange?: (isPageFocused: boolean) => void
+  onPageFocusChange?: (isPageFocused: PageFocusChangePayload) => void
 }
 
 export const mountBlurListener = ({

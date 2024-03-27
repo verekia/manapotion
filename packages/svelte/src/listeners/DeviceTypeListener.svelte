@@ -1,14 +1,15 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { mountDeviceTypeListener } from '@manapotion/core'
+  import { DeviceTypeChangePayload, mountDeviceTypeListener } from '@manapotion/core'
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher<{
+    deviceTypeChange: DeviceTypeChangePayload
+  }>()
 
   onMount(() =>
     mountDeviceTypeListener({
-      onDeviceTypeChange: ({ isDesktop, isMobile }) =>
-        dispatch('deviceTypeChange', { isDesktop, isMobile }),
+      onDeviceTypeChange: payload => dispatch('deviceTypeChange', payload),
     }),
   )
 </script>

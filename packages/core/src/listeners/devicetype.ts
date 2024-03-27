@@ -1,7 +1,9 @@
 import { mp } from '../store'
 
+export type DeviceTypeChangePayload = { isDesktop: boolean; isMobile: boolean }
+
 export type DeviceTypeListenerProps = {
-  onDeviceTypeChange?: ({ isDesktop, isMobile }: { isDesktop: boolean; isMobile: boolean }) => void
+  onDeviceTypeChange?: (payload: DeviceTypeChangePayload) => void
 }
 
 export const mountDeviceTypeListener = ({ onDeviceTypeChange }: DeviceTypeListenerProps) => {

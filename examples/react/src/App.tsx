@@ -293,10 +293,10 @@ const App = () => {
             `onKeydown – code: ${code}, key: ${key}, alt: ${alt}, ctrl: ${ctrl}, meta: ${meta}, shift: ${shift}`,
           )
         }
-        onKeyUp={(code, key) =>
+        onKeyUp={({ code, key }) =>
           eventNotificationRef.current.setMessage(`onKeyup – code: ${code}, key: ${key}`)
         }
-        onMouseMove={(x, y, movementX, movementY) =>
+        onMouseMove={({ x, y, movementX, movementY }) =>
           eventNotificationRef.current.setMessage(
             `onMouseMove – x: ${x}, y: ${y}, movementX: ${movementX}, movementY: ${movementY}`,
           )

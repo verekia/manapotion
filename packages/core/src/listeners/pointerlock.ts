@@ -1,7 +1,9 @@
 import { mp } from '../store'
 
+export type PointerLockChangePayload = boolean
+
 export type PointerLockListenerProps = {
-  onPointerLockChange?: (isPointerLocked: boolean) => void
+  onPointerLockChange?: (isPointerLocked: PointerLockChangePayload) => void
 }
 
 export const mountPointerLockListener = ({ onPointerLockChange }: PointerLockListenerProps) => {

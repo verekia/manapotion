@@ -1,7 +1,9 @@
 import { mp } from '../store'
 
+export type FullscreenChangePayload = boolean
+
 export type FullscreenListenerProps = {
-  onFullscreenChange?: (isFullscreen: boolean) => void
+  onFullscreenChange?: (payload: FullscreenChangePayload) => void
 }
 
 export const mountFullscreenListener = ({ onFullscreenChange }: FullscreenListenerProps) => {

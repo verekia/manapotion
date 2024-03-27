@@ -1,14 +1,14 @@
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 
-import { mountMouseMoveListener } from '@manapotion/core'
+import { mountMouseMoveListener, MouseMovePayload } from '@manapotion/core'
 
 export const MouseMoveListener = defineComponent({
-  emits: ['mouseMove'],
+  emits: { mouseMove: (payload: MouseMovePayload) => payload },
   props: { mouseMovementResetDelay: { type: Number, default: 30 } },
   setup: (props, { emit }) => {
     onMounted(() => {
       let unsub = mountMouseMoveListener({
-        onMouseMove: (x, y, movementX, movementY) => emit('mouseMove', x, y, movementX, movementY),
+        onMouseMove: payload => emit('mouseMove', payload),
         mouseMovementResetDelay: props.mouseMovementResetDelay,
       })
       watch(
@@ -16,8 +16,7 @@ export const MouseMoveListener = defineComponent({
         newDelay => {
           unsub()
           unsub = mountMouseMoveListener({
-            onMouseMove: (x, y, movementX, movementY) =>
-              emit('mouseMove', x, y, movementX, movementY),
+            onMouseMove: payload => emit('mouseMove', payload),
             mouseMovementResetDelay: newDelay,
           })
         },

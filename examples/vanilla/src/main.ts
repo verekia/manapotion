@@ -14,7 +14,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `
 
 listeners({
-  onMouseMove: (x, y) => console.log('mouse moved', x, y),
+  onMouseMove: ({ x, y }) => console.log('mouse moved', x, y),
 })
 
 setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)

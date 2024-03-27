@@ -1,17 +1,17 @@
 import { defineComponent, h } from 'vue'
 
 import {
-  DeviceTypeListenerProps,
-  FullscreenListenerProps,
-  KeyboardListenerProps,
-  MouseButtonsListenerProps,
-  MouseMoveListenerProps,
-  MouseScrollListenerProps,
-  PageFocusListenerProps,
-  PageVisibilityListenerProps,
-  PointerLockListenerProps,
-  ResizeListenerProps,
-  ScreenOrientationListenerProps,
+  DeviceTypeChangePayload,
+  FullscreenChangePayload,
+  KeyDownPayload,
+  KeyUpPayload,
+  MouseMovePayload,
+  MouseScrollPayload,
+  PageFocusChangePayload,
+  PageVisibilityPayload,
+  PointerLockChangePayload,
+  ResizePayload,
+  ScreenOrientationChangePayload,
 } from '@manapotion/core'
 
 import { DeviceTypeListener } from './listeners/DeviceTypeListener.vue'
@@ -27,25 +27,25 @@ import { ResizeListener } from './listeners/ResizeListener.vue'
 import { ScreenOrientationListener } from './listeners/ScreenOrientationListener.vue'
 
 export const Listeners = defineComponent({
-  emits: [
-    'fullscreenChange',
-    'pointerLockChange',
-    'mouseMove',
-    'pageVisibilityChange',
-    'pageFocusChange',
-    'resize',
-    'deviceTypeChange',
-    'screenOrientationChange',
-    'leftMouseDown',
-    'middleMouseDown',
-    'rightMouseDown',
-    'leftMouseUp',
-    'middleMouseUp',
-    'rightMouseUp',
-    'keyDown',
-    'keyUp',
-    'scroll',
-  ],
+  emits: {
+    mouseMove: (payload: MouseMovePayload) => payload,
+    pointerLockChange: (payload: PointerLockChangePayload) => payload,
+    pageVisibilityChange: (payload: PageVisibilityPayload) => payload,
+    fullscreenChange: (payload: FullscreenChangePayload) => payload,
+    deviceTypeChange: (payload: DeviceTypeChangePayload) => payload,
+    resize: (payload: ResizePayload) => payload,
+    screenOrientationChange: (payload: ScreenOrientationChangePayload) => payload,
+    pageFocusChange: (payload: PageFocusChangePayload) => payload,
+    scroll: (payload: MouseScrollPayload) => payload,
+    keyDown: (payload: KeyDownPayload) => payload,
+    keyUp: (payload: KeyUpPayload) => payload,
+    leftMouseDown: () => undefined,
+    middleMouseDown: () => undefined,
+    rightMouseDown: () => undefined,
+    leftMouseUp: () => undefined,
+    middleMouseUp: () => undefined,
+    rightMouseUp: () => undefined,
+  },
   props: {
     mouseMovementResetDelay: { type: Number, default: 30 },
     clearInputsOnBlur: { type: Boolean, default: true },
@@ -54,42 +54,32 @@ export const Listeners = defineComponent({
   setup:
     (props, { emit }) =>
     () => [
-      h(FullscreenListener, {
-        onFullscreenChange: isFullscreen => emit('fullscreenChange', isFullscreen),
-      } satisfies FullscreenListenerProps),
+      h(FullscreenListener, { onFullscreenChange: payload => emit('fullscreenChange', payload) }),
 
       h(PointerLockListener, {
-        onPointerLockChange: isPointerLocked => emit('pointerLockChange', isPointerLocked),
-      } satisfies PointerLockListenerProps),
+        onPointerLockChange: payload => emit('pointerLockChange', payload),
+      }),
 
       h(MouseMoveListener, {
-        onMouseMove: (x, y, movementX, movementY) => emit('mouseMove', x, y, movementX, movementY),
+        onMouseMove: payload => emit('mouseMove', payload),
         mouseMovementResetDelay: props.mouseMovementResetDelay,
-      } satisfies MouseMoveListenerProps),
+      }),
 
       h(PageVisibilityListener, {
-        onPageVisibilityChange: isVisible => emit('pageVisibilityChange', isVisible),
-      } satisfies PageVisibilityListenerProps),
+        onPageVisibilityChange: payload => emit('pageVisibilityChange', payload),
+      }),
 
       h(PageFocusListener, {
-        onPageFocusChange: isPageFocused => emit('pageFocusChange', isPageFocused),
+        onPageFocusChange: payload => emit('pageFocusChange', payload),
         clearInputsOnBlur: props.clearInputsOnBlur,
-      } satisfies PageFocusListenerProps),
+      }),
 
-      h(ResizeListener, {
-        onResize: ({ width, height, isLandscape, isPortrait }) =>
-          emit('resize', { width, height, isLandscape, isPortrait }),
-      } satisfies ResizeListenerProps),
-
-      h(DeviceTypeListener, {
-        onDeviceTypeChange: ({ isDesktop, isMobile }) =>
-          emit('deviceTypeChange', { isDesktop, isMobile }),
-      } satisfies DeviceTypeListenerProps),
+      h(ResizeListener, { onResize: payload => emit('resize', payload) }),
+      h(DeviceTypeListener, { onDeviceTypeChange: payload => emit('deviceTypeChange', payload) }),
 
       h(ScreenOrientationListener, {
-        onScreenOrientationChange: ({ isPortrait, isLandscape }) =>
-          emit('screenOrientationChange', { isPortrait, isLandscape }),
-      } satisfies ScreenOrientationListenerProps),
+        onScreenOrientationChange: payload => emit('screenOrientationChange', payload),
+      }),
 
       h(MouseButtonsListener, {
         onLeftMouseDown: () => emit('leftMouseDown'),
@@ -98,16 +88,16 @@ export const Listeners = defineComponent({
         onLeftMouseUp: () => emit('leftMouseUp'),
         onMiddleMouseUp: () => emit('middleMouseUp'),
         onRightMouseUp: () => emit('rightMouseUp'),
-      } satisfies MouseButtonsListenerProps),
+      }),
 
       h(KeyboardListener, {
-        onKeyDown: keyState => emit('keyDown', keyState),
-        onKeyUp: (code, key) => emit('keyUp', code, key),
-      } satisfies KeyboardListenerProps),
+        onKeyDown: payload => emit('keyDown', payload),
+        onKeyUp: payload => emit('keyUp', payload),
+      }),
 
       h(MouseScrollListener, {
-        onScroll: deltaY => emit('scroll', deltaY),
+        onScroll: payload => emit('scroll', payload),
         mouseScrollResetDelay: props.mouseScrollResetDelay,
-      } satisfies MouseScrollListenerProps),
+      }),
     ],
 })
