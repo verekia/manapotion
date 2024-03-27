@@ -5,13 +5,12 @@ import { mountMouseScrollListener, MouseScrollListenerProps } from '@manapotion/
 export const MouseScrollListener = defineComponent({
   emits: ['scroll'],
   props: { mouseScrollResetDelay: { type: Number, default: 100 } },
-  setup(props, { emit }) {
+  setup: (props, { emit }) => {
     onMounted(() => {
       let unsub = mountMouseScrollListener({
         onScroll: deltaY => emit('scroll', deltaY),
         mouseScrollResetDelay: props.mouseScrollResetDelay,
-      } satisfies MouseScrollListenerProps)
-
+      })
       watch(
         () => props.mouseScrollResetDelay,
         newDelay => {
@@ -22,11 +21,8 @@ export const MouseScrollListener = defineComponent({
           } satisfies MouseScrollListenerProps)
         },
       )
-
       onUnmounted(unsub)
     })
   },
-  render() {
-    return null
-  },
+  render: () => null,
 })

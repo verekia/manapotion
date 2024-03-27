@@ -47,21 +47,13 @@ export const Listeners = defineComponent({
     'scroll',
   ],
   props: {
-    mouseMovementResetDelay: {
-      type: Number,
-      default: 30,
-    },
-    clearInputsOnBlur: {
-      type: Boolean,
-      default: true,
-    },
-    mouseScrollResetDelay: {
-      type: Number,
-      default: 500,
-    },
+    mouseMovementResetDelay: { type: Number, default: 30 },
+    clearInputsOnBlur: { type: Boolean, default: true },
+    mouseScrollResetDelay: { type: Number, default: 500 },
   },
-  setup(props, { emit }) {
-    return () => [
+  setup:
+    (props, { emit }) =>
+    () => [
       h(FullscreenListener, {
         onFullscreenChange: isFullscreen => emit('fullscreenChange', isFullscreen),
       } satisfies FullscreenListenerProps),
@@ -117,6 +109,5 @@ export const Listeners = defineComponent({
         onScroll: deltaY => emit('scroll', deltaY),
         mouseScrollResetDelay: props.mouseScrollResetDelay,
       } satisfies MouseScrollListenerProps),
-    ]
-  },
+    ],
 })

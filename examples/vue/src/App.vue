@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 
 import {
+  DeviceTypeListener,
   isDesktop,
   isLandscape,
   isMiddleMouseDown,
@@ -60,6 +61,10 @@ const handlePageVisibilityChange = (isVisible: boolean) => {
   console.log('Page visibility change!', isVisible)
 }
 
+const handleDT = (x: string) => {
+  console.log(x)
+}
+
 const jsonKeys = computed(() => JSON.stringify(keys.value))
 </script>
 
@@ -92,4 +97,5 @@ const jsonKeys = computed(() => JSON.stringify(keys.value))
     @pointerLockChange="handlePointerLockChange"
     @pageVisibilityChange="handlePageVisibilityChange"
   />
+  <DeviceTypeListener @deviceTypeChange="handleDT" />
 </template>
