@@ -3,9 +3,7 @@
 
   import { DeviceTypeChangePayload, mountDeviceTypeListener } from '@manapotion/core'
 
-  const dispatch = createEventDispatcher<{
-    deviceTypeChange: DeviceTypeChangePayload
-  }>()
+  const dispatch = createEventDispatcher<{ deviceTypeChange: DeviceTypeChangePayload }>()
 
   onMount(() =>
     mountDeviceTypeListener({

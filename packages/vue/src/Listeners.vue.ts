@@ -55,7 +55,7 @@ export const Listeners = defineComponent({
   props: {
     mouseMovementResetDelay: { type: Number, default: 30 },
     clearInputsOnBlur: { type: Boolean, default: true },
-    mouseScrollResetDelay: { type: Number, default: 500 },
+    mouseScrollResetDelay: { type: Number, default: 100 },
   },
   setup:
     (props, { emit }) =>
