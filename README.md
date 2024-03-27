@@ -281,7 +281,7 @@ Once mounted, you cannot modify the callbacks dynamically. If you need to change
 
 ## Animation loops
 
-If you are not using React Three Fiber or TresJS, you will need an animation loop to update your scene elements. You can use the `useAnimationFrame` hook to run your animation loop per component:
+If you are not using React Three Fiber, TresJS, or Threlte, you will need an animation loop to update your scene elements. You can use the `useAnimationFrame` hook to run your animation loop per component:
 
 **React**
 
