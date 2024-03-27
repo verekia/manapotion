@@ -6,7 +6,7 @@ export type ScreenOrientationChangePayload = {
 }
 
 export type ScreenOrientationListenerProps = {
-  onScreenOrientationChange?: ({ isLandscape, isPortrait }: ScreenOrientationChangePayload) => void
+  onScreenOrientationChange?: (payload: ScreenOrientationChangePayload) => void
 }
 
 export const mountScreenOrientationListener = ({

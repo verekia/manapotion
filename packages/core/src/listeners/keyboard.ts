@@ -4,8 +4,8 @@ export type KeyDownPayload = KeyState
 export type KeyUpPayload = { code: string; key: string }
 
 export type KeyboardListenerProps = {
-  onKeyDown?: (keyState: KeyDownPayload) => void
-  onKeyUp?: ({ code, key }: KeyUpPayload) => void
+  onKeyDown?: (payload: KeyDownPayload) => void
+  onKeyUp?: (payload: KeyUpPayload) => void
 }
 
 // https://w3c.github.io/uievents/tools/key-event-viewer.html

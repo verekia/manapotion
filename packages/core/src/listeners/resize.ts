@@ -7,9 +7,7 @@ export type ResizePayload = {
   isPortrait: boolean
 }
 
-export type ResizeListenerProps = {
-  onResize?: ({ width, height, isLandscape, isPortrait }: ResizePayload) => void
-}
+export type ResizeListenerProps = { onResize?: (payload: ResizePayload) => void }
 
 export const mountResizeListener = ({ onResize }: ResizeListenerProps) => {
   const payload: ResizePayload = {

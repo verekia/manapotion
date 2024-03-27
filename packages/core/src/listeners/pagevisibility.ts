@@ -1,9 +1,9 @@
 import { mp } from '../store'
 
-export type PageVisibilityPayload = boolean
+export type PageVisibilityPayload = { isVisible: boolean }
 
 export type PageVisibilityListenerProps = {
-  onPageVisibilityChange?: (isVisible: PageVisibilityPayload) => void
+  onPageVisibilityChange?: (payload: PageVisibilityPayload) => void
 }
 
 export const mountPageVisibilityListener = ({
@@ -12,7 +12,7 @@ export const mountPageVisibilityListener = ({
   const handler = () => {
     const isVisible = !document.hidden
     mp().setPageVisible(isVisible)
-    onPageVisibilityChange?.(isVisible)
+    onPageVisibilityChange?.({ isVisible })
   }
 
   handler()

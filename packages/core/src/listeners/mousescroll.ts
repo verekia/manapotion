@@ -2,9 +2,7 @@ import { mp } from '../store'
 
 let resetTimeout: ReturnType<typeof setTimeout> | null = null
 
-export type MouseScrollPayload = {
-  deltaY: number
-}
+export type MouseScrollPayload = { deltaY: number }
 
 export type MouseScrollListenerProps = {
   onScroll?: (payload: MouseScrollPayload) => void

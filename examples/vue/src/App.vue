@@ -17,17 +17,19 @@ import {
   Listeners,
   mp,
   mpRefs,
+  PageVisibilityPayload,
+  PointerLockChangePayload,
   useAnimationFrame,
 } from '@manapotion/vue'
 
 import FullscreenButton from './FullscreenButton.vue'
 import PointerLockButton from './PointerLockButton.vue'
 
-const handleFullscreenChange = (isFullscreen: FullscreenChangePayload) => {
+const handleFullscreenChange = ({ isFullscreen }: FullscreenChangePayload) => {
   console.log('Fullscreen change!', isFullscreen)
 }
 
-const handlePointerLockChange = (isPointerLocked: boolean) => {
+const handlePointerLockChange = ({ isPointerLocked }: PointerLockChangePayload) => {
   console.log('Pointer lock change!', isPointerLocked)
 }
 
@@ -59,7 +61,7 @@ useAnimationFrame(() => {
   mouseScrollRef.value!.textContent = String(mouseWheelDeltaY)
 })
 
-const handlePageVisibilityChange = (isVisible: boolean) => {
+const handlePageVisibilityChange = ({ isVisible }: PageVisibilityPayload) => {
   console.log('Page visibility change!', isVisible)
 }
 

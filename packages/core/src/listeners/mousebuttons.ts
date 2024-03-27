@@ -1,12 +1,19 @@
 import { mp } from '../store'
 
+export type LeftMouseDownPayload = {}
+export type MiddleMouseDownPayload = {}
+export type RightMouseDownPayload = {}
+export type LeftMouseUpPayload = {}
+export type MiddleMouseUpPayload = {}
+export type RightMouseUpPayload = {}
+
 export type MouseButtonsListenerProps = {
-  onLeftMouseDown?: () => void
-  onMiddleMouseDown?: () => void
-  onRightMouseDown?: () => void
-  onLeftMouseUp?: () => void
-  onMiddleMouseUp?: () => void
-  onRightMouseUp?: () => void
+  onLeftMouseDown?: (payload: LeftMouseDownPayload) => void
+  onMiddleMouseDown?: (payload: MiddleMouseDownPayload) => void
+  onRightMouseDown?: (payload: RightMouseDownPayload) => void
+  onLeftMouseUp?: (payload: LeftMouseUpPayload) => void
+  onMiddleMouseUp?: (payload: MiddleMouseUpPayload) => void
+  onRightMouseUp?: (payload: RightMouseUpPayload) => void
 }
 
 export const mountMouseButtonsListener = ({
@@ -17,29 +24,31 @@ export const mountMouseButtonsListener = ({
   onMiddleMouseUp,
   onRightMouseUp,
 }: MouseButtonsListenerProps) => {
+  const emptyObject = {}
+
   const downHandler = (e: MouseEvent) => {
     if (e.button === 0) {
       mp().setLeftMouseDown(true)
-      onLeftMouseDown?.()
+      onLeftMouseDown?.(emptyObject)
     } else if (e.button === 1) {
       mp().setMiddleMouseDown(true)
-      onMiddleMouseDown?.()
+      onMiddleMouseDown?.(emptyObject)
     } else if (e.button === 2) {
       mp().setRightMouseDown(true)
-      onRightMouseDown?.()
+      onRightMouseDown?.(emptyObject)
     }
   }
 
   const upHandler = (e: MouseEvent) => {
     if (e.button === 0) {
       mp().setLeftMouseDown(false)
-      onLeftMouseUp?.()
+      onLeftMouseUp?.(emptyObject)
     } else if (e.button === 1) {
       mp().setMiddleMouseDown(false)
-      onMiddleMouseUp?.()
+      onMiddleMouseUp?.(emptyObject)
     } else if (e.button === 2) {
       mp().setRightMouseDown(false)
-      onRightMouseUp?.()
+      onRightMouseUp?.(emptyObject)
     }
   }
 
