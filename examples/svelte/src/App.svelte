@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useAnimationFrame } from '@manapotion/svelte'
+  import { DeviceTypeListener, useAnimationFrame } from '@manapotion/svelte'
 
   import Counter from './lib/Counter.svelte'
 
@@ -14,4 +14,6 @@
   <div class="card mr-2">
     <Counter />
   </div>
+
+  <DeviceTypeListener />
 </main>
