@@ -5,15 +5,13 @@ import { mountPointerLockListener, PointerLockListenerProps } from '@manapotion/
 export const PointerLockListener = defineComponent({
   emits: ['pointerLockChange'],
   setup(_, { emit }) {
-    let unsub = () => {}
-
     onMounted(() => {
-      unsub = mountPointerLockListener({
+      const unsub = mountPointerLockListener({
         onPointerLockChange: isPointerLocked => emit('pointerLockChange', isPointerLocked),
       } satisfies PointerLockListenerProps)
-    })
 
-    onUnmounted(unsub)
+      onUnmounted(unsub)
+    })
   },
   render() {
     return null

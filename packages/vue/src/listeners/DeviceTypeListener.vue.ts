@@ -5,16 +5,14 @@ import { DeviceTypeListenerProps, mountDeviceTypeListener } from '@manapotion/co
 export const DeviceTypeListener = defineComponent({
   emits: ['deviceTypeChange'],
   setup(_, { emit }) {
-    let unsub = () => {}
-
     onMounted(() => {
-      unsub = mountDeviceTypeListener({
+      const unsub = mountDeviceTypeListener({
         onDeviceTypeChange: ({ isDesktop, isMobile }) =>
           emit('deviceTypeChange', { isDesktop, isMobile }),
       } satisfies DeviceTypeListenerProps)
-    })
 
-    onUnmounted(unsub)
+      onUnmounted(unsub)
+    })
   },
   render() {
     return null

@@ -12,10 +12,8 @@ export const MouseButtonsListener = defineComponent({
     'rightMouseUp',
   ],
   setup(_, { emit }) {
-    let unsub = () => {}
-
     onMounted(() => {
-      unsub = mountMouseButtonsListener({
+      const unsub = mountMouseButtonsListener({
         onLeftMouseDown: () => emit('leftMouseDown'),
         onMiddleMouseDown: () => emit('middleMouseDown'),
         onRightMouseDown: () => emit('rightMouseDown'),
@@ -23,9 +21,9 @@ export const MouseButtonsListener = defineComponent({
         onMiddleMouseUp: () => emit('middleMouseUp'),
         onRightMouseUp: () => emit('rightMouseUp'),
       } satisfies MouseButtonsListenerProps)
-    })
 
-    onUnmounted(unsub)
+      onUnmounted(unsub)
+    })
   },
   render() {
     return null

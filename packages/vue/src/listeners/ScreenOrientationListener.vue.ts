@@ -5,16 +5,14 @@ import { mountScreenOrientationListener, ScreenOrientationListenerProps } from '
 export const ScreenOrientationListener = defineComponent({
   emits: ['screenOrientationChange'],
   setup(_, { emit }) {
-    let unsub = () => {}
-
     onMounted(() => {
-      unsub = mountScreenOrientationListener({
+      const unsub = mountScreenOrientationListener({
         onScreenOrientationChange: ({ isPortrait, isLandscape }) =>
           emit('screenOrientationChange', { isPortrait, isLandscape }),
       } satisfies ScreenOrientationListenerProps)
-    })
 
-    onUnmounted(unsub)
+      onUnmounted(unsub)
+    })
   },
   render() {
     return null

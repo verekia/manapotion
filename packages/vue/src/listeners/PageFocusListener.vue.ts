@@ -6,34 +6,31 @@ export const PageFocusListener = defineComponent({
   emits: ['pageFocusChange'],
   props: { clearInputsOnBlur: { type: Boolean, default: true } },
   setup(props, { emit }) {
-    let unsubBlur = () => {}
-    let unsubFocus = () => {}
-
     onMounted(() => {
-      unsubBlur = mountBlurListener({
+      let unsubBlur = mountBlurListener({
         onPageFocusChange: isPageFocused => emit('pageFocusChange', isPageFocused),
         clearInputsOnBlur: props.clearInputsOnBlur,
       } satisfies PageFocusListenerProps)
 
-      unsubFocus = mountFocusListener({
+      const unsubFocus = mountFocusListener({
         onPageFocusChange: isPageFocused => emit('pageFocusChange', isPageFocused),
       } satisfies PageFocusListenerProps)
-    })
 
-    watch(
-      () => props.clearInputsOnBlur,
-      newClearInputsOnBlur => {
+      watch(
+        () => props.clearInputsOnBlur,
+        newClearInputsOnBlur => {
+          unsubBlur()
+          unsubBlur = mountBlurListener({
+            onPageFocusChange: isPageFocused => emit('pageFocusChange', isPageFocused),
+            clearInputsOnBlur: newClearInputsOnBlur,
+          } satisfies PageFocusListenerProps)
+        },
+      )
+
+      onUnmounted(() => {
         unsubBlur()
-        unsubBlur = mountBlurListener({
-          onPageFocusChange: isPageFocused => emit('pageFocusChange', isPageFocused),
-          clearInputsOnBlur: newClearInputsOnBlur,
-        } satisfies PageFocusListenerProps)
-      },
-    )
-
-    onUnmounted(() => {
-      unsubBlur()
-      unsubFocus()
+        unsubFocus()
+      })
     })
   },
   render() {

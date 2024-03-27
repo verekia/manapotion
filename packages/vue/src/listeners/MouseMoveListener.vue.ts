@@ -6,27 +6,26 @@ export const MouseMoveListener = defineComponent({
   emits: ['mouseMove'],
   props: { mouseMovementResetDelay: { type: Number, default: 30 } },
   setup(props, { emit }) {
-    let unsub = () => {}
     onMounted(() => {
-      unsub = mountMouseMoveListener({
+      let unsub = mountMouseMoveListener({
         onMouseMove: (x, y, movementX, movementY) => emit('mouseMove', x, y, movementX, movementY),
         mouseMovementResetDelay: props.mouseMovementResetDelay,
       } satisfies MouseMoveListenerProps)
+
+      watch(
+        () => props.mouseMovementResetDelay,
+        newDelay => {
+          unsub()
+          unsub = mountMouseMoveListener({
+            onMouseMove: (x, y, movementX, movementY) =>
+              emit('mouseMove', x, y, movementX, movementY),
+            mouseMovementResetDelay: newDelay,
+          } satisfies MouseMoveListenerProps)
+        },
+      )
+
+      onUnmounted(unsub)
     })
-
-    watch(
-      () => props.mouseMovementResetDelay,
-      newDelay => {
-        unsub()
-        unsub = mountMouseMoveListener({
-          onMouseMove: (x, y, movementX, movementY) =>
-            emit('mouseMove', x, y, movementX, movementY),
-          mouseMovementResetDelay: newDelay,
-        } satisfies MouseMoveListenerProps)
-      },
-    )
-
-    onUnmounted(unsub)
   },
   render() {
     return null

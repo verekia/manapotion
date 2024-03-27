@@ -5,16 +5,14 @@ import { mountResizeListener, ResizeListenerProps } from '@manapotion/core'
 export const ResizeListener = defineComponent({
   emits: ['resize'],
   setup(_, { emit }) {
-    let unsub = () => {}
-
     onMounted(() => {
-      unsub = mountResizeListener({
+      const unsub = mountResizeListener({
         onResize: ({ width, height, isLandscape, isPortrait }) =>
           emit('resize', { width, height, isLandscape, isPortrait }),
       } satisfies ResizeListenerProps)
-    })
 
-    onUnmounted(unsub)
+      onUnmounted(unsub)
+    })
   },
   render() {
     return null

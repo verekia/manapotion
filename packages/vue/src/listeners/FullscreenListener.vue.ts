@@ -5,15 +5,13 @@ import { FullscreenListenerProps, mountFullscreenListener } from '@manapotion/co
 export const FullscreenListener = defineComponent({
   emits: ['fullscreenChange'],
   setup(_, { emit }) {
-    let unsub = () => {}
-
     onMounted(() => {
-      unsub = mountFullscreenListener({
+      const unsub = mountFullscreenListener({
         onFullscreenChange: isFullscreen => emit('fullscreenChange', isFullscreen),
       } satisfies FullscreenListenerProps)
-    })
 
-    onUnmounted(unsub)
+      onUnmounted(unsub)
+    })
   },
   render() {
     return null
