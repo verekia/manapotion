@@ -77,7 +77,7 @@ import { Listeners } from '@manapotion/vue'
 **Svelte**
 
 ```svelte
-<script>
+<script lang="ts">
   import { Listeners } from '@manapotion/svelte'
 </script>
 
@@ -90,9 +90,9 @@ import { Listeners } from '@manapotion/vue'
 ```js
 import { listeners } from '@manapotion/vanilla'
 
-const unsubscribe = listeners({})
+const unsub = listeners({})
 
-// call unsubscribe() to stop listening
+// call unsub() to stop listening
 ```
 
 This will automatically give you access to some reactive and non-reactive variables.
@@ -174,7 +174,7 @@ There is no reactivity system in vanilla JavaScript, so you can use [callbacks](
 ```js
 import { manaPotionStore } from '@manapotion/vanilla'
 
-const unsubscribe = manaPotionStore.subscribe(state => {
+const unsub = manaPotionStore.subscribe(state => {
   console.log(state.isLeftMouseDown)
 })
 ```
@@ -346,11 +346,11 @@ useAnimationFrame(({ delta, elapsed }) => {
 ```ts
 import { startAnimationFrame } from '@manapotion/vanilla'
 
-const unsubscribe = startAnimationFrame(({ delta, elapsed }) => {
+const unsub = startAnimationFrame(({ delta, elapsed }) => {
   // Your animation loop
 })
 
-// call unsubscribe() to stop the animation loop
+// call unsub() to stop the animation loop
 ```
 
 ## Virtual joysticks
