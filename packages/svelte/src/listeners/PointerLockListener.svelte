@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { mountPointerLockListener, PointerLockChangePayload } from '@manapotion/core'
+  import { mountPointerLockListener } from '@manapotion/core'
+
+  import type { PointerLockChangePayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{ pointerLockChange: PointerLockChangePayload }>()
 

@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { mountScreenOrientationListener, ScreenOrientationChangePayload } from '@manapotion/core'
+  import { mountScreenOrientationListener } from '@manapotion/core'
+
+  import type { ScreenOrientationChangePayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{
     screenOrientationChange: ScreenOrientationChangePayload

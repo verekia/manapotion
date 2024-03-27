@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { mountResizeListener, ResizePayload } from '@manapotion/core'
+  import { mountResizeListener } from '@manapotion/core'
+
+  import type { ResizePayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{ resize: ResizePayload }>()
 

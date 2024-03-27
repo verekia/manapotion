@@ -4,9 +4,9 @@
   <img src="/examples/react/public/mana-potion.webp" alt="Mana Potion" width="162" height="230" />
 </p>
 
-🧪 **Mana Potion** is a toolkit for JavaScript game development and interactive experiences. It is _not_ a game engine or framework but a collection of **low-level utilities and helpers** that are commonly needed when building games.
+🧪 **Mana Potion** is a toolkit for JavaScript game development and interactive experiences. It is _not_ a game engine or framework but a collection of **low-level utilities and helpers** commonly needed when building games.
 
-Mana Potion supports React, Vue, and vanilla JavaScript. Svelte coming soon.
+Mana Potion supports React, Vue, Svelte, and vanilla JavaScript. It is a particularly great fit for people who build games or experiences in [React Three Fiber](https://docs.pmnd.rs/react-three-fiber), [TresJS](https://tresjs.org/), [Threlte](https://threlte.xyz/), and vanilla [Three.js](https://threejs.org/), but it can be used in any context.
 
 The library consists of:
 
@@ -25,6 +25,7 @@ The library consists of:
 - If you use React Three Fiber, install `@manapotion/r3f`
 - If you use React _without R3F_, install `@manapotion/react`
 - If you use Vue, install `@manapotion/vue`
+- If you use Svelte, install `@manapotion/svelte`
 - If you don't use these frameworks, install `@manapotion/vanilla`
 
 ## Listeners and reactive store
@@ -71,6 +72,17 @@ import { Listeners } from '@manapotion/vue'
   <div>Your game</div>
   <Listeners />
 </template>
+```
+
+**Svelte**
+
+```svelte
+<script>
+  import { Listeners } from '@manapotion/svelte'
+</script>
+
+<div>Your game</div>
+<Listeners />
 ```
 
 **Vanilla**
@@ -140,6 +152,19 @@ import { isLeftMouseDown, mpRefs } from '@manapotion/vue'
   <div>{{ isLeftMouseDown }}</div>
   <div>{{ mpRefs.isRightMouseDown }}</div>
 </template>
+```
+
+**Svelte**
+
+All the reactive variables are available as stores, either individually or via `mpStore`:
+
+```svelte
+<script lang="ts">
+  import { isLeftMouseDown, mpStore } from '@manapotion/svelte'
+</script>
+
+<div>{$isLeftMouseDown}</div>
+<div>{$mpStore.isRightMouseDown}</div>
 ```
 
 **Vanilla**
@@ -234,6 +259,14 @@ You can provide custom event callbacks to `<Listeners />` or to individual liste
 <FullscreenListener @fullscreenChange="handleFullscreenChange" />
 ```
 
+**Svelte**
+
+```svelte
+<Listeners on:fullscreenChange={handleFullscreenChange} />
+<!-- or -->
+<FullscreenListener on:fullscreenChange={handleFullscreenChange} />
+```
+
 **Vanilla**
 
 ```js
@@ -288,6 +321,24 @@ useAnimationFrame(({ delta, elapsed }) => {
 <template>
   <div :ref="playerRef">Player</div>
 </template>
+```
+
+**Svelte**
+
+```svelte
+<script lang="ts">
+  import { useAnimationFrame } from '@manapotion/svelte'
+
+  import player from './player'
+
+  let playerEl: HTMLDivElement
+
+  useAnimationFrame(({ delta, elapsed }) => {
+    playerEl.style.transform = `translate(${player.x}px, ${player.y}px)`
+  })
+</script>
+
+<div bind:this={playerEl}>Player</div>
 ```
 
 **Vanilla**

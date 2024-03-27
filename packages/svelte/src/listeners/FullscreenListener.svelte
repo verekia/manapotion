@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { FullscreenChangePayload, mountFullscreenListener } from '@manapotion/core'
+  import { mountFullscreenListener } from '@manapotion/core'
+
+  import type { FullscreenChangePayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{ fullscreenChange: FullscreenChangePayload }>()
 

@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { KeyDownPayload, KeyUpPayload, mountKeyboardListener } from '@manapotion/core'
+  import { mountKeyboardListener } from '@manapotion/core'
+
+  import type { KeyDownPayload, KeyUpPayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{ keyDown: KeyDownPayload; keyUp: KeyUpPayload }>()
 

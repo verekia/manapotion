@@ -18,6 +18,7 @@ export default {
     '^#/(.*)$',
     '',
     '<TYPES>',
+    '',
     '^[./]',
   ],
   importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],

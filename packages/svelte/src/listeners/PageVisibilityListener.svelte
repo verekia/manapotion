@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { mountPageVisibilityListener, PageVisibilityPayload } from '@manapotion/core'
+  import { mountPageVisibilityListener } from '@manapotion/core'
+
+  import type { PageVisibilityPayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{ pageVisibilityChange: PageVisibilityPayload }>()
 

@@ -1,11 +1,13 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { mountBlurListener, mountFocusListener, PageFocusChangePayload } from '@manapotion/core'
+  import { mountBlurListener, mountFocusListener } from '@manapotion/core'
+
+  import type { PageFocusChangePayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{ pageFocusChange: PageFocusChangePayload }>()
 
-  export const clearInputsOnBlur = false
+  export let clearInputsOnBlur = false
 
   onMount(() => {
     let unsubBlur = mountBlurListener({

@@ -1,11 +1,13 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { mountMouseMoveListener, MouseMovePayload } from '@manapotion/core'
+  import { mountMouseMoveListener } from '@manapotion/core'
+
+  import type { MouseMovePayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{ mouseMove: MouseMovePayload }>()
 
-  export const mouseMovementResetDelay = 30
+  export let mouseMovementResetDelay = 30
 
   onMount(() =>
     mountMouseMoveListener({

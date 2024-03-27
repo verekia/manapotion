@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { DeviceTypeChangePayload, mountDeviceTypeListener } from '@manapotion/core'
+  import { mountDeviceTypeListener } from '@manapotion/core'
+
+  import type { DeviceTypeChangePayload } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{ deviceTypeChange: DeviceTypeChangePayload }>()
 

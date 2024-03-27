@@ -1,8 +1,9 @@
 export * from './svelte-loops'
-export * from './Listeners.svelte'
 export * from './svelte-store'
 
 export * from '@manapotion/core'
+
+export { default as Listeners } from './Listeners.svelte'
 
 export { default as DeviceTypeListener } from './listeners/DeviceTypeListener.svelte'
 export { default as FullscreenListener } from './listeners/FullscreenListener.svelte'

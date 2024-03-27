@@ -1,12 +1,13 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import {
+  import { mountMouseButtonsListener } from '@manapotion/core'
+
+  import type {
     LeftMouseDownPayload,
     LeftMouseUpPayload,
     MiddleMouseDownPayload,
     MiddleMouseUpPayload,
-    mountMouseButtonsListener,
     RightMouseDownPayload,
     RightMouseUpPayload,
   } from '@manapotion/core'
