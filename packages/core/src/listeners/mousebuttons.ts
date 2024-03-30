@@ -1,11 +1,11 @@
 import { mp } from '../store'
 
-export type LeftMouseDownPayload = {}
-export type MiddleMouseDownPayload = {}
-export type RightMouseDownPayload = {}
-export type LeftMouseUpPayload = {}
-export type MiddleMouseUpPayload = {}
-export type RightMouseUpPayload = {}
+export type LeftMouseDownPayload = Record<string, never>
+export type MiddleMouseDownPayload = Record<string, never>
+export type RightMouseDownPayload = Record<string, never>
+export type LeftMouseUpPayload = Record<string, never>
+export type MiddleMouseUpPayload = Record<string, never>
+export type RightMouseUpPayload = Record<string, never>
 
 export type MouseButtonsListenerProps = {
   onLeftMouseDown?: (payload: LeftMouseDownPayload) => void

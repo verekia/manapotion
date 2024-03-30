@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export const enterFullscreen = () => {
   if (document.documentElement.requestFullscreen) {
     document.documentElement.requestFullscreen()
@@ -37,8 +39,7 @@ export const lockOrientation = (type: OrientationLockType) => {
     return
   }
   if ('lock' in screen.orientation) {
-    // @ts-expect-error
-    screen.orientation.lock(type)
+    ;(screen.orientation.lock as any)(type)
   }
 }
 

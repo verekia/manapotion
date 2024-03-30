@@ -54,7 +54,7 @@ export interface ManaPotionState {
   setKeyUp: (key: string, code: string) => void
 
   // Custom
-  setCustom: (key: string, value: any) => void
+  setCustom: (key: string, value: unknown) => void
 }
 
 const defaultInputState = {
@@ -114,8 +114,12 @@ export const manaPotionStore = createStore<ManaPotionState>()(
       })),
     setKeyUp: (code, key) =>
       set(state => {
-        const { [code]: __, ...byCode } = state.keys.byCode
-        const { [key]: _, ...byKey } = state.keys.byKey
+        const byCode = { ...state.keys.byCode }
+        delete byCode[code]
+
+        const byKey = { ...state.keys.byKey }
+        delete byKey[key]
+
         return { keys: { byCode, byKey } }
       }),
 

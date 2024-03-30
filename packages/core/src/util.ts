@@ -3,15 +3,15 @@ export const lerp = (a: number, b: number, t: number): number => a + (b - a) * t
 export const clamp = (value: number, min: number, max: number): number =>
   value < min ? min : value > max ? max : value
 
-export const throttle = (
-  callback: (...args: any[]) => void,
+export const throttle = <T extends unknown[]>(
+  callback: (...args: T) => void,
   delay = 100,
-): ((...args: any[]) => void) => {
+): ((...args: T) => void) => {
   if (delay <= 0) return callback
 
   let lastCall = 0
 
-  return (...args: any[]) => {
+  return (...args: T) => {
     const now = performance.now()
     if (now - lastCall < delay) return
     lastCall = now
@@ -19,15 +19,15 @@ export const throttle = (
   }
 }
 
-export const debounce = (
-  callback: (...args: any[]) => void,
+export const debounce = <T extends unknown[]>(
+  callback: (...args: T) => void,
   delay = 100,
-): ((...args: any[]) => void) => {
+): ((...args: T) => void) => {
   if (delay <= 0) return callback
 
   let timeout: ReturnType<typeof setTimeout> | null = null
 
-  return (...args: any[]) => {
+  return (...args: T) => {
     if (timeout !== null) {
       clearTimeout(timeout)
     }
@@ -35,16 +35,16 @@ export const debounce = (
   }
 }
 
-export const throttleDebounce = (
-  callback: (...args: any[]) => void,
+export const throttleDebounce = <T extends unknown[]>(
+  callback: (...args: T) => void,
   delay = 100,
-): ((...args: any[]) => void) => {
+): ((...args: T) => void) => {
   if (delay <= 0) return callback
 
   let debounceTimeout: ReturnType<typeof setTimeout> | null = null
   let lastCall = 0
 
-  return (...args: any[]) => {
+  return (...args: T) => {
     const now = performance.now()
     const throttleTimePassed = now - lastCall >= delay
     const callCallback = () => {
