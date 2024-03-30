@@ -48,8 +48,8 @@ useAnimationFrame(() => {
   mouseYRef.value!.textContent = String(mouse.position.y)
   mouseMovementXRef.value!.textContent = String(mouse.movement.x)
   mouseMovementYRef.value!.textContent = String(mouse.movement.y)
-  windowWidthRef.value!.textContent = String(browser.windowWidth)
-  windowHeightRef.value!.textContent = String(browser.windowHeight)
+  windowWidthRef.value!.textContent = String(browser.width)
+  windowHeightRef.value!.textContent = String(browser.height)
   mouseScrollRef.value!.textContent = String(mouse.wheel.y)
 })
 

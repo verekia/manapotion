@@ -9,8 +9,8 @@ export type Browser = {
   readonly isMobile: boolean
   readonly isPortrait: boolean
   readonly isLandscape: boolean
-  readonly windowWidth: number
-  readonly windowHeight: number
+  readonly width: number
+  readonly height: number
   readonly pointerLockSupported: boolean
 }
 
@@ -19,8 +19,8 @@ const defaultBrowser: Browser = {
   isFullscreen: false,
   isPageVisible: true,
   isPageFocused: true,
-  windowWidth: 0,
-  windowHeight: 0,
+  width: 0,
+  height: 0,
   isDesktop: false,
   isMobile: false,
   isPortrait: false,

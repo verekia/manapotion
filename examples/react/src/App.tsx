@@ -117,8 +117,8 @@ const UI = () => {
     liveMouseYRef.current!.textContent = String(mouse.position.y)
     liveMouseMovementXRef.current!.textContent = String(mouse.movement.x)
     liveMouseMovementYRef.current!.textContent = String(mouse.movement.y)
-    liveWidthRef.current!.textContent = String(mp().browser.windowWidth)
-    liveHeightRef.current!.textContent = String(mp().browser.windowHeight)
+    liveWidthRef.current!.textContent = String(mp().browser.width)
+    liveHeightRef.current!.textContent = String(mp().browser.height)
     liveScrollYRef.current!.textContent = String(mouse.wheel.y)
   })
 

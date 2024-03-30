@@ -139,8 +139,8 @@ Legend: ⚡️ **Reactive**, 🗿 **Non-reactive**, 🚧 **Not implemented yet**
 - ⚡️ `browser.isPageFocused`
 - ⚡️ `browser.isDesktop` / `browser.isMobile`
 - ⚡️ `browser.isLandscape` / `browser.isPortrait`
-- 🗿 `browser.windowWidth`
-- 🗿 `browser.windowHeight`
+- 🗿 `browser.width`
+- 🗿 `browser.height`
 - 🚧 `pointerLockSupported`
 
 ### 🖱️ Mouse
