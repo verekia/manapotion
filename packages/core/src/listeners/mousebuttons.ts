@@ -1,54 +1,54 @@
-import { mp } from '../store'
+import { Mouse, mp } from '../store'
 
-export type LeftMouseDownPayload = Record<string, never>
-export type MiddleMouseDownPayload = Record<string, never>
-export type RightMouseDownPayload = Record<string, never>
-export type LeftMouseUpPayload = Record<string, never>
-export type MiddleMouseUpPayload = Record<string, never>
-export type RightMouseUpPayload = Record<string, never>
+export type LeftMouseButtonDownPayload = Mouse
+export type MiddleMouseButtonDownPayload = Mouse
+export type RightMouseButtonDownPayload = Mouse
+export type LeftMouseButtonUpPayload = Mouse
+export type MiddleMouseButtonUpPayload = Mouse
+export type RightMouseButtonUpPayload = Mouse
 
 export type MouseButtonsListenerProps = {
-  onLeftMouseDown?: (payload: LeftMouseDownPayload) => void
-  onMiddleMouseDown?: (payload: MiddleMouseDownPayload) => void
-  onRightMouseDown?: (payload: RightMouseDownPayload) => void
-  onLeftMouseUp?: (payload: LeftMouseUpPayload) => void
-  onMiddleMouseUp?: (payload: MiddleMouseUpPayload) => void
-  onRightMouseUp?: (payload: RightMouseUpPayload) => void
+  onLeftMouseButtonDown?: (payload: LeftMouseButtonDownPayload) => void
+  onMiddleMouseButtonDown?: (payload: MiddleMouseButtonDownPayload) => void
+  onRightMouseButtonDown?: (payload: RightMouseButtonDownPayload) => void
+  onLeftMouseButtonUp?: (payload: LeftMouseButtonUpPayload) => void
+  onMiddleMouseButtonUp?: (payload: MiddleMouseButtonUpPayload) => void
+  onRightMouseButtonUp?: (payload: RightMouseButtonUpPayload) => void
 }
 
 export const mountMouseButtonsListener = ({
-  onLeftMouseDown,
-  onMiddleMouseDown,
-  onRightMouseDown,
-  onLeftMouseUp,
-  onMiddleMouseUp,
-  onRightMouseUp,
+  onLeftMouseButtonDown,
+  onMiddleMouseButtonDown,
+  onRightMouseButtonDown,
+  onLeftMouseButtonUp,
+  onMiddleMouseButtonUp,
+  onRightMouseButtonUp,
 }: MouseButtonsListenerProps) => {
-  const emptyObject = {}
-
   const downHandler = (e: MouseEvent) => {
+    const { mouse, setMouseButtons } = mp()
     if (e.button === 0) {
-      mp().setLeftMouseDown(true)
-      onLeftMouseDown?.(emptyObject)
+      setMouseButtons({ ...mouse.buttons, left: true })
+      onLeftMouseButtonDown?.(mouse)
     } else if (e.button === 1) {
-      mp().setMiddleMouseDown(true)
-      onMiddleMouseDown?.(emptyObject)
+      setMouseButtons({ ...mouse.buttons, middle: true })
+      onMiddleMouseButtonDown?.(mouse)
     } else if (e.button === 2) {
-      mp().setRightMouseDown(true)
-      onRightMouseDown?.(emptyObject)
+      setMouseButtons({ ...mouse.buttons, right: true })
+      onRightMouseButtonDown?.(mouse)
     }
   }
 
   const upHandler = (e: MouseEvent) => {
+    const { mouse, setMouseButtons } = mp()
     if (e.button === 0) {
-      mp().setLeftMouseDown(false)
-      onLeftMouseUp?.(emptyObject)
+      setMouseButtons({ ...mouse.buttons, left: false })
+      onLeftMouseButtonUp?.(mouse)
     } else if (e.button === 1) {
-      mp().setMiddleMouseDown(false)
-      onMiddleMouseUp?.(emptyObject)
+      setMouseButtons({ ...mouse.buttons, middle: false })
+      onMiddleMouseButtonUp?.(mouse)
     } else if (e.button === 2) {
-      mp().setRightMouseDown(false)
-      onRightMouseUp?.(emptyObject)
+      setMouseButtons({ ...mouse.buttons, right: false })
+      onRightMouseButtonUp?.(mouse)
     }
   }
 

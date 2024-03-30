@@ -47,12 +47,12 @@ export const Listeners = ({
   onResize,
   onDeviceTypeChange,
   onScreenOrientationChange,
-  onLeftMouseDown,
-  onMiddleMouseDown,
-  onRightMouseDown,
-  onLeftMouseUp,
-  onMiddleMouseUp,
-  onRightMouseUp,
+  onLeftMouseButtonDown,
+  onMiddleMouseButtonDown,
+  onRightMouseButtonDown,
+  onLeftMouseButtonUp,
+  onMiddleMouseButtonUp,
+  onRightMouseButtonUp,
   onScroll,
   mouseScrollResetDelay,
   onKeyDown,
@@ -74,12 +74,12 @@ export const Listeners = ({
     <DeviceTypeListener onDeviceTypeChange={onDeviceTypeChange} />
     <ScreenOrientationListener onScreenOrientationChange={onScreenOrientationChange} />
     <MouseButtonsListener
-      onLeftMouseDown={onLeftMouseDown}
-      onMiddleMouseDown={onMiddleMouseDown}
-      onRightMouseDown={onRightMouseDown}
-      onLeftMouseUp={onLeftMouseUp}
-      onMiddleMouseUp={onMiddleMouseUp}
-      onRightMouseUp={onRightMouseUp}
+      onLeftMouseButtonDown={onLeftMouseButtonDown}
+      onMiddleMouseButtonDown={onMiddleMouseButtonDown}
+      onRightMouseButtonDown={onRightMouseButtonDown}
+      onLeftMouseButtonUp={onLeftMouseButtonUp}
+      onMiddleMouseButtonUp={onMiddleMouseButtonUp}
+      onRightMouseButtonUp={onRightMouseButtonUp}
     />
     <KeyboardListener onKeyDown={onKeyDown} onKeyUp={onKeyUp} />
     <MouseScrollListener onScroll={onScroll} mouseScrollResetDelay={mouseScrollResetDelay} />

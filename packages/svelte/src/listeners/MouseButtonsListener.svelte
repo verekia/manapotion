@@ -4,31 +4,31 @@
   import { mountMouseButtonsListener } from '@manapotion/core'
 
   import type {
-    LeftMouseDownPayload,
-    LeftMouseUpPayload,
-    MiddleMouseDownPayload,
-    MiddleMouseUpPayload,
-    RightMouseDownPayload,
-    RightMouseUpPayload,
+    LeftMouseButtonDownPayload,
+    LeftMouseButtonUpPayload,
+    MiddleMouseButtonDownPayload,
+    MiddleMouseButtonUpPayload,
+    RightMouseButtonDownPayload,
+    RightMouseButtonUpPayload,
   } from '@manapotion/core'
 
   const dispatch = createEventDispatcher<{
-    leftMouseDown: LeftMouseDownPayload
-    leftMouseUp: LeftMouseUpPayload
-    middleMouseDown: MiddleMouseDownPayload
-    middleMouseUp: MiddleMouseUpPayload
-    rightMouseDown: RightMouseDownPayload
-    rightMouseUp: RightMouseUpPayload
+    leftMouseButtonDown: LeftMouseButtonDownPayload
+    leftMouseButtonUp: LeftMouseButtonUpPayload
+    middleMouseButtonDown: MiddleMouseButtonDownPayload
+    middleMouseButtonUp: MiddleMouseButtonUpPayload
+    rightMouseButtonDown: RightMouseButtonDownPayload
+    rightMouseButtonUp: RightMouseButtonUpPayload
   }>()
 
   onMount(() =>
     mountMouseButtonsListener({
-      onLeftMouseDown: payload => dispatch('leftMouseDown', payload),
-      onLeftMouseUp: payload => dispatch('leftMouseUp', payload),
-      onMiddleMouseDown: payload => dispatch('middleMouseDown', payload),
-      onMiddleMouseUp: payload => dispatch('middleMouseUp', payload),
-      onRightMouseDown: payload => dispatch('rightMouseDown', payload),
-      onRightMouseUp: payload => dispatch('rightMouseUp', payload),
+      onLeftMouseButtonDown: payload => dispatch('leftMouseButtonDown', payload),
+      onLeftMouseButtonUp: payload => dispatch('leftMouseButtonUp', payload),
+      onMiddleMouseButtonDown: payload => dispatch('middleMouseButtonDown', payload),
+      onMiddleMouseButtonUp: payload => dispatch('middleMouseButtonUp', payload),
+      onRightMouseButtonDown: payload => dispatch('rightMouseButtonDown', payload),
+      onRightMouseButtonUp: payload => dispatch('rightMouseButtonUp', payload),
     }),
   )
 </script>

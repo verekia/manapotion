@@ -1,6 +1,20 @@
 import { devtools } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
 
+export type MousePosition = { x: number; y: number }
+export type MouseMovement = { x: number; y: number }
+export type MouseWheel = { y: number }
+
+export type MouseButtons = { left: boolean; middle: boolean; right: boolean }
+
+export type Mouse = {
+  isLocked: boolean
+  position: MousePosition
+  movement: MouseMovement
+  wheel: MouseWheel
+  buttons: MouseButtons
+}
+
 export type KeyState = {
   code: string
   key: string
@@ -10,9 +24,10 @@ export type KeyState = {
   meta: boolean
 }
 
+export type Keyboard = { byCode: Record<string, KeyState>; byKey: Record<string, KeyState> }
+
 export interface ManaPotionState {
   // Browser
-  isPointerLocked: boolean
   isFullscreen: boolean
   isPageVisible: boolean
   isPageFocused: boolean
@@ -31,25 +46,10 @@ export interface ManaPotionState {
   setScreenOrientation: (params: { isPortrait: boolean; isLandscape: boolean }) => void
 
   // Inputs
-  isLeftMouseDown: boolean
-  isMiddleMouseDown: boolean
-  isRightMouseDown: boolean
-  mouseX: number
-  mouseY: number
-  mouseMovementX: number
-  mouseMovementY: number
-  mouseWheelDeltaY: number
-  keys: {
-    byCode: Record<string, KeyState>
-    byKey: Record<string, KeyState>
-  }
+  mouse: Mouse
+  keyboard: Keyboard
   clearInputs: () => void
-  setMousePosition: (x: number, y: number) => void
-  setMouseMovement: (x: number, y: number) => void
-  setLeftMouseDown: (isLeftMouseDown: boolean) => void
-  setMiddleMouseDown: (isMiddleMouseDown: boolean) => void
-  setRightMouseDown: (isRightMouseDown: boolean) => void
-  setMouseWheelDeltaY: (deltaY: number) => void
+  setMouseButtons: (buttons: MouseButtons) => void
   setKeyDown: (keyState: KeyState) => void
   setKeyUp: (key: string, code: string) => void
 
@@ -58,24 +58,19 @@ export interface ManaPotionState {
 }
 
 const defaultInputState = {
-  isLeftMouseDown: false,
-  isMiddleMouseDown: false,
-  isRightMouseDown: false,
-  mouseX: 0,
-  mouseY: 0,
-  mouseMovementX: 0,
-  mouseMovementY: 0,
-  mouseWheelDeltaY: 0,
-  keys: {
-    byCode: {},
-    byKey: {},
+  keyboard: { byCode: {}, byKey: {} },
+  mouse: {
+    isLocked: false,
+    position: { x: 0, y: 0 },
+    movement: { x: 0, y: 0 },
+    wheel: { y: 0 },
+    buttons: { left: false, middle: false, right: false },
   },
 }
 
 export const manaPotionStore = createStore<ManaPotionState>()(
   devtools(set => ({
     // Browser
-    isPointerLocked: false,
     isFullscreen: false,
     isPageVisible: true,
     isPageFocused: true,
@@ -85,7 +80,7 @@ export const manaPotionStore = createStore<ManaPotionState>()(
     isMobile: false,
     isPortrait: false,
     isLandscape: false,
-    setPointerLocked: isPointerLocked => set(() => ({ isPointerLocked })),
+    setPointerLocked: isLocked => set(s => ({ ...s, mouse: { ...s.mouse, isLocked } })),
     setFullscreen: isFullscreen => set(() => ({ isFullscreen })),
     setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
     setPageFocused: isPageFocused => set(() => ({ isPageFocused })),
@@ -96,31 +91,28 @@ export const manaPotionStore = createStore<ManaPotionState>()(
     // Inputs
     ...defaultInputState,
     clearInputs: () => set(() => defaultInputState),
+    setMouseButtons: (buttons: MouseButtons) =>
+      set(state => ({ mouse: { ...state.mouse, buttons } })),
     clearMouseButtons: () =>
-      set(() => ({ isLeftMouseDown: false, isMiddleMouseDown: false, isRightMouseDown: false })),
-    setMousePosition: (mouseX, mouseY) => set(() => ({ mouseX, mouseY })),
-    setMouseMovement: (mouseMovementX, mouseMovementY) =>
-      set(() => ({ mouseMovementX, mouseMovementY })),
-    setLeftMouseDown: isLeftMouseDown => set(() => ({ isLeftMouseDown })),
-    setMiddleMouseDown: isMiddleMouseDown => set(() => ({ isMiddleMouseDown })),
-    setRightMouseDown: isRightMouseDown => set(() => ({ isRightMouseDown })),
-    setMouseWheelDeltaY: mouseWheelDeltaY => set(() => ({ mouseWheelDeltaY })),
+      set(state => ({
+        mouse: { ...state.mouse, buttons: { left: false, middle: false, right: false } },
+      })),
     setKeyDown: (keyState: KeyState) =>
       set(state => ({
-        keys: {
-          byCode: { ...state.keys.byCode, [keyState.code]: keyState },
-          byKey: { ...state.keys.byKey, [keyState.key]: keyState },
+        keyboard: {
+          byCode: { ...state.keyboard.byCode, [keyState.code]: keyState },
+          byKey: { ...state.keyboard.byKey, [keyState.key]: keyState },
         },
       })),
     setKeyUp: (code, key) =>
       set(state => {
-        const byCode = { ...state.keys.byCode }
+        const byCode = { ...state.keyboard.byCode }
         delete byCode[code]
 
-        const byKey = { ...state.keys.byKey }
+        const byKey = { ...state.keyboard.byKey }
         delete byKey[key]
 
-        return { keys: { byCode, byKey } }
+        return { keyboard: { byCode, byKey } }
       }),
 
     // Custom

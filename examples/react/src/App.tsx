@@ -14,6 +14,8 @@ import {
   unlockKeys,
   unlockOrientation,
   useAnimationFrame,
+  useIsMiddleMouseButtonDown,
+  useIsRightMouseButtonDown,
   useMP,
 } from '@manapotion/r3f'
 import { MeshProps, useFrame } from '@react-three/fiber'
@@ -87,15 +89,15 @@ const UI = () => {
   const isFullscreen = useMP(s => s.isFullscreen)
   const isPageVisible = useMP(s => s.isPageVisible)
   const isPageFocused = useMP(s => s.isPageFocused)
-  const isPointerLocked = useMP(s => s.isPointerLocked)
+  const isPointerLocked = useMP(s => s.mouse.isLocked)
   const isDesktop = useMP(s => s.isDesktop)
   const isMobile = useMP(s => s.isMobile)
   const isPortrait = useMP(s => s.isPortrait)
   const isLandscape = useMP(s => s.isLandscape)
-  const isLeftMouseDown = useMP(s => s.isLeftMouseDown)
-  const isMiddleMouseDown = useMP(s => s.isMiddleMouseDown)
-  const isRightMouseDown = useMP(s => s.isRightMouseDown)
-  const keys = useMP(s => s.keys)
+  const isLeftMouseDown = useMP(s => s.mouse.buttons.left)
+  const isMiddleMouseDown = useIsMiddleMouseButtonDown()
+  const isRightMouseDown = useIsRightMouseButtonDown()
+  const keyboard = useMP(s => s.keyboard)
 
   const liveMouseXRef = useRef<HTMLSpanElement>(null)
   const liveMouseYRef = useRef<HTMLSpanElement>(null)
@@ -108,13 +110,14 @@ const UI = () => {
   const liveScrollYRef = useRef<HTMLDivElement>(null)
 
   useAnimationFrame(() => {
-    liveMouseXRef.current!.textContent = String(mp().mouseX)
-    liveMouseYRef.current!.textContent = String(mp().mouseY)
-    liveMouseMovementXRef.current!.textContent = String(mp().mouseMovementX)
-    liveMouseMovementYRef.current!.textContent = String(mp().mouseMovementY)
+    const { mouse } = mp()
+    liveMouseXRef.current!.textContent = String(mouse.position.x)
+    liveMouseYRef.current!.textContent = String(mouse.position.y)
+    liveMouseMovementXRef.current!.textContent = String(mouse.movement.x)
+    liveMouseMovementYRef.current!.textContent = String(mouse.movement.y)
     liveWidthRef.current!.textContent = String(mp().windowWidth)
     liveHeightRef.current!.textContent = String(mp().windowHeight)
-    liveScrollYRef.current!.textContent = String(mp().mouseWheelDeltaY)
+    liveScrollYRef.current!.textContent = String(mouse.wheel.y)
   })
 
   return (
@@ -246,7 +249,7 @@ const UI = () => {
           <textarea
             readOnly
             className="h-[100px] w-full max-w-[500px] bg-gray-700"
-            value={JSON.stringify(keys)}
+            value={JSON.stringify(keyboard)}
           />
         </div>
       </div>
@@ -295,9 +298,9 @@ const App = () => {
         onKeyUp={({ code, key }) =>
           eventNotificationRef.current!.setMessage(`onKeyup – code: ${code}, key: ${key}`)
         }
-        onMouseMove={({ x, y, movementX, movementY }) =>
+        onMouseMove={({ position, movement }) =>
           eventNotificationRef.current!.setMessage(
-            `onMouseMove – x: ${x}, y: ${y}, movementX: ${movementX}, movementY: ${movementY}`,
+            `onMouseMove – x: ${position.x}, y: ${position.y}, movementX: ${movement.x}, movementY: ${movement.y}`,
           )
         }
         onDeviceTypeChange={({ isDesktop, isMobile }) =>
@@ -315,12 +318,20 @@ const App = () => {
             `onScreenOrientationChange – isPortrait: ${isPortrait}, isLandscape: ${isLandscape}`,
           )
         }
-        onLeftMouseDown={() => eventNotificationRef.current!.setMessage('onLeftMouseDown')}
-        onMiddleMouseDown={() => eventNotificationRef.current!.setMessage('onMiddleMouseDown')}
-        onRightMouseDown={() => eventNotificationRef.current!.setMessage('onRightMouseDown')}
-        onLeftMouseUp={() => eventNotificationRef.current!.setMessage('onLeftMouseUp')}
-        onMiddleMouseUp={() => eventNotificationRef.current!.setMessage('onMiddleMouseUp')}
-        onRightMouseUp={() => eventNotificationRef.current!.setMessage('onRightMouseUp')}
+        onLeftMouseButtonDown={() =>
+          eventNotificationRef.current!.setMessage('onLeftMouseButtonDown')
+        }
+        onMiddleMouseButtonDown={() =>
+          eventNotificationRef.current!.setMessage('onMiddleMouseButtonDown')
+        }
+        onRightMouseButtonDown={() =>
+          eventNotificationRef.current!.setMessage('onRightMouseButtonDown')
+        }
+        onLeftMouseButtonUp={() => eventNotificationRef.current!.setMessage('onLeftMouseButtonUp')}
+        onMiddleMouseButtonUp={() => eventNotificationRef.current!.setMessage('onMiddleMouseUp')}
+        onRightMouseButtonUp={() =>
+          eventNotificationRef.current!.setMessage('onRightMouseButtonUp')
+        }
         onScroll={deltaY =>
           eventNotificationRef.current!.setMessage(`onScroll – deltaY: ${deltaY}`)
         }

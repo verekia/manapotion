@@ -1,33 +1,33 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
 import {
-  LeftMouseDownPayload,
-  LeftMouseUpPayload,
-  MiddleMouseDownPayload,
-  MiddleMouseUpPayload,
+  LeftMouseButtonDownPayload,
+  LeftMouseButtonUpPayload,
+  MiddleMouseButtonDownPayload,
+  MiddleMouseButtonUpPayload,
   mountMouseButtonsListener,
-  RightMouseDownPayload,
-  RightMouseUpPayload,
+  RightMouseButtonDownPayload,
+  RightMouseButtonUpPayload,
 } from '@manapotion/core'
 
 export const MouseButtonsListener = defineComponent({
   emits: {
-    leftMouseDown: (payload: LeftMouseDownPayload) => payload,
-    middleMouseDown: (payload: MiddleMouseDownPayload) => payload,
-    rightMouseDown: (payload: RightMouseDownPayload) => payload,
-    leftMouseUp: (payload: LeftMouseUpPayload) => payload,
-    middleMouseUp: (payload: MiddleMouseUpPayload) => payload,
-    rightMouseUp: (payload: RightMouseUpPayload) => payload,
+    leftMouseButtonDown: (payload: LeftMouseButtonDownPayload) => payload,
+    middleMouseButtonDown: (payload: MiddleMouseButtonDownPayload) => payload,
+    rightMouseButtonDown: (payload: RightMouseButtonDownPayload) => payload,
+    leftMouseButtonUp: (payload: LeftMouseButtonUpPayload) => payload,
+    middleMouseButtonUp: (payload: MiddleMouseButtonUpPayload) => payload,
+    rightMouseButtonUp: (payload: RightMouseButtonUpPayload) => payload,
   },
   setup: (_, { emit }) => {
     onMounted(() => {
       const unsub = mountMouseButtonsListener({
-        onLeftMouseDown: payload => emit('leftMouseDown', payload),
-        onMiddleMouseDown: payload => emit('middleMouseDown', payload),
-        onRightMouseDown: payload => emit('rightMouseDown', payload),
-        onLeftMouseUp: payload => emit('leftMouseUp', payload),
-        onMiddleMouseUp: payload => emit('middleMouseUp', payload),
-        onRightMouseUp: payload => emit('rightMouseUp', payload),
+        onLeftMouseButtonDown: payload => emit('leftMouseButtonDown', payload),
+        onMiddleMouseButtonDown: payload => emit('middleMouseButtonDown', payload),
+        onRightMouseButtonDown: payload => emit('rightMouseButtonDown', payload),
+        onLeftMouseButtonUp: payload => emit('leftMouseButtonUp', payload),
+        onMiddleMouseButtonUp: payload => emit('middleMouseButtonUp', payload),
+        onRightMouseButtonUp: payload => emit('rightMouseButtonUp', payload),
       })
       onUnmounted(unsub)
     })

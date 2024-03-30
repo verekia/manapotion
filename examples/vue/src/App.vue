@@ -7,13 +7,13 @@ import {
   FullscreenChangePayload,
   isDesktop,
   isLandscape,
-  isMiddleMouseDown,
+  isMiddleMouseButtonDown,
   isMobile,
   isPageFocused,
   isPageVisible,
   isPortrait,
-  isRightMouseDown,
-  keys,
+  isRightMouseButtonDown,
+  keyboard,
   Listeners,
   mp,
   mpRefs,
@@ -42,23 +42,15 @@ const windowHeightRef = ref<HTMLSpanElement | null>(null)
 const mouseScrollRef = ref<HTMLSpanElement | null>(null)
 
 useAnimationFrame(() => {
-  const {
-    mouseX,
-    mouseY,
-    mouseMovementX,
-    mouseMovementY,
-    windowWidth,
-    windowHeight,
-    mouseWheelDeltaY,
-  } = mp()
+  const { mouse, windowWidth, windowHeight } = mp()
 
-  mouseXRef.value!.textContent = String(mouseX)
-  mouseYRef.value!.textContent = String(mouseY)
-  mouseMovementXRef.value!.textContent = String(mouseMovementX)
-  mouseMovementYRef.value!.textContent = String(mouseMovementY)
+  mouseXRef.value!.textContent = String(mouse.position.x)
+  mouseYRef.value!.textContent = String(mouse.position.y)
+  mouseMovementXRef.value!.textContent = String(mouse.movement.x)
+  mouseMovementYRef.value!.textContent = String(mouse.movement.y)
   windowWidthRef.value!.textContent = String(windowWidth)
   windowHeightRef.value!.textContent = String(windowHeight)
-  mouseScrollRef.value!.textContent = String(mouseWheelDeltaY)
+  mouseScrollRef.value!.textContent = String(mouse.wheel.y)
 })
 
 const handlePageVisibilityChange = ({ isVisible }: PageVisibilityPayload) => {
@@ -69,7 +61,7 @@ const handleDT = (payload: DeviceTypeChangePayload) => {
   console.log(payload)
 }
 
-const jsonKeys = computed(() => JSON.stringify(keys.value))
+const jsonKeys = computed(() => JSON.stringify(keyboard.value))
 </script>
 
 <template>
@@ -86,8 +78,9 @@ const jsonKeys = computed(() => JSON.stringify(keys.value))
   <div>Is landscape: {{ isLandscape }}</div>
   <div>Window size: <span ref="windowWidthRef" /> <span ref="windowHeightRef" /></div>
   <div>
-    Mouse buttons: Left: {{ mpRefs.isLeftMouseDown }}, Middle: {{ isMiddleMouseDown }}, Right:
-    {{ isRightMouseDown }}
+    Mouse buttons: Left: {{ mpRefs.isLeftMouseButtonDown }}, Middle: {{ isMiddleMouseButtonDown }},
+    Right:
+    {{ isRightMouseButtonDown }}
   </div>
   <div>
     <div>

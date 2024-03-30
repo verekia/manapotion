@@ -1,8 +1,8 @@
-import { mp } from '../store'
+import { Mouse, mp } from '../store'
 
 let resetTimeout: ReturnType<typeof setTimeout> | null = null
 
-export type MouseScrollPayload = { deltaY: number }
+export type MouseScrollPayload = Mouse
 
 export type MouseScrollListenerProps = {
   onScroll?: (payload: MouseScrollPayload) => void
@@ -13,22 +13,18 @@ export const mountMouseScrollListener = ({
   onScroll,
   mouseScrollResetDelay,
 }: MouseScrollListenerProps) => {
-  const payload: MouseScrollPayload = { deltaY: 0 }
-
   const handler = (e: WheelEvent) => {
-    const deltaY = e.deltaY
+    const { mouse } = mp()
 
-    payload.deltaY = deltaY
-    onScroll?.(payload)
-    mp().mouseWheelDeltaY = deltaY
+    mouse.wheel.y = e.deltaY
+    onScroll?.(mouse)
 
     resetTimeout && clearTimeout(resetTimeout)
 
     if (mouseScrollResetDelay) {
       resetTimeout = setTimeout(() => {
-        payload.deltaY = 0
-        onScroll?.(payload)
-        mp().mouseWheelDeltaY = 0
+        mouse.wheel.y = 0
+        onScroll?.(mouse)
       }, mouseScrollResetDelay)
     }
   }

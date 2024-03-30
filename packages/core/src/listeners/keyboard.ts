@@ -13,8 +13,9 @@ export type KeyboardListenerProps = {
 export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerProps) => {
   const downHandler = (e: KeyboardEvent) => {
     const { key, code } = e
+    const { keyboard, setKeyDown } = mp()
 
-    if (mp().keys.byCode[code] || mp().keys.byKey[key]) {
+    if (keyboard.byCode[code] || keyboard.byKey[key]) {
       return
     }
 
@@ -28,11 +29,13 @@ export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerPr
     }
 
     onKeyDown?.(keyState)
-    mp().setKeyDown(keyState)
+    setKeyDown(keyState)
   }
 
   const upHandler = (e: KeyboardEvent) => {
-    mp().setKeyUp(e.code, e.key)
+    const { setKeyUp } = mp()
+
+    setKeyUp(e.code, e.key)
     onKeyUp?.({ code: e.code, key: e.key })
   }
 

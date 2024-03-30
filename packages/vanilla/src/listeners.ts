@@ -47,12 +47,12 @@ export const listeners = ({
   onResize,
   onDeviceTypeChange,
   onScreenOrientationChange,
-  onLeftMouseDown,
-  onMiddleMouseDown,
-  onRightMouseDown,
-  onLeftMouseUp,
-  onMiddleMouseUp,
-  onRightMouseUp,
+  onLeftMouseButtonDown,
+  onMiddleMouseButtonDown,
+  onRightMouseButtonDown,
+  onLeftMouseButtonUp,
+  onMiddleMouseButtonUp,
+  onRightMouseButtonUp,
   onScroll,
   mouseScrollResetDelay,
   onKeyDown,
@@ -63,12 +63,12 @@ export const listeners = ({
   const unsubFocus = mountFocusListener({ onPageFocusChange })
   const unsubFullscreen = mountFullscreenListener({ onFullscreenChange })
   const unsubMouseButtons = mountMouseButtonsListener({
-    onLeftMouseDown,
-    onMiddleMouseDown,
-    onRightMouseDown,
-    onLeftMouseUp,
-    onMiddleMouseUp,
-    onRightMouseUp,
+    onLeftMouseButtonDown,
+    onMiddleMouseButtonDown,
+    onRightMouseButtonDown,
+    onLeftMouseButtonUp,
+    onMiddleMouseButtonUp,
+    onRightMouseButtonUp,
   })
   const unsubMouseMove = mountMouseMoveListener({ onMouseMove, mouseMovementResetDelay })
   const unsubKeyboard = mountKeyboardListener({ onKeyDown, onKeyUp })
