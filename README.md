@@ -339,20 +339,18 @@ const unsub = startAnimationFrame(({ delta, elapsed }) => {
 
 ⚠️ React-only for now ⚠️
 
-Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. You must create a joystick object with `createJoystick()`, and pass it to `<JoystickArea />`. You can choose between 2 modes, follow or origin, by setting `maxFollowDistance` or `maxOriginDistance`:
+Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. Each virtual joystick is associated with a single `<JoystickArea />`. You can create your own Joystick objects with `createJoystick()` or use one of the two default ones that are already available on the joysticks store. The default ones are called `movement` and `rotation` joysticks.
+
+You can choose between 2 modes, follow or origin, by setting `maxFollowDistance` or `maxOriginDistance`:
 
 ```jsx
-import { JoystickArea, createJoystick } from '@manapotion/react'
-
-const joystick = createJoystick()
+import { JoystickArea, getJoysticks } from '@manapotion/react'
 
 const MobileUI = () => {
   return (
     <JoystickArea
-      joystick={joystick}
-      maxFollowDistance={50}
-      // OR
-      maxOriginDistance={50}
+      joystick={getJoysticks().movement}
+      maxFollowDistance={50} // or maxOriginDistance={50}
     />
   )
 }
@@ -362,75 +360,22 @@ In follow mode, the joystick will follow the user's finger, which is good for pl
 
 Here are the properties that will be updated on your joystick object:
 
-- `isActive`
-- `identifier`
-- `originX`
-- `originY`
-- `originAngle`
-- `originDistance`
-- `originDistanceRatio`
-- `followX`
-- `followY`
-- `followAngle`
-- `followDistance`
-- `followDistanceRatio`
-- `currentX`
-- `currentY`
-- `movementX`
-- `movementY`
+- 🗿 `joystick.isActive`
+- 🗿 `identifier`
+- 🗿 `originX` / `originY`
+- 🗿 `originAngle`
+- 🗿 `originDistance`
+- 🗿 `originDistanceRatio`
+- 🗿 `followX` / `followY`
+- 🗿 `followAngle`
+- 🗿 `followDistance`
+- 🗿 `followDistanceRatio`
+- 🗿 `currentX`/ `currentY`
+- 🗿 `movementX` / `movementY`
 
 See the [example of how to style your joystick](https://github.com/verekia/manapotion/blob/main/examples/react/src/MobileJoystick.tsx).
 
 Multitouch within a single area is not supported, but you can create multiple `<JoystickArea />`. One for movement and one for camera rotation for example.
-
-### Augmenting the store
-
-You can add your own variables to the store by augmenting the `ManaPotionState` interface from `@manapotion/react`, `@manapotion/vue`, or `@manapotion/vanilla` in a global definition file such as `global.d.ts` at the root of your project:
-
-```ts
-import { ManaPotionState } from '@manapotion/react'
-
-declare module '@manapotion/react' {
-  interface ManaPotionState {
-    foo: number
-  }
-}
-```
-
-You can then set it imperatively as `mp().foo = 3` or reactively with `mp().setCustom('foo', 3)`.
-
-For example, to add your joysticks to the Mana Potion store, you can define them like this in `global.d.ts`:
-
-```ts
-import { Joystick, ManaPotionState } from '@manapotion/react'
-
-declare module '@manapotion/react' {
-  interface ManaPotionState {
-    movementJoystick: Joystick
-    cameraJoystick: Joystick
-  }
-}
-```
-
-Then, initialize them somewhere in your app:
-
-```jsx
-mp().movementJoystick = createJoystick()
-mp().cameraJoystick = createJoystick()
-```
-
-Finally, pass them to your `<JoystickArea />` components:
-
-```jsx
-const MobileUI = () => (
-  <>
-    <JoystickArea joystick={mp().movementJoystick} maxFollowDistance={50} />
-    <JoystickArea joystick={mp().cameraJoystick} maxFollowDistance={50} />
-  </>
-)
-```
-
-Note that you don't have to do this, you can just make them a global variable somewhere in your app, or put them in your own store. This is just a way to keep all inputs in the Mana Potion store.
 
 ## Browser API Helpers
 

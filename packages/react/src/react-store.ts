@@ -1,4 +1,13 @@
-import { Browser, browserStore, Keyboard, keyboardStore, Mouse, mouseStore } from '@manapotion/core'
+import {
+  Browser,
+  browserStore,
+  Joysticks,
+  joysticksStore,
+  Keyboard,
+  keyboardStore,
+  Mouse,
+  mouseStore,
+} from '@manapotion/core'
 import { useStore } from 'zustand'
 
 export function useBrowser(): Browser
@@ -17,4 +26,10 @@ export function useKeyboard(): Keyboard
 export function useKeyboard<T>(selector: (state: Keyboard) => T): T
 export function useKeyboard<T>(selector?: (state: Keyboard) => T) {
   return useStore(keyboardStore, selector!)
+}
+
+export function useJoysticks(): Joysticks
+export function useJoysticks<T>(selector: (state: Joysticks) => T): T
+export function useJoysticks<T>(selector?: (state: Joysticks) => T) {
+  return useStore(joysticksStore, selector!)
 }

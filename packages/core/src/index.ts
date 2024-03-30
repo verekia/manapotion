@@ -1,6 +1,7 @@
 export * from './stores/browserStore'
 export * from './stores/keyboardStore'
 export * from './stores/mouseStore'
+export * from './stores/joysticksStore'
 export * from './loops'
 export * from './browser'
 export * from './util'

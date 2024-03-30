@@ -1,8 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { createJoystick, JoystickArea, useFrameEffect } from '@manapotion/r3f'
-
-const joystick = createJoystick()
+import { getJoysticks, JoystickArea, useFrameEffect } from '@manapotion/r3f'
 
 const MobileJoystick = () => {
   const joystickCurrentRef = useRef<HTMLDivElement>(null)
@@ -11,6 +9,8 @@ const MobileJoystick = () => {
   const [isHelperShown, setIsHelperShown] = useState(true)
 
   useFrameEffect(() => {
+    const joystick = getJoysticks().movement
+
     if (!joystickCurrentRef.current || !joystickFollowRef.current || !joystickOriginRef.current) {
       return
     }
@@ -42,7 +42,7 @@ const MobileJoystick = () => {
 
   return (
     <JoystickArea
-      joystick={joystick}
+      joystick={getJoysticks().movement}
       maxFollowDistance={50}
       className="absolute left-1/2 top-1/2 z-10 size-56 -translate-x-1/2 -translate-y-1/2 border border-blue-500 desktop:hidden"
       onStart={() => setIsHelperShown(false)}

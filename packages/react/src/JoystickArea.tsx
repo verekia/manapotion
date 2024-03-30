@@ -7,46 +7,10 @@ import {
   useRef,
 } from 'react'
 
+import { Joystick } from '@manapotion/core'
+
 const { sin, cos, sqrt, pow, atan2 } = Math
 const pi = Math.PI
-
-export type Joystick = {
-  isActive: boolean
-  identifier: number | null
-  originX: number | null
-  originY: number | null
-  originAngle: number | null
-  originDistance: number | null
-  originDistanceRatio: number | null
-  followX: number | null
-  followY: number | null
-  followAngle: number | null
-  followDistance: number | null
-  followDistanceRatio: number | null
-  currentX: number | null
-  currentY: number | null
-  movementX: number
-  movementY: number
-}
-
-export const createJoystick = (): Joystick => ({
-  isActive: false,
-  identifier: null,
-  originX: null,
-  originY: null,
-  originAngle: null,
-  originDistance: null,
-  originDistanceRatio: null,
-  followX: null,
-  followY: null,
-  followAngle: null,
-  followDistance: null,
-  followDistanceRatio: null,
-  currentX: null,
-  currentY: null,
-  movementX: 0,
-  movementY: 0,
-})
 
 type JoystickAreaProps = {
   joystick: Joystick
