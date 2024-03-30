@@ -15,6 +15,7 @@ export const isMiddleMouseButtonDown = ref(manaPotionStore.getState().mouse.butt
 export const isRightMouseButtonDown = ref(manaPotionStore.getState().mouse.buttons.right)
 export const keyboard = ref(manaPotionStore.getState().keyboard)
 export const mouse = ref(manaPotionStore.getState().mouse)
+export const mouseButtons = ref(manaPotionStore.getState().mouse.buttons)
 
 export const mpRefs = reactive({
   isFullscreen,
@@ -30,6 +31,7 @@ export const mpRefs = reactive({
   isRightMouseButtonDown,
   keyboard,
   mouse,
+  mouseButtons,
 })
 
 manaPotionStore.subscribe(state => {
@@ -46,4 +48,5 @@ manaPotionStore.subscribe(state => {
   isRightMouseButtonDown.value = state.mouse.buttons.right
   keyboard.value = state.keyboard
   mouse.value = state.mouse
+  mouseButtons.value = state.mouse.buttons
 })

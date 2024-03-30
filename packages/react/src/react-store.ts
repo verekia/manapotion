@@ -20,3 +20,4 @@ export const useIsMiddleMouseButtonDown = () => useMP(s => s.mouse.buttons.middl
 export const useIsRightMouseButtonDown = () => useMP(s => s.mouse.buttons.right)
 export const useKeyboard = () => useMP(s => s.keyboard)
 export const useMouse = () => useMP(s => s.mouse)
+export const useMouseButtons = () => useMP(s => s.mouse.buttons)

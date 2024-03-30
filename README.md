@@ -10,7 +10,7 @@ Mana Potion supports React, Vue, Svelte, and vanilla JavaScript. It is a particu
 
 The library consists of:
 
-- [**Listeners and a reactive store for inputs and browser state**](#listeners-and-reactive-store)
+- [**Listeners and a reactive store for inputs and browser state**](#getting-started)
 - [**Animation loops**](#animation-loops)
 - [**Headless virtual joysticks**](#virtual-joysticks)
 - [**Browser API helpers**](#browser-api-helpers)
@@ -22,36 +22,20 @@ The library consists of:
 
 ## Installation
 
-- If you use React Three Fiber, install `@manapotion/r3f`
-- If you use React _without R3F_, install `@manapotion/react`
-- If you use Vue, install `@manapotion/vue`
-- If you use Svelte, install `@manapotion/svelte`
+- If you use **React Three Fiber**, install `@manapotion/r3f`
+- If you use **React** _without R3F_, install `@manapotion/react`
+- If you use **Vue**, install `@manapotion/vue`
+- If you use **Svelte**, install `@manapotion/svelte`
 - If you don't use these frameworks, install `@manapotion/vanilla`
 
-## Listeners and reactive store
+## Getting started
 
-At the heart of Mana Potion is a [Zustand](https://github.com/pmndrs/zustand) store that gets updated by event listeners. You can access this store imperatively in your animation loop or reactively in your components.
+Add `<Listeners />` somewhere in your app:
 
-The listeners available are:
-
-- `<MouseButtonsListener />`
-- `<MouseMoveListener />`
-- `<MouseScrollListener />`
-- `<KeyboardListener />`
-- `<PointerLockListener />`
-- `<FullscreenListener />`
-- `<ResizeListener />`
-- `<DeviceTypeListener />`
-- `<ScreenOrientationListener />`
-- `<PageVisibilityListener />`
-- `<PageFocusListener />`
-
-To enable them all, simply add `<Listeners />` to your app:
-
-**React**
+**React, Vue, Svelte**
 
 ```jsx
-import { Listeners } from '@manapotion/react'
+import { Listeners } from '@manapotion/react' // or /vue, /svelte
 
 const App = () => (
   <>
@@ -59,30 +43,6 @@ const App = () => (
     <Listeners />
   </>
 )
-```
-
-**Vue**
-
-```vue
-<script setup lang="ts">
-import { Listeners } from '@manapotion/vue'
-</script>
-
-<template>
-  <div>Your game</div>
-  <Listeners />
-</template>
-```
-
-**Svelte**
-
-```svelte
-<script lang="ts">
-  import { Listeners } from '@manapotion/svelte'
-</script>
-
-<div>Your game</div>
-<Listeners />
 ```
 
 **Vanilla**
@@ -95,44 +55,32 @@ const unsub = listeners({})
 // call unsub() to stop listening
 ```
 
-This will automatically give you access to some reactive and non-reactive variables.
+This will automatically give you access to some reactive and non-reactive variables. If you do not want to listen to every event supported by the library, you can cherry-pick individual listeners (for example, `<MouseMoveListener />` or `<FullscreenListener />`).
 
-🗿 **Non-reactive** variables may be frequently updated and should be accessed imperatively in your main loop:
+🗿 **Non-reactive** variables may be frequently updated and should be accessed imperatively in your main loop or in event handlers:
 
 ```jsx
-import { mp } from '@manapotion/react' // or /vue or /vanilla
+import { mp } from '@manapotion/react' // or /vue, /svelte, or /vanilla
 
 const animate = () => {
-  const { mouseMovementX } = mp()
-  // Move the camera
+  const { mouse, keyboard } = mp()
+  // ...
 }
 ```
 
-⚡️ **Reactive** variables can similarly be accessed imperatively:
-
-```jsx
-const animate = () => {
-  const { isRightMouseDown } = mp()
-
-  if (isRightMouseDown) {
-    // Some imperative logic
-  }
-}
-```
-
-Or reactively in components to trigger re-renders:
+⚡️ **Reactive** variables can similarly be accessed imperatively, but also reactively in components to trigger re-renders
 
 **React**
 
-There are hooks available for all the reactive variables, but you can also use `useMP` by passing a selector to it:
+There are hooks available with various granularity for all the reactive variables. You can either use `useMP` by passing a selector to it, or use more specific hooks directly:
 
 ```jsx
-import { useMP, useIsLeftMouseDown } from '@manapotion/react'
+import { useMP, useMouseButtons, useMouse, useIsRightMouseButtonDown } from '@manapotion/react'
 
 const Component = () => {
-  const isLeftMouseDown = useIsLeftMouseDown()
+  const isRightMouseButtonDown = useMP(s => s.mouse.buttons.right)
   // or
-  const isRightMouseDown = useMP(s => s.isRightMouseDown)
+  const isRightMouseButtonDown = useIsRightMouseButtonDown()
 
   // Some reactive component
   return ( /* ... */ )
@@ -141,30 +89,31 @@ const Component = () => {
 
 **Vue**
 
-All the reactive variables are available as refs, either individually or via `mpRefs`:
+The reactive variables are available as refs, either individually or via `mpRefs`:
 
 ```vue
 <script setup lang="ts">
-import { isLeftMouseDown, mpRefs } from '@manapotion/vue'
+import { isRightMouseButtonDown, mpRefs } from '@manapotion/vue'
 </script>
 
 <template>
-  <div>{{ isLeftMouseDown }}</div>
-  <div>{{ mpRefs.isRightMouseDown }}</div>
+  <div>{{ mpRefs.mouse.buttons.right }}</div>
+  <!-- or -->
+  <div>{{ isRightMouseButtonDown }}</div>
 </template>
 ```
 
 **Svelte**
 
-All the reactive variables are available as stores, either individually or via `mpStore`:
+The reactive variables are available as stores, either individually or via `mpStore`:
 
 ```svelte
 <script lang="ts">
-  import { isLeftMouseDown, mpStore } from '@manapotion/svelte'
+  import { isRightMouseButtonDown, mpStore } from '@manapotion/svelte'
 </script>
 
-<div>{$isLeftMouseDown}</div>
-<div>{$mpStore.isRightMouseDown}</div>
+<div>{$isRightMouseButtonDown}</div>
+<div>{$mpStore.mouse.buttons.right}</div>
 ```
 
 **Vanilla**
@@ -175,7 +124,7 @@ There is no reactivity system in vanilla JavaScript, so you can use [callbacks](
 import { manaPotionStore } from '@manapotion/vanilla'
 
 const unsub = manaPotionStore.subscribe(state => {
-  console.log(state.isLeftMouseDown)
+  console.log(state.mouse.buttons.right)
 })
 ```
 
@@ -185,13 +134,13 @@ Legend: ⚡️ **Reactive**, 🗿 **Non-reactive**, 🚧 **Not implemented yet**
 
 ### 🌐 Browser
 
-- ⚡️ `isFullscreen`
-- ⚡️ `isPageVisible`
-- ⚡️ `isPageFocused`
-- ⚡️ `isDesktop` / `isMobile`
-- ⚡️ `isLandscape` / `isPortrait`
-- 🗿 `windowWidth`
-- 🗿 `windowHeight`
+- ⚡️ `browser.isFullscreen`
+- ⚡️ `browser.isPageVisible`
+- ⚡️ `browser.isPageFocused`
+- ⚡️ `browser.isDesktop` / `browser.isMobile`
+- ⚡️ `browser.isLandscape` / `browser.isPortrait`
+- 🗿 `browser.windowWidth`
+- 🗿 `browser.windowHeight`
 - 🚧 `pointerLockSupported`
 
 ### 🖱️ Mouse
@@ -209,6 +158,9 @@ Legend: ⚡️ **Reactive**, 🗿 **Non-reactive**, 🚧 **Not implemented yet**
 You can import and use `resetMouse` to reinitialize the mouse data.
 
 ### ⌨️ Keyboard
+
+- ⚡️ `keyboard.byKey`
+- ⚡️ `keyboard.byCode`
 
 ⚡️ `keyboard` contains keys that are available in two versions, `byCode` and `byKey`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`byCode`) of the key or the character being typed as a key (`byKey`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
 
@@ -283,7 +235,7 @@ You can provide custom event callbacks to `<Listeners />` or to individual liste
 ```vue
 <Listeners @fullscreenChange="handleFullscreenChange" />
 <!-- or -->
-<FullscreenListener @fullscreenChange="handleFullscreenChange" />
+<FullscreenListener @fullscreen-change="handleFullscreenChange" />
 ```
 
 **Svelte**

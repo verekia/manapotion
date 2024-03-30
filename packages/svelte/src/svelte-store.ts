@@ -18,3 +18,4 @@ export const isMiddleMouseButtonDown = derived(mpStore, $mpStore => $mpStore.mou
 export const isRightMouseButtonDown = derived(mpStore, $mpStore => $mpStore.mouse.buttons.right)
 export const keyboard = derived(mpStore, $mpStore => $mpStore.keyboard)
 export const mouse = derived(mpStore, $mpStore => $mpStore.mouse)
+export const mouseButtons = derived(mpStore, $mpStore => $mpStore.mouse.buttons)
