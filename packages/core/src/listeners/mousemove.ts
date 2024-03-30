@@ -1,4 +1,4 @@
-import { Mouse, MouseMovement, MousePosition, mp } from '../store'
+import { getMouse, Mouse, MouseMovement, MousePosition } from '../stores/mouseStore'
 
 let movementResetTimeout: ReturnType<typeof setTimeout> | null = null
 
@@ -18,7 +18,7 @@ export const mountMouseMoveListener = ({
   mouseMovementResetDelay,
 }: MouseMoveListenerProps) => {
   const handler = (e: MouseEvent) => {
-    const { mouse } = mp()
+    const mouse = getMouse()
     const position: Mutable<MousePosition> = mouse.position
     const movement: Mutable<MouseMovement> = mouse.movement
 

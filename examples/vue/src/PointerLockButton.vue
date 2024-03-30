@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUpdate } from 'vue'
 
-import { isPointerLocked, lockPointer, unlockPointer } from '@manapotion/vue'
+import { lockPointer, mouse, unlockPointer } from '@manapotion/vue'
 
 onBeforeUpdate(() => {
   console.log('PointerLockButton re-render ')
@@ -9,7 +9,7 @@ onBeforeUpdate(() => {
 </script>
 
 <template>
-  <button @click="isPointerLocked ? unlockPointer() : lockPointer()">
-    {{ isPointerLocked ? 'Unlock' : 'Lock' }} pointer
+  <button @click="mouse.locked ? unlockPointer() : lockPointer()">
+    {{ mouse.locked ? 'Unlock' : 'Lock' }} pointer
   </button>
 </template>

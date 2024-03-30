@@ -1,4 +1,4 @@
-import { manaPotionStore } from '../store'
+import { browserStore } from '../stores/browserStore'
 
 export type FullscreenChangePayload = { isFullscreen: boolean }
 
@@ -9,7 +9,7 @@ export type FullscreenListenerProps = {
 export const mountFullscreenListener = ({ onFullscreenChange }: FullscreenListenerProps) => {
   const handler = () => {
     const isFullscreen = Boolean(document.fullscreenElement)
-    manaPotionStore.setState(s => ({ ...s, browser: { ...s.browser, isFullscreen } }))
+    browserStore.setState(s => ({ ...s, isFullscreen }))
     onFullscreenChange?.({ isFullscreen })
   }
 

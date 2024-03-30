@@ -1,4 +1,4 @@
-import { manaPotionStore } from '../store'
+import { browserStore } from '../stores/browserStore'
 
 export type PageVisibilityPayload = { isPageVisible: boolean }
 
@@ -11,7 +11,7 @@ export const mountPageVisibilityListener = ({
 }: PageVisibilityListenerProps) => {
   const handler = () => {
     const isPageVisible = !document.hidden
-    manaPotionStore.setState(s => ({ ...s, browser: { ...s.browser, isPageVisible } }))
+    browserStore.setState(s => ({ ...s, isPageVisible }))
     onPageVisibilityChange?.({ isPageVisible })
   }
 

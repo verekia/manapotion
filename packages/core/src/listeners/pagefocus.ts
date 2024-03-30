@@ -1,4 +1,4 @@
-import { manaPotionStore } from '../store'
+import { browserStore } from '../stores/browserStore'
 
 export type PageFocusChangePayload = { isPageFocused: boolean }
 
@@ -8,7 +8,7 @@ export type PageFocusListenerProps = {
 
 export const mountBlurListener = ({ onPageFocusChange }: PageFocusListenerProps) => {
   const handler = () => {
-    manaPotionStore.setState(s => ({ ...s, browser: { ...s.browser, isPageFocused: false } }))
+    browserStore.setState(s => ({ ...s, isPageFocused: false }))
     onPageFocusChange?.({ isPageFocused: false })
   }
 
@@ -21,7 +21,7 @@ export const mountBlurListener = ({ onPageFocusChange }: PageFocusListenerProps)
 
 export const mountFocusListener = ({ onPageFocusChange }: PageFocusListenerProps) => {
   const handler = () => {
-    manaPotionStore.setState(s => ({ ...s, browser: { ...s.browser, isPageFocused: true } }))
+    browserStore.setState(s => ({ ...s, isPageFocused: true }))
     onPageFocusChange?.({ isPageFocused: true })
   }
 

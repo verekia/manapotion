@@ -1,4 +1,4 @@
-import { manaPotionStore } from '../store'
+import { browserStore } from '../stores/browserStore'
 
 export type DeviceTypeChangePayload = { isDesktop: boolean; isMobile: boolean }
 
@@ -13,7 +13,7 @@ export const mountDeviceTypeListener = ({ onDeviceTypeChange }: DeviceTypeListen
   const handler = () => {
     const isDesktop = desktopQuery.matches
     const isMobile = mobileQuery.matches
-    manaPotionStore.setState(s => ({ ...s, browser: { ...s.browser, isDesktop, isMobile } }))
+    browserStore.setState(s => ({ ...s, isDesktop, isMobile }))
     onDeviceTypeChange?.({ isDesktop, isMobile })
   }
 

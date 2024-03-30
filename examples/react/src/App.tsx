@@ -4,11 +4,12 @@ import {
   debounce,
   enterFullscreen,
   exitFullscreen,
+  getBrowser,
+  getMouse,
   Listeners,
   lockKeys,
   lockOrientation,
   lockPointer,
-  mp,
   resetKeyboard,
   resetMouse,
   throttle,
@@ -16,9 +17,9 @@ import {
   unlockKeys,
   unlockOrientation,
   useAnimationFrame,
-  useIsMiddleMouseButtonDown,
-  useIsRightMouseButtonDown,
-  useMP,
+  useBrowser,
+  useKeyboard,
+  useMouse,
 } from '@manapotion/r3f'
 import { MeshProps, useFrame } from '@react-three/fiber'
 import { Mesh } from 'three'
@@ -88,18 +89,18 @@ const EventNotification = forwardRef(EventNotificationBase)
 const UI = () => {
   const [renderer, setRenderer] = useState('WebGPU')
   const toggleRenderer = () => setRenderer(renderer === 'WebGPU' ? 'WebGL' : 'WebGPU')
-  const isFullscreen = useMP(s => s.browser.isFullscreen)
-  const isPageVisible = useMP(s => s.browser.isPageVisible)
-  const isPageFocused = useMP(s => s.browser.isPageFocused)
-  const isPointerLocked = useMP(s => s.mouse.locked)
-  const isDesktop = useMP(s => s.browser.isDesktop)
-  const isMobile = useMP(s => s.browser.isMobile)
-  const isPortrait = useMP(s => s.browser.isPortrait)
-  const isLandscape = useMP(s => s.browser.isLandscape)
-  const isLeftMouseDown = useMP(s => s.mouse.buttons.left)
-  const isMiddleMouseDown = useIsMiddleMouseButtonDown()
-  const isRightMouseDown = useIsRightMouseButtonDown()
-  const keyboard = useMP(s => s.keyboard)
+  const isFullscreen = useBrowser(s => s.isFullscreen)
+  const isPageVisible = useBrowser(s => s.isPageVisible)
+  const isPageFocused = useBrowser(s => s.isPageFocused)
+  const isPointerLocked = useMouse(s => s.locked)
+  const isDesktop = useBrowser(s => s.isDesktop)
+  const isMobile = useBrowser(s => s.isMobile)
+  const isPortrait = useBrowser(s => s.isPortrait)
+  const isLandscape = useBrowser(s => s.isLandscape)
+  const isLeftMouseDown = useMouse(s => s.buttons.left)
+  const isMiddleMouseDown = useMouse(s => s.buttons.middle)
+  const isRightMouseDown = useMouse(s => s.buttons.right)
+  const keyboard = useKeyboard()
 
   const liveMouseXRef = useRef<HTMLSpanElement>(null)
   const liveMouseYRef = useRef<HTMLSpanElement>(null)
@@ -112,13 +113,13 @@ const UI = () => {
   const liveScrollYRef = useRef<HTMLDivElement>(null)
 
   useAnimationFrame(() => {
-    const { mouse } = mp()
+    const mouse = getMouse()
     liveMouseXRef.current!.textContent = String(mouse.position.x)
     liveMouseYRef.current!.textContent = String(mouse.position.y)
     liveMouseMovementXRef.current!.textContent = String(mouse.movement.x)
     liveMouseMovementYRef.current!.textContent = String(mouse.movement.y)
-    liveWidthRef.current!.textContent = String(mp().browser.width)
-    liveHeightRef.current!.textContent = String(mp().browser.height)
+    liveWidthRef.current!.textContent = String(getBrowser().width)
+    liveHeightRef.current!.textContent = String(getBrowser().height)
     liveScrollYRef.current!.textContent = String(mouse.wheel.y)
   })
 

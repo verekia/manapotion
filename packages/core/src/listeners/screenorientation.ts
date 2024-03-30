@@ -1,4 +1,4 @@
-import { manaPotionStore } from '../store'
+import { browserStore } from '../stores/browserStore'
 
 export type ScreenOrientationChangePayload = {
   isLandscape: boolean
@@ -18,7 +18,7 @@ export const mountScreenOrientationListener = ({
   const handler = () => {
     const isLandscape = landscapeQuery.matches
     const isPortrait = portraitQuery.matches
-    manaPotionStore.setState(s => ({ ...s, browser: { ...s.browser, isLandscape, isPortrait } }))
+    browserStore.setState(s => ({ ...s, isLandscape, isPortrait }))
     onScreenOrientationChange?.({ isLandscape, isPortrait })
   }
 

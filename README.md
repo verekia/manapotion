@@ -57,13 +57,15 @@ const unsub = listeners({})
 
 This will automatically give you access to some reactive and non-reactive variables. If you do not want to listen to every event supported by the library, you can cherry-pick individual listeners (for example, `<MouseMoveListener />` or `<FullscreenListener />`).
 
-🗿 **Non-reactive** variables may be frequently updated and should be accessed imperatively in your main loop or in event handlers:
+🗿 **Non-reactive** variables may be frequently updated and should be accessed imperatively in your main loop or in event handlers via `getMouse`, `getKeyboard`, and `getBrowser`:
 
 ```jsx
-import { mp } from '@manapotion/react' // or /vue, /svelte, or /vanilla
+import { getMouse, getKeyboard, getBrowser } from '@manapotion/react' // or /vue, /svelte, or /vanilla
 
 const animate = () => {
-  const { mouse, keyboard } = mp()
+  const { right } = getMouse().buttons
+  const { KeyW } = getKeyboard().byCode
+  const { isFullscreen } = getBrowser()
   // ...
 }
 ```
@@ -72,15 +74,15 @@ const animate = () => {
 
 **React**
 
-There are hooks available with various granularity for all the reactive variables. You can either use `useMP` by passing a selector to it, or use more specific hooks directly:
+Use the `useMouse`, `useKeyboard`, and `useBrowser` hooks with a selector to access variables reactively:
 
 ```jsx
-import { useMP, useMouseButtons, useMouse, useIsRightMouseButtonDown } from '@manapotion/react'
+import { useMouse, useBrowser, useKeyboard } from '@manapotion/react'
 
 const Component = () => {
-  const isRightMouseButtonDown = useMP(s => s.mouse.buttons.right)
-  // or
-  const isRightMouseButtonDown = useIsRightMouseButtonDown()
+  const isRightButtonDown = useMouse(s => s.buttons.right)
+  const { KeyW } = useKeyboard(s => s.byCode)
+  const isFullscreen = useBrowser(s => s.isFullscreen)
 
   // Some reactive component
   return ( /* ... */ )
@@ -93,13 +95,13 @@ The reactive variables are available as refs, either individually or via `mpRefs
 
 ```vue
 <script setup lang="ts">
-import { isRightMouseButtonDown, mpRefs } from '@manapotion/vue'
+import { mouse, browser, keyboard } from '@manapotion/vue'
 </script>
 
 <template>
-  <div>{{ mpRefs.mouse.buttons.right }}</div>
-  <!-- or -->
-  <div>{{ isRightMouseButtonDown }}</div>
+  <div>{{ mouse.buttons.right }}</div>
+  <div>{{ browser.isFullscreen }}</div>
+  <div>{{ keyboard.byCode.KeyW }}</div>
 </template>
 ```
 
@@ -109,11 +111,12 @@ The reactive variables are available as stores, either individually or via `mpSt
 
 ```svelte
 <script lang="ts">
-  import { isRightMouseButtonDown, mpStore } from '@manapotion/svelte'
+  import { mouse, browser, keyboard } from '@manapotion/svelte'
 </script>
 
-<div>{$isRightMouseButtonDown}</div>
-<div>{$mpStore.mouse.buttons.right}</div>
+  <div>{$mouse.buttons.right}</div>
+  <div>{$browser.isFullscreen}</div>
+  <div>{$keyboard.byCode.KeyW}</div>
 ```
 
 **Vanilla**
@@ -121,10 +124,10 @@ The reactive variables are available as stores, either individually or via `mpSt
 There is no reactivity system in vanilla JavaScript, so you can use [callbacks](#callbacks) to update your app state when the store changes. You can also subscribe to the Zustand store directly to watch for changes:
 
 ```js
-import { manaPotionStore } from '@manapotion/vanilla'
+import { mouseStore } from '@manapotion/vanilla'
 
-const unsub = manaPotionStore.subscribe(state => {
-  console.log(state.mouse.buttons.right)
+const unsub = mouseStore.subscribe(state => {
+  console.log(state.buttons.right)
 })
 ```
 
@@ -168,7 +171,7 @@ Here is how you would handle going forward when the user presses W (or Z on Fren
 
 ```js
 const animate = () => {
-  const { KeyW } = mp().keyboard.byCode
+  const { KeyW } = getKeyboard().byCode
 
   if (KeyW) {
     // Go forward

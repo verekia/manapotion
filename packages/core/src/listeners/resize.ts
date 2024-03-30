@@ -1,4 +1,4 @@
-import { Browser, mp } from '../store'
+import { Browser, getBrowser } from '../stores/browserStore'
 
 export type ResizePayload = { width: number; height: number }
 
@@ -12,7 +12,7 @@ export const mountResizeListener = ({ onResize }: ResizeListenerProps) => {
   const payload: ResizePayload = { width: 0, height: 0 }
 
   const handler = () => {
-    const browser: Mutable<Browser> = mp().browser
+    const browser: Mutable<Browser> = getBrowser()
 
     const width = window.innerWidth
     const height = window.innerHeight

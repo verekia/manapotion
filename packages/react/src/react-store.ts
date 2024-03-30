@@ -1,23 +1,20 @@
-import { ManaPotionState, manaPotionStore } from '@manapotion/core'
+import { Browser, browserStore, Keyboard, keyboardStore, Mouse, mouseStore } from '@manapotion/core'
 import { useStore } from 'zustand'
 
-export function useMP(): ManaPotionState
-export function useMP<T>(selector: (state: ManaPotionState) => T): T
-export function useMP<T>(selector?: (state: ManaPotionState) => T) {
-  return useStore(manaPotionStore, selector!)
+export function useBrowser(): Browser
+export function useBrowser<T>(selector: (state: Browser) => T): T
+export function useBrowser<T>(selector?: (state: Browser) => T) {
+  return useStore(browserStore, selector!)
 }
 
-export const useIsFullscreen = () => useMP(s => s.browser.isFullscreen)
-export const useIsPointerLocked = () => useMP(s => s.mouse.locked)
-export const useIsPageVisible = () => useMP(s => s.browser.isPageVisible)
-export const useIsPageFocused = () => useMP(s => s.browser.isPageFocused)
-export const useIsLandscape = () => useMP(s => s.browser.isLandscape)
-export const useIsPortrait = () => useMP(s => s.browser.isPortrait)
-export const useIsMobile = () => useMP(s => s.browser.isMobile)
-export const useIsDesktop = () => useMP(s => s.browser.isDesktop)
-export const useIsLeftMouseButtonDown = () => useMP(s => s.mouse.buttons.left)
-export const useIsMiddleMouseButtonDown = () => useMP(s => s.mouse.buttons.middle)
-export const useIsRightMouseButtonDown = () => useMP(s => s.mouse.buttons.right)
-export const useKeyboard = () => useMP(s => s.keyboard)
-export const useMouse = () => useMP(s => s.mouse)
-export const useMouseButtons = () => useMP(s => s.mouse.buttons)
+export function useMouse(): Mouse
+export function useMouse<T>(selector: (state: Mouse) => T): T
+export function useMouse<T>(selector?: (state: Mouse) => T) {
+  return useStore(mouseStore, selector!)
+}
+
+export function useKeyboard(): Keyboard
+export function useKeyboard<T>(selector: (state: Keyboard) => T): T
+export function useKeyboard<T>(selector?: (state: Keyboard) => T) {
+  return useStore(keyboardStore, selector!)
+}

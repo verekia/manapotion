@@ -1,11 +1,9 @@
 <script lang="ts">
   import {
+    browser,
     DeviceTypeListener,
-    isFullscreen,
-    isPortrait,
+    getMouse,
     Listeners,
-    mp,
-    mpStore,
     useAnimationFrame,
   } from '@manapotion/svelte'
 
@@ -17,7 +15,7 @@
   let player = { x: 0, y: 0 }
 
   useAnimationFrame(() => {
-    const { mouse } = mp()
+    const mouse = getMouse()
     console.log('Frame')
     playerEl.style.transform = `translate(${player.x}px, ${player.y}px)`
     player.x += 1
@@ -35,10 +33,10 @@
   <h1>Svelte</h1>
 
   <div class="card mr-2">
-    Is desktop: {$mpStore.isDesktop ? 'Yes' : 'No'}
-    Is fullscreen: {$isFullscreen ? 'Yes' : 'No'}
-    Is landscape: {$mpStore.isLandscape ? 'Yes' : 'No'}
-    Is portrait: {$isPortrait ? 'Yes' : 'No'}
+    Is desktop: {$browser.isDesktop ? 'Yes' : 'No'}
+    Is fullscreen: {$browser.isFullscreen ? 'Yes' : 'No'}
+    Is landscape: {$browser.isLandscape ? 'Yes' : 'No'}
+    Is portrait: {$browser.isPortrait ? 'Yes' : 'No'}
     Mouse position: <span bind:this={mouseXEl} />, <span bind:this={mouseYEl} />
   </div>
 

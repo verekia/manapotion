@@ -1,4 +1,4 @@
-import { manaPotionStore } from '../store'
+import { mouseStore } from '../stores/mouseStore'
 
 export type LeftMouseButtonDownPayload = Record<string, never>
 export type MiddleMouseButtonDownPayload = Record<string, never>
@@ -16,6 +16,10 @@ export type MouseButtonsListenerProps = {
   onRightMouseButtonUp?: (payload: RightMouseButtonUpPayload) => void
 }
 
+type Mutable<T> = {
+  -readonly [P in keyof T]: T[P]
+}
+
 export const mountMouseButtonsListener = ({
   onLeftMouseButtonDown,
   onMiddleMouseButtonDown,
@@ -31,10 +35,14 @@ export const mountMouseButtonsListener = ({
     const middle = (e.buttons & 4) !== 0
     const right = (e.buttons & 2) !== 0
 
-    manaPotionStore.setState(s => ({
-      ...s,
-      mouse: { ...s.mouse, buttons: { left, right, middle } },
-    }))
+    mouseStore.setState(s => {
+      const newMouse = structuredClone(s)
+      const buttons: Mutable<(typeof s)['buttons']> = newMouse.buttons
+      buttons.left = left
+      buttons.middle = middle
+      buttons.right = right
+      return newMouse
+    })
 
     if (e.button === 0) {
       onLeftMouseButtonDown?.(emptyObject)
@@ -50,10 +58,14 @@ export const mountMouseButtonsListener = ({
     const middle = (e.buttons & 4) !== 0
     const right = (e.buttons & 2) !== 0
 
-    manaPotionStore.setState(s => ({
-      ...s,
-      mouse: { ...s.mouse, buttons: { left, right, middle } },
-    }))
+    mouseStore.setState(s => {
+      const newMouse = structuredClone(s)
+      const buttons: Mutable<(typeof s)['buttons']> = newMouse.buttons
+      buttons.left = left
+      buttons.middle = middle
+      buttons.right = right
+      return newMouse
+    })
 
     if (e.button === 0) {
       onLeftMouseButtonUp?.(emptyObject)
