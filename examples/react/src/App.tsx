@@ -16,10 +16,11 @@ import {
   useAnimationFrame,
   useMP,
 } from '@manapotion/r3f'
-import { Canvas, MeshProps, useFrame } from '@react-three/fiber'
+import { MeshProps, useFrame } from '@react-three/fiber'
 import { Mesh } from 'three'
 
 import MobileJoystick from './MobileJoystick'
+import { WebGPUCanvas } from './WebGPUCanvas'
 
 function Box(props: MeshProps) {
   const meshRef = useRef<Mesh>(null)
@@ -257,7 +258,7 @@ const UI = () => {
           Change
         </button>
       </div>
-      <Canvas onContextMenu={e => e.preventDefault()}>
+      <WebGPUCanvas onContextMenu={e => e.preventDefault()}>
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
           position={[10, 10, 10]}
@@ -269,7 +270,7 @@ const UI = () => {
         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
-      </Canvas>
+      </WebGPUCanvas>
       <MobileJoystick />
     </>
   )

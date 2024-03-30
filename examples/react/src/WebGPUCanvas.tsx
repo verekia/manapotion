@@ -6,6 +6,11 @@ let WebGPURenderer: any
 
 // With Vite, you need to enable top-level await:
 
+//
+// optimizeDeps: { esbuildOptions: { target: 'esnext' } },
+//
+// or
+//
 // import topLevelAwait from 'vite-plugin-top-level-await'
 //
 //   plugins: [
