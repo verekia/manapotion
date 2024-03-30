@@ -4,39 +4,31 @@ import { createStore } from 'zustand/vanilla'
 export type Joystick = {
   isActive: boolean
   identifier: number | null
-  originX: number | null
-  originY: number | null
-  originAngle: number | null
-  originDistance: number | null
-  originDistanceRatio: number | null
-  followX: number | null
-  followY: number | null
-  followAngle: number | null
-  followDistance: number | null
-  followDistanceRatio: number | null
-  currentX: number | null
-  currentY: number | null
-  movementX: number
-  movementY: number
+  origin: {
+    x: number | null
+    y: number | null
+    angle: number | null
+    distance: number | null
+    distanceRatio: number | null
+  }
+  follow: {
+    x: number | null
+    y: number | null
+    angle: number | null
+    distance: number | null
+    distanceRatio: number | null
+  }
+  current: { x: number | null; y: number | null }
+  movement: { x: number; y: number }
 }
 
 export const createJoystick = (): Joystick => ({
   isActive: false,
   identifier: null,
-  originX: null,
-  originY: null,
-  originAngle: null,
-  originDistance: null,
-  originDistanceRatio: null,
-  followX: null,
-  followY: null,
-  followAngle: null,
-  followDistance: null,
-  followDistanceRatio: null,
-  currentX: null,
-  currentY: null,
-  movementX: 0,
-  movementY: 0,
+  origin: { x: null, y: null, angle: null, distance: null, distanceRatio: null },
+  follow: { x: null, y: null, angle: null, distance: null, distanceRatio: null },
+  current: { x: null, y: null },
+  movement: { x: 0, y: 0 },
 })
 
 export type Joysticks = {

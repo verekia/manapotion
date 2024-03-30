@@ -17,27 +17,27 @@ const MobileJoystick = () => {
 
     joystickCurrentRef.current.style.opacity = joystick.isActive ? '1' : '0'
     joystickFollowRef.current.style.opacity =
-      joystick.isActive && joystick.followDistance ? '1' : '0'
+      joystick.isActive && joystick.follow.distance ? '1' : '0'
     joystickOriginRef.current.style.opacity =
-      joystick.isActive && !joystick.followDistance ? '1' : '0'
+      joystick.isActive && !joystick.follow.distance ? '1' : '0'
 
     if (
-      joystick.currentY === null ||
-      joystick.currentX === null ||
-      joystick.originX === null ||
-      joystick.originY === null
+      joystick.current.y === null ||
+      joystick.current.x === null ||
+      joystick.origin.x === null ||
+      joystick.origin.y === null
     ) {
       return
     }
 
-    joystickCurrentRef.current.style.transform = `translate(${joystick.currentX}px, ${-joystick.currentY}px)`
-    joystickOriginRef.current.style.transform = `translate(${joystick.originX}px, ${-joystick.originY}px)`
+    joystickCurrentRef.current.style.transform = `translate(${joystick.current.x}px, ${-joystick.current.y}px)`
+    joystickOriginRef.current.style.transform = `translate(${joystick.origin.x}px, ${-joystick.origin.y}px)`
 
-    if (joystick.followX === null || joystick.followY === null) {
+    if (joystick.follow.x === null || joystick.follow.y === null) {
       return
     }
 
-    joystickFollowRef.current.style.transform = `translate(${joystick.followX}px, ${-joystick.followY}px)`
+    joystickFollowRef.current.style.transform = `translate(${joystick.follow.x}px, ${-joystick.follow.y}px)`
   })
 
   return (

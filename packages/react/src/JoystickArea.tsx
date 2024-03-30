@@ -61,20 +61,20 @@ const JoystickAreaBase = (
       }
       joystick.identifier = null
       joystick.isActive = false
-      joystick.originX = null
-      joystick.originY = null
-      joystick.originAngle = null
-      joystick.originDistance = null
-      joystick.originDistanceRatio = null
-      joystick.followX = null
-      joystick.followY = null
-      joystick.followAngle = null
-      joystick.followDistance = null
-      joystick.followDistanceRatio = null
-      joystick.currentX = null
-      joystick.currentY = null
-      joystick.movementX = 0
-      joystick.movementY = 0
+      joystick.origin.x = null
+      joystick.origin.y = null
+      joystick.origin.angle = null
+      joystick.origin.distance = null
+      joystick.origin.distanceRatio = null
+      joystick.follow.x = null
+      joystick.follow.y = null
+      joystick.follow.angle = null
+      joystick.follow.distance = null
+      joystick.follow.distanceRatio = null
+      joystick.current.x = null
+      joystick.current.y = null
+      joystick.movement.x = 0
+      joystick.movement.y = 0
     }
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -93,26 +93,26 @@ const JoystickAreaBase = (
 
       joystick.identifier = touch.identifier
       joystick.isActive = true
-      joystick.originX = currentX
-      joystick.originY = currentY
-      joystick.originAngle = 0
-      joystick.originDistance = 0
-      joystick.originDistanceRatio = 0
+      joystick.origin.x = currentX
+      joystick.origin.y = currentY
+      joystick.origin.angle = 0
+      joystick.origin.distance = 0
+      joystick.origin.distanceRatio = 0
 
       // Follow mode
 
       if (maxFollowDistance !== undefined) {
-        joystick.followX = currentX
-        joystick.followY = currentY
-        joystick.followAngle = 0
-        joystick.followDistance = 0
-        joystick.followDistanceRatio = 0
+        joystick.follow.x = currentX
+        joystick.follow.y = currentY
+        joystick.follow.angle = 0
+        joystick.follow.distance = 0
+        joystick.follow.distanceRatio = 0
       }
 
-      joystick.currentX = currentX
-      joystick.currentY = currentY
-      joystick.movementX = 0
-      joystick.movementY = 0
+      joystick.current.x = currentX
+      joystick.current.y = currentY
+      joystick.movement.x = 0
+      joystick.movement.y = 0
 
       onStart?.(joystick)
     }
@@ -132,10 +132,10 @@ const JoystickAreaBase = (
         }
 
         if (
-          joystick.originX === null ||
-          joystick.originY === null ||
-          joystick.currentX === null ||
-          joystick.currentY === null
+          joystick.origin.x === null ||
+          joystick.origin.y === null ||
+          joystick.current.x === null ||
+          joystick.current.y === null
         ) {
           continue
         }
@@ -147,90 +147,92 @@ const JoystickAreaBase = (
         const fingerPositionY = rect.height - (touch.clientY - rect.top)
 
         const fingerOriginDistance = sqrt(
-          pow(fingerPositionX - joystick.originX, 2) + pow(fingerPositionY - joystick.originY, 2),
+          pow(fingerPositionX - joystick.origin.x, 2) + pow(fingerPositionY - joystick.origin.y, 2),
         )
 
-        joystick.originAngle =
-          (atan2(fingerPositionY - joystick.originY, fingerPositionX - joystick.originX) + 2 * pi) %
+        joystick.origin.angle =
+          (atan2(fingerPositionY - joystick.origin.y, fingerPositionX - joystick.origin.x) +
+            2 * pi) %
           (2 * pi)
 
         const currentX =
           maxOriginDistance !== undefined
-            ? joystick.originX +
-              Math.min(fingerOriginDistance, maxOriginDistance) * cos(joystick.originAngle)
+            ? joystick.origin.x +
+              Math.min(fingerOriginDistance, maxOriginDistance) * cos(joystick.origin.angle)
             : touch.clientX - rect.left
         const currentY =
           maxOriginDistance !== undefined
-            ? joystick.originY +
-              Math.min(fingerOriginDistance, maxOriginDistance) * sin(joystick.originAngle)
+            ? joystick.origin.y +
+              Math.min(fingerOriginDistance, maxOriginDistance) * sin(joystick.origin.angle)
             : rect.height - (touch.clientY - rect.top)
 
-        joystick.movementX = currentX - joystick.currentX
-        joystick.movementY = currentY - joystick.currentY
-        joystick.currentX = currentX
-        joystick.currentY = currentY
+        joystick.movement.x = currentX - joystick.current.x
+        joystick.movement.y = currentY - joystick.current.y
+        joystick.current.x = currentX
+        joystick.current.y = currentY
 
-        joystick.originDistance = sqrt(
-          pow(currentX - joystick.originX, 2) + pow(currentY - joystick.originY, 2),
+        joystick.origin.distance = sqrt(
+          pow(currentX - joystick.origin.x, 2) + pow(currentY - joystick.origin.y, 2),
         )
 
         if (maxOriginDistance !== undefined) {
-          if (joystick.originDistance > maxOriginDistance - 0.01) {
-            joystick.originDistance = maxOriginDistance
+          if (joystick.origin.distance > maxOriginDistance - 0.01) {
+            joystick.origin.distance = maxOriginDistance
           }
         }
 
-        joystick.originDistanceRatio = maxOriginDistance
-          ? joystick.originDistance / maxOriginDistance
+        joystick.origin.distanceRatio = maxOriginDistance
+          ? joystick.origin.distance / maxOriginDistance
           : 1
-        if (joystick.originDistanceRatio > 0.99) {
-          joystick.originDistanceRatio = 1
+        if (joystick.origin.distanceRatio > 0.99) {
+          joystick.origin.distanceRatio = 1
         }
 
         // Follow case
 
         if (maxFollowDistance !== undefined) {
-          if (joystick.followX !== null && joystick.followY !== null) {
-            joystick.followAngle =
-              (atan2(fingerPositionY - joystick.followY, fingerPositionX - joystick.followX) +
+          if (joystick.follow.x !== null && joystick.follow.y !== null) {
+            joystick.follow.angle =
+              (atan2(fingerPositionY - joystick.follow.y, fingerPositionX - joystick.follow.x) +
                 2 * pi) %
               (2 * pi)
 
-            joystick.followDistance = sqrt(
-              pow(currentX - joystick.followX, 2) + pow(currentY - joystick.followY, 2),
+            joystick.follow.distance = sqrt(
+              pow(currentX - joystick.follow.x, 2) + pow(currentY - joystick.follow.y, 2),
             )
-            if (joystick.followDistance > maxFollowDistance - 0.01) {
-              joystick.followDistance = maxFollowDistance
+            if (joystick.follow.distance > maxFollowDistance - 0.01) {
+              joystick.follow.distance = maxFollowDistance
             }
 
-            joystick.followDistanceRatio = maxFollowDistance
-              ? joystick.followDistance / maxFollowDistance
+            joystick.follow.distanceRatio = maxFollowDistance
+              ? joystick.follow.distance / maxFollowDistance
               : 1
 
-            joystick.followAngle =
-              (atan2(currentY - joystick.followY, currentX - joystick.followX) + 2 * pi) % (2 * pi)
+            joystick.follow.angle =
+              (atan2(currentY - joystick.follow.y, currentX - joystick.follow.x) + 2 * pi) %
+              (2 * pi)
 
-            if (joystick.followDistance >= maxFollowDistance) {
+            if (joystick.follow.distance >= maxFollowDistance) {
               const oppositeFollowAngle = Math.atan2(
-                joystick.followY - currentY,
-                joystick.followX - currentX,
+                joystick.follow.y - currentY,
+                joystick.follow.x - currentX,
               )
-              joystick.followX = currentX + maxFollowDistance * cos(oppositeFollowAngle)
-              joystick.followY = currentY + maxFollowDistance * sin(oppositeFollowAngle)
+              joystick.follow.x = currentX + maxFollowDistance * cos(oppositeFollowAngle)
+              joystick.follow.y = currentY + maxFollowDistance * sin(oppositeFollowAngle)
             }
           }
         }
 
-        joystick.originAngle =
-          (atan2(currentY - joystick.originY, currentX - joystick.originX) + 2 * pi) % (2 * pi)
+        joystick.origin.angle =
+          (atan2(currentY - joystick.origin.y, currentX - joystick.origin.x) + 2 * pi) % (2 * pi)
 
         onMove?.(joystick)
 
         resetMovementTimeoutRef.current && clearTimeout(resetMovementTimeoutRef.current)
         resetMovementTimeoutRef.current = setTimeout(() => {
           if (joystick && joystick.identifier !== undefined) {
-            joystick.movementX = 0
-            joystick.movementY = 0
+            joystick.movement.x = 0
+            joystick.movement.y = 0
 
             onMove?.(joystick)
           }
@@ -252,8 +254,8 @@ const JoystickAreaBase = (
           continue
         }
 
-        joystick.movementX = 0
-        joystick.movementY = 0
+        joystick.movement.x = 0
+        joystick.movement.y = 0
 
         onEnd?.(joystick)
 
