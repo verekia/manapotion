@@ -1,11 +1,11 @@
-import { Mouse, mp } from '../store'
+import { manaPotionStore } from '../store'
 
-export type LeftMouseButtonDownPayload = Mouse
-export type MiddleMouseButtonDownPayload = Mouse
-export type RightMouseButtonDownPayload = Mouse
-export type LeftMouseButtonUpPayload = Mouse
-export type MiddleMouseButtonUpPayload = Mouse
-export type RightMouseButtonUpPayload = Mouse
+export type LeftMouseButtonDownPayload = Record<string, never>
+export type MiddleMouseButtonDownPayload = Record<string, never>
+export type RightMouseButtonDownPayload = Record<string, never>
+export type LeftMouseButtonUpPayload = Record<string, never>
+export type MiddleMouseButtonUpPayload = Record<string, never>
+export type RightMouseButtonUpPayload = Record<string, never>
 
 export type MouseButtonsListenerProps = {
   onLeftMouseButtonDown?: (payload: LeftMouseButtonDownPayload) => void
@@ -24,31 +24,43 @@ export const mountMouseButtonsListener = ({
   onMiddleMouseButtonUp,
   onRightMouseButtonUp,
 }: MouseButtonsListenerProps) => {
+  const emptyObject = {}
+
   const downHandler = (e: MouseEvent) => {
-    const { mouse, setMouseButtons } = mp()
+    const left = (e.buttons & 1) !== 0
+    const middle = (e.buttons & 4) !== 0
+    const right = (e.buttons & 2) !== 0
+
+    manaPotionStore.setState(s => ({
+      ...s,
+      mouse: { ...s.mouse, buttons: { left, right, middle } },
+    }))
+
     if (e.button === 0) {
-      setMouseButtons({ ...mouse.buttons, left: true })
-      onLeftMouseButtonDown?.(mouse)
+      onLeftMouseButtonDown?.(emptyObject)
     } else if (e.button === 1) {
-      setMouseButtons({ ...mouse.buttons, middle: true })
-      onMiddleMouseButtonDown?.(mouse)
+      onMiddleMouseButtonDown?.(emptyObject)
     } else if (e.button === 2) {
-      setMouseButtons({ ...mouse.buttons, right: true })
-      onRightMouseButtonDown?.(mouse)
+      onRightMouseButtonDown?.(emptyObject)
     }
   }
 
   const upHandler = (e: MouseEvent) => {
-    const { mouse, setMouseButtons } = mp()
+    const left = (e.buttons & 1) !== 0
+    const middle = (e.buttons & 4) !== 0
+    const right = (e.buttons & 2) !== 0
+
+    manaPotionStore.setState(s => ({
+      ...s,
+      mouse: { ...s.mouse, buttons: { left, right, middle } },
+    }))
+
     if (e.button === 0) {
-      setMouseButtons({ ...mouse.buttons, left: false })
-      onLeftMouseButtonUp?.(mouse)
+      onLeftMouseButtonUp?.(emptyObject)
     } else if (e.button === 1) {
-      setMouseButtons({ ...mouse.buttons, middle: false })
-      onMiddleMouseButtonUp?.(mouse)
+      onMiddleMouseButtonUp?.(emptyObject)
     } else if (e.button === 2) {
-      setMouseButtons({ ...mouse.buttons, right: false })
-      onRightMouseButtonUp?.(mouse)
+      onRightMouseButtonUp?.(emptyObject)
     }
   }
 

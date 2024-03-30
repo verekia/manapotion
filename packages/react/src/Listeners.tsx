@@ -37,7 +37,6 @@ export type ListenersProps = MouseMoveListenerProps &
   MouseScrollListenerProps
 
 export const Listeners = ({
-  clearInputsOnBlur,
   mouseMovementResetDelay,
   onMouseMove,
   onPageVisibilityChange,
@@ -64,10 +63,7 @@ export const Listeners = ({
       onMouseMove={onMouseMove}
     />
     <PageVisibilityListener onPageVisibilityChange={onPageVisibilityChange} />
-    <PageFocusListener
-      onPageFocusChange={onPageFocusChange}
-      clearInputsOnBlur={clearInputsOnBlur}
-    />
+    <PageFocusListener onPageFocusChange={onPageFocusChange} />
     <PointerLockListener onPointerLockChange={onPointerLockChange} />
     <FullscreenListener onFullscreenChange={onFullscreenChange} />
     <ResizeListener onResize={onResize} />

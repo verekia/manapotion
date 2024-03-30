@@ -1,37 +1,28 @@
-import { mp } from '../store'
+import { Browser, mp } from '../store'
 
-export type ResizePayload = {
-  width: number
-  height: number
-  isLandscape: boolean
-  isPortrait: boolean
-}
+export type ResizePayload = { width: number; height: number }
 
 export type ResizeListenerProps = { onResize?: (payload: ResizePayload) => void }
 
+type Mutable<T> = {
+  -readonly [P in keyof T]: T[P]
+}
+
 export const mountResizeListener = ({ onResize }: ResizeListenerProps) => {
-  const payload: ResizePayload = {
-    width: 0,
-    height: 0,
-    isPortrait: false,
-    isLandscape: false,
-  }
+  const payload: ResizePayload = { width: 0, height: 0 }
 
   const handler = () => {
+    const browser: Mutable<Browser> = mp().browser
+
     const width = window.innerWidth
     const height = window.innerHeight
 
-    mp().windowWidth = width
-    mp().windowHeight = height
-    const isPortrait = height >= width
-    const isLandscape = width > height
-    mp().isPortrait = isPortrait
-    mp().isLandscape = isLandscape
+    browser.windowWidth = width
+    browser.windowHeight = height
 
     payload.width = width
     payload.height = height
-    payload.isPortrait = isPortrait
-    payload.isLandscape = isLandscape
+
     onResize?.(payload)
   }
 

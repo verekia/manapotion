@@ -1,123 +1,94 @@
 import { devtools } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
 
-export type MousePosition = { x: number; y: number }
-export type MouseMovement = { x: number; y: number }
-export type MouseWheel = { y: number }
+export type Browser = {
+  readonly isFullscreen: boolean
+  readonly isPageVisible: boolean
+  readonly isPageFocused: boolean
+  readonly isDesktop: boolean
+  readonly isMobile: boolean
+  readonly isPortrait: boolean
+  readonly isLandscape: boolean
+  readonly windowWidth: number
+  readonly windowHeight: number
+  readonly pointerLockSupported: boolean
+}
 
-export type MouseButtons = { left: boolean; middle: boolean; right: boolean }
+const defaultBrowser: Browser = {
+  pointerLockSupported: false,
+  isFullscreen: false,
+  isPageVisible: true,
+  isPageFocused: true,
+  windowWidth: 0,
+  windowHeight: 0,
+  isDesktop: false,
+  isMobile: false,
+  isPortrait: false,
+  isLandscape: false,
+}
 
+export type MousePosition = { readonly x: number; readonly y: number }
+export type MouseMovement = { readonly x: number; readonly y: number }
+export type MouseWheel = { readonly y: number }
+export type MouseButtons = {
+  readonly left: boolean
+  readonly middle: boolean
+  readonly right: boolean
+}
 export type Mouse = {
-  isLocked: boolean
-  position: MousePosition
-  movement: MouseMovement
-  wheel: MouseWheel
-  buttons: MouseButtons
+  readonly locked: boolean
+  readonly position: MousePosition
+  readonly movement: MouseMovement
+  readonly wheel: MouseWheel
+  readonly buttons: MouseButtons
+}
+
+const defaultMouse: Mouse = {
+  locked: false,
+  position: { x: 0, y: 0 },
+  movement: { x: 0, y: 0 },
+  wheel: { y: 0 },
+  buttons: { left: false, middle: false, right: false },
 }
 
 export type KeyState = {
-  code: string
-  key: string
-  ctrl: boolean
-  shift: boolean
-  alt: boolean
-  meta: boolean
+  readonly code: string
+  readonly key: string
+  readonly ctrl: boolean
+  readonly shift: boolean
+  readonly alt: boolean
+  readonly meta: boolean
 }
 
-export type Keyboard = { byCode: Record<string, KeyState>; byKey: Record<string, KeyState> }
+export type Keyboard = {
+  readonly byCode: Record<string, KeyState>
+  readonly byKey: Record<string, KeyState>
+}
+
+const defaultKeyboard: Keyboard = { byCode: {}, byKey: {} }
 
 export interface ManaPotionState {
-  // Browser
-  isFullscreen: boolean
-  isPageVisible: boolean
-  isPageFocused: boolean
-  isDesktop: boolean
-  isMobile: boolean
-  isPortrait: boolean
-  isLandscape: boolean
-  windowWidth: number
-  windowHeight: number
-  setPointerLocked: (isPointerLocked: boolean) => void
-  setFullscreen: (isFullscreen: boolean) => void
-  setPageVisible: (isPageVisible: boolean) => void
-  setPageFocused: (isFocused: boolean) => void
-  setSize: (params: { windowWidth: number; windowHeight: number }) => void
-  setDeviceType: (params: { isDesktop: boolean; isMobile: boolean }) => void
-  setScreenOrientation: (params: { isPortrait: boolean; isLandscape: boolean }) => void
-
-  // Inputs
-  mouse: Mouse
-  keyboard: Keyboard
-  clearInputs: () => void
-  setMouseButtons: (buttons: MouseButtons) => void
-  setKeyDown: (keyState: KeyState) => void
-  setKeyUp: (key: string, code: string) => void
-
-  // Custom
-  setCustom: (key: string, value: unknown) => void
-}
-
-const defaultInputState = {
-  keyboard: { byCode: {}, byKey: {} },
-  mouse: {
-    isLocked: false,
-    position: { x: 0, y: 0 },
-    movement: { x: 0, y: 0 },
-    wheel: { y: 0 },
-    buttons: { left: false, middle: false, right: false },
-  },
+  readonly browser: Browser
+  readonly mouse: Mouse
+  readonly keyboard: Keyboard
 }
 
 export const manaPotionStore = createStore<ManaPotionState>()(
-  devtools(set => ({
-    // Browser
-    isFullscreen: false,
-    isPageVisible: true,
-    isPageFocused: true,
-    windowWidth: 0,
-    windowHeight: 0,
-    isDesktop: false,
-    isMobile: false,
-    isPortrait: false,
-    isLandscape: false,
-    setPointerLocked: isLocked => set(s => ({ ...s, mouse: { ...s.mouse, isLocked } })),
-    setFullscreen: isFullscreen => set(() => ({ isFullscreen })),
-    setPageVisible: isPageVisible => set(() => ({ isPageVisible })),
-    setPageFocused: isPageFocused => set(() => ({ isPageFocused })),
-    setSize: ({ windowWidth, windowHeight }) => set(() => ({ windowWidth, windowHeight })),
-    setDeviceType: ({ isDesktop, isMobile }) => set(() => ({ isDesktop, isMobile })),
-    setScreenOrientation: ({ isPortrait, isLandscape }) => set(() => ({ isPortrait, isLandscape })),
-
-    // Inputs
-    ...defaultInputState,
-    clearInputs: () => set(() => defaultInputState),
-    setMouseButtons: (buttons: MouseButtons) =>
-      set(state => ({ mouse: { ...state.mouse, buttons } })),
-    clearMouseButtons: () =>
-      set(state => ({
-        mouse: { ...state.mouse, buttons: { left: false, middle: false, right: false } },
-      })),
-    setKeyDown: (keyState: KeyState) =>
-      set(state => ({
-        keyboard: {
-          byCode: { ...state.keyboard.byCode, [keyState.code]: keyState },
-          byKey: { ...state.keyboard.byKey, [keyState.key]: keyState },
-        },
-      })),
-    setKeyUp: (code, key) =>
-      set(state => {
-        const byCode = { ...state.keyboard.byCode }
-        delete byCode[code]
-
-        const byKey = { ...state.keyboard.byKey }
-        delete byKey[key]
-
-        return { keyboard: { byCode, byKey } }
-      }),
-
-    // Custom
-    setCustom: (key, value) => set(() => ({ [key]: value })),
+  devtools(() => ({
+    browser: structuredClone(defaultBrowser),
+    mouse: structuredClone(defaultMouse),
+    keyboard: structuredClone(defaultKeyboard),
   })),
 )
+
+export const resetMouse = () =>
+  manaPotionStore.setState(s => ({ ...s, mouse: structuredClone(defaultMouse) }))
+
+export const resetKeyboard = () =>
+  manaPotionStore.setState(s => ({ ...s, keyboard: structuredClone(defaultKeyboard) }))
+
+export const setCustom = (property: string, value: unknown) => {
+  manaPotionStore.setState(s => ({ ...s, [property]: value }))
+}
 
 export const mp = () => manaPotionStore.getState()

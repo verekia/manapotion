@@ -37,7 +37,6 @@ export type ListenersProps = MouseMoveListenerProps &
   MouseScrollListenerProps
 
 export const listeners = ({
-  clearInputsOnBlur,
   mouseMovementResetDelay,
   onMouseMove,
   onPageVisibilityChange,
@@ -59,7 +58,7 @@ export const listeners = ({
   onKeyUp,
 }: ListenersProps) => {
   const unsubDeviceType = mountDeviceTypeListener({ onDeviceTypeChange })
-  const unsubBlur = mountBlurListener({ clearInputsOnBlur, onPageFocusChange })
+  const unsubBlur = mountBlurListener({ onPageFocusChange })
   const unsubFocus = mountFocusListener({ onPageFocusChange })
   const unsubFullscreen = mountFullscreenListener({ onFullscreenChange })
   const unsubMouseButtons = mountMouseButtonsListener({

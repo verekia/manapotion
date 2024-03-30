@@ -2,14 +2,14 @@ import { reactive, ref } from 'vue'
 
 import { manaPotionStore } from '@manapotion/core'
 
-export const isFullscreen = ref(manaPotionStore.getState().isFullscreen)
-export const isPointerLocked = ref(manaPotionStore.getState().mouse.isLocked)
-export const isPageVisible = ref(manaPotionStore.getState().isPageVisible)
-export const isPageFocused = ref(manaPotionStore.getState().isPageFocused)
-export const isLandscape = ref(manaPotionStore.getState().isLandscape)
-export const isPortrait = ref(manaPotionStore.getState().isPortrait)
-export const isMobile = ref(manaPotionStore.getState().isMobile)
-export const isDesktop = ref(manaPotionStore.getState().isDesktop)
+export const isFullscreen = ref(manaPotionStore.getState().browser.isFullscreen)
+export const isPointerLocked = ref(manaPotionStore.getState().mouse.locked)
+export const isPageVisible = ref(manaPotionStore.getState().browser.isPageVisible)
+export const isPageFocused = ref(manaPotionStore.getState().browser.isPageFocused)
+export const isLandscape = ref(manaPotionStore.getState().browser.isLandscape)
+export const isPortrait = ref(manaPotionStore.getState().browser.isPortrait)
+export const isMobile = ref(manaPotionStore.getState().browser.isMobile)
+export const isDesktop = ref(manaPotionStore.getState().browser.isDesktop)
 export const isLeftMouseButtonDown = ref(manaPotionStore.getState().mouse.buttons.left)
 export const isMiddleMouseButtonDown = ref(manaPotionStore.getState().mouse.buttons.middle)
 export const isRightMouseButtonDown = ref(manaPotionStore.getState().mouse.buttons.right)
@@ -33,14 +33,14 @@ export const mpRefs = reactive({
 })
 
 manaPotionStore.subscribe(state => {
-  isFullscreen.value = state.isFullscreen
-  isPointerLocked.value = state.mouse.isLocked
-  isPageVisible.value = state.isPageVisible
-  isPageFocused.value = state.isPageFocused
-  isLandscape.value = state.isLandscape
-  isPortrait.value = state.isPortrait
-  isMobile.value = state.isMobile
-  isDesktop.value = state.isDesktop
+  isFullscreen.value = state.browser.isFullscreen
+  isPointerLocked.value = state.mouse.locked
+  isPageVisible.value = state.browser.isPageVisible
+  isPageFocused.value = state.browser.isPageFocused
+  isLandscape.value = state.browser.isLandscape
+  isPortrait.value = state.browser.isPortrait
+  isMobile.value = state.browser.isMobile
+  isDesktop.value = state.browser.isDesktop
   isLeftMouseButtonDown.value = state.mouse.buttons.left
   isMiddleMouseButtonDown.value = state.mouse.buttons.middle
   isRightMouseButtonDown.value = state.mouse.buttons.right

@@ -181,11 +181,10 @@ const unsub = manaPotionStore.subscribe(state => {
 
 Here are the variables available:
 
-Legend: ⚡️ **Reactive**, 🗿 **Non-reactive**
+Legend: ⚡️ **Reactive**, 🗿 **Non-reactive**, 🚧 **Not implemented yet**
 
-### 🌐 General browser state
+### 🌐 Browser
 
-- ⚡️ `isPointerLocked`
 - ⚡️ `isFullscreen`
 - ⚡️ `isPageVisible`
 - ⚡️ `isPageFocused`
@@ -193,28 +192,33 @@ Legend: ⚡️ **Reactive**, 🗿 **Non-reactive**
 - ⚡️ `isLandscape` / `isPortrait`
 - 🗿 `windowWidth`
 - 🗿 `windowHeight`
+- 🚧 `pointerLockSupported`
 
-### 🕹 Inputs
+### 🖱️ Mouse
 
-- ⚡️ `isLeftMouseDown`
-- ⚡️ `isMiddleMouseDown`
-- ⚡️ `isRightMouseDown`
-- ⚡️ `keys`
-- 🗿 `mouseX`
-- 🗿 `mouseY` (the bottom of the screen is 0)
-- 🗿 `mouseMovementX`
-- 🗿 `mouseMovementY` (going up is positive)
-- 🗿 `mouseWheelDeltaY`
+- ⚡️ `mouse.buttons.left`
+- ⚡️ `mouse.buttons.middle`
+- ⚡️ `mouse.buttons.right`
+- ⚡️ `mouse.locked`
+- 🗿 `mouse.position.x`
+- 🗿 `mouse.position.y` (the bottom of the screen is 0)
+- 🗿 `mouse.movement.x`
+- 🗿 `mouse.movement.y` (going up is positive)
+- 🗿 `mouse.wheel.y` (delta)
 
-### Keys
+You can import and use `resetMouse` to reinitialize the mouse data.
 
-Keyboard `keys` are available in two versions,`keys.byCode` and `keys.byKey`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`byCode`) of the key or the character being typed as a key (`byKey`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
+### ⌨️ Keyboard
+
+⚡️ `keyboard` contains keys that are available in two versions, `byCode` and `byKey`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`byCode`) of the key or the character being typed as a key (`byKey`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
 
 Here is how you would handle going forward when the user presses W (or Z on French keyboards):
 
 ```js
 const animate = () => {
-  if (mp().keys.byCode.KeyW) {
+  const { KeyW } = mp().keyboard.byCode
+
+  if (KeyW) {
     // Go forward
   }
 }
@@ -238,6 +242,29 @@ const App = () => {
   )
 }
 ```
+
+You can import and use `resetKeyboard` to reinitialize the keyboard data.
+
+This is useful to prevent keys from staying pressed when switching between tabs or when the game loses focus:
+
+```jsx
+import { Listeners, resetKeyboard, resetMouse } from '@manapotion/react'
+
+const App = () => (
+  <Listeners
+    onPageFocusChange={() => {
+      resetKeyboard()
+      resetMouse()
+    }}
+    onPageVisibilityChange={() => {
+      resetKeyboard()
+      resetMouse()
+    }}
+  />
+)
+```
+
+If your game requires holding a key to perform some action, this technique can prevent players cheating by holding the key and switching tabs.
 
 ### Callbacks
 

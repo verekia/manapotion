@@ -1,22 +1,15 @@
-import { mp } from '../store'
+import { manaPotionStore } from '../store'
 
 export type PageFocusChangePayload = { isPageFocused: boolean }
 
 export type PageFocusListenerProps = {
-  clearInputsOnBlur?: boolean
   onPageFocusChange?: (payload: PageFocusChangePayload) => void
 }
 
-export const mountBlurListener = ({
-  onPageFocusChange,
-  clearInputsOnBlur = true,
-}: PageFocusListenerProps) => {
+export const mountBlurListener = ({ onPageFocusChange }: PageFocusListenerProps) => {
   const handler = () => {
-    mp().setPageFocused(false)
+    manaPotionStore.setState(s => ({ ...s, browser: { ...s.browser, isPageFocused: false } }))
     onPageFocusChange?.({ isPageFocused: false })
-    if (clearInputsOnBlur) {
-      mp().clearInputs()
-    }
   }
 
   window.addEventListener('blur', handler)
@@ -28,7 +21,7 @@ export const mountBlurListener = ({
 
 export const mountFocusListener = ({ onPageFocusChange }: PageFocusListenerProps) => {
   const handler = () => {
-    mp().setPageFocused(true)
+    manaPotionStore.setState(s => ({ ...s, browser: { ...s.browser, isPageFocused: true } }))
     onPageFocusChange?.({ isPageFocused: true })
   }
 

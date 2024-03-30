@@ -1,4 +1,4 @@
-import { mp } from '../store'
+import { manaPotionStore } from '../store'
 
 export type PointerLockChangePayload = { isPointerLocked: boolean }
 
@@ -8,9 +8,9 @@ export type PointerLockListenerProps = {
 
 export const mountPointerLockListener = ({ onPointerLockChange }: PointerLockListenerProps) => {
   const handler = () => {
-    const isPointerLocked = Boolean(document.pointerLockElement)
-    mp().setPointerLocked(isPointerLocked)
-    onPointerLockChange?.({ isPointerLocked })
+    const locked = Boolean(document.pointerLockElement)
+    manaPotionStore.setState(s => ({ ...s, mouse: { ...s.mouse, locked } }))
+    onPointerLockChange?.({ isPointerLocked: locked })
   }
 
   handler()

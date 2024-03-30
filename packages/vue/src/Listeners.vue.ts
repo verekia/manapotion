@@ -35,7 +35,6 @@ import { ScreenOrientationListener } from './listeners/ScreenOrientationListener
 export const Listeners = defineComponent({
   props: {
     mouseMovementResetDelay: { type: Number, default: 30 },
-    clearInputsOnBlur: { type: Boolean, default: true },
     mouseScrollResetDelay: { type: Number, default: 100 },
   },
   emits: {
@@ -75,11 +74,7 @@ export const Listeners = defineComponent({
         onPageVisibilityChange: payload => emit('pageVisibilityChange', payload),
       }),
 
-      h(PageFocusListener, {
-        onPageFocusChange: payload => emit('pageFocusChange', payload),
-        clearInputsOnBlur: props.clearInputsOnBlur,
-      }),
-
+      h(PageFocusListener, { onPageFocusChange: payload => emit('pageFocusChange', payload) }),
       h(ResizeListener, { onResize: payload => emit('resize', payload) }),
       h(DeviceTypeListener, { onDeviceTypeChange: payload => emit('deviceTypeChange', payload) }),
 

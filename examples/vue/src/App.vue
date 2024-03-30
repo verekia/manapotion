@@ -42,19 +42,19 @@ const windowHeightRef = ref<HTMLSpanElement | null>(null)
 const mouseScrollRef = ref<HTMLSpanElement | null>(null)
 
 useAnimationFrame(() => {
-  const { mouse, windowWidth, windowHeight } = mp()
+  const { mouse, browser } = mp()
 
   mouseXRef.value!.textContent = String(mouse.position.x)
   mouseYRef.value!.textContent = String(mouse.position.y)
   mouseMovementXRef.value!.textContent = String(mouse.movement.x)
   mouseMovementYRef.value!.textContent = String(mouse.movement.y)
-  windowWidthRef.value!.textContent = String(windowWidth)
-  windowHeightRef.value!.textContent = String(windowHeight)
+  windowWidthRef.value!.textContent = String(browser.windowWidth)
+  windowHeightRef.value!.textContent = String(browser.windowHeight)
   mouseScrollRef.value!.textContent = String(mouse.wheel.y)
 })
 
-const handlePageVisibilityChange = ({ isVisible }: PageVisibilityPayload) => {
-  console.log('Page visibility change!', isVisible)
+const handlePageVisibilityChange = ({ isPageVisible }: PageVisibilityPayload) => {
+  console.log('Page visibility change!', isPageVisible)
 }
 
 const handleDT = (payload: DeviceTypeChangePayload) => {

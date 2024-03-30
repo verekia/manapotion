@@ -1,4 +1,4 @@
-import { KeyState, mp } from '../store'
+import { KeyState, manaPotionStore } from '../store'
 
 export type KeyDownPayload = KeyState
 export type KeyUpPayload = { code: string; key: string }
@@ -13,11 +13,6 @@ export type KeyboardListenerProps = {
 export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerProps) => {
   const downHandler = (e: KeyboardEvent) => {
     const { key, code } = e
-    const { keyboard, setKeyDown } = mp()
-
-    if (keyboard.byCode[code] || keyboard.byKey[key]) {
-      return
-    }
 
     const keyState = {
       key,
@@ -29,13 +24,23 @@ export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerPr
     }
 
     onKeyDown?.(keyState)
-    setKeyDown(keyState)
+    manaPotionStore.setState(s => ({
+      ...s,
+      keyboard: {
+        ...s.keyboard,
+        byCode: { ...s.keyboard.byCode, [code]: keyState },
+        byKey: { ...s.keyboard.byKey, [key]: keyState },
+      },
+    }))
   }
 
   const upHandler = (e: KeyboardEvent) => {
-    const { setKeyUp } = mp()
-
-    setKeyUp(e.code, e.key)
+    manaPotionStore.setState(s => {
+      const newKeyboard = { ...s.keyboard }
+      delete newKeyboard.byCode[e.code]
+      delete newKeyboard.byKey[e.key]
+      return { ...s, keyboard: newKeyboard }
+    })
     onKeyUp?.({ code: e.code, key: e.key })
   }
 

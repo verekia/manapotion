@@ -9,6 +9,8 @@ import {
   lockOrientation,
   lockPointer,
   mp,
+  resetKeyboard,
+  resetMouse,
   throttle,
   throttleDebounce,
   unlockKeys,
@@ -86,14 +88,14 @@ const EventNotification = forwardRef(EventNotificationBase)
 const UI = () => {
   const [renderer, setRenderer] = useState('WebGPU')
   const toggleRenderer = () => setRenderer(renderer === 'WebGPU' ? 'WebGL' : 'WebGPU')
-  const isFullscreen = useMP(s => s.isFullscreen)
-  const isPageVisible = useMP(s => s.isPageVisible)
-  const isPageFocused = useMP(s => s.isPageFocused)
-  const isPointerLocked = useMP(s => s.mouse.isLocked)
-  const isDesktop = useMP(s => s.isDesktop)
-  const isMobile = useMP(s => s.isMobile)
-  const isPortrait = useMP(s => s.isPortrait)
-  const isLandscape = useMP(s => s.isLandscape)
+  const isFullscreen = useMP(s => s.browser.isFullscreen)
+  const isPageVisible = useMP(s => s.browser.isPageVisible)
+  const isPageFocused = useMP(s => s.browser.isPageFocused)
+  const isPointerLocked = useMP(s => s.mouse.locked)
+  const isDesktop = useMP(s => s.browser.isDesktop)
+  const isMobile = useMP(s => s.browser.isMobile)
+  const isPortrait = useMP(s => s.browser.isPortrait)
+  const isLandscape = useMP(s => s.browser.isLandscape)
   const isLeftMouseDown = useMP(s => s.mouse.buttons.left)
   const isMiddleMouseDown = useIsMiddleMouseButtonDown()
   const isRightMouseDown = useIsRightMouseButtonDown()
@@ -115,8 +117,8 @@ const UI = () => {
     liveMouseYRef.current!.textContent = String(mouse.position.y)
     liveMouseMovementXRef.current!.textContent = String(mouse.movement.x)
     liveMouseMovementYRef.current!.textContent = String(mouse.movement.y)
-    liveWidthRef.current!.textContent = String(mp().windowWidth)
-    liveHeightRef.current!.textContent = String(mp().windowHeight)
+    liveWidthRef.current!.textContent = String(mp().browser.windowWidth)
+    liveHeightRef.current!.textContent = String(mp().browser.windowHeight)
     liveScrollYRef.current!.textContent = String(mouse.wheel.y)
   })
 
@@ -335,6 +337,14 @@ const App = () => {
         onScroll={deltaY =>
           eventNotificationRef.current!.setMessage(`onScroll – deltaY: ${deltaY}`)
         }
+        onPageFocusChange={() => {
+          resetKeyboard()
+          resetMouse()
+        }}
+        onPageVisibilityChange={() => {
+          resetKeyboard()
+          resetMouse()
+        }}
       />
     </>
   )

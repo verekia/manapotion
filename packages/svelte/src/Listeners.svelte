@@ -55,7 +55,6 @@
 
   export let mouseScrollResetDelay = 100
   export let mouseMovementResetDelay = 30
-  export let clearInputsOnBlur = true
 </script>
 
 <DeviceTypeListener on:deviceTypeChange={e => dispatch('deviceTypeChange', e.detail)} />
@@ -74,10 +73,7 @@
 />
 <MouseMoveListener on:mouseMove={e => dispatch('mouseMove', e.detail)} {mouseMovementResetDelay} />
 <MouseScrollListener on:scroll={e => dispatch('scroll', e.detail)} {mouseScrollResetDelay} />
-<PageFocusListener
-  on:pageFocusChange={e => dispatch('pageFocusChange', e.detail)}
-  {clearInputsOnBlur}
-/>
+<PageFocusListener on:pageFocusChange={e => dispatch('pageFocusChange', e.detail)} />
 <PageVisibilityListener on:pageVisibilityChange={e => dispatch('pageVisibilityChange', e.detail)} />
 <PointerLockListener on:pointerLockChange={e => dispatch('pointerLockChange', e.detail)} />
 <ResizeListener on:resize={e => dispatch('resize', e.detail)} />
