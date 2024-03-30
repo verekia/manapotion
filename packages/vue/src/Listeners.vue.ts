@@ -33,6 +33,11 @@ import { ResizeListener } from './listeners/ResizeListener.vue'
 import { ScreenOrientationListener } from './listeners/ScreenOrientationListener.vue'
 
 export const Listeners = defineComponent({
+  props: {
+    mouseMovementResetDelay: { type: Number, default: 30 },
+    clearInputsOnBlur: { type: Boolean, default: true },
+    mouseScrollResetDelay: { type: Number, default: 100 },
+  },
   emits: {
     mouseMove: (payload: MouseMovePayload) => payload,
     pointerLockChange: (payload: PointerLockChangePayload) => payload,
@@ -51,11 +56,6 @@ export const Listeners = defineComponent({
     leftMouseUp: (payload: LeftMouseUpPayload) => payload,
     middleMouseUp: (payload: MiddleMouseUpPayload) => payload,
     rightMouseUp: (payload: RightMouseUpPayload) => payload,
-  },
-  props: {
-    mouseMovementResetDelay: { type: Number, default: 30 },
-    clearInputsOnBlur: { type: Boolean, default: true },
-    mouseScrollResetDelay: { type: Number, default: 100 },
   },
   setup:
     (props, { emit }) =>

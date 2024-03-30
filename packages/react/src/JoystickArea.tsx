@@ -58,7 +58,7 @@ type JoystickAreaProps = {
 } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
 // react-merge-refs v2.1.1
-function mergeRefs<T = any>(
+function mergeRefs<T = unknown>(
   refs: Array<React.MutableRefObject<T> | React.LegacyRef<T> | undefined | null>,
 ): React.RefCallback<T> {
   return value => {
@@ -320,6 +320,7 @@ const JoystickAreaBase = (
       element.removeEventListener('touchmove', handleTouchMove)
       element.removeEventListener('touchend', handleTouchEnd)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [joystick, maxFollowDistance, maxOriginDistance])
 
   if (!joystick) {

@@ -97,10 +97,10 @@ const jsonKeys = computed(() => JSON.stringify(keys.value))
   </div>
 
   <Listeners
-    @fullscreenChange="handleFullscreenChange"
-    @pointerLockChange="handlePointerLockChange"
-    @pageVisibilityChange="handlePageVisibilityChange"
-    @deviceTypeChange="handleDT"
+    @fullscreen-change="handleFullscreenChange"
+    @pointer-lock-change="handlePointerLockChange"
+    @page-visibility-change="handlePageVisibilityChange"
+    @device-type-change="handleDT"
   />
-  <DeviceTypeListener @deviceTypeChange="handleDT" />
+  <DeviceTypeListener @device-type-change="handleDT" />
 </template>

@@ -5,6 +5,7 @@ import { mountScreenOrientationListener, ScreenOrientationListenerProps } from '
 export const ScreenOrientationListener = ({
   onScreenOrientationChange,
 }: ScreenOrientationListenerProps) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => mountScreenOrientationListener({ onScreenOrientationChange }), [])
 
   return null

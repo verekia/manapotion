@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "lint": "eslint --ext ts,vue .",
     "start": "serve dist",
     "preview": "vite preview",
     "typecheck": "vue-tsc",
@@ -20,8 +21,14 @@
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@manapotion/tailwind": "^0.21.0",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.17",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.24.0",
+    "eslint-plugin-prettier-vue": "^5.0.0",
     "postcss": "^8.4.35",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",

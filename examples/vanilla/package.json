@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "start": "serve dist",
-    "lint": "eslint . --ext .ts --ignore-pattern dist/",
+    "lint": "eslint . --ext ts",
     "preview": "vite preview",
     "typecheck": "tsc",
     "format": "prettier --write .",

@@ -44,20 +44,18 @@ function Box(props: MeshProps) {
   )
 }
 
-export const throttledHello = throttle(
-  (...args: any[]) => console.log('throttledHello', ...args),
-  1000,
-)
-export const debouncedHello = debounce(
-  (...args: any[]) => console.log('debouncedHello', ...args),
-  1000,
-)
+export const throttledHello = throttle((...args) => console.log('throttledHello', ...args), 1000)
+export const debouncedHello = debounce((...args) => console.log('debouncedHello', ...args), 1000)
 export const throttledDebouncedHello = throttleDebounce(
-  (...args: any[]) => console.log('throttledDebouncedHello', ...args),
+  (...args) => console.log('throttledDebouncedHello', ...args),
   1000,
 )
 
-const EventNotificationBase = (_: any, ref: ForwardedRef<any>) => {
+interface EventNotificationActions {
+  setMessage: (message: string) => void
+}
+
+const EventNotificationBase = (_: unknown, ref: ForwardedRef<EventNotificationActions>) => {
   const messageRef = useRef<HTMLDivElement>(null)
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -277,7 +275,7 @@ const UI = () => {
 }
 
 const App = () => {
-  const eventNotificationRef = useRef<any>(null)
+  const eventNotificationRef = useRef<EventNotificationActions>(null)
 
   return (
     <>
@@ -285,45 +283,47 @@ const App = () => {
       <EventNotification ref={eventNotificationRef} />
       <Listeners
         onPointerLockChange={isPointerLocked =>
-          eventNotificationRef.current.setMessage(
+          eventNotificationRef.current!.setMessage(
             `onPointerLockChange – isPointerLocked: ${isPointerLocked}`,
           )
         }
         onKeyDown={({ code, alt, ctrl, key, meta, shift }) =>
-          eventNotificationRef.current.setMessage(
+          eventNotificationRef.current!.setMessage(
             `onKeydown – code: ${code}, key: ${key}, alt: ${alt}, ctrl: ${ctrl}, meta: ${meta}, shift: ${shift}`,
           )
         }
         onKeyUp={({ code, key }) =>
-          eventNotificationRef.current.setMessage(`onKeyup – code: ${code}, key: ${key}`)
+          eventNotificationRef.current!.setMessage(`onKeyup – code: ${code}, key: ${key}`)
         }
         onMouseMove={({ x, y, movementX, movementY }) =>
-          eventNotificationRef.current.setMessage(
+          eventNotificationRef.current!.setMessage(
             `onMouseMove – x: ${x}, y: ${y}, movementX: ${movementX}, movementY: ${movementY}`,
           )
         }
         onDeviceTypeChange={({ isDesktop, isMobile }) =>
-          eventNotificationRef.current.setMessage(
+          eventNotificationRef.current!.setMessage(
             `onDeviceTypeChange – isDesktop: ${isDesktop}, isMobile: ${isMobile}`,
           )
         }
         onFullscreenChange={isFullscreen =>
-          eventNotificationRef.current.setMessage(
+          eventNotificationRef.current!.setMessage(
             `onFullscreenChange – isFullscreen: ${isFullscreen}`,
           )
         }
         onScreenOrientationChange={({ isPortrait, isLandscape }) =>
-          eventNotificationRef.current.setMessage(
+          eventNotificationRef.current!.setMessage(
             `onScreenOrientationChange – isPortrait: ${isPortrait}, isLandscape: ${isLandscape}`,
           )
         }
-        onLeftMouseDown={() => eventNotificationRef.current.setMessage('onLeftMouseDown')}
-        onMiddleMouseDown={() => eventNotificationRef.current.setMessage('onMiddleMouseDown')}
-        onRightMouseDown={() => eventNotificationRef.current.setMessage('onRightMouseDown')}
-        onLeftMouseUp={() => eventNotificationRef.current.setMessage('onLeftMouseUp')}
-        onMiddleMouseUp={() => eventNotificationRef.current.setMessage('onMiddleMouseUp')}
-        onRightMouseUp={() => eventNotificationRef.current.setMessage('onRightMouseUp')}
-        onScroll={deltaY => eventNotificationRef.current.setMessage(`onScroll – deltaY: ${deltaY}`)}
+        onLeftMouseDown={() => eventNotificationRef.current!.setMessage('onLeftMouseDown')}
+        onMiddleMouseDown={() => eventNotificationRef.current!.setMessage('onMiddleMouseDown')}
+        onRightMouseDown={() => eventNotificationRef.current!.setMessage('onRightMouseDown')}
+        onLeftMouseUp={() => eventNotificationRef.current!.setMessage('onLeftMouseUp')}
+        onMiddleMouseUp={() => eventNotificationRef.current!.setMessage('onMiddleMouseUp')}
+        onRightMouseUp={() => eventNotificationRef.current!.setMessage('onRightMouseUp')}
+        onScroll={deltaY =>
+          eventNotificationRef.current!.setMessage(`onScroll – deltaY: ${deltaY}`)
+        }
       />
     </>
   )

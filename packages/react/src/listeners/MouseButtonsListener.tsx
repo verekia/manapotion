@@ -20,6 +20,7 @@ export const MouseButtonsListener = ({
         onMiddleMouseUp,
         onRightMouseUp,
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   )
 

@@ -8,6 +8,7 @@ export const MouseScrollListener = ({
 }: MouseScrollListenerProps) => {
   useEffect(
     () => mountMouseScrollListener({ onScroll, mouseScrollResetDelay }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [mouseScrollResetDelay],
   )
 

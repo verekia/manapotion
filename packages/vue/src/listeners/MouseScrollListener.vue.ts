@@ -3,8 +3,8 @@ import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 import { mountMouseScrollListener, MouseScrollPayload } from '@manapotion/core'
 
 export const MouseScrollListener = defineComponent({
-  emits: { scroll: (payload: MouseScrollPayload) => payload },
   props: { mouseScrollResetDelay: { type: Number, default: 100 } },
+  emits: { scroll: (payload: MouseScrollPayload) => payload },
   setup: (props, { emit }) => {
     onMounted(() => {
       let unsub = mountMouseScrollListener({

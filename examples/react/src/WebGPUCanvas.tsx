@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { CanvasProps, Canvas as R3FCanvas } from '@react-three/fiber'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let WebGPURenderer: any
 
 // With Vite, you need to enable top-level await:

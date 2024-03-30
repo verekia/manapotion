@@ -8,6 +8,7 @@ export const MouseMoveListener = ({
 }: MouseMoveListenerProps) => {
   useEffect(
     () => mountMouseMoveListener({ onMouseMove, mouseMovementResetDelay }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [mouseMovementResetDelay],
   )
 
