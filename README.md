@@ -361,17 +361,17 @@ In follow mode, the joystick will follow the user's finger, which is good for pl
 Here are the properties that will be updated on your joystick object:
 
 - 🗿 `joystick.isActive`
-- 🗿 `identifier`
-- 🗿 `originX` / `originY`
-- 🗿 `originAngle`
-- 🗿 `originDistance`
-- 🗿 `originDistanceRatio`
-- 🗿 `followX` / `followY`
-- 🗿 `followAngle`
-- 🗿 `followDistance`
-- 🗿 `followDistanceRatio`
-- 🗿 `currentX`/ `currentY`
-- 🗿 `movementX` / `movementY`
+- 🗿 `joystick.identifier`
+- 🗿 `joystick.origin.x` / `joystick.origin.y`
+- 🗿 `joystick.origin.angle`
+- 🗿 `joystick.origin.distance`
+- 🗿 `joystick.origin.distanceRatio`
+- 🗿 `joystick.follow.x` / `joystick.follow.y`
+- 🗿 `joystick.follow.angle`
+- 🗿 `joystick.follow.distance`
+- 🗿 `joystick.follow.distanceRatio`
+- 🗿 `joystick.current.x`/ `joystick.current.y`
+- 🗿 `joystick.movement.x` / `joystick.movement.y`
 
 See the [example of how to style your joystick](https://github.com/verekia/manapotion/blob/main/examples/react/src/MobileJoystick.tsx).
 
