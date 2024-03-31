@@ -21,6 +21,12 @@
   import IsPageFocusedLabel from './components/labels/IsPageFocusedLabel.svelte'
   import IsPageVisibleLabel from './components/labels/IsPageVisibleLabel.svelte'
   import IsPortraitLabel from './components/labels/IsPortraitLabel.svelte'
+  import KeyboardSection from './components/labels/KeyboardSection.svelte'
+  import LeftMouseButtonLabel from './components/labels/LeftMouseButtonLabel.svelte'
+  import LockedLabel from './components/labels/LockedLabel.svelte'
+  import LockMouseButton from './components/labels/LockMouseButton.svelte'
+  import MiddleMouseButtonLabel from './components/labels/MiddleMouseButtonLabel.svelte'
+  import RightMouseButtonLabel from './components/labels/RightMouseButtonLabel.svelte'
   import TwitterIcon from './components/TwitterIcon.svelte'
 
   const handleDTChange = ({ detail }: CustomEvent<DeviceTypeChangePayload>) => {
@@ -120,6 +126,26 @@
           <button class="btn" on:click={unlockKeys}> Release keys </button>
         </div>
       </div>
+    </section>
+    <section>
+      <h2 class="section-heading">🖱️ Mouse</h2>
+      <Item name="locked">
+        <LockedLabel slot="label" />
+        <LockMouseButton slot="extra" />
+      </Item>
+      <Item name="buttons.left">
+        <LeftMouseButtonLabel slot="label" />
+      </Item>
+      <Item name="buttons.middle">
+        <MiddleMouseButtonLabel slot="label" />
+      </Item>
+      <Item name="buttons.right">
+        <RightMouseButtonLabel slot="label" />
+      </Item>
+    </section>
+    <section>
+      <h2 class="section-heading">⌨️ Keyboard</h2>
+      <KeyboardSection />
     </section>
   </div>
 
