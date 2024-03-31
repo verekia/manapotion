@@ -30,7 +30,7 @@ export const FullscreenButton = () => {
   const isFullscreen = useBrowser(s => s.isFullscreen)
 
   return (
-    <button onClick={isFullscreen ? exitFullscreen : enterFullscreen}>
+    <button onClick={isFullscreen ? exitFullscreen : enterFullscreen} className="btn">
       {isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
     </button>
   )

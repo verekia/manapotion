@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, RefObject, useImperativeHandle, useRef } from 'react'
+import { ForwardedRef, forwardRef, RefObject, useImperativeHandle, useRef, useState } from 'react'
 
 import {
   debounce,
@@ -25,6 +25,7 @@ import {
   PageFocusLabel,
   PageVisibilityLabel,
 } from './components/browser-labels'
+import Item from './components/Item'
 import {
   LeftMouseButtonDownLabel,
   MiddleMouseButtonDownLabel,
@@ -106,6 +107,7 @@ const UI = ({
 }) => {
   const animationFrameRef = useRef<HTMLSpanElement>(null)
   const animationFrameThrottledRef = useRef<HTMLSpanElement>(null)
+  const [joystickMode, setJoystickMode] = useState<'follow' | 'origin'>('follow')
 
   useAnimationFrame(({ elapsed }) => {
     animationFrameRef.current!.textContent = String(elapsed)
@@ -119,7 +121,7 @@ const UI = ({
 
   return (
     <>
-      <div className="container mx-auto px-5 pt-5" onContextMenu={e => e.preventDefault()}>
+      <div className="mx-auto max-w-7xl px-5 pb-16 pt-5" onContextMenu={e => e.preventDefault()}>
         <div className="mb-5 flex flex-col items-center justify-center gap-6 sm:flex-row">
           <img src="/mana-potion.webp" className="w-28" alt="Logo" />
           <div className="flex flex-col gap-3">
@@ -129,102 +131,136 @@ const UI = ({
               Svelte, vanilla)
             </h2>
             <div>
-              <div className="text-center italic text-gray-400 sm:text-left">⚡️ Reactive</div>
               <div className="text-center italic text-gray-400 sm:text-left">
-                🗿 Non-reactive (updated via events or animation frame)
+                ⚡️ Reactive (re-render components on change)
+              </div>
+              <div className="text-center italic text-gray-400 sm:text-left">
+                🗿 Non-reactive (managed by events or animation frame)
               </div>
             </div>
             <div>
               <a href="https://github.com/verekia/manapotion" target="_blank">
                 GitHub
               </a>
+              <span className="mx-1">•</span>
+              <a href="https://twitter.com/verekia" target="_blank">
+                Twitter
+              </a>
+              <span className="mx-1">•</span>
+              <a href="https://discord.gg/VXYxGrP8EJ" target="_blank">
+                Discord
+              </a>
             </div>
           </div>
         </div>
 
-        <section className="my-5">
-          <h2 className="mb-1 text-xl">🌐 Browser</h2>
-          <div>
-            ⚡️ isFullscreen: <FullscreenLabel /> <FullscreenButton />
-          </div>
-          <div>
-            ⚡️ isPageVisible: <PageVisibilityLabel />
-          </div>
-          <div>
-            ⚡️ isPageFocused: <PageFocusLabel />
-          </div>
-          <div>
-            ⚡️ isDesktop: <IsDesktopLabel />
-          </div>
-          <div>
-            ⚡️ isMobile: <IsMobileLabel />
-          </div>
-          <div>
-            ⚡️ isPortrait: <IsPortraitLabel /> (ratio-based)
-          </div>
-          <div>
-            ⚡️ isLandscape: <IsLandscapeLabel /> (ratio-based)
-          </div>
-          <div>
-            <h2>Force mobile orientation (use after fullscreen on mobile)</h2>
-            <button
-              className="rounded-md bg-gray-700 px-2 py-1"
-              onClick={() => lockOrientation('landscape')}
-            >
-              Landscape
-            </button>
-            <button
-              className="rounded-md bg-gray-700 px-2 py-1"
-              onClick={() => lockOrientation('portrait')}
-            >
-              Portrait
-            </button>
-            <button className="rounded-md bg-gray-700 px-2 py-1" onClick={unlockOrientation}>
-              Unlock orientation
-            </button>
-          </div>
-          <div>
-            🗿 width & height: <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
-          </div>
-          <div>
-            <h2>Keyboard lock (use after fullscreen on desktop)</h2>
-            <button
-              className="rounded-md bg-gray-700 px-2 py-1"
-              onClick={() => lockKeys(['Escape', 'KeyW', 'KeyA', 'KeyS', 'KeyD'])}
-            >
-              Lock Esc and WASD
-            </button>
-            <button className="rounded-md bg-gray-700 px-2 py-1" onClick={() => unlockKeys()}>
-              Release keys
-            </button>
-          </div>
-        </section>
-        <section className="my-5">
-          <h2 className="mb-1 text-xl">🖱️ Mouse</h2>
-          <div>
-            ⚡️ locked: <MouseLockedLabel /> <PointerLockButton />
-          </div>
-          <div>
-            ⚡️ button.left: <LeftMouseButtonDownLabel />
-          </div>
-          <div>
-            ⚡️ button.middle: <MiddleMouseButtonDownLabel />
-          </div>
-          <div>
-            ⚡️ button.right: <RightMouseButtonDownLabel />
-          </div>
-          <div>
-            🗿 position: <span className="tabular-nums" ref={liveMouseXRef} />{' '}
-            <span className="tabular-nums" ref={liveMouseYRef} />
-          </div>
-          <div>
-            🗿 movement: <span className="tabular-nums" ref={liveMouseMovementXRef} />{' '}
-            <span className="tabular-nums" ref={liveMouseMovementYRef} />
-          </div>
-          <div>
-            🗿 wheel.y: <span ref={liveScrollYRef} className="tabular-nums" />
-          </div>
-        </section>
+        <div className="mt-10 flex flex-col gap-10 lg:flex-row">
+          <section>
+            <h2 className="mb-1 text-xl">🌐 Browser</h2>
+            <Item label={<FullscreenLabel />} name="isFullscreen" extra={<FullscreenButton />} />
+            <Item label={<PageVisibilityLabel />} name="isPageVisible" />
+            <Item label={<PageFocusLabel />} name="isPageFocused" />
+            <Item label={<IsDesktopLabel />} name="isDesktop" />
+            <Item label={<IsMobileLabel />} name="isMobile" />
+            <Item
+              label={<IsPortraitLabel />}
+              name="isPortrait"
+              extra={<span className="text-sm">Ratio-based</span>}
+            />
+            <Item
+              label={<IsLandscapeLabel />}
+              name="isLandscape"
+              extra={<span className="text-sm">Ratio-based</span>}
+            />
+            <Item
+              isReactive={false}
+              name="width,height"
+              value={
+                <>
+                  <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
+                </>
+              }
+            />
+            <div className="mt-2">
+              <h2>Force mobile orientation (use after fullscreen on mobile)</h2>
+              <div className="flex flex-wrap gap-2">
+                <button className="btn" onClick={() => lockOrientation('landscape')}>
+                  Landscape
+                </button>
+                <button className="btn" onClick={() => lockOrientation('portrait')}>
+                  Portrait
+                </button>
+                <button className="btn" onClick={unlockOrientation}>
+                  Unlock orientation
+                </button>
+              </div>
+            </div>
+            <div className="mt-2">
+              <h2>Keyboard lock (use after fullscreen on desktop)</h2>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  className="btn"
+                  onClick={() => lockKeys(['Escape', 'KeyW', 'KeyA', 'KeyS', 'KeyD'])}
+                >
+                  Lock Esc and WASD
+                </button>
+                <button className="btn" onClick={() => unlockKeys()}>
+                  Release keys
+                </button>
+              </div>
+            </div>
+          </section>
+          <section className="w-80">
+            <h2 className="mb-1 text-xl">🖱️ Mouse</h2>
+            <Item label={<MouseLockedLabel />} name="locked" extra={<PointerLockButton />} />
+            <Item label={<LeftMouseButtonDownLabel />} name="buttons.left" />
+            <Item label={<MiddleMouseButtonDownLabel />} name="buttons.middle" />
+            <Item label={<RightMouseButtonDownLabel />} name="buttons.right" />
+            <Item
+              isReactive={false}
+              name="position"
+              value={
+                <>
+                  <span className="tabular-nums" ref={liveMouseXRef} />{' '}
+                  <span className="tabular-nums" ref={liveMouseYRef} />
+                </>
+              }
+            />
+            <Item
+              isReactive={false}
+              name="movement"
+              value={
+                <>
+                  <span className="tabular-nums" ref={liveMouseMovementXRef} />{' '}
+                  <span className="tabular-nums" ref={liveMouseMovementYRef} />
+                </>
+              }
+            />
+            <Item
+              isReactive={false}
+              name="wheel.y"
+              value={<span className="tabular-nums" ref={liveScrollYRef} />}
+            />
+          </section>
+          <section>
+            <h2 className="mb-1 text-xl">🕹️ Virtual joysticks</h2>
+            <div className="relative">
+              <div className="absolute left-10 top-20 max-w-36 text-center mobile:hidden">
+                Switch to 👆 mobile mode in devtools
+              </div>
+              <MobileJoystick className="mt-3" mode={joystickMode} />
+              <div className="mt-3 flex justify-center gap-3 text-center">
+                Mode{' '}
+                <button
+                  className="btn capitalize"
+                  onClick={() => setJoystickMode(joystickMode === 'follow' ? 'origin' : 'follow')}
+                >
+                  {joystickMode}
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
         <section className="my-5">
           <h2 className="mb-1 text-xl">⌨️ Keyboard</h2>
           <KeyboardSection />
@@ -238,10 +274,6 @@ const UI = ({
             useAnimationFrame (throttled):{' '}
             <span className="tabular-nums" ref={animationFrameThrottledRef} />
           </div>
-        </section>
-        <section className="my-5">
-          <h2 className="mb-1 text-xl">🕹️ Virtual joysticks</h2>
-          <div>Switch to mobile mode in your devtools to see the mobile joystick.</div>
         </section>
         <section className="my-5">
           <h2 className="mb-1 text-xl">🍃 Tailwind</h2>
@@ -283,7 +315,6 @@ const UI = ({
           </div>
         </section>
       </div>
-      <MobileJoystick />
     </>
   )
 }
@@ -347,9 +378,9 @@ const App = () => {
         onMiddleMouseButtonUp={() => console.log('onMiddleMouseUp')}
         onRightMouseButtonUp={() => console.log('onRightMouseButtonUp')}
         onScroll={({ wheel }) => {
-          const twoDecimalsY = wheel.y.toFixed(2)
-          console.log(`onScroll – deltaY: ${twoDecimalsY}`)
-          liveScrollYRef.current!.textContent = twoDecimalsY
+          const rounded = Math.round(wheel.y)
+          console.log(`onScroll – deltaY: ${rounded}`)
+          liveScrollYRef.current!.textContent = String(rounded)
         }}
         onPageFocusChange={() => {
           resetKeyboard()

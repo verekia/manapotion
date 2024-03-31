@@ -8,8 +8,8 @@ export const PointerLockButton = () => {
   const locked = useMouse(s => s.locked)
 
   return (
-    <button onClick={locked ? unlockPointer : lockPointer}>
-      {locked ? 'Unlock pointer' : 'Lock pointer'}
+    <button onClick={locked ? unlockPointer : lockPointer} className="btn">
+      {locked ? 'Unlock' : 'Lock'}
     </button>
   )
 }
