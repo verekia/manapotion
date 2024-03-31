@@ -1,4 +1,4 @@
-import { keyboardStore, KeyState } from '../stores/keyboardStore'
+import { getKeyboard, keyboardStore, KeyState } from '../stores/keyboardStore'
 
 export type KeyDownPayload = KeyState
 export type KeyUpPayload = { code: string; key: string }
@@ -13,6 +13,11 @@ export type KeyboardListenerProps = {
 export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerProps) => {
   const downHandler = (e: KeyboardEvent) => {
     const { key, code } = e
+    const keyboard = getKeyboard()
+
+    if (keyboard.byCode[code] || keyboard.byKey[key]) {
+      return
+    }
 
     const keyState = {
       key,

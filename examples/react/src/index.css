@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.label {
+  @apply inline-block rounded px-1.5;
+}
+
+.label--positive {
+  @apply bg-green-200 text-green-800;
+}
+
+.label--negative {
+  @apply bg-red-200 text-red-800;
+}
+
+.label--unknown {
+  @apply bg-gray-200 text-gray-800;
+}

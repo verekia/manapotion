@@ -23,6 +23,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-extra-semi': 'off',
     'react/react-in-jsx-scope': 0,
+    'react/jsx-no-target-blank': 0,
   },
   settings: { react: { version: 'detect' } },
 }

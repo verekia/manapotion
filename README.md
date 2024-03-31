@@ -70,7 +70,7 @@ const animate = () => {
 }
 ```
 
-⚡️ **Reactive** variables can similarly be accessed imperatively, but also reactively in components to trigger re-renders
+⚡️ **Reactive** variables can be accessed imperatively too, but also reactively in components to trigger re-renders:
 
 **React**
 
@@ -91,8 +91,6 @@ const Component = () => {
 
 **Vue**
 
-The reactive variables are available as refs, either individually or via `mpRefs`:
-
 ```vue
 <script setup lang="ts">
 import { mouse, browser, keyboard } from '@manapotion/vue'
@@ -106,8 +104,6 @@ import { mouse, browser, keyboard } from '@manapotion/vue'
 ```
 
 **Svelte**
-
-The reactive variables are available as stores, either individually or via `mpStore`:
 
 ```svelte
 <script lang="ts">
