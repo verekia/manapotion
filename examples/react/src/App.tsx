@@ -26,6 +26,7 @@ import {
   PageVisibilityLabel,
 } from './components/browser-labels'
 import Item from './components/Item'
+import Label from './components/Label'
 import {
   LeftMouseButtonDownLabel,
   MiddleMouseButtonDownLabel,
@@ -74,16 +75,24 @@ const EventNotification = forwardRef(EventNotificationBase)
 
 const KeyboardSection = () => {
   const keyboard = useKeyboard()
-  console.log('keyboard rendered')
+
+  const codes = Array.from(Object.keys(keyboard.codes)).reduce(
+    (acc, code) => `${acc}${acc && ','} ${code}`,
+    '',
+  )
+  const keys = Array.from(Object.keys(keyboard.keys)).reduce(
+    (acc, key) => `${acc}${acc && ','} ${key}`,
+    '',
+  )
 
   return (
     <>
-      <div>
-        ⚡️ byCode <pre>{JSON.stringify(keyboard.byCode, null, 2)}</pre>
-      </div>
-      <div>
-        ⚡️ byKey <pre>{JSON.stringify(keyboard.byKey, null, 2)}</pre>
-      </div>
+      <Item name="codes" value={codes} />
+      <Item name="keys" value={keys} />
+      <Item name="ctrl" label={<Label name="ctrl" value={keyboard.ctrl} />} />
+      <Item name="shift" label={<Label name="shift" value={keyboard.shift} />} />
+      <Item name="alt" label={<Label name="alt" value={keyboard.alt} />} />
+      <Item name="meta" label={<Label name="meta" value={keyboard.meta} />} />
     </>
   )
 }
@@ -154,9 +163,9 @@ const UI = ({
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-10 lg:flex-row">
+        <div className="cols-1 mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           <section>
-            <h2 className="mb-1 text-xl">🌐 Browser</h2>
+            <h2 className="section-heading">🌐 Browser</h2>
             <Item label={<FullscreenLabel />} name="isFullscreen" extra={<FullscreenButton />} />
             <Item label={<PageVisibilityLabel />} name="isPageVisible" />
             <Item label={<PageFocusLabel />} name="isPageFocused" />
@@ -182,7 +191,7 @@ const UI = ({
               }
             />
             <div className="mt-2">
-              <h2>Force mobile orientation (use after fullscreen on mobile)</h2>
+              <h2>Force mobile orientation (use after fullscreen)</h2>
               <div className="flex flex-wrap gap-2">
                 <button className="btn" onClick={() => lockOrientation('landscape')}>
                   Landscape
@@ -210,8 +219,8 @@ const UI = ({
               </div>
             </div>
           </section>
-          <section className="w-80">
-            <h2 className="mb-1 text-xl">🖱️ Mouse</h2>
+          <section>
+            <h2 className="section-heading">🖱️ Mouse</h2>
             <Item label={<MouseLockedLabel />} name="locked" extra={<PointerLockButton />} />
             <Item label={<LeftMouseButtonDownLabel />} name="buttons.left" />
             <Item label={<MiddleMouseButtonDownLabel />} name="buttons.middle" />
@@ -243,13 +252,13 @@ const UI = ({
             />
           </section>
           <section>
-            <h2 className="mb-1 text-xl">🕹️ Virtual joysticks</h2>
-            <div className="relative">
+            <h2 className="section-heading">🕹️ Virtual joysticks</h2>
+            <div className="relative w-max">
               <div className="absolute left-10 top-20 max-w-36 text-center mobile:hidden">
                 Switch to 👆 mobile mode in devtools
               </div>
               <MobileJoystick className="mt-3" mode={joystickMode} />
-              <div className="mt-3 flex justify-center gap-3 text-center">
+              <div className="mt-3 flex items-center justify-center gap-3">
                 Mode{' '}
                 <button
                   className="btn capitalize"
@@ -260,60 +269,60 @@ const UI = ({
               </div>
             </div>
           </section>
+          <section>
+            <h2 className="section-heading">⌨️ Keyboard</h2>
+            <KeyboardSection />
+          </section>
+          <section>
+            <h2 className="section-heading">🔄 Animation loops</h2>
+            <div>
+              useAnimationFrame: <span className="tabular-nums" ref={animationFrameRef} />
+            </div>
+            <div>
+              useAnimationFrame (throttled):{' '}
+              <span className="tabular-nums" ref={animationFrameThrottledRef} />
+            </div>
+          </section>
+          <section>
+            <h2 className="section-heading">🍃 Tailwind</h2>
+            <div>
+              <div>
+                Current width range:
+                <span className="hidden max-5xs:inline">5xs and below</span>
+                <span className="hidden 5xs:max-4xs:inline">5xs to 4xs</span>
+                <span className="hidden 4xs:max-3xs:inline">4xs to 3xs</span>
+                <span className="hidden 3xs:max-2xs:inline">3xs to 2xs</span>
+                <span className="hidden 2xs:max-xs:inline">2xs to xs</span>
+                <span className="hidden xs:max-sm:inline">xs to sm</span>
+                <span className="hidden sm:max-md:inline">sm to md</span>
+                <span className="hidden md:max-lg:inline">md to lg</span>
+                <span className="hidden lg:max-xl:inline">lg to xl</span>
+                <span className="hidden xl:max-2xl:inline">xl to 2xl</span>
+                <span className="hidden 2xl:max-3xl:inline">2xl to 3xl</span>
+                <span className="hidden 3xl:max-4xl:inline">3xl to 4xl</span>
+                <span className="hidden 4xl:max-5xl:inline">4xl to 5xl</span>
+                <span className="hidden 5xl:inline">5xl and up</span>
+              </div>
+              <div>
+                Current height range:
+                <span className="hidden max-5xs-h:inline">5xs and below</span>
+                <span className="hidden 5xs-h:max-4xs-h:inline">5xs to 4xs</span>
+                <span className="hidden 4xs-h:max-3xs-h:inline">4xs to 3xs</span>
+                <span className="hidden 3xs-h:max-2xs-h:inline">3xs to 2xs</span>
+                <span className="hidden 2xs-h:max-xs-h:inline">2xs to xs</span>
+                <span className="hidden xs-h:max-sm-h:inline">xs to sm</span>
+                <span className="hidden sm-h:max-md-h:inline">sm to md</span>
+                <span className="hidden md-h:max-lg-h:inline">md to lg</span>
+                <span className="hidden lg-h:max-xl-h:inline">lg to xl</span>
+                <span className="hidden xl-h:max-2xl-h:inline">xl to 2xl</span>
+                <span className="hidden 2xl-h:max-3xl-h:inline">2xl to 3xl</span>
+                <span className="hidden 3xl-h:max-4xl-h:inline">3xl to 4xl</span>
+                <span className="hidden 4xl-h:max-5xl-h:inline">4xl to 5xl</span>
+                <span className="hidden 5xl-h:inline">5xl and up</span>
+              </div>
+            </div>
+          </section>
         </div>
-        <section className="my-5">
-          <h2 className="mb-1 text-xl">⌨️ Keyboard</h2>
-          <KeyboardSection />
-        </section>
-        <section className="my-5">
-          <h2 className="mb-1 text-xl">🔄 Animation loops</h2>
-          <div>
-            useAnimationFrame: <span className="tabular-nums" ref={animationFrameRef} />
-          </div>
-          <div>
-            useAnimationFrame (throttled):{' '}
-            <span className="tabular-nums" ref={animationFrameThrottledRef} />
-          </div>
-        </section>
-        <section className="my-5">
-          <h2 className="mb-1 text-xl">🍃 Tailwind</h2>
-          <div>
-            <div>
-              Current width range:
-              <span className="hidden max-5xs:inline">5xs and below</span>
-              <span className="hidden 5xs:max-4xs:inline">5xs to 4xs</span>
-              <span className="hidden 4xs:max-3xs:inline">4xs to 3xs</span>
-              <span className="hidden 3xs:max-2xs:inline">3xs to 2xs</span>
-              <span className="hidden 2xs:max-xs:inline">2xs to xs</span>
-              <span className="hidden xs:max-sm:inline">xs to sm</span>
-              <span className="hidden sm:max-md:inline">sm to md</span>
-              <span className="hidden md:max-lg:inline">md to lg</span>
-              <span className="hidden lg:max-xl:inline">lg to xl</span>
-              <span className="hidden xl:max-2xl:inline">xl to 2xl</span>
-              <span className="hidden 2xl:max-3xl:inline">2xl to 3xl</span>
-              <span className="hidden 3xl:max-4xl:inline">3xl to 4xl</span>
-              <span className="hidden 4xl:max-5xl:inline">4xl to 5xl</span>
-              <span className="hidden 5xl:inline">5xl and up</span>
-            </div>
-            <div>
-              Current height range:
-              <span className="hidden max-5xs-h:inline">5xs and below</span>
-              <span className="hidden 5xs-h:max-4xs-h:inline">5xs to 4xs</span>
-              <span className="hidden 4xs-h:max-3xs-h:inline">4xs to 3xs</span>
-              <span className="hidden 3xs-h:max-2xs-h:inline">3xs to 2xs</span>
-              <span className="hidden 2xs-h:max-xs-h:inline">2xs to xs</span>
-              <span className="hidden xs-h:max-sm-h:inline">xs to sm</span>
-              <span className="hidden sm-h:max-md-h:inline">sm to md</span>
-              <span className="hidden md-h:max-lg-h:inline">md to lg</span>
-              <span className="hidden lg-h:max-xl-h:inline">lg to xl</span>
-              <span className="hidden xl-h:max-2xl-h:inline">xl to 2xl</span>
-              <span className="hidden 2xl-h:max-3xl-h:inline">2xl to 3xl</span>
-              <span className="hidden 3xl-h:max-4xl-h:inline">3xl to 4xl</span>
-              <span className="hidden 4xl-h:max-5xl-h:inline">4xl to 5xl</span>
-              <span className="hidden 5xl-h:inline">5xl and up</span>
-            </div>
-          </div>
-        </section>
       </div>
     </>
   )

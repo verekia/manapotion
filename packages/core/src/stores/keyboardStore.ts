@@ -1,21 +1,23 @@
 import { devtools } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
 
-export type KeyState = {
-  readonly code: string
-  readonly key: string
+export type Keyboard = {
+  readonly codes: Record<string, boolean>
+  readonly keys: Record<string, boolean>
   readonly ctrl: boolean
   readonly shift: boolean
   readonly alt: boolean
   readonly meta: boolean
 }
 
-export type Keyboard = {
-  readonly byCode: Record<string, KeyState>
-  readonly byKey: Record<string, KeyState>
+const defaultKeyboard: Keyboard = {
+  codes: {},
+  keys: {},
+  ctrl: false,
+  shift: false,
+  alt: false,
+  meta: false,
 }
-
-const defaultKeyboard: Keyboard = { byCode: {}, byKey: {} }
 
 export const keyboardStore = createStore<Keyboard>()(
   devtools(() => structuredClone(defaultKeyboard), { name: 'keyboard' }),

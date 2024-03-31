@@ -64,7 +64,7 @@ import { getMouse, getKeyboard, getBrowser } from '@manapotion/react' // or /vue
 
 const animate = () => {
   const { right } = getMouse().buttons
-  const { KeyW } = getKeyboard().byCode
+  const { KeyW } = getKeyboard().codes
   const { isFullscreen } = getBrowser()
   // ...
 }
@@ -81,7 +81,7 @@ import { useMouse, useBrowser, useKeyboard } from '@manapotion/react'
 
 const Component = () => {
   const isRightButtonDown = useMouse(s => s.buttons.right)
-  const { KeyW } = useKeyboard(s => s.byCode)
+  const { KeyW } = useKeyboard(s => s.codes)
   const isFullscreen = useBrowser(s => s.isFullscreen)
 
   // Some reactive component
@@ -99,7 +99,7 @@ import { mouse, browser, keyboard } from '@manapotion/vue'
 <template>
   <div>{{ mouse.buttons.right }}</div>
   <div>{{ browser.isFullscreen }}</div>
-  <div>{{ keyboard.byCode.KeyW }}</div>
+  <div>{{ keyboard.codes.KeyW }}</div>
 </template>
 ```
 
@@ -112,7 +112,7 @@ import { mouse, browser, keyboard } from '@manapotion/vue'
 
   <div>{$mouse.buttons.right}</div>
   <div>{$browser.isFullscreen}</div>
-  <div>{$keyboard.byCode.KeyW}</div>
+  <div>{$keyboard.codes.KeyW}</div>
 ```
 
 **Vanilla**
@@ -158,16 +158,16 @@ You can import and use `resetMouse` to reinitialize the mouse data.
 
 ### ⌨️ Keyboard
 
-- ⚡️ `keyboard.byKey`
-- ⚡️ `keyboard.byCode`
+- ⚡️ `keyboard.keys`
+- ⚡️ `keyboard.codes`
 
-⚡️ `keyboard` contains keys that are available in two versions, `byCode` and `byKey`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`byCode`) of the key or the character being typed as a key (`byKey`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
+⚡️ `keyboard` contains keys that are available in two versions, `codes` and `keys`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`codes`) of the key or the character being typed as a key (`keys`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
 
 Here is how you would handle going forward when the user presses W (or Z on French keyboards):
 
 ```js
 const animate = () => {
-  const { KeyW } = getKeyboard().byCode
+  const { KeyW } = getKeyboard().codes
 
   if (KeyW) {
     // Go forward
