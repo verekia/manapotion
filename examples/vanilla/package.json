@@ -1,7 +1,7 @@
 {
   "name": "example-vanilla",
   "private": true,
-  "version": "0.22.2",
+  "version": "0.23.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,11 +15,11 @@
     "publint": ""
   },
   "dependencies": {
-    "@manapotion/vanilla": "^0.22.2"
+    "@manapotion/vanilla": "^0.23.0"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
-    "@manapotion/tailwind": "^0.22.0",
+    "@manapotion/tailwind": "^0.23.0",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
     "autoprefixer": "^10.4.17",
