@@ -1,6 +1,5 @@
 <script lang="ts">
   import {
-    browser,
     DeviceTypeListener,
     Listeners,
     lockKeys,
