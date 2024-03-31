@@ -158,8 +158,12 @@ You can import and use `resetMouse` to reinitialize the mouse data.
 
 ### ⌨️ Keyboard
 
-- ⚡️ `keyboard.keys`
 - ⚡️ `keyboard.codes`
+- ⚡️ `keyboard.keys`
+- ⚡️ `keyboard.ctrl`
+- ⚡️ `keyboard.shift`
+- ⚡️ `keyboard.alt`
+- ⚡️ `keyboard.meta`
 
 ⚡️ `keyboard` contains keys that are available in two versions, `codes` and `keys`. This lets you decide if you want to use the [physical location](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#writing_system_keys) (`codes`) of the key or the character being typed as a key (`keys`). Using the physical location is better for game controls such as using WASD to move a character, because it is agnostic to the user's keyboard layout (did you know French keyboards are not QWERTY but AZERTY?).
 
