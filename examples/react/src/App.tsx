@@ -25,6 +25,8 @@ import {
   PageFocusLabel,
   PageVisibilityLabel,
 } from './components/browser-labels'
+import DiscordIcon from './components/DiscordIcon'
+import GithubIcon from './components/GithubIcon'
 import Item from './components/Item'
 import Label from './components/Label'
 import {
@@ -34,6 +36,7 @@ import {
   PointerLockButton,
   RightMouseButtonDownLabel,
 } from './components/mouse-labels'
+import TwitterIcon from './components/TwitterIcon'
 import MobileJoystick from './MobileJoystick'
 
 export const throttledHello = throttle((...args) => console.log('throttledHello', ...args), 1000)
@@ -139,31 +142,45 @@ const UI = ({
               Toolkit for JavaScript game development and interactive experiences (React, Vue,
               Svelte, vanilla)
             </h2>
-            <div>
-              <div className="text-center italic text-gray-400 sm:text-left">
-                ⚡️ Reactive (re-render components on change)
-              </div>
-              <div className="text-center italic text-gray-400 sm:text-left">
-                🗿 Non-reactive (managed by events or animation frame)
-              </div>
-            </div>
-            <div>
-              <a href="https://github.com/verekia/manapotion" target="_blank">
+            <div className="flex items-center justify-center gap-3 sm:justify-start">
+              <a
+                href="https://github.com/verekia/manapotion"
+                target="_blank"
+                className="flex items-center gap-2 rounded-md bg-slate-600 px-3 py-1.5 font-medium hover:bg-slate-700"
+              >
+                <GithubIcon />
                 GitHub
               </a>
-              <span className="mx-1">•</span>
-              <a href="https://twitter.com/verekia" target="_blank">
+              <a
+                href="https://twitter.com/verekia"
+                target="_blank"
+                className="flex items-center gap-2 rounded-md bg-slate-600 px-3 py-1.5 font-medium hover:bg-slate-700"
+              >
+                <TwitterIcon />
                 Twitter
               </a>
-              <span className="mx-1">•</span>
-              <a href="https://discord.gg/VXYxGrP8EJ" target="_blank">
+              <a
+                href="https://discord.gg/VXYxGrP8EJ"
+                target="_blank"
+                className="flex items-center gap-2 rounded-md bg-slate-600 px-3 py-1.5 font-medium hover:bg-slate-700"
+              >
+                <DiscordIcon />
                 Discord
               </a>
             </div>
           </div>
         </div>
 
-        <div className="cols-1 mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 text-slate-300">
+          <div>
+            ⚡️ <b>Reactive</b> (re-renders components on changes)
+          </div>
+          <div>
+            🗿 <b>Non-reactive</b> (managed by events or animation frame)
+          </div>
+        </div>
+
+        <div className="cols-1 mt-5 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           <section>
             <h2 className="section-heading">🌐 Browser</h2>
             <Item label={<FullscreenLabel />} name="isFullscreen" extra={<FullscreenButton />} />
@@ -252,9 +269,13 @@ const UI = ({
             />
           </section>
           <section>
+            <h2 className="section-heading">⌨️ Keyboard</h2>
+            <KeyboardSection />
+          </section>
+          <section>
             <h2 className="section-heading">🕹️ Virtual joysticks</h2>
             <div className="relative w-max">
-              <div className="absolute left-10 top-20 max-w-36 text-center mobile:hidden">
+              <div className="absolute left-[58px] top-[75px] max-w-36 text-center mobile:hidden">
                 Switch to 👆 mobile mode in devtools
               </div>
               <MobileJoystick className="mt-3" mode={joystickMode} />
@@ -268,10 +289,6 @@ const UI = ({
                 </button>
               </div>
             </div>
-          </section>
-          <section>
-            <h2 className="section-heading">⌨️ Keyboard</h2>
-            <KeyboardSection />
           </section>
           <section>
             <h2 className="section-heading">🔄 Animation loops</h2>
