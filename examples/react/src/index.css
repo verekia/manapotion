@@ -35,5 +35,5 @@
 }
 
 .btn {
-  @apply inline-block rounded bg-slate-700 px-2 py-1 text-sm text-white;
+  @apply inline-block rounded bg-blue-200/20 px-2 py-1 text-sm hover:bg-blue-200/30;
 }

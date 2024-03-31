@@ -139,14 +139,14 @@ const UI = ({
           <div className="flex flex-col gap-3">
             <h1 className="text-center text-5xl font-medium sm:text-left">Mana Potion</h1>
             <h2 className="max-w-lg text-pretty text-center text-lg text-gray-300 sm:text-left">
-              Toolkit for JavaScript game development and interactive experiences (React, Vue,
-              Svelte, vanilla)
+              Toolkit for JavaScript game development and interactive experiences with React, Vue,
+              Svelte, and vanilla JS support.
             </h2>
             <div className="flex items-center justify-center gap-3 sm:justify-start">
               <a
                 href="https://github.com/verekia/manapotion"
                 target="_blank"
-                className="flex items-center gap-2 rounded-md bg-slate-600 px-3 py-1.5 font-medium hover:bg-slate-700"
+                className="flex items-center gap-2 rounded-md bg-blue-200/20 px-3 py-1.5 font-medium hover:bg-blue-200/10"
               >
                 <GithubIcon />
                 GitHub
@@ -154,7 +154,7 @@ const UI = ({
               <a
                 href="https://twitter.com/verekia"
                 target="_blank"
-                className="flex items-center gap-2 rounded-md bg-slate-600 px-3 py-1.5 font-medium hover:bg-slate-700"
+                className="flex items-center gap-2 rounded-md bg-blue-200/20 px-3 py-1.5 font-medium hover:bg-blue-200/10"
               >
                 <TwitterIcon />
                 Twitter
@@ -162,7 +162,7 @@ const UI = ({
               <a
                 href="https://discord.gg/VXYxGrP8EJ"
                 target="_blank"
-                className="flex items-center gap-2 rounded-md bg-slate-600 px-3 py-1.5 font-medium hover:bg-slate-700"
+                className="flex items-center gap-2 rounded-md bg-blue-200/20 px-3 py-1.5 font-medium hover:bg-blue-200/10"
               >
                 <DiscordIcon />
                 Discord
@@ -230,7 +230,7 @@ const UI = ({
                 >
                   Lock Esc and WASD
                 </button>
-                <button className="btn" onClick={() => unlockKeys()}>
+                <button className="btn" onClick={unlockKeys}>
                   Release keys
                 </button>
               </div>
