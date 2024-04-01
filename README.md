@@ -435,8 +435,8 @@ Mana Potion provides a few utility functions that are useful for JS gamedev and 
 - [`lerp`](https://tsdocs.dev/docs/@manapotion/core/functions/lerp.html): Linear interpolation.
 - [`clamp`](https://tsdocs.dev/docs/@manapotion/core/functions/clamp.html): Clamps a number between a minimum and a maximum value.
 - [`throttle`](https://tsdocs.dev/docs/@manapotion/core/functions/throttle.html): Throttles a function by a given time in ms.
-- `debounce`: Debounces a function by a given time in ms.
-- `throttleDebounce`: Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
+- [`debounce`](https://tsdocs.dev/docs/@manapotion/core/functions/debounce.html): Debounces a function by a given time in ms.
+- [`throttleDebounce`](https://tsdocs.dev/docs/@manapotion/core/functions/throttleDebounce.html): Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
 
 # Tailwind
 
