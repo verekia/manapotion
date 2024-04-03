@@ -134,11 +134,11 @@ const UI = ({
             <h1 className="text-center text-5xl font-medium sm:text-left">Mana Potion</h1>
             <h2 className="max-w-lg text-pretty text-center text-lg text-gray-300 sm:text-left">
               Toolkit for JavaScript game development and interactive experiences with <b>React</b>,{' '}
-              <a href="https://vue.manapotion.org" target="_blank" className="underline">
+              <a href="https://vue.manapotion.org" className="underline">
                 Vue
               </a>
               ,{' '}
-              <a href="https://svelte.manapotion.org" target="_blank" className="underline">
+              <a href="https://svelte.manapotion.org" className="underline">
                 Svelte
               </a>
               , and vanilla JS support.
