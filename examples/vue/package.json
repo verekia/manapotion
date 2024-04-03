@@ -1,7 +1,7 @@
 {
   "name": "example-vue",
   "private": true,
-  "version": "0.24.0-alpha.0",
+  "version": "0.24.0-alpha.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,7 @@
     "publint": ""
   },
   "dependencies": {
-    "@manapotion/vue": "^0.24.0-alpha.0",
+    "@manapotion/vue": "^0.24.0-alpha.1",
     "vue": "^3.4.21"
   },
   "devDependencies": {
