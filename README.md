@@ -301,7 +301,7 @@ useAnimationFrame(({ delta, elapsed }) => {
 </script>
 
 <template>
-  <div :ref="playerRef">Player</div>
+  <div ref="playerRef">Player</div>
 </template>
 ```
 

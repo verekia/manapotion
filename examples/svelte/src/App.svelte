@@ -59,9 +59,12 @@
     <div class="flex flex-col gap-3">
       <h1 class="text-center text-5xl font-medium sm:text-left">Mana Potion</h1>
       <h2 class="max-w-lg text-pretty text-center text-lg text-gray-300 sm:text-left">
-        Toolkit for JavaScript game development and interactive experiences with React, Vue, <b
-          >Svelte</b
-        >, and vanilla JS support.
+        Toolkit for JavaScript game development and interactive experiences with <a
+          class="underline"
+          target="blank"
+          href="https://manapotion.org">React</a
+        >, <a class="underline" target="blank" href="https://vue.manapotion.org">Vue</a>,
+        <b>Svelte</b>, and vanilla JS support.
       </h2>
       <div class="flex items-center justify-center gap-3 sm:justify-start">
         <a
