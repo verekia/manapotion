@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/r3f",
-  "version": "0.24.0-alpha.1",
+  "version": "0.24.0-alpha.2",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -41,7 +41,7 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/react": "^0.24.0-alpha.1"
+    "@manapotion/react": "^0.24.0-alpha.2"
   },
   "peerDependencies": {
     "@react-three/fiber": ">=8.10.0",
