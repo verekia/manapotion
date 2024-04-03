@@ -4,8 +4,10 @@
     Listeners,
     lockKeys,
     lockOrientation,
+    throttle,
     unlockKeys,
     unlockOrientation,
+    useAnimationFrame,
   } from '@manapotion/svelte'
 
   import type { DeviceTypeChangePayload } from '@manapotion/svelte'
@@ -32,6 +34,23 @@
   const handleDTChange = ({ detail }: CustomEvent<DeviceTypeChangePayload>) => {
     console.log('Device type change:', { isDesktop: detail.isDesktop, isMobile: detail.isMobile })
   }
+
+  let windowSizeEl: HTMLSpanElement
+  let mousePosEl: HTMLSpanElement
+  let mouseMoveEl: HTMLSpanElement
+  let scrollYEl: HTMLSpanElement
+  let animationFrameEl: HTMLSpanElement
+  let animationFrameThrottledEl: HTMLSpanElement
+
+  useAnimationFrame(({ elapsed }) => {
+    animationFrameEl.textContent = String(elapsed)
+  })
+
+  useAnimationFrame(
+    throttle(({ elapsed }) => {
+      animationFrameThrottledEl.textContent = String(elapsed)
+    }, 100),
+  )
 </script>
 
 <main class="mx-auto max-w-7xl px-5 pb-16 pt-5" on:contextmenu={e => e.preventDefault()}>
@@ -89,11 +108,11 @@
         <IsFullscreenLabel slot="label" />
         <FullscreenButton slot="extra" />
       </Item>
-      <Item name="isPageFocused">
-        <IsPageFocusedLabel slot="label" />
-      </Item>
       <Item name="isPageVisible">
         <IsPageVisibleLabel slot="label" />
+      </Item>
+      <Item name="isPageFocused">
+        <IsPageFocusedLabel slot="label" />
       </Item>
       <Item name="isDesktop">
         <IsDesktopLabel slot="label" />
@@ -108,6 +127,11 @@
       <Item name="isLandscape">
         <IsLandscapeLabel slot="label" />
         <span slot="extra" class="text-sm">Ratio-based</span>
+      </Item>
+      <Item name="width,height" isReactive={false}>
+        <svelte:fragment slot="value">
+          <span class="tabular-nums" bind:this={windowSizeEl} />
+        </svelte:fragment>
       </Item>
       <div class="mt-2">
         <h2>Force mobile orientation (use after fullscreen)</h2>
@@ -142,13 +166,91 @@
       <Item name="buttons.right">
         <RightMouseButtonLabel slot="label" />
       </Item>
+      <Item name="position" isReactive={false}>
+        <svelte:fragment slot="value">
+          <span class="tabular-nums" bind:this={mousePosEl} />
+        </svelte:fragment>
+      </Item>
+      <Item name="movement" isReactive={false}>
+        <svelte:fragment slot="value">
+          <span class="tabular-nums" bind:this={mouseMoveEl} />
+        </svelte:fragment>
+      </Item>
+      <Item name="wheel.y" isReactive={false}>
+        <svelte:fragment slot="value">
+          <span class="tabular-nums" bind:this={scrollYEl} />
+        </svelte:fragment>
+      </Item>
     </section>
     <section>
       <h2 class="section-heading">⌨️ Keyboard</h2>
       <KeyboardSection />
     </section>
+    <section>
+      <h2 class="section-heading">🕹️ Virtual joysticks</h2>
+      <div>Svelte support coming soon.</div>
+    </section>
+    <section>
+      <h2 class="section-heading">🔄 Animation loops</h2>
+      <div>
+        useAnimationFrame: <span class="tabular-nums" bind:this={animationFrameEl} />
+      </div>
+      <div>
+        useAnimationFrame (throttled): <span
+          class="tabular-nums"
+          bind:this={animationFrameThrottledEl}
+        />
+      </div>
+    </section>
+    <section>
+      <h2 class="section-heading">🍃 Tailwind</h2>
+      <div>
+        <div>
+          Current width range:
+          <span class="hidden max-5xs:inline">5xs and below</span>
+          <span class="hidden 5xs:max-4xs:inline">5xs to 4xs</span>
+          <span class="hidden 4xs:max-3xs:inline">4xs to 3xs</span>
+          <span class="hidden 3xs:max-2xs:inline">3xs to 2xs</span>
+          <span class="hidden 2xs:max-xs:inline">2xs to xs</span>
+          <span class="hidden xs:max-sm:inline">xs to sm</span>
+          <span class="hidden sm:max-md:inline">sm to md</span>
+          <span class="hidden md:max-lg:inline">md to lg</span>
+          <span class="hidden lg:max-xl:inline">lg to xl</span>
+          <span class="hidden xl:max-2xl:inline">xl to 2xl</span>
+          <span class="hidden 2xl:max-3xl:inline">2xl to 3xl</span>
+          <span class="hidden 3xl:max-4xl:inline">3xl to 4xl</span>
+          <span class="hidden 4xl:max-5xl:inline">4xl to 5xl</span>
+          <span class="hidden 5xl:inline">5xl and up</span>
+        </div>
+        <div>
+          Current height range:
+          <span class="hidden max-5xs-h:inline">5xs and below</span>
+          <span class="hidden 5xs-h:max-4xs-h:inline">5xs to 4xs</span>
+          <span class="hidden 4xs-h:max-3xs-h:inline">4xs to 3xs</span>
+          <span class="hidden 3xs-h:max-2xs-h:inline">3xs to 2xs</span>
+          <span class="hidden 2xs-h:max-xs-h:inline">2xs to xs</span>
+          <span class="hidden xs-h:max-sm-h:inline">xs to sm</span>
+          <span class="hidden sm-h:max-md-h:inline">sm to md</span>
+          <span class="hidden md-h:max-lg-h:inline">md to lg</span>
+          <span class="hidden lg-h:max-xl-h:inline">lg to xl</span>
+          <span class="hidden xl-h:max-2xl-h:inline">xl to 2xl</span>
+          <span class="hidden 2xl-h:max-3xl-h:inline">2xl to 3xl</span>
+          <span class="hidden 3xl-h:max-4xl-h:inline">3xl to 4xl</span>
+          <span class="hidden 4xl-h:max-5xl-h:inline">4xl to 5xl</span>
+          <span class="hidden 5xl-h:inline">5xl and up</span>
+        </div>
+      </div>
+    </section>
   </div>
 
   <DeviceTypeListener on:deviceTypeChange={handleDTChange} />
-  <Listeners on:keyDown={e => console.log(e.detail)} />
+  <Listeners
+    on:keyDown={e => console.log(e.detail)}
+    on:resize={e => (windowSizeEl.textContent = `${e.detail.width}x${e.detail.height}`)}
+    on:mouseMove={e => {
+      mousePosEl.textContent = `${e.detail.position.x} ${e.detail.position.y}`
+      mouseMoveEl.textContent = `${e.detail.movement.x} ${e.detail.movement.y}`
+    }}
+    on:scroll={e => (scrollYEl.textContent = String(Math.round(e.detail.y)))}
+  />
 </main>

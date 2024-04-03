@@ -101,21 +101,15 @@ const KeyboardSection = () => {
 }
 
 const UI = ({
-  liveMouseXRef,
-  liveMouseYRef,
-  liveMouseMovementXRef,
-  liveMouseMovementYRef,
-  liveWidthRef,
-  liveHeightRef,
-  liveScrollYRef,
+  mousePosRef,
+  mouseMoveRef,
+  windowSizeRef,
+  scrollYRef,
 }: {
-  liveMouseXRef: RefObject<HTMLSpanElement>
-  liveMouseYRef: RefObject<HTMLSpanElement>
-  liveMouseMovementXRef: RefObject<HTMLSpanElement>
-  liveMouseMovementYRef: RefObject<HTMLSpanElement>
-  liveWidthRef: RefObject<HTMLSpanElement>
-  liveHeightRef: RefObject<HTMLSpanElement>
-  liveScrollYRef: RefObject<HTMLDivElement>
+  mousePosRef: RefObject<HTMLSpanElement>
+  mouseMoveRef: RefObject<HTMLSpanElement>
+  windowSizeRef: RefObject<HTMLSpanElement>
+  scrollYRef: RefObject<HTMLDivElement>
 }) => {
   const animationFrameRef = useRef<HTMLSpanElement>(null)
   const animationFrameThrottledRef = useRef<HTMLSpanElement>(null)
@@ -201,11 +195,7 @@ const UI = ({
             <Item
               isReactive={false}
               name="width,height"
-              value={
-                <>
-                  <span ref={liveWidthRef} />x<span ref={liveHeightRef} />
-                </>
-              }
+              value={<span className="tabular-nums" ref={windowSizeRef} />}
             />
             <div className="mt-2">
               <h2>Force mobile orientation (use after fullscreen)</h2>
@@ -245,27 +235,17 @@ const UI = ({
             <Item
               isReactive={false}
               name="position"
-              value={
-                <>
-                  <span className="tabular-nums" ref={liveMouseXRef} />{' '}
-                  <span className="tabular-nums" ref={liveMouseYRef} />
-                </>
-              }
+              value={<span className="tabular-nums" ref={mousePosRef} />}
             />
             <Item
               isReactive={false}
               name="movement"
-              value={
-                <>
-                  <span className="tabular-nums" ref={liveMouseMovementXRef} />{' '}
-                  <span className="tabular-nums" ref={liveMouseMovementYRef} />
-                </>
-              }
+              value={<span className="tabular-nums" ref={mouseMoveRef} />}
             />
             <Item
               isReactive={false}
               name="wheel.y"
-              value={<span className="tabular-nums" ref={liveScrollYRef} />}
+              value={<span className="tabular-nums" ref={scrollYRef} />}
             />
           </section>
           <section>
@@ -347,24 +327,18 @@ const UI = ({
 
 const App = () => {
   const eventNotificationRef = useRef<EventNotificationActions>(null)
-  const liveMouseXRef = useRef<HTMLSpanElement>(null)
-  const liveMouseYRef = useRef<HTMLSpanElement>(null)
-  const liveMouseMovementXRef = useRef<HTMLSpanElement>(null)
-  const liveMouseMovementYRef = useRef<HTMLSpanElement>(null)
-  const liveWidthRef = useRef<HTMLSpanElement>(null)
-  const liveHeightRef = useRef<HTMLSpanElement>(null)
-  const liveScrollYRef = useRef<HTMLDivElement>(null)
+  const mousePosRef = useRef<HTMLSpanElement>(null)
+  const mouseMoveRef = useRef<HTMLSpanElement>(null)
+  const windowSizeRef = useRef<HTMLSpanElement>(null)
+  const scrollYRef = useRef<HTMLDivElement>(null)
 
   return (
     <>
       <UI
-        liveMouseXRef={liveMouseXRef}
-        liveMouseYRef={liveMouseYRef}
-        liveMouseMovementXRef={liveMouseMovementXRef}
-        liveMouseMovementYRef={liveMouseMovementYRef}
-        liveWidthRef={liveWidthRef}
-        liveHeightRef={liveHeightRef}
-        liveScrollYRef={liveScrollYRef}
+        mousePosRef={mousePosRef}
+        mouseMoveRef={mouseMoveRef}
+        windowSizeRef={windowSizeRef}
+        scrollYRef={scrollYRef}
       />
       {false && <EventNotification ref={eventNotificationRef} />}
       <Listeners
@@ -381,10 +355,8 @@ const App = () => {
           console.log(
             `onMouseMove – x: ${position.x}, y: ${position.y}, movementX: ${movement.x}, movementY: ${movement.y}`,
           )
-          liveMouseXRef.current!.textContent = String(position.x)
-          liveMouseYRef.current!.textContent = String(position.y)
-          liveMouseMovementXRef.current!.textContent = String(movement.x)
-          liveMouseMovementYRef.current!.textContent = String(movement.y)
+          mousePosRef.current!.textContent = `${position.x} ${position.y}`
+          mouseMoveRef.current!.textContent = `${movement.x} ${movement.y}`
         }}
         onDeviceTypeChange={({ isDesktop, isMobile }) =>
           console.log(`onDeviceTypeChange – isDesktop: ${isDesktop}, isMobile: ${isMobile}`)
@@ -403,10 +375,10 @@ const App = () => {
         onLeftMouseButtonUp={() => console.log('onLeftMouseButtonUp')}
         onMiddleMouseButtonUp={() => console.log('onMiddleMouseUp')}
         onRightMouseButtonUp={() => console.log('onRightMouseButtonUp')}
-        onScroll={({ wheel }) => {
-          const rounded = Math.round(wheel.y)
+        onScroll={({ y }) => {
+          const rounded = Math.round(y)
           console.log(`onScroll – deltaY: ${rounded}`)
-          liveScrollYRef.current!.textContent = String(rounded)
+          scrollYRef.current!.textContent = String(rounded)
         }}
         onPageFocusChange={() => {
           resetKeyboard()
@@ -418,8 +390,7 @@ const App = () => {
         }}
         onResize={({ width, height }) => {
           console.log(`onResize – width: ${width}, height: ${height}`)
-          liveWidthRef.current!.textContent = String(width)
-          liveHeightRef.current!.textContent = String(height)
+          windowSizeRef.current!.textContent = `${width}x${height}`
         }}
       />
     </>

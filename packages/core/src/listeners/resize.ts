@@ -19,9 +19,8 @@ export const mountResizeListener = ({ onResize }: ResizeListenerProps) => {
 
     browser.width = width
     browser.height = height
-
-    payload.width = width
-    payload.height = height
+    payload.width = browser.width
+    payload.height = browser.height
 
     onResize?.(payload)
   }
