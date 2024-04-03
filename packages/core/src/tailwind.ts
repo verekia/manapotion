@@ -77,4 +77,4 @@ const extendScreens = {
   desktop: { raw: '(hover: hover) and (pointer: fine)' },
 }
 
-export const theme = { screens, extend: { screens: extendScreens } }
+export const tailwindTheme = { screens, extend: { screens: extendScreens } }

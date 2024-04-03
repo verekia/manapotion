@@ -1,13 +1,13 @@
-import { theme } from '@manapotion/tailwind'
+import { tailwindTheme as manapotionTheme } from '@manapotion/vue'
 
 import type { Config } from 'tailwindcss'
 
 export default {
   content: ['./index.html', './src/**/*.vue'],
   theme: {
-    screens: theme.screens,
+    screens: manapotionTheme.screens,
     extend: {
-      screens: theme.extend.screens,
+      screens: manapotionTheme.extend.screens,
     },
   },
   plugins: [],

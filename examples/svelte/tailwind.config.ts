@@ -1,13 +1,15 @@
-import { theme } from '@manapotion/tailwind'
+// For some reason, Prettier chokes on importing the theme from @manapotion/svelte
+// Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: No "exports" main defined
+import { tailwindTheme as manapotionTheme } from '@manapotion/core'
 
 import type { Config } from 'tailwindcss'
 
 export default {
   content: ['./index.html', './src/**/*.svelte'],
   theme: {
-    screens: theme.screens,
+    screens: manapotionTheme.screens,
     extend: {
-      screens: theme.extend.screens,
+      screens: manapotionTheme.extend.screens,
     },
   },
   plugins: [],

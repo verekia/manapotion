@@ -440,7 +440,7 @@ Mana Potion provides a few utility functions that are useful for JS gamedev and 
 
 # Tailwind
 
-**`@manapotion/tailwind`** is a package that needs to be installed separately and provides a theme containing the following `screens` breakpoints:
+Mana Potion provides a Tailwind theme containing the following `screens` breakpoints:
 
 - 5xs: 192px
 - 4xs: 256px
@@ -473,14 +473,14 @@ To add the theme to your Tailwind config:
 
 ```js
 /** @type {import('tailwindcss').Config} */
-import { theme } from '@manapotion/tailwind'
+import { tailwindTheme as manapotionTheme } from '@manapotion/react' // or /vue, /svelte, /vanilla
 
 export default {
   content: ['./index.html', './src/**/*.tsx'],
   theme: {
-    screens: theme.screens,
+    screens: manapotionTheme.screens,
     extend: {
-      screens: theme.extend.screens,
+      screens: manapotionTheme.extend.screens,
     },
   },
 }

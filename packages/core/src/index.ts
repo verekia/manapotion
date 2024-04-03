@@ -5,6 +5,7 @@ export * from './stores/joysticksStore'
 export * from './loops'
 export * from './browser'
 export * from './util'
+export * from './tailwind'
 
 export * from './listeners/devicetype'
 export * from './listeners/fullscreen'
