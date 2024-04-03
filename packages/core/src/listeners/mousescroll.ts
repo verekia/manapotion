@@ -15,7 +15,7 @@ type Mutable<T> = {
 
 export const mountMouseScrollListener = ({
   onScroll,
-  mouseScrollResetDelay,
+  mouseScrollResetDelay = 100,
 }: MouseScrollListenerProps) => {
   const payload = { y: 0 }
 

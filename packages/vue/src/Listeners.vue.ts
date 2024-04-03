@@ -34,8 +34,10 @@ import { ScreenOrientationListener } from './listeners/ScreenOrientationListener
 
 export const Listeners = defineComponent({
   props: {
-    mouseMovementResetDelay: { type: Number, default: 30 },
-    mouseScrollResetDelay: { type: Number, default: 100 },
+    // eslint-disable-next-line vue/require-default-prop
+    mouseMovementResetDelay: { type: Number },
+    // eslint-disable-next-line vue/require-default-prop
+    mouseScrollResetDelay: { type: Number },
   },
   emits: {
     mouseMove: (payload: MouseMovePayload) => payload,

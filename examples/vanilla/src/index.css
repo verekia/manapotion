@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.section-heading {
+  @apply mb-3 text-2xl;
+}
+
+.label {
+  @apply inline-block w-9 rounded text-center text-sm;
+}
+
+.label--positive {
+  @apply bg-green-200 text-green-800;
+}
+
+.label--negative {
+  @apply bg-red-200 text-red-800;
+}
+
+.label--unknown {
+  @apply bg-gray-200 text-gray-800;
+}
+
+.item {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.item--main {
+  @apply flex flex-row-reverse items-center justify-between gap-2 2xs:w-48 2xs:flex-row;
+}
+
+.item--name {
+  @apply font-mono text-sm;
+}
+
+.btn {
+  @apply inline-block rounded bg-white/15 px-2 py-1 text-sm text-white hover:bg-white/5;
+}

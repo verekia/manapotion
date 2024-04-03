@@ -53,8 +53,8 @@
     screenOrientationChange: ScreenOrientationChangePayload
   }>()
 
-  export let mouseScrollResetDelay = 100
-  export let mouseMovementResetDelay = 30
+  export let mouseScrollResetDelay: number
+  export let mouseMovementResetDelay: number
 </script>
 
 <DeviceTypeListener on:deviceTypeChange={e => dispatch('deviceTypeChange', e.detail)} />

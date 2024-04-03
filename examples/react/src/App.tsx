@@ -291,8 +291,7 @@ const UI = ({
             <h2 className="section-heading">🍃 Tailwind</h2>
             <div>
               <div>
-                Current width range:
-                <span className="hidden max-5xs:inline">5xs and below</span>
+                Current width range: <span className="hidden max-5xs:inline">5xs and below</span>
                 <span className="hidden 5xs:max-4xs:inline">5xs to 4xs</span>
                 <span className="hidden 4xs:max-3xs:inline">4xs to 3xs</span>
                 <span className="hidden 3xs:max-2xs:inline">3xs to 2xs</span>
@@ -308,8 +307,7 @@ const UI = ({
                 <span className="hidden 5xl:inline">5xl and up</span>
               </div>
               <div>
-                Current height range:
-                <span className="hidden max-5xs-h:inline">5xs and below</span>
+                Current height range: <span className="hidden max-5xs-h:inline">5xs and below</span>
                 <span className="hidden 5xs-h:max-4xs-h:inline">5xs to 4xs</span>
                 <span className="hidden 4xs-h:max-3xs-h:inline">4xs to 3xs</span>
                 <span className="hidden 3xs-h:max-2xs-h:inline">3xs to 2xs</span>

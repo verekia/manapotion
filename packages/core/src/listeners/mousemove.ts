@@ -18,7 +18,7 @@ type Mutable<T> = {
 
 export const mountMouseMoveListener = ({
   onMouseMove,
-  mouseMovementResetDelay,
+  mouseMovementResetDelay = 30,
 }: MouseMoveListenerProps) => {
   const payload = { position: { x: 0, y: 0 }, movement: { x: 0, y: 0 } }
 

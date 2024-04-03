@@ -3,7 +3,8 @@ import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 import { mountMouseMoveListener, MouseMovePayload } from '@manapotion/core'
 
 export const MouseMoveListener = defineComponent({
-  props: { mouseMovementResetDelay: { type: Number, default: 30 } },
+  // eslint-disable-next-line vue/require-default-prop
+  props: { mouseMovementResetDelay: { type: Number } },
   emits: { mouseMove: (payload: MouseMovePayload) => payload },
   setup: (props, { emit }) => {
     onMounted(() => {

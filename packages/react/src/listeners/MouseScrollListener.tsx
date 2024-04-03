@@ -4,7 +4,7 @@ import { mountMouseScrollListener, MouseScrollListenerProps } from '@manapotion/
 
 export const MouseScrollListener = ({
   onScroll,
-  mouseScrollResetDelay = 100,
+  mouseScrollResetDelay,
 }: MouseScrollListenerProps) => {
   useEffect(
     () => mountMouseScrollListener({ onScroll, mouseScrollResetDelay }),

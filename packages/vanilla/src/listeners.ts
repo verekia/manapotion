@@ -2,14 +2,13 @@ import {
   DeviceTypeListenerProps,
   FullscreenListenerProps,
   KeyboardListenerProps,
-  mountBlurListener,
   mountDeviceTypeListener,
-  mountFocusListener,
   mountFullscreenListener,
   mountKeyboardListener,
   mountMouseButtonsListener,
   mountMouseMoveListener,
   mountMouseScrollListener,
+  mountPageFocusListener,
   mountPageVisibilityListener,
   mountPointerLockListener,
   mountResizeListener,
@@ -58,8 +57,7 @@ export const listeners = ({
   onKeyUp,
 }: ListenersProps) => {
   const unsubDeviceType = mountDeviceTypeListener({ onDeviceTypeChange })
-  const unsubBlur = mountBlurListener({ onPageFocusChange })
-  const unsubFocus = mountFocusListener({ onPageFocusChange })
+  const unsubPageFocus = mountPageFocusListener({ onPageFocusChange })
   const unsubFullscreen = mountFullscreenListener({ onFullscreenChange })
   const unsubMouseButtons = mountMouseButtonsListener({
     onLeftMouseButtonDown,
@@ -79,8 +77,7 @@ export const listeners = ({
 
   return () => {
     unsubDeviceType()
-    unsubBlur()
-    unsubFocus()
+    unsubPageFocus()
     unsubFullscreen()
     unsubMouseButtons()
     unsubMouseMove()
