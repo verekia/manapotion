@@ -1,8 +1,15 @@
 import { useEffect } from 'react'
 
-import { FrameCallback, startAnimationFrame } from '@manapotion/core'
+import {
+  AnimationFrameCallback,
+  AnimationFrameOptions,
+  startAnimationFrame,
+} from '@manapotion/core'
 
-export const useAnimationFrame = (callback: FrameCallback) => {
+export const useAnimationFrame = (
+  callback: AnimationFrameCallback,
+  options?: AnimationFrameOptions,
+) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => startAnimationFrame(callback), [])
+  useEffect(() => startAnimationFrame(callback, options), [])
 }

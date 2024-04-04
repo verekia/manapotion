@@ -14,7 +14,6 @@ The library consists of:
 - [**Animation loops**](#animation-loops)
 - [**Headless virtual joysticks**](#virtual-joysticks)
 - [**Browser API helpers**](#browser-api-helpers)
-- [**General math and gamedev utilities**](#utilities)
 - [**Tailwind media queries**](#tailwind)
 - [**Extra hooks for React Three Fiber**](#react-three-fiber)
 
@@ -22,7 +21,7 @@ The library consists of:
 
 ## Demos
 
-Check out the [**React**](https://manapotion.org/), [**Vue**](https://vue.manapotion.org/), [**Svelte**](https://svelte.manapotion.org/), and <a href="https://vanilla.manapotion.org/" target="_blank"><b>vanilla JS</b></a> demos.
+Check out the [**React**](https://manapotion.org/), [**Vue**](https://vue.manapotion.org/), [**Svelte**](https://svelte.manapotion.org/), and [**vanilla JS**](https://vanilla.manapotion.org/) demos.
 
 ## Installation
 
@@ -339,6 +338,19 @@ const unsub = startAnimationFrame(({ delta, elapsed }) => {
 // call unsub() to stop the animation loop
 ```
 
+### Throttling
+
+You can throttle the animation loop by passing a `throttle` option to `useAnimationFrame`/`startAnimationFrame`:
+
+```jsx
+useAnimationFrame(
+  ({ delta, elapsed }) => {
+    // Your animation loop
+  },
+  { throttle: 1000 } // ms
+)
+```
+
 ## Virtual joysticks
 
 ⚠️ React-only for now ⚠️
@@ -431,16 +443,6 @@ const FullscreenButton = () => {
 ```
 
 **Note**: Locking keys is a [Chrome experimental feature](https://developer.chrome.com/blog/better-full-screen-mode) to maintain fullscreen when players press Esc (they have to hold it instead). It lets games show in-game dialogs that players can close with Esc without leaving fullscreen.
-
-# Utilities
-
-Mana Potion provides a few utility functions that are useful for JS gamedev and animations in general.
-
-- [`lerp`](https://tsdocs.dev/docs/@manapotion/core/functions/lerp.html): Linear interpolation.
-- [`clamp`](https://tsdocs.dev/docs/@manapotion/core/functions/clamp.html): Clamps a number between a minimum and a maximum value.
-- [`throttle`](https://tsdocs.dev/docs/@manapotion/core/functions/throttle.html): Throttles a function by a given time in ms.
-- [`debounce`](https://tsdocs.dev/docs/@manapotion/core/functions/debounce.html): Debounces a function by a given time in ms.
-- [`throttleDebounce`](https://tsdocs.dev/docs/@manapotion/core/functions/throttleDebounce.html): Throttles a function by a given time in ms, but also makes a final call to it after the throttle time has passed.
 
 # Tailwind
 

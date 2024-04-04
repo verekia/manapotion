@@ -24,7 +24,6 @@ import {
   RightMouseButtonUpPayload,
   ScreenOrientationChangePayload,
   startAnimationFrame,
-  throttle,
   unlockKeys,
   unlockOrientation,
   unlockPointer,
@@ -189,10 +188,11 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   startAnimationFrame(
-    throttle(({ elapsed }) => {
+    ({ elapsed }) => {
       const el = document.getElementById('animationFrameThrottled')!
       el.textContent = String(elapsed)
-    }),
+    },
+    { throttle: 100 },
   )
 })
 

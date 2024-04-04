@@ -1,10 +1,17 @@
 import { onMounted, onUnmounted } from 'vue'
 
-import { FrameCallback, startAnimationFrame } from '@manapotion/core'
+import {
+  AnimationFrameCallback,
+  AnimationFrameOptions,
+  startAnimationFrame,
+} from '@manapotion/core'
 
-export const useAnimationFrame = (callback: FrameCallback) => {
+export const useAnimationFrame = (
+  callback: AnimationFrameCallback,
+  options?: AnimationFrameOptions,
+) => {
   onMounted(() => {
-    const unsub = startAnimationFrame(callback)
+    const unsub = startAnimationFrame(callback, options)
     onUnmounted(unsub)
   })
 }

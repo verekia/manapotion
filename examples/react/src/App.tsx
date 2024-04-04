@@ -1,14 +1,11 @@
 import { ForwardedRef, forwardRef, RefObject, useImperativeHandle, useRef, useState } from 'react'
 
 import {
-  debounce,
   Listeners,
   lockKeys,
   lockOrientation,
   resetKeyboard,
   resetMouse,
-  throttle,
-  throttleDebounce,
   unlockKeys,
   unlockOrientation,
   useAnimationFrame,
@@ -38,13 +35,6 @@ import {
 } from './components/mouse-labels'
 import TwitterIcon from './components/TwitterIcon'
 import MobileJoystick from './MobileJoystick'
-
-export const throttledHello = throttle((...args) => console.log('throttledHello', ...args), 1000)
-export const debouncedHello = debounce((...args) => console.log('debouncedHello', ...args), 1000)
-export const throttledDebouncedHello = throttleDebounce(
-  (...args) => console.log('throttledDebouncedHello', ...args),
-  1000,
-)
 
 interface EventNotificationActions {
   setMessage: (message: string) => void
@@ -120,9 +110,10 @@ const UI = ({
   })
 
   useAnimationFrame(
-    throttle(({ elapsed }) => {
+    ({ elapsed }) => {
       animationFrameThrottledRef.current!.textContent = String(elapsed)
-    }, 100),
+    },
+    { throttle: 100 },
   )
 
   return (

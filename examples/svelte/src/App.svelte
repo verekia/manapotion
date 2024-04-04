@@ -4,7 +4,6 @@
     Listeners,
     lockKeys,
     lockOrientation,
-    throttle,
     unlockKeys,
     unlockOrientation,
     useAnimationFrame,
@@ -47,9 +46,10 @@
   })
 
   useAnimationFrame(
-    throttle(({ elapsed }) => {
+    ({ elapsed }) => {
       animationFrameThrottledEl.textContent = String(elapsed)
-    }, 100),
+    },
+    { throttle: 100 },
   )
 </script>
 
