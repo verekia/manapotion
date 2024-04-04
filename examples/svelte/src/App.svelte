@@ -63,7 +63,8 @@
           class="underline"
           href="https://manapotion.org">React</a
         >, <a class="underline" href="https://vue.manapotion.org">Vue</a>,
-        <b>Svelte</b>, and vanilla JS support.
+        <b>Svelte</b>, and <a class="underline" href="https://vanilla.manapotion.org">vanilla JS</a>
+        support.
       </h2>
       <div class="flex items-center justify-center gap-3 sm:justify-start">
         <a

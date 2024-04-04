@@ -23,6 +23,8 @@ import {
   RightMouseButtonDownPayload,
   RightMouseButtonUpPayload,
   ScreenOrientationChangePayload,
+  startAnimationFrame,
+  throttle,
   unlockKeys,
   unlockOrientation,
   unlockPointer,
@@ -180,6 +182,18 @@ document.addEventListener('DOMContentLoaded', () => {
     onKeyDown: updateKeyboard,
     onKeyUp: updateKeyboard,
   })
+
+  startAnimationFrame(({ elapsed }) => {
+    const el = document.getElementById('animationFrame')!
+    el.textContent = String(elapsed)
+  })
+
+  startAnimationFrame(
+    throttle(({ elapsed }) => {
+      const el = document.getElementById('animationFrameThrottled')!
+      el.textContent = String(elapsed)
+    }),
+  )
 })
 
 // @ts-expect-error should define this function in the global scope
@@ -367,6 +381,57 @@ export const App = html`
           name: 'meta',
           label: html`<span id="meta"></span>`,
         })}
+      </section>
+      <section>
+        <h2 class="section-heading">🕹️ Virtual joysticks</h2>
+        <div>Vanilla support coming soon.</div>
+      </section>
+      <section>
+        <h2 class="section-heading">🔄 Animation loops</h2>
+        <div>useAnimationFrame: <span id="animationFrame" class="tabular-nums"></span></div>
+        <div>
+          useAnimationFrame (throttled):
+          <span id="animationFrameThrottled" class="tabular-nums"></span>
+        </div>
+      </section>
+      <section>
+        <h2 class="section-heading">🍃 Tailwind</h2>
+        <div>
+          <div>
+            Current width range:
+            <span class="hidden max-5xs:inline">5xs and below</span>
+            <span class="hidden 5xs:max-4xs:inline">5xs to 4xs</span>
+            <span class="hidden 4xs:max-3xs:inline">4xs to 3xs</span>
+            <span class="hidden 3xs:max-2xs:inline">3xs to 2xs</span>
+            <span class="hidden 2xs:max-xs:inline">2xs to xs</span>
+            <span class="hidden xs:max-sm:inline">xs to sm</span>
+            <span class="hidden sm:max-md:inline">sm to md</span>
+            <span class="hidden md:max-lg:inline">md to lg</span>
+            <span class="hidden lg:max-xl:inline">lg to xl</span>
+            <span class="hidden xl:max-2xl:inline">xl to 2xl</span>
+            <span class="hidden 2xl:max-3xl:inline">2xl to 3xl</span>
+            <span class="hidden 3xl:max-4xl:inline">3xl to 4xl</span>
+            <span class="hidden 4xl:max-5xl:inline">4xl to 5xl</span>
+            <span class="hidden 5xl:inline">5xl and up</span>
+          </div>
+          <div>
+            Current height range:
+            <span class="hidden max-5xs-h:inline">5xs and below</span>
+            <span class="hidden 5xs-h:max-4xs-h:inline">5xs to 4xs</span>
+            <span class="hidden 4xs-h:max-3xs-h:inline">4xs to 3xs</span>
+            <span class="hidden 3xs-h:max-2xs-h:inline">3xs to 2xs</span>
+            <span class="hidden 2xs-h:max-xs-h:inline">2xs to xs</span>
+            <span class="hidden xs-h:max-sm-h:inline">xs to sm</span>
+            <span class="hidden sm-h:max-md-h:inline">sm to md</span>
+            <span class="hidden md-h:max-lg-h:inline">md to lg</span>
+            <span class="hidden lg-h:max-xl-h:inline">lg to xl</span>
+            <span class="hidden xl-h:max-2xl-h:inline">xl to 2xl</span>
+            <span class="hidden 2xl-h:max-3xl-h:inline">2xl to 3xl</span>
+            <span class="hidden 3xl-h:max-4xl-h:inline">3xl to 4xl</span>
+            <span class="hidden 4xl-h:max-5xl-h:inline">4xl to 5xl</span>
+            <span class="hidden 5xl-h:inline">5xl and up</span>
+          </div>
+        </div>
       </section>
     </div>
   </main>

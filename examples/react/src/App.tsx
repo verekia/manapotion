@@ -141,7 +141,11 @@ const UI = ({
               <a href="https://svelte.manapotion.org" className="underline">
                 Svelte
               </a>
-              , and vanilla JS support.
+              , and{' '}
+              <a href="https://vanilla.manapotion.org" className="underline">
+                vanilla JS
+              </a>{' '}
+              support.
             </h2>
             <div className="flex items-center justify-center gap-3 sm:justify-start">
               <a

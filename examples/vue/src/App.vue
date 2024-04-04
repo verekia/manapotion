@@ -57,7 +57,8 @@ useAnimationFrame(
         <h2 class="max-w-lg text-pretty text-center text-lg text-gray-200 sm:text-left">
           Toolkit for JavaScript game development and interactive experiences with
           <a class="underline" href="https://manapotion.org">React</a>, <b>Vue</b>,
-          <a class="underline" href="https://svelte.manapotion.org">Svelte</a>, and vanilla JS
+          <a class="underline" href="https://svelte.manapotion.org">Svelte</a>, and
+          <a class="underline" href="https://vanilla.manapotion.org">vanilla JS</a>
           support.
         </h2>
         <div class="flex items-center justify-center gap-3 sm:justify-start">
