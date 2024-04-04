@@ -38,7 +38,7 @@ Add `<Listeners />` somewhere in your app:
 **React, Vue, Svelte**
 
 ```jsx
-import { Listeners } from '@manapotion/react' // or /vue, /svelte
+import { Listeners } from '@manapotion/react' // or vue, svelte
 
 const App = () => (
   <>
@@ -63,7 +63,7 @@ This will automatically give you access to some reactive and non-reactive variab
 🗿 **Non-reactive** variables may be frequently updated and should be accessed imperatively in your main loop or in event handlers via `getMouse`, `getKeyboard`, and `getBrowser`:
 
 ```jsx
-import { getMouse, getKeyboard, getBrowser } from '@manapotion/react' // or /vue, /svelte, or /vanilla
+import { getMouse, getKeyboard, getBrowser } from '@manapotion/react' // or vue, svelte, vanilla
 
 const animate = () => {
   const { right } = getMouse().buttons
@@ -347,7 +347,7 @@ useAnimationFrame(
   ({ delta, elapsed }) => {
     // Your animation loop
   },
-  { throttle: 1000 } // ms
+  { throttle: 100 } // ms
 )
 ```
 
@@ -479,7 +479,7 @@ To add the theme to your Tailwind config:
 
 ```js
 /** @type {import('tailwindcss').Config} */
-import { tailwindTheme as manapotionTheme } from '@manapotion/react' // or /vue, /svelte, /vanilla
+import { tailwindTheme as manapotionTheme } from '@manapotion/react' // or vue, svelte, vanilla
 
 export default {
   content: ['./index.html', './src/**/*.tsx'],
@@ -517,6 +517,11 @@ const Scene = () => {
 ```
 
 You can use `useFrameEffect` to animate your UI outside of the `Canvas`.
+
+## General tips
+
+- Clamp your device pixel ratio from 1 to 1.5. The sharpness of a DPR of 2 or more for high-density screens is not worth the performance hit.
+- On mobile, clamp your frame rate to 60 FPS. It will prevent high-framerate devices from overheating and saves battery life.
 
 ## Community
 
