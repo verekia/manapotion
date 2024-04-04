@@ -90,7 +90,7 @@ useAnimationFrame(
     </div>
 
     <div class="mt-10 text-gray-200">
-      <div>⚡️ <b>Reactive</b> (re-renders components on changes)</div>
+      <div>⚡️ <b>Reactive</b> (subscribed components react to changes)</div>
       <div>🗿 <b>Non-reactive</b> (managed by events or animation frame)</div>
     </div>
 

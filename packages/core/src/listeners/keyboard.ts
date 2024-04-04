@@ -32,6 +32,15 @@ export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerPr
       return
     }
 
+    keyboardStore.setState(s => ({
+      ...s,
+      codes: { ...s.codes, [code]: true },
+      keys: { ...s.keys, [key]: true },
+      ctrl: e.ctrlKey,
+      shift: e.shiftKey,
+      alt: e.altKey,
+      meta: e.metaKey,
+    }))
     onKeyDown?.({
       code,
       key,
@@ -39,16 +48,6 @@ export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerPr
       shift: e.shiftKey,
       alt: e.altKey,
       meta: e.metaKey,
-    })
-    keyboardStore.setState(s => {
-      const newKeyboard: Mutable<Keyboard> = { ...s, codes: { ...s.codes }, keys: { ...s.keys } }
-      newKeyboard.codes[code] = true
-      newKeyboard.keys[key] = true
-      newKeyboard.ctrl = e.ctrlKey
-      newKeyboard.shift = e.shiftKey
-      newKeyboard.alt = e.altKey
-      newKeyboard.meta = e.metaKey
-      return newKeyboard
     })
   }
 
@@ -59,6 +58,7 @@ export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerPr
       delete newKeyboard.keys[e.key]
       delete newKeyboard.keys[e.key.toUpperCase()]
       delete newKeyboard.keys[e.key.toLowerCase()]
+      delete newKeyboard.keys.Dead
       newKeyboard.ctrl = e.ctrlKey
       newKeyboard.shift = e.shiftKey
       newKeyboard.alt = e.altKey

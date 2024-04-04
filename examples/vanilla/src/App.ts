@@ -4,6 +4,7 @@ import {
   exitFullscreen,
   FullscreenChangePayload,
   getBrowser,
+  getKeyboard,
   getMouse,
   LeftMouseButtonDownPayload,
   LeftMouseButtonUpPayload,
@@ -37,7 +38,45 @@ const getLabelValue = (value: boolean) =>
 const getLabelClass = (value: boolean) =>
   `label ${value === true ? 'label--positive' : value === false ? 'label--negative' : 'label--unknown'}`
 
+const updateKeyboard = () => {
+  const { codes, keys, alt, ctrl, meta, shift } = getKeyboard()
+
+  const codesContent = Array.from(Object.keys(codes)).reduce(
+    (acc, code) => `${acc}${acc && ','} ${code}`,
+    '',
+  )
+
+  const keysContent = Array.from(Object.keys(keys)).reduce(
+    (acc, key) => `${acc}${acc && ','} ${key}`,
+    '',
+  )
+
+  const elCodes = document.getElementById('codes')!
+  elCodes.textContent = codesContent
+
+  const elKeys = document.getElementById('keys')!
+  elKeys.textContent = keysContent
+
+  const elCtrl = document.getElementById('ctrl')!
+  elCtrl.textContent = getLabelValue(ctrl)
+  elCtrl.className = getLabelClass(ctrl)
+
+  const elShift = document.getElementById('shift')!
+  elShift.textContent = getLabelValue(shift)
+  elShift.className = getLabelClass(shift)
+
+  const elAlt = document.getElementById('alt')!
+  elAlt.textContent = getLabelValue(alt)
+  elAlt.className = getLabelClass(alt)
+
+  const elMeta = document.getElementById('meta')!
+  elMeta.textContent = getLabelValue(meta)
+  elMeta.className = getLabelClass(meta)
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  updateKeyboard()
+
   const mouseLeft = document.getElementById('mouse-left')!
   mouseLeft.textContent = getLabelValue(false)
   mouseLeft.className = getLabelClass(false)
@@ -138,6 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const el = document.getElementById('mouse-scroll-y')!
       el.textContent = String(Math.round(y))
     },
+    onKeyDown: updateKeyboard,
+    onKeyUp: updateKeyboard,
   })
 })
 
@@ -195,7 +236,7 @@ export const App = html`
       </div>
     </div>
     <div class="mt-10 text-gray-200">
-      <div>⚡️ <b>Reactive</b> (re-renders components on changes)</div>
+      <div>⚡️ <b>Reactive</b> (subscribed components react to changes)</div>
       <div>🗿 <b>Non-reactive</b> (managed by events or animation frame)</div>
     </div>
 
@@ -298,6 +339,33 @@ export const App = html`
         ${Item({
           name: 'wheel.y',
           value: html`<span id="mouse-scroll-y" class="tabular-nums"></span>`,
+        })}
+      </section>
+      <section>
+        <h2 class="section-heading">⌨️ Keyboard</h2>
+        ${Item({
+          name: 'codes',
+          value: html`<span id="codes"></span>`,
+        })}
+        ${Item({
+          name: 'keys',
+          value: html`<span id="keys"></span>`,
+        })}
+        ${Item({
+          name: 'ctrl',
+          label: html`<span id="ctrl"></span>`,
+        })}
+        ${Item({
+          name: 'shift',
+          label: html`<span id="shift"></span>`,
+        })}
+        ${Item({
+          name: 'alt',
+          label: html`<span id="alt"></span>`,
+        })}
+        ${Item({
+          name: 'meta',
+          label: html`<span id="meta"></span>`,
         })}
       </section>
     </div>

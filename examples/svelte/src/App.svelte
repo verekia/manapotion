@@ -96,7 +96,7 @@
 
   <div class="mt-10 text-gray-300">
     <div>
-      ⚡️ <b>Reactive</b> (re-renders components on changes)
+      ⚡️ <b>Reactive</b> (subscribed components react to changes)
     </div>
     <div>
       🗿 <b>Non-reactive</b> (managed by events or animation frame)
