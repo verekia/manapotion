@@ -516,12 +516,22 @@ const Scene = () => {
 }
 ```
 
-You can use `useFrameEffect` to animate your UI outside of the `Canvas`.
+You can use `useFrameEffect` to animate your UI outside of the `Canvas`, but you might want to throttle it with the `throttle` option:
+
+```jsx
+useFrameEffect(
+  ({ delta, elapsed }) => {
+    // Your animation loop
+  },
+  { throttle: 100 } // ms
+)
+```
 
 ## General tips
 
-- Clamp your device pixel ratio from 1 to 1.5. The sharpness of a DPR of 2 or more for high-density screens is not worth the performance hit.
+- Clamp your device pixel ratio from 1 to 1.5. The sharpness of a DPR of 2 or more for high-density screens is not worth the performance hit (at least on mobile).
 - On mobile, clamp your frame rate to 60 FPS. It will prevent high-framerate devices from overheating and saves battery life.
+- If you use Three.js, some [math utilites](https://threejs.org/docs/#api/en/math/MathUtils) such as `clamp`, `lerp`, and `smoothstep` are included in Three.js
 
 ## Community
 

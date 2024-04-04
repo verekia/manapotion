@@ -37,8 +37,10 @@ const MobileJoystick = ({
   return (
     <JoystickArea
       joystick={getJoysticks().movement}
-      {...(mode === 'follow' ? { maxFollowDistance: 50 } : { maxOriginDistance: 50 })}
-      className={`relative z-10 h-48 w-64 rounded-md border border-slate-500 ${className}`}
+      mode={mode}
+      containerProps={{
+        className: `relative z-10 h-48 w-64 rounded-md border border-slate-500 ${className}`,
+      }}
       onStart={handleStart}
       onMove={handleMove}
       onEnd={handleEnd}
