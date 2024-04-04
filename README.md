@@ -353,23 +353,25 @@ useAnimationFrame(
 
 ## Virtual joysticks
 
-⚠️ React-only for now ⚠️
+⚠️ React and vanilla-only for now ⚠️
 
 Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. Each virtual joystick is associated with a single `<JoystickArea />`. You can create your own Joystick objects with `createJoystick()` or use one of the two default ones that are already available on the joysticks store. The default ones are called `movement` and `rotation` joysticks.
 
-You can choose between 2 modes, follow or origin, by setting `maxFollowDistance` or `maxOriginDistance`:
+You can choose between 2 modes, `follow` or `origin`, and can adjust the `maxFollowDistance` or `maxOriginDistance`. Use the `onStart`, `onMove`, and `onEnd` callbacks to update your game state and optionally show a joystick on the screen.
 
 ```jsx
 import { JoystickArea, getJoysticks } from '@manapotion/react'
 
-const MobileUI = () => {
-  return (
-    <JoystickArea
-      joystick={getJoysticks().movement}
-      maxFollowDistance={50} // or maxOriginDistance={50}
-    />
-  )
-}
+const MobileUI = () => (
+  <JoystickArea
+    joystick={getJoysticks().movement}
+    mode="follow" // Default
+    maxFollowDistance={50} // Default
+    onStart={handleStart}
+    onMove={handleMove}
+    onEnd={handleEnd}
+  />
+)
 ```
 
 In follow mode, the joystick will follow the user's finger, which is good for player movement.

@@ -26,6 +26,7 @@ import DiscordIcon from './components/DiscordIcon'
 import GithubIcon from './components/GithubIcon'
 import Item from './components/Item'
 import Label from './components/Label'
+import MobileJoystick from './components/MobileJoystick'
 import {
   LeftMouseButtonDownLabel,
   MiddleMouseButtonDownLabel,
@@ -34,7 +35,6 @@ import {
   RightMouseButtonDownLabel,
 } from './components/mouse-labels'
 import TwitterIcon from './components/TwitterIcon'
-import MobileJoystick from './MobileJoystick'
 
 interface EventNotificationActions {
   setMessage: (message: string) => void

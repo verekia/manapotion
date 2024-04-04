@@ -4,8 +4,10 @@ import {
   exitFullscreen,
   FullscreenChangePayload,
   getBrowser,
+  getJoysticks,
   getKeyboard,
   getMouse,
+  Joystick,
   LeftMouseButtonDownPayload,
   LeftMouseButtonUpPayload,
   listeners,
@@ -14,6 +16,7 @@ import {
   lockPointer,
   MiddleMouseButtonDownPayload,
   MiddleMouseButtonUpPayload,
+  mountJoystickArea,
   MouseMovePayload,
   MouseScrollPayload,
   PageFocusChangePayload,
@@ -73,6 +76,44 @@ const updateKeyboard = () => {
   const elMeta = document.getElementById('meta')!
   elMeta.textContent = getLabelValue(meta)
   elMeta.className = getLabelClass(meta)
+}
+
+let joystickMode: 'follow' | 'origin' = 'follow'
+let unsubJoystickArea: () => void
+
+const updateJoystickButton = () => {
+  const btn = document.getElementById('joystick-mode-btn')!
+  btn.textContent = joystickMode === 'follow' ? 'Follow' : 'Origin'
+}
+
+const handleJoystickStart = (joystick: Joystick) => {
+  const joystickCurrentEl = document.getElementById('joystick-current')!
+  const joystickOriginEl = document.getElementById('joystick-origin')!
+  const joystickFollowEl = document.getElementById('joystick-follow')!
+  joystickCurrentEl.style.transform = `translate(${joystick.current.x}px, ${-joystick.current.y!}px)`
+  joystickOriginEl.style.transform = `translate(${joystick.origin.x}px, ${-joystick.origin.y!}px)`
+  joystickFollowEl.style.transform = `translate(${joystick.follow.x}px, ${-joystick.follow.y!}px)`
+  joystickCurrentEl.style.opacity = '1'
+  joystickMode === 'follow' && (joystickFollowEl.style.opacity = '1')
+  joystickOriginEl.style.opacity = '1'
+}
+
+const handleJoystickEnd = () => {
+  const joystickCurrentEl = document.getElementById('joystick-current')!
+  const joystickOriginEl = document.getElementById('joystick-origin')!
+  const joystickFollowEl = document.getElementById('joystick-follow')!
+  joystickCurrentEl.style.opacity = '0'
+  joystickOriginEl.style.opacity = '0'
+  joystickFollowEl.style.opacity = '0'
+}
+
+const handleJoystickMove = (joystick: Joystick) => {
+  const joystickCurrentEl = document.getElementById('joystick-current')!
+  const joystickOriginEl = document.getElementById('joystick-origin')!
+  const joystickFollowEl = document.getElementById('joystick-follow')!
+  joystickCurrentEl.style.transform = `translate(${joystick.current.x}px, ${-joystick.current.y!}px)`
+  joystickOriginEl.style.transform = `translate(${joystick.origin.x}px, ${-joystick.origin.y!}px)`
+  joystickFollowEl.style.transform = `translate(${joystick.follow.x}px, ${-joystick.follow.y!}px)`
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -182,6 +223,17 @@ document.addEventListener('DOMContentLoaded', () => {
     onKeyUp: updateKeyboard,
   })
 
+  unsubJoystickArea = mountJoystickArea({
+    element: document.getElementById('joystick-area')!,
+    mode: joystickMode,
+    joystick: getJoysticks().movement,
+    onMove: handleJoystickMove,
+    onStart: handleJoystickStart,
+    onEnd: handleJoystickEnd,
+  })
+
+  updateJoystickButton()
+
   startAnimationFrame(({ elapsed }) => {
     const el = document.getElementById('animationFrame')!
     el.textContent = String(elapsed)
@@ -209,6 +261,20 @@ window.unlockOrientation = unlockOrientation
 window.lockKeys = lockKeys
 // @ts-expect-error should define this function in the global scope
 window.unlockKeys = unlockKeys
+// @ts-expect-error should define this function in the global scope
+window.toggleJoystickMode = () => {
+  joystickMode = joystickMode === 'follow' ? 'origin' : 'follow'
+  unsubJoystickArea()
+  unsubJoystickArea = mountJoystickArea({
+    element: document.getElementById('joystick-area')!,
+    mode: joystickMode,
+    joystick: getJoysticks().movement,
+    onMove: handleJoystickMove,
+    onStart: handleJoystickStart,
+    onEnd: handleJoystickEnd,
+  })
+  updateJoystickButton()
+}
 
 export const App = html`
   <main class="mx-auto max-w-7xl px-5 pb-16 pt-5" oncontextmenu="event.preventDefault()">
@@ -384,7 +450,36 @@ export const App = html`
       </section>
       <section>
         <h2 class="section-heading">🕹️ Virtual joysticks</h2>
-        <div>Vanilla support coming soon.</div>
+        <div class="relative w-max">
+          <div class="absolute left-[58px] top-[75px] max-w-36 text-center mobile:hidden">
+            Switch to 👆 mobile mode in devtools
+          </div>
+          <div
+            id="joystick-area"
+            class="relative z-10 h-48 w-64 rounded-md border border-slate-500"
+          >
+            <div
+              id="joystick-current"
+              class="pointer-events-none absolute -bottom-6 -left-6 size-12 rounded-full bg-red-500 opacity-0 transition-opacity"
+            ></div>
+            <div
+              id="joystick-origin"
+              class="pointer-events-none absolute -bottom-6 -left-6 size-12 rounded-full bg-blue-500 opacity-0 transition-opacity"
+            ></div>
+            <div
+              id="joystick-follow"
+              class="pointer-events-none absolute -bottom-6 -left-6 size-12 rounded-full bg-green-500 opacity-0 transition-opacity"
+            ></div>
+          </div>
+          <div class="mt-3 flex items-center justify-center gap-3">
+            Mode
+            <button
+              class="btn capitalize"
+              onclick="window.toggleJoystickMode()"
+              id="joystick-mode-btn"
+            ></button>
+          </div>
+        </div>
       </section>
       <section>
         <h2 class="section-heading">🔄 Animation loops</h2>
