@@ -1,7 +1,7 @@
 {
   "name": "example-react",
   "private": true,
-  "version": "0.24.0-alpha.3",
+  "version": "0.24.0-alpha.4",
   "license": "MIT",
   "bump": 1,
   "type": "module",
@@ -17,7 +17,7 @@
     "publint": ""
   },
   "dependencies": {
-    "@manapotion/r3f": "^0.24.0-alpha.3",
+    "@manapotion/r3f": "^0.24.0-alpha.4",
     "@react-three/fiber": "^8.15.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
