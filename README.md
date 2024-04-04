@@ -20,6 +20,10 @@ The library consists of:
 
 **Important**: Until we hit 1.0.0, expect breaking changes in minor versions.
 
+## Demos
+
+Check out the [**React**](https://manapotion.org/), [**Vue**](https://vue.manapotion.org/), [**Svelte**](https://svelte.manapotion.org/), and <a href="https://vanilla.manapotion.org/" target="_blank"><b>vanilla JS</b></a> demos.
+
 ## Installation
 
 - If you use **React Three Fiber**, install `@manapotion/r3f`
