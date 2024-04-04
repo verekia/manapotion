@@ -27,6 +27,7 @@ import LockedLabel from './components/labels/LockedLabel.vue'
 import LockMouseButton from './components/labels/LockMouseButton.vue'
 import MiddleMouseButtonLabel from './components/labels/MiddleMouseButtonLabel.vue'
 import RightMouseButtonLabel from './components/labels/RightMouseButtonLabel.vue'
+import MobileJoystick from './components/MobileJoystick.vue'
 import TwitterIcon from './components/TwitterIcon.vue'
 
 const animationFrameEl = ref<HTMLSpanElement>()
@@ -46,6 +47,8 @@ useAnimationFrame(
   },
   { throttle: 100 },
 )
+
+const joystickMode = ref<'follow' | 'origin'>('follow')
 </script>
 
 <template>
@@ -132,13 +135,13 @@ useAnimationFrame(
           <template #label>
             <IsPortraitLabel />
           </template>
-          <template #extra><span className="text-sm">Ratio-based</span></template>
+          <template #extra><span class="text-sm">Ratio-based</span></template>
         </Item>
         <Item name="isLandscape">
           <template #label>
             <IsLandscapeLabel />
           </template>
-          <template #extra><span className="text-sm">Ratio-based</span></template>
+          <template #extra><span class="text-sm">Ratio-based</span></template>
         </Item>
 
         <Item :name="'width,height'" :is-reactive="false">
@@ -212,7 +215,21 @@ useAnimationFrame(
       </section>
       <section>
         <h2 class="section-heading">🕹️ Virtual joysticks</h2>
-        <div>Vue support coming soon.</div>
+        <div class="relative w-max">
+          <div class="absolute left-[58px] top-[75px] max-w-36 text-center mobile:hidden">
+            Switch to 👆 mobile mode in devtools
+          </div>
+          <MobileJoystick :mode="joystickMode" />
+          <div class="mt-3 flex items-center justify-center gap-3">
+            Mode
+            <button
+              class="btn capitalize"
+              @click="() => (joystickMode = joystickMode === 'follow' ? 'origin' : 'follow')"
+            >
+              {{ joystickMode === 'follow' ? 'Follow' : 'Origin' }}
+            </button>
+          </div>
+        </div>
       </section>
       <section>
         <h2 class="section-heading">🔄 Animation loops</h2>

@@ -353,7 +353,7 @@ useAnimationFrame(
 
 ## Virtual joysticks
 
-⚠️ React and vanilla-only for now ⚠️
+⚠️ Svelte not supported yet ⚠️
 
 Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. Each virtual joystick is associated with a single `<JoystickArea />`. You can create your own Joystick objects with `createJoystick()` or use one of the two default ones that are already available on the joysticks store. The default ones are called `movement` and `rotation` joysticks.
 
@@ -373,6 +373,8 @@ const MobileUI = () => (
   />
 )
 ```
+
+With vanilla JS, use `mountJoystickArea` instead.
 
 In follow mode, the joystick will follow the user's finger, which is good for player movement.
 

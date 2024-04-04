@@ -2,13 +2,7 @@ import { useRef } from 'react'
 
 import { getJoysticks, Joystick, JoystickArea } from '@manapotion/r3f'
 
-const MobileJoystick = ({
-  className = '',
-  mode = 'follow',
-}: {
-  className?: string
-  mode?: 'follow' | 'origin'
-}) => {
+const MobileJoystick = ({ mode = 'follow' }: { mode?: 'follow' | 'origin' }) => {
   const joystickCurrentRef = useRef<HTMLDivElement>(null)
   const joystickOriginRef = useRef<HTMLDivElement>(null)
   const joystickFollowRef = useRef<HTMLDivElement>(null)
@@ -39,7 +33,7 @@ const MobileJoystick = ({
       joystick={getJoysticks().movement}
       mode={mode}
       containerProps={{
-        className: `relative z-10 h-48 w-64 rounded-md border border-slate-500 ${className}`,
+        className: `relative z-10 h-48 w-64 rounded-md border border-slate-500 mt-3`,
       }}
       onStart={handleStart}
       onMove={handleMove}

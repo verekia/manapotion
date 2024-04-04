@@ -260,7 +260,7 @@ const UI = ({
               <div className="absolute left-[58px] top-[75px] max-w-36 text-center mobile:hidden">
                 Switch to 👆 mobile mode in devtools
               </div>
-              <MobileJoystick className="mt-3" mode={joystickMode} />
+              <MobileJoystick mode={joystickMode} />
               <div className="mt-3 flex items-center justify-center gap-3">
                 Mode{' '}
                 <button

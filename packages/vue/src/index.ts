@@ -1,6 +1,7 @@
 export * from './Listeners.vue'
 export * from './vue-store'
 export * from './vue-loops'
+export * from './JoystickArea.vue'
 
 export * from './listeners/DeviceTypeListener.vue'
 export * from './listeners/KeyboardListener.vue'
