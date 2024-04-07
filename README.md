@@ -396,7 +396,7 @@ You can pause and resume the main loop with `pauseMainLoop` and `resumeMainLoop`
 If you are using React Three Fiber, you can disable R3F's loop and sync the canvas with Mana Potion's loop by setting `frameloop="never"` on your `<Canvas>` and adding the following component as its child:
 
 ```jsx
-const SyncR3FWithMainLoop = () => {
+const SyncMainLoop = () => {
   const advance = useThree(s => s.advance)
 
   useMainLoop(
@@ -411,11 +411,13 @@ const SyncR3FWithMainLoop = () => {
 
 const App = () => (
   <Canvas frameloop="never">
-    <SyncR3FWithMainLoop />
+    <SyncMainLoop />
     {/* Your scene */}
   </Canvas>
 )
 ```
+
+Similarly, if you are using Threlte, set `renderMode` to `manual` on your `Canvas` and call `useThrelte().advance()` in a `useMainLoop`.
 
 ## Virtual joysticks
 
