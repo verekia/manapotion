@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/react",
-  "version": "0.24.1",
+  "version": "0.24.2-alpha.0",
   "license": "MIT",
   "type": "module",
   "bump": 1,
@@ -42,7 +42,7 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/core": "^0.24.1"
+    "@manapotion/core": "^0.24.2-alpha.0"
   },
   "peerDependencies": {
     "react": ">=17.0.2",

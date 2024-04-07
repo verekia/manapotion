@@ -1,7 +1,7 @@
 {
   "name": "example-vanilla",
   "private": true,
-  "version": "0.24.1",
+  "version": "0.24.2-alpha.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,7 @@
     "publint": ""
   },
   "dependencies": {
-    "@manapotion/vanilla": "^0.24.1"
+    "@manapotion/vanilla": "^0.24.2-alpha.0"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
