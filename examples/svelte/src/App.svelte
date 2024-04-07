@@ -8,6 +8,7 @@
     unlockOrientation,
     useAnimationFrame,
   } from '@manapotion/svelte'
+  import { writable } from 'svelte/store'
 
   import type { DeviceTypeChangePayload } from '@manapotion/svelte'
 
@@ -28,6 +29,7 @@
   import LockMouseButton from './components/labels/LockMouseButton.svelte'
   import MiddleMouseButtonLabel from './components/labels/MiddleMouseButtonLabel.svelte'
   import RightMouseButtonLabel from './components/labels/RightMouseButtonLabel.svelte'
+  import MobileJoystick from './components/MobileJoystick.svelte'
   import TwitterIcon from './components/TwitterIcon.svelte'
 
   const handleDTChange = ({ detail }: CustomEvent<DeviceTypeChangePayload>) => {
@@ -51,6 +53,8 @@
     },
     { throttle: 100 },
   )
+
+  const joystickMode = writable<'follow' | 'origin'>('follow')
 </script>
 
 <main class="mx-auto max-w-7xl px-5 pb-16 pt-5" on:contextmenu={e => e.preventDefault()}>
@@ -191,7 +195,21 @@
     </section>
     <section>
       <h2 class="section-heading">🕹️ Virtual joysticks</h2>
-      <div>Svelte support coming soon.</div>
+      <div class="relative w-max">
+        <div class="absolute left-[58px] top-[75px] max-w-36 text-center mobile:hidden">
+          Switch to 👆 mobile mode in devtools
+        </div>
+        <MobileJoystick mode={$joystickMode} />
+        <div class="mt-3 flex items-center justify-center gap-3">
+          Mode
+          <button
+            class="btn capitalize"
+            on:click={() => ($joystickMode = $joystickMode === 'follow' ? 'origin' : 'follow')}
+          >
+            {$joystickMode === 'follow' ? 'Follow' : 'Origin'}
+          </button>
+        </div>
+      </div>
     </section>
     <section>
       <h2 class="section-heading">🔄 Animation loops</h2>
