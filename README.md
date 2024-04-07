@@ -353,8 +353,6 @@ useAnimationFrame(
 
 ## Virtual joysticks
 
-⚠️ Svelte not supported yet ⚠️
-
 Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. Each virtual joystick is associated with a single `<JoystickArea />`. You can create your own Joystick objects with `createJoystick()` or use one of the two default ones that are already available on the joysticks store. The default ones are called `movement` and `rotation` joysticks.
 
 You can choose between 2 modes, `follow` or `origin`, and can adjust the `maxFollowDistance` or `maxOriginDistance`. Use the `onStart`, `onMove`, and `onEnd` callbacks to update your game state and optionally show a joystick on the screen.
