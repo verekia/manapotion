@@ -272,6 +272,6 @@
       mouseMoveEl.textContent = `${e.detail.movement.x} ${e.detail.movement.y}`
     }}
     on:scroll={e => (scrollYEl.textContent = String(Math.round(e.detail.y)))}
-    on:pageFocusChange={e => (e.detail.isPageFocused ? resumeMainLoop() : pauseMainLoop())}
+    on:pageVisibilityChange={e => (e.detail.isPageVisible ? resumeMainLoop() : pauseMainLoop())}
   />
 </main>

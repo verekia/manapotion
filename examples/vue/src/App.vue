@@ -290,7 +290,7 @@ const joystickMode = ref<'follow' | 'origin'>('follow')
         }
       "
       @scroll="e => (scrollYEl!.textContent = String(Math.round(e.y)))"
-      @page-focus-change="e => (e.isPageFocused ? resumeMainLoop() : pauseMainLoop())"
+      @page-visibility-change="e => (e.isPageVisible ? resumeMainLoop() : pauseMainLoop())"
     />
   </main>
 </template>

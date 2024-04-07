@@ -145,12 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const el = document.getElementById('isPageVisible')!
       el.textContent = getLabelValue(isPageVisible)
       el.className = getLabelClass(isPageVisible)
+      isPageVisible ? resumeMainLoop() : pauseMainLoop()
     },
     onPageFocusChange: ({ isPageFocused }: PageFocusChangePayload) => {
       const el = document.getElementById('isPageFocused')!
       el.textContent = getLabelValue(isPageFocused)
       el.className = getLabelClass(isPageFocused)
-      isPageFocused ? resumeMainLoop() : pauseMainLoop()
     },
     onDeviceTypeChange: ({ isDesktop, isMobile }: DeviceTypeChangePayload) => {
       const elDesktop = document.getElementById('isDesktop')!

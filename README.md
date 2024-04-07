@@ -387,8 +387,8 @@ You can pause and resume the main loop with `pauseMainLoop` and `resumeMainLoop`
 
 ```jsx
 <Listeners
-  onPageFocusChange={({ isPageFocused }) => {
-    isPageFocused ? resumeMainLoop() : pauseMainLoop()
+  onPageVisibilityChange={({ isPageVisible }) => {
+    isPageVisible ? resumeMainLoop() : pauseMainLoop()
   }}
 />
 ```

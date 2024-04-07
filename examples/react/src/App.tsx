@@ -381,14 +381,14 @@ const App = () => {
           console.log(`onScroll – deltaY: ${rounded}`)
           scrollYRef.current!.textContent = String(rounded)
         }}
-        onPageFocusChange={({ isPageFocused }) => {
+        onPageFocusChange={() => {
           resetKeyboard()
           resetMouse()
-          isPageFocused ? resumeMainLoop() : pauseMainLoop()
         }}
-        onPageVisibilityChange={() => {
+        onPageVisibilityChange={({ isPageVisible }) => {
           resetKeyboard()
           resetMouse()
+          isPageVisible ? resumeMainLoop() : pauseMainLoop()
         }}
         onResize={({ width, height }) => {
           console.log(`onResize – width: ${width}, height: ${height}`)
