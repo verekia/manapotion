@@ -41,12 +41,10 @@
     "publint": "publint"
   },
   "dependencies": {
-    "lodash.throttle": "^4.1.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
-    "@types/lodash.throttle": "^4.1.9",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "eslint": "^8.57.0",

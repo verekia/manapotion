@@ -6,7 +6,6 @@ export * from './loops'
 export * from './browser'
 export * from './tailwind'
 export * from './joystickarea'
-export { default as throttle } from 'lodash.throttle'
 
 export * from './listeners/devicetype'
 export * from './listeners/fullscreen'

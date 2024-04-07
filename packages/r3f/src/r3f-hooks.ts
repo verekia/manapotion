@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import { throttle } from '@manapotion/react'
 import { addAfterEffect, addEffect, addTail } from '@react-three/fiber'
+import throttle from 'lodash.throttle'
 
 import type { AnimationFrameOptions } from '@manapotion/react'
 import type { GlobalRenderCallback } from '@react-three/fiber'
