@@ -42,16 +42,16 @@
   let mousePosEl: HTMLSpanElement
   let mouseMoveEl: HTMLSpanElement
   let scrollYEl: HTMLSpanElement
-  let animationFrameEl: HTMLSpanElement
-  let animationFrameThrottledEl: HTMLSpanElement
+  let mainLoopEl: HTMLSpanElement
+  let mainLoopThrottledEl: HTMLSpanElement
 
   useMainLoop(({ elapsed }) => {
-    animationFrameEl.textContent = String(Math.round(elapsed * 1000))
+    mainLoopEl.textContent = String(Math.round(elapsed * 1000))
   })
 
   useMainLoop(
     ({ elapsed }) => {
-      animationFrameThrottledEl.textContent = String(Math.round(elapsed * 1000))
+      mainLoopThrottledEl.textContent = String(Math.round(elapsed * 1000))
     },
     { throttle: 100 },
   )
@@ -106,7 +106,7 @@
       ⚡️ <b>Reactive</b> (subscribed components react to changes)
     </div>
     <div>
-      🗿 <b>Non-reactive</b> (managed by events or animation frame)
+      🗿 <b>Non-reactive</b> (managed by events or the main loop)
     </div>
   </div>
 
@@ -214,15 +214,12 @@
       </div>
     </section>
     <section>
-      <h2 class="section-heading">🔄 Animation loops</h2>
+      <h2 class="section-heading">🔄 Main loop</h2>
       <div>
-        useAnimationFrame: <span class="tabular-nums" bind:this={animationFrameEl} />
+        useMainLoop: <span class="tabular-nums" bind:this={mainLoopEl} />
       </div>
       <div>
-        useAnimationFrame (throttled): <span
-          class="tabular-nums"
-          bind:this={animationFrameThrottledEl}
-        />
+        useMainLoop (throttled): <span class="tabular-nums" bind:this={mainLoopThrottledEl} />
       </div>
     </section>
     <section>

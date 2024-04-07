@@ -103,17 +103,17 @@ const UI = ({
   windowSizeRef: RefObject<HTMLSpanElement>
   scrollYRef: RefObject<HTMLDivElement>
 }) => {
-  const animationFrameRef = useRef<HTMLSpanElement>(null)
-  const animationFrameThrottledRef = useRef<HTMLSpanElement>(null)
+  const mainLoopRef = useRef<HTMLSpanElement>(null)
+  const MainLoopThrottledRef = useRef<HTMLSpanElement>(null)
   const [joystickMode, setJoystickMode] = useState<'follow' | 'origin'>('follow')
 
   useMainLoop(({ elapsed }) => {
-    animationFrameRef.current!.textContent = String(Math.round(elapsed * 1000))
+    mainLoopRef.current!.textContent = String(Math.round(elapsed * 1000))
   })
 
   useMainLoop(
     ({ elapsed }) => {
-      animationFrameThrottledRef.current!.textContent = String(Math.round(elapsed * 1000))
+      MainLoopThrottledRef.current!.textContent = String(Math.round(elapsed * 1000))
     },
     { throttle: 100 },
   )
@@ -174,7 +174,7 @@ const UI = ({
             ⚡️ <b>Reactive</b> (subscribed components react to changes)
           </div>
           <div>
-            🗿 <b>Non-reactive</b> (managed by events or animation frame)
+            🗿 <b>Non-reactive</b> (managed by events or the main loop)
           </div>
         </div>
 
@@ -275,13 +275,12 @@ const UI = ({
             </div>
           </section>
           <section>
-            <h2 className="section-heading">🔄 Animation loops</h2>
+            <h2 className="section-heading">🔄 Main loop</h2>
             <div>
-              useAnimationFrame: <span className="tabular-nums" ref={animationFrameRef} />
+              useMainLoop: <span className="tabular-nums" ref={mainLoopRef} />
             </div>
             <div>
-              useAnimationFrame (throttled):{' '}
-              <span className="tabular-nums" ref={animationFrameThrottledRef} />
+              useMainLoop (throttled): <span className="tabular-nums" ref={MainLoopThrottledRef} />
             </div>
           </section>
           <section>

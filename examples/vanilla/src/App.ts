@@ -238,13 +238,13 @@ document.addEventListener('DOMContentLoaded', () => {
   updateJoystickButton()
 
   addMainLoopEffect(({ elapsed }) => {
-    const el = document.getElementById('animationFrame')!
+    const el = document.getElementById('mainLoopEl')!
     el.textContent = String(Math.round(elapsed * 1000))
   })
 
   addMainLoopEffect(
     ({ elapsed }) => {
-      const el = document.getElementById('animationFrameThrottled')!
+      const el = document.getElementById('mainLoopThrottledEl')!
       el.textContent = String(Math.round(elapsed * 1000))
     },
     { throttle: 100 },
@@ -320,7 +320,7 @@ export const App = html`
     </div>
     <div class="mt-10 text-gray-200">
       <div>⚡️ <b>Reactive</b> (subscribed components react to changes)</div>
-      <div>🗿 <b>Non-reactive</b> (managed by events or animation frame)</div>
+      <div>🗿 <b>Non-reactive</b> (managed by events or the main loop)</div>
     </div>
 
     <div class="cols-1 mt-5 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
@@ -485,11 +485,11 @@ export const App = html`
         </div>
       </section>
       <section>
-        <h2 class="section-heading">🔄 Animation loops</h2>
-        <div>useAnimationFrame: <span id="animationFrame" class="tabular-nums"></span></div>
+        <h2 class="section-heading">🔄 Main loop</h2>
+        <div>addMainLoopEffect: <span id="mainLoopEl" class="tabular-nums"></span></div>
         <div>
-          useAnimationFrame (throttled):
-          <span id="animationFrameThrottled" class="tabular-nums"></span>
+          addMainLoopEffect (throttled):
+          <span id="mainLoopThrottledEl" class="tabular-nums"></span>
         </div>
       </section>
       <section>

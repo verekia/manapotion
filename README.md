@@ -341,7 +341,7 @@ const unsub = addMainLoopEffect(({ delta, elapsed }) => {
 
 ### Throttling
 
-You can throttle some callbacks by passing a `throttle` option to `useAnimationFrame`/`startAnimationFrame`:
+You can throttle some callbacks by passing a `throttle` option to `useMainLoop`/`addMainLoopEffect`:
 
 ```jsx
 useMainLoop(

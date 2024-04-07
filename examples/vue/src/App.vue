@@ -32,20 +32,20 @@ import RightMouseButtonLabel from './components/labels/RightMouseButtonLabel.vue
 import MobileJoystick from './components/MobileJoystick.vue'
 import TwitterIcon from './components/TwitterIcon.vue'
 
-const animationFrameEl = ref<HTMLSpanElement>()
-const animationFrameThrottledEl = ref<HTMLSpanElement>()
+const mainLoopEl = ref<HTMLSpanElement>()
+const mainLoopThrottledEl = ref<HTMLSpanElement>()
 const windowSizeEl = ref<HTMLSpanElement>()
 const mousePosEl = ref<HTMLSpanElement>()
 const mouseMoveEl = ref<HTMLSpanElement>()
 const scrollYEl = ref<HTMLSpanElement>()
 
 useMainLoop(({ elapsed }) => {
-  animationFrameEl.value!.textContent = String(Math.round(elapsed * 1000))
+  mainLoopEl.value!.textContent = String(Math.round(elapsed * 1000))
 })
 
 useMainLoop(
   ({ elapsed }) => {
-    animationFrameThrottledEl.value!.textContent = String(Math.round(elapsed * 1000))
+    mainLoopThrottledEl.value!.textContent = String(Math.round(elapsed * 1000))
   },
   { throttle: 100 },
 )
@@ -97,7 +97,7 @@ const joystickMode = ref<'follow' | 'origin'>('follow')
 
     <div class="mt-10 text-gray-200">
       <div>⚡️ <b>Reactive</b> (subscribed components react to changes)</div>
-      <div>🗿 <b>Non-reactive</b> (managed by events or animation frame)</div>
+      <div>🗿 <b>Non-reactive</b> (managed by events or the main loop)</div>
     </div>
 
     <div class="cols-1 mt-5 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
@@ -234,11 +234,11 @@ const joystickMode = ref<'follow' | 'origin'>('follow')
         </div>
       </section>
       <section>
-        <h2 class="section-heading">🔄 Animation loops</h2>
-        <div>useAnimationFrame: <span ref="animationFrameEl" class="tabular-nums" /></div>
+        <h2 class="section-heading">🔄 Main loop</h2>
+        <div>useMainLoop: <span ref="mainLoopEl" class="tabular-nums" /></div>
         <div>
-          useAnimationFrame (throttled):
-          <span ref="animationFrameThrottledEl" class="tabular-nums" />
+          useMainLoop (throttled):
+          <span ref="mainLoopThrottledEl" class="tabular-nums" />
         </div>
       </section>
       <section>
