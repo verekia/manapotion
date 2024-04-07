@@ -266,7 +266,7 @@ Once mounted, you cannot modify the callbacks dynamically. If you need to change
 
 ## Animation loops
 
-If you are not using React Three Fiber, TresJS, or Threlte, you will need an animation loop to update your scene elements. You can use the `useAnimationFrame` hook to run your animation loop per component:
+The `useAnimationFrame` hook can be used to schedule your various systems in a single `requestAnimationFrame` call that you can configure per component:
 
 **React**
 
@@ -340,7 +340,7 @@ const unsub = startAnimationFrame(({ delta, elapsed }) => {
 
 ### Throttling
 
-You can throttle the animation loop by passing a `throttle` option to `useAnimationFrame`/`startAnimationFrame`:
+You can throttle some callbacks by passing a `throttle` option to `useAnimationFrame`/`startAnimationFrame`:
 
 ```jsx
 useAnimationFrame(
@@ -349,6 +349,37 @@ useAnimationFrame(
   },
   { throttle: 100 } // ms
 )
+```
+
+### Stages
+
+Organize your main loop into stages to run your systems in a specific order (using arbitrary numbers):
+
+```jsx
+export const STAGE_CONTROLS = -5
+export const STAGE_PHYSICS = -4
+export const STAGE_LOGIC = -2
+export const STAGE_RENDER = 0 // Default stage
+export const STAGE_UI = 5
+export const STAGE_CLEANUP = 10
+
+const HealthBar = () => {
+  useAnimationFrame(
+    () => {
+      // Adjust health bar width
+    },
+    { stage: STAGE_UI, throttle: 100 }
+  )
+}
+
+const Physics = () => {
+  useAnimationFrame(
+    () => {
+      // Update physics
+    },
+    { stage: STAGE_PHYSICS }
+  )
+}
 ```
 
 ## Virtual joysticks
