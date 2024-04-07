@@ -393,6 +393,30 @@ You can pause and resume the main loop with `pauseMainLoop` and `resumeMainLoop`
 />
 ```
 
+If you are using React Three Fiber, you can disable R3F's loop and sync the canvas with Mana Potion's loop by setting `frameloop="never"` on your `<Canvas>` and adding the following component as its child:
+
+```jsx
+const SyncR3FWithMainLoop = () => {
+  const advance = useThree(s => s.advance)
+
+  useMainLoop(
+    ({ elapsed }) => advance(elapsed),
+    { stage: STAGE_RENDER } // Or whatever stage you want
+  )
+
+  return null
+}
+
+// ...
+
+const App = () => (
+  <Canvas frameloop="never">
+    <SyncR3FWithMainLoop />
+    {/* Your scene */}
+  </Canvas>
+)
+```
+
 ## Virtual joysticks
 
 Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. Each virtual joystick is associated with a single `<JoystickArea />`. You can create your own Joystick objects with `createJoystick()` or use one of the two default ones that are already available on the joysticks store. The default ones are called `movement` and `rotation` joysticks.
