@@ -1,17 +1,10 @@
 import { onMounted, onUnmounted } from 'vue'
 
-import {
-  AnimationFrameCallback,
-  AnimationFrameOptions,
-  startAnimationFrame,
-} from '@manapotion/core'
+import { addMainLoopEffect, MainLoopEffectCallback, MainLoopEffectOptions } from '@manapotion/core'
 
-export const useAnimationFrame = (
-  callback: AnimationFrameCallback,
-  options?: AnimationFrameOptions,
-) => {
+export const useMainLoop = (callback: MainLoopEffectCallback, options?: MainLoopEffectOptions) => {
   onMounted(() => {
-    const unsub = startAnimationFrame(callback, options)
+    const unsub = addMainLoopEffect(callback, options)
     onUnmounted(unsub)
   })
 }

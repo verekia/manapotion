@@ -1,4 +1,5 @@
 import {
+  addMainLoopEffect,
   DeviceTypeChangePayload,
   enterFullscreen,
   exitFullscreen,
@@ -21,12 +22,13 @@ import {
   MouseScrollPayload,
   PageFocusChangePayload,
   PageVisibilityPayload,
+  pauseMainLoop,
   PointerLockChangePayload,
   ResizePayload,
+  resumeMainLoop,
   RightMouseButtonDownPayload,
   RightMouseButtonUpPayload,
   ScreenOrientationChangePayload,
-  startAnimationFrame,
   unlockKeys,
   unlockOrientation,
   unlockPointer,
@@ -148,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const el = document.getElementById('isPageFocused')!
       el.textContent = getLabelValue(isPageFocused)
       el.className = getLabelClass(isPageFocused)
+      isPageFocused ? resumeMainLoop() : pauseMainLoop()
     },
     onDeviceTypeChange: ({ isDesktop, isMobile }: DeviceTypeChangePayload) => {
       const elDesktop = document.getElementById('isDesktop')!
@@ -234,15 +237,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateJoystickButton()
 
-  startAnimationFrame(({ elapsed }) => {
+  addMainLoopEffect(({ elapsed }) => {
     const el = document.getElementById('animationFrame')!
-    el.textContent = String(elapsed)
+    el.textContent = String(Math.round(elapsed * 1000))
   })
 
-  startAnimationFrame(
+  addMainLoopEffect(
     ({ elapsed }) => {
       const el = document.getElementById('animationFrameThrottled')!
-      el.textContent = String(elapsed)
+      el.textContent = String(Math.round(elapsed * 1000))
     },
     { throttle: 100 },
   )

@@ -4,9 +4,11 @@
     Listeners,
     lockKeys,
     lockOrientation,
+    pauseMainLoop,
+    resumeMainLoop,
     unlockKeys,
     unlockOrientation,
-    useAnimationFrame,
+    useMainLoop,
   } from '@manapotion/svelte'
   import { writable } from 'svelte/store'
 
@@ -43,13 +45,13 @@
   let animationFrameEl: HTMLSpanElement
   let animationFrameThrottledEl: HTMLSpanElement
 
-  useAnimationFrame(({ elapsed }) => {
-    animationFrameEl.textContent = String(elapsed)
+  useMainLoop(({ elapsed }) => {
+    animationFrameEl.textContent = String(Math.round(elapsed * 1000))
   })
 
-  useAnimationFrame(
+  useMainLoop(
     ({ elapsed }) => {
-      animationFrameThrottledEl.textContent = String(elapsed)
+      animationFrameThrottledEl.textContent = String(Math.round(elapsed * 1000))
     },
     { throttle: 100 },
   )
@@ -273,5 +275,6 @@
       mouseMoveEl.textContent = `${e.detail.movement.x} ${e.detail.movement.y}`
     }}
     on:scroll={e => (scrollYEl.textContent = String(Math.round(e.detail.y)))}
+    on:pageFocusChange={e => (e.detail.isPageFocused ? resumeMainLoop() : pauseMainLoop())}
   />
 </main>

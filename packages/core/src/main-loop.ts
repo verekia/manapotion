@@ -1,23 +1,17 @@
-export type AnimationFrameCallback = ({
-  delta,
-  elapsed,
-}: {
-  delta: number
-  elapsed: number
-}) => void
+export type MainLoopEffectCallback = (callback: { delta: number; elapsed: number }) => void
 
-export type AnimationFrameOptions = {
+export type MainLoopEffectOptions = {
   throttle?: number
   stage?: number
 }
 
-const callbacks = new Map<number, Set<AnimationFrameCallback>>()
-const callbackLastExecution = new WeakMap<AnimationFrameCallback, number>()
+const callbacks = new Map<number, Set<MainLoopEffectCallback>>()
+const callbackLastExecutions = new WeakMap<MainLoopEffectCallback, number>()
 const state = { delta: 0, elapsed: 0 }
 let previousTime = performance.now()
 let running = false
 
-const loop = (time: number) => {
+const mainLoop = (time: number) => {
   if (!running) return
 
   state.delta = (time - previousTime) / 1000
@@ -36,17 +30,20 @@ const loop = (time: number) => {
     })
 
   previousTime = time
-  requestAnimationFrame(loop)
+  requestAnimationFrame(mainLoop)
 }
 
-const subscribe = (callback: AnimationFrameCallback, options?: AnimationFrameOptions) => {
+export const addMainLoopEffect = (
+  callback: MainLoopEffectCallback,
+  options?: MainLoopEffectOptions,
+) => {
   const throttledCallback = (state: { delta: number; elapsed: number }) => {
     const now = performance.now()
-    const lastExecution = callbackLastExecution.get(callback) || 0
+    const lastExecution = callbackLastExecutions.get(callback) || 0
     const throttleInterval = options?.throttle || 0
 
     if (now - lastExecution >= throttleInterval) {
-      callbackLastExecution.set(callback, now)
+      callbackLastExecutions.set(callback, now)
       callback(state)
     }
   }
@@ -60,7 +57,7 @@ const subscribe = (callback: AnimationFrameCallback, options?: AnimationFrameOpt
   if (!running) {
     running = true
     previousTime = performance.now() // Reset time to avoid large delta after pause
-    requestAnimationFrame(loop)
+    requestAnimationFrame(mainLoop)
   }
 
   return () => {
@@ -71,14 +68,12 @@ const subscribe = (callback: AnimationFrameCallback, options?: AnimationFrameOpt
   }
 }
 
-export const startAnimationFrame = subscribe
+export const pauseMainLoop = () => (running = false)
 
-export const pauseAnimation = () => (running = false)
-
-export const resumeAnimation = () => {
+export const resumeMainLoop = () => {
   if (!running && callbacks.size > 0) {
     running = true
     previousTime = performance.now() // Reset time to avoid large delta after pause
-    requestAnimationFrame(loop)
+    requestAnimationFrame(mainLoop)
   }
 }

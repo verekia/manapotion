@@ -1,15 +1,10 @@
 import { useEffect } from 'react'
 
-import {
-  AnimationFrameCallback,
-  AnimationFrameOptions,
-  startAnimationFrame,
-} from '@manapotion/core'
+import { addMainLoopEffect } from '@manapotion/core'
 
-export const useAnimationFrame = (
-  callback: AnimationFrameCallback,
-  options?: AnimationFrameOptions,
-) => {
+import type { MainLoopEffectCallback, MainLoopEffectOptions } from '@manapotion/core'
+
+export const useMainLoop = (callback: MainLoopEffectCallback, options?: MainLoopEffectOptions) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => startAnimationFrame(callback, options), [])
+  useEffect(() => addMainLoopEffect(callback, options), [])
 }

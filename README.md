@@ -11,11 +11,11 @@ Mana Potion supports React, Vue, Svelte, and vanilla JavaScript. It is a particu
 The library consists of:
 
 - [**Listeners and a reactive store for inputs and browser state**](#getting-started)
-- [**Animation loops**](#animation-loops)
+- [**A main loop**](#main-loop)
 - [**Headless virtual joysticks**](#virtual-joysticks)
 - [**Browser API helpers**](#browser-api-helpers)
 - [**Tailwind media queries**](#tailwind)
-- [**Extra hooks for React Three Fiber**](#react-three-fiber)
+<!-- - [**Extra hooks for React Three Fiber**](#react-three-fiber) -->
 
 **Important**: Until we hit 1.0.0, expect breaking changes in minor versions.
 
@@ -25,8 +25,9 @@ Check out the [**React**](https://manapotion.org/), [**Vue**](https://vue.manapo
 
 ## Installation
 
-- If you use **React Three Fiber**, install `@manapotion/r3f`
-- If you use **React** _without R3F_, install `@manapotion/react`
+<!-- - If you use **React Three Fiber**, install `@manapotion/r3f` -->
+
+- If you use **React**, install `@manapotion/react`
 - If you use **Vue**, install `@manapotion/vue`
 - If you use **Svelte**, install `@manapotion/svelte`
 - If you don't use these frameworks, install `@manapotion/vanilla`
@@ -264,22 +265,22 @@ Please check the TypeScript types for the available callbacks.
 
 Once mounted, you cannot modify the callbacks dynamically. If you need to change them, you will need to unmount and remount the component. If you have use cases of callbacks changed dynamically, please let me know on [Discord](https://discord.gg/VXYxGrP8EJ).
 
-## Animation loops
+## Main loop
 
-The `useAnimationFrame` hook can be used to schedule your various systems in a single `requestAnimationFrame` call that you can configure per component:
+The `useMainLoop` hook can be used to schedule your various systems in a single `requestAnimationFrame` call that you can configure per component:
 
 **React**
 
 ```jsx
 import { useRef } from 'react'
-import { useAnimationFrame } from '@manapotion/react'
+import { useMainLoop } from '@manapotion/react'
 
 import player from './player'
 
 const Player = () => {
   const ref = useRef<HTMLDivElement>(null)
 
-  useAnimationFrame(({ delta, elapsed }) => {
+  useMainLoop(({ delta, elapsed }) => {
     ref.current!.style.transform = `translate(${player.x}px, ${player.y}px)`
   })
 
@@ -292,13 +293,13 @@ const Player = () => {
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAnimationFrame } from '@manapotion/vue'
+import { useMainLoop } from '@manapotion/vue'
 
 import player from './player'
 
 const playerRef = ref<HTMLDivElement | null>(null)
 
-useAnimationFrame(({ delta, elapsed }) => {
+useMainLoop(({ delta, elapsed }) => {
   playerRef.value!.style.transform = `translate(${player.x}px, ${player.y}px)`
 })
 </script>
@@ -312,13 +313,13 @@ useAnimationFrame(({ delta, elapsed }) => {
 
 ```svelte
 <script lang="ts">
-  import { useAnimationFrame } from '@manapotion/svelte'
+  import { useMainLoop } from '@manapotion/svelte'
 
   import player from './player'
 
   let playerEl: HTMLDivElement
 
-  useAnimationFrame(({ delta, elapsed }) => {
+  useMainLoop(({ delta, elapsed }) => {
     playerEl.style.transform = `translate(${player.x}px, ${player.y}px)`
   })
 </script>
@@ -329,9 +330,9 @@ useAnimationFrame(({ delta, elapsed }) => {
 **Vanilla**
 
 ```ts
-import { startAnimationFrame } from '@manapotion/vanilla'
+import { addMainLoopEffect } from '@manapotion/vanilla'
 
-const unsub = startAnimationFrame(({ delta, elapsed }) => {
+const unsub = addMainLoopEffect(({ delta, elapsed }) => {
   // Your animation loop
 })
 
@@ -343,7 +344,7 @@ const unsub = startAnimationFrame(({ delta, elapsed }) => {
 You can throttle some callbacks by passing a `throttle` option to `useAnimationFrame`/`startAnimationFrame`:
 
 ```jsx
-useAnimationFrame(
+useMainLoop(
   ({ delta, elapsed }) => {
     // Your animation loop
   },
@@ -364,7 +365,7 @@ export const STAGE_UI = 5
 export const STAGE_CLEANUP = 10
 
 const HealthBar = () => {
-  useAnimationFrame(
+  useMainLoop(
     () => {
       // Adjust health bar width
     },
@@ -373,13 +374,23 @@ const HealthBar = () => {
 }
 
 const Physics = () => {
-  useAnimationFrame(
+  useMainLoop(
     () => {
       // Update physics
     },
     { stage: STAGE_PHYSICS }
   )
 }
+```
+
+You can pause and resume the main loop with `pauseMainLoop` and `resumeMainLoop`:
+
+```jsx
+<Listeners
+  onPageFocusChange={({ isPageFocused }) => {
+    isPageFocused ? resumeMainLoop() : pauseMainLoop()
+  }}
+/>
 ```
 
 ## Virtual joysticks
@@ -525,7 +536,7 @@ export default {
 }
 ```
 
-## React Three Fiber
+<!-- ## React Three Fiber
 
 **`@manapotion/r3f`** includes hooks to run logic inside the main R3F `requestAnimationFrame` loop. They are simple hooks around [`addEffect`, `addAfterEffect`, and `addTail`](https://docs.pmnd.rs/react-three-fiber/api/additional-exports). See R3F [loop source](https://github.com/pmndrs/react-three-fiber/blob/master/packages/fiber/src/core/loop.ts).
 
@@ -558,7 +569,7 @@ useFrameEffect(
   },
   { throttle: 100 } // ms
 )
-```
+``` -->
 
 ## General tips
 

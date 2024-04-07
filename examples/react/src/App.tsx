@@ -4,12 +4,14 @@ import {
   Listeners,
   lockKeys,
   lockOrientation,
+  pauseMainLoop,
   resetKeyboard,
   resetMouse,
+  resumeMainLoop,
   unlockKeys,
   unlockOrientation,
-  useAnimationFrame,
   useKeyboard,
+  useMainLoop,
 } from '@manapotion/r3f'
 
 import {
@@ -105,13 +107,13 @@ const UI = ({
   const animationFrameThrottledRef = useRef<HTMLSpanElement>(null)
   const [joystickMode, setJoystickMode] = useState<'follow' | 'origin'>('follow')
 
-  useAnimationFrame(({ elapsed }) => {
-    animationFrameRef.current!.textContent = String(elapsed)
+  useMainLoop(({ elapsed }) => {
+    animationFrameRef.current!.textContent = String(Math.round(elapsed * 1000))
   })
 
-  useAnimationFrame(
+  useMainLoop(
     ({ elapsed }) => {
-      animationFrameThrottledRef.current!.textContent = String(elapsed)
+      animationFrameThrottledRef.current!.textContent = String(Math.round(elapsed * 1000))
     },
     { throttle: 100 },
   )
@@ -380,9 +382,10 @@ const App = () => {
           console.log(`onScroll – deltaY: ${rounded}`)
           scrollYRef.current!.textContent = String(rounded)
         }}
-        onPageFocusChange={() => {
+        onPageFocusChange={({ isPageFocused }) => {
           resetKeyboard()
           resetMouse()
+          isPageFocused ? resumeMainLoop() : pauseMainLoop()
         }}
         onPageVisibilityChange={() => {
           resetKeyboard()

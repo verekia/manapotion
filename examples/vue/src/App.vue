@@ -5,9 +5,11 @@ import {
   Listeners,
   lockKeys,
   lockOrientation,
+  pauseMainLoop,
+  resumeMainLoop,
   unlockKeys,
   unlockOrientation,
-  useAnimationFrame,
+  useMainLoop,
 } from '@manapotion/vue'
 
 import DiscordIcon from './components/DiscordIcon.vue'
@@ -37,13 +39,13 @@ const mousePosEl = ref<HTMLSpanElement>()
 const mouseMoveEl = ref<HTMLSpanElement>()
 const scrollYEl = ref<HTMLSpanElement>()
 
-useAnimationFrame(({ elapsed }) => {
-  animationFrameEl.value!.textContent = String(elapsed)
+useMainLoop(({ elapsed }) => {
+  animationFrameEl.value!.textContent = String(Math.round(elapsed * 1000))
 })
 
-useAnimationFrame(
+useMainLoop(
   ({ elapsed }) => {
-    animationFrameThrottledEl.value!.textContent = String(elapsed)
+    animationFrameThrottledEl.value!.textContent = String(Math.round(elapsed * 1000))
   },
   { throttle: 100 },
 )
@@ -288,6 +290,7 @@ const joystickMode = ref<'follow' | 'origin'>('follow')
         }
       "
       @scroll="e => (scrollYEl!.textContent = String(Math.round(e.y)))"
+      @page-focus-change="e => (e.isPageFocused ? resumeMainLoop() : pauseMainLoop())"
     />
   </main>
 </template>
