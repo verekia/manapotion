@@ -8,9 +8,10 @@ export type AnimationFrameCallback = ({
 
 export type AnimationFrameOptions = {
   throttle?: number
+  stage?: number
 }
 
-const callbacks = new Set<AnimationFrameCallback>()
+const callbacks = new Map<number, Set<AnimationFrameCallback>>()
 const callbackLastExecution = new WeakMap<AnimationFrameCallback, number>()
 const state = { delta: 0, elapsed: 0 }
 let previousTime = performance.now()
@@ -21,13 +22,19 @@ const loop = (time: number) => {
 
   state.delta = time - previousTime
   state.elapsed += state.delta
-  callbacks.forEach(callback => {
-    try {
-      callback(state)
-    } catch (error) {
-      console.error('Error in animation frame callback:', error)
-    }
-  })
+
+  Array.from(callbacks.keys())
+    .sort((a, b) => a - b)
+    .forEach(stage => {
+      callbacks.get(stage)?.forEach(callback => {
+        try {
+          callback(state)
+        } catch (error) {
+          console.error('Error in animation frame callback:', error)
+        }
+      })
+    })
+
   previousTime = time
   requestAnimationFrame(loop)
 }
@@ -44,7 +51,11 @@ const subscribe = (callback: AnimationFrameCallback, options?: AnimationFrameOpt
     }
   }
 
-  callbacks.add(throttledCallback)
+  const stage = options?.stage || 0
+  if (!callbacks.has(stage)) {
+    callbacks.set(stage, new Set())
+  }
+  callbacks.get(stage)?.add(throttledCallback)
 
   if (!running) {
     running = true
@@ -53,7 +64,10 @@ const subscribe = (callback: AnimationFrameCallback, options?: AnimationFrameOpt
   }
 
   return () => {
-    callbacks.delete(throttledCallback)
+    callbacks.get(stage)?.delete(throttledCallback)
+    if (callbacks.get(stage)?.size === 0) {
+      callbacks.delete(stage)
+    }
   }
 }
 
