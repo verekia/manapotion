@@ -20,7 +20,7 @@ let running = false
 const loop = (time: number) => {
   if (!running) return
 
-  state.delta = time - previousTime
+  state.delta = (time - previousTime) / 1000
   state.elapsed += state.delta
 
   Array.from(callbacks.keys())
