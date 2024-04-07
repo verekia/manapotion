@@ -5,7 +5,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:@react-three/recommended',
   ],
   overrides: [
     {
@@ -17,7 +16,7 @@ module.exports = {
   ignorePatterns: ['dist'],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  plugins: ['@typescript-eslint', 'react', 'react-refresh', '@react-three'],
+  plugins: ['@typescript-eslint', 'react', 'react-refresh'],
   rules: {
     'react/no-unknown-property': 0,
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

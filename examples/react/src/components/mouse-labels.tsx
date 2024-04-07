@@ -1,4 +1,4 @@
-import { lockPointer, unlockPointer, useMouse } from '@manapotion/r3f'
+import { lockPointer, unlockPointer, useMouse } from '@manapotion/react'
 
 import Label from './Label'
 

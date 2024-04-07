@@ -13,7 +13,7 @@
     "vanilla": "cd examples/vanilla && npm run dev",
     "svelte": "cd examples/svelte && npm run dev",
     "clean": "rm -rf packages/*/dist",
-    "build": "npm run build -w @manapotion/core -w @manapotion/vanilla -w @manapotion/react -w @manapotion/vue -w @manapotion/svelte -w @manapotion/r3f",
+    "build": "npm run build -w @manapotion/core -w @manapotion/vanilla -w @manapotion/react -w @manapotion/vue -w @manapotion/svelte",
     "lint": "npm run lint -ws",
     "publint": "npm run publint -ws",
     "typecheck": "npm run typecheck -ws",

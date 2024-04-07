@@ -12,7 +12,7 @@ import {
   unlockOrientation,
   useKeyboard,
   useMainLoop,
-} from '@manapotion/r3f'
+} from '@manapotion/react'
 
 import {
   FullscreenButton,

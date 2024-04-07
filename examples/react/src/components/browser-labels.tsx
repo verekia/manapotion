@@ -1,4 +1,4 @@
-import { enterFullscreen, exitFullscreen, useBrowser } from '@manapotion/r3f'
+import { enterFullscreen, exitFullscreen, useBrowser } from '@manapotion/react'
 
 import Label from './Label'
 
