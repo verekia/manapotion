@@ -61,7 +61,9 @@
 
 <main class="mx-auto max-w-7xl px-5 pb-16 pt-5" on:contextmenu={e => e.preventDefault()}>
   <div class="mb-5 flex flex-col items-center justify-center gap-6 sm:flex-row">
-    <a href="/"><img src="/mana-potion.webp" class="w-28" alt="Logo" /></a>
+    <a href="/">
+      <img src="/mana-potion.webp" class="w-28" alt="Logo" width="324" height="460" />
+    </a>
     <div class="flex flex-col gap-3">
       <div class="flex items-center gap-3 justify-center sm:justify-start">
         <h1 class="text-5xl font-medium"><a href="/">Mana Potion</a></h1>

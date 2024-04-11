@@ -123,7 +123,7 @@ const UI = ({
       <div className="mx-auto max-w-7xl px-5 pb-16 pt-5" onContextMenu={e => e.preventDefault()}>
         <div className="mb-5 flex flex-col items-center justify-center gap-6 sm:flex-row">
           <a href="/">
-            <img src="/mana-potion.webp" className="w-28" alt="Logo" />
+            <img src="/mana-potion.webp" className="w-28" alt="Logo" width="324" height="460" />
           </a>
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-center gap-3 sm:justify-start">
