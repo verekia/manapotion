@@ -56,14 +56,14 @@ const joystickMode = ref<'follow' | 'origin'>('follow')
 <template>
   <main class="mx-auto max-w-7xl px-5 pb-16 pt-5" @contextmenu.prevent="">
     <div class="mb-5 flex flex-col items-center justify-center gap-6 sm:flex-row">
-      <img src="/mana-potion.webp" class="w-28" alt="Logo" />
+      <a href="/"><img src="/mana-potion.webp" class="w-28" alt="Logo" /></a>
       <div class="flex flex-col gap-3">
-        <h1 class="text-center text-5xl font-medium sm:text-left">Mana Potion</h1>
+        <h1 class="text-center text-5xl font-medium sm:text-left"><a href="/">Mana Potion</a></h1>
         <h2 class="max-w-lg text-pretty text-center text-lg text-gray-200 sm:text-left">
           Toolkit for JavaScript game development and interactive experiences with
-          <a class="underline" href="https://manapotion.org">React</a>, <b>Vue</b>,
-          <a class="underline" href="https://svelte.manapotion.org">Svelte</a>, and
-          <a class="underline" href="https://vanilla.manapotion.org">vanilla JS</a>
+          <a class="underline" href="/react/">React</a>, <b>Vue</b>,
+          <a class="underline" href="/svelte/">Svelte</a>, and
+          <a class="underline" href="/vanilla/">vanilla JS</a>
           support.
         </h2>
         <div class="flex items-center justify-center gap-3 sm:justify-start">

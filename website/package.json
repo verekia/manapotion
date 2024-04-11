@@ -1,0 +1,21 @@
+{
+  "name": "manapotion-website",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/index.css -o ./dist/index.css --watch",
+    "build": "npx tailwindcss -i ./src/index.css -o ./dist/index.css",
+    "lint": "",
+    "publint": "",
+    "typecheck": "",
+    "format": "",
+    "format:check": ""
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.13",
+    "tailwindcss": "^3.4.3"
+  }
+}

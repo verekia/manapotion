@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "vue-tsc && vite build --base=/vue/",
     "lint": "eslint --ext ts,vue .",
     "start": "serve dist",
     "preview": "vite preview",

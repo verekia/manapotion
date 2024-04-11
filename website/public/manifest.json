@@ -1,9 +1,9 @@
 {
-  "short_name": "Mana Potion Svelte",
-  "name": "Mana Potion Svelte",
+  "short_name": "Mana Potion",
+  "name": "Mana Potion",
   "start_url": "/",
-  "background_color": "#333",
-  "theme_color": "#333",
+  "background_color": "#2d65cd",
+  "theme_color": "#2d65cd",
   "display": "standalone",
   "icons": [
     { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },

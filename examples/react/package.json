@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base=/react/",
     "start": "serve dist",
     "lint": "eslint . --ext ts,tsx",
     "preview": "vite preview",

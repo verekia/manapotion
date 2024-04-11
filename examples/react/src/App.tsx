@@ -122,20 +122,24 @@ const UI = ({
     <>
       <div className="mx-auto max-w-7xl px-5 pb-16 pt-5" onContextMenu={e => e.preventDefault()}>
         <div className="mb-5 flex flex-col items-center justify-center gap-6 sm:flex-row">
-          <img src="/mana-potion.webp" className="w-28" alt="Logo" />
+          <a href="/">
+            <img src="/mana-potion.webp" className="w-28" alt="Logo" />
+          </a>
           <div className="flex flex-col gap-3">
-            <h1 className="text-center text-5xl font-medium sm:text-left">Mana Potion</h1>
+            <h1 className="text-center text-5xl font-medium sm:text-left">
+              <a href="/">Mana Potion</a>
+            </h1>
             <h2 className="max-w-lg text-pretty text-center text-lg text-gray-300 sm:text-left">
               Toolkit for JavaScript game development and interactive experiences with <b>React</b>,{' '}
-              <a href="https://vue.manapotion.org" className="underline">
+              <a href="/vue/" className="underline">
                 Vue
               </a>
               ,{' '}
-              <a href="https://svelte.manapotion.org" className="underline">
+              <a href="/svelte/" className="underline">
                 Svelte
               </a>
               , and{' '}
-              <a href="https://vanilla.manapotion.org" className="underline">
+              <a href="/vanilla/" className="underline">
                 vanilla JS
               </a>{' '}
               support.
