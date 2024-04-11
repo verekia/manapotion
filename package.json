@@ -16,7 +16,7 @@
     "clean": "rm -rf packages/*/dist",
     "build": "npm run build -w @manapotion/core -w @manapotion/vanilla -w @manapotion/react -w @manapotion/vue -w @manapotion/svelte",
     "build-examples": "npm run build -w examples/react -w examples/vue -w examples/vanilla -w examples/svelte",
-    "build-website": "rm -rf website/dist && mkdir website/dist && cp -R examples/react/dist website/dist/react && cp -R examples/vue/dist website/dist/vue && cp -R examples/vanilla/dist website/dist/vanilla && cp -R examples/svelte/dist website/dist/svelte && cp -R website/public/* website/dist/.",
+    "build-website": "rm -rf website/dist && mkdir website/dist && cp -R examples/react/dist website/dist/react && cp -R examples/vue/dist website/dist/vue && cp -R examples/vanilla/dist website/dist/vanilla && cp -R examples/svelte/dist website/dist/svelte && cd website && npm run build && cp -R public/* dist/.",
     "website": "npx serve website/dist",
     "website-all": "run-s build-examples build-website website",
     "lint": "npm run lint -ws",
