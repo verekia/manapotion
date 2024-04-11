@@ -126,8 +126,8 @@ const UI = ({
             <img src="/mana-potion.webp" className="w-28" alt="Logo" />
           </a>
           <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-3">
-              <h1 className="text-center text-5xl font-medium sm:text-left">
+            <div className="flex items-center justify-center gap-3 sm:justify-start">
+              <h1 className="text-5xl font-medium">
                 <a href="/">Mana Potion</a>
               </h1>
               <img src="/react.svg" className="size-10" alt="React" />
