@@ -126,9 +126,12 @@ const UI = ({
             <img src="/mana-potion.webp" className="w-28" alt="Logo" />
           </a>
           <div className="flex flex-col gap-3">
-            <h1 className="text-center text-5xl font-medium sm:text-left">
-              <a href="/">Mana Potion</a>
-            </h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-center text-5xl font-medium sm:text-left">
+                <a href="/">Mana Potion</a>
+              </h1>
+              <img src="/react.svg" className="size-10" alt="React" />
+            </div>
             <h2 className="max-w-lg text-pretty text-center text-lg text-gray-300 sm:text-left">
               Toolkit for JavaScript game development and interactive experiences with <b>React</b>,{' '}
               <a href="/vue/" className="underline">

@@ -63,7 +63,10 @@
   <div class="mb-5 flex flex-col items-center justify-center gap-6 sm:flex-row">
     <a href="/"><img src="/mana-potion.webp" class="w-28" alt="Logo" /></a>
     <div class="flex flex-col gap-3">
-      <h1 class="text-center text-5xl font-medium sm:text-left"><a href="/">Mana Potion</a></h1>
+      <div class="flex items-center gap-3">
+        <h1 class="text-center text-5xl font-medium sm:text-left"><a href="/">Mana Potion</a></h1>
+        <img src="/svelte.svg" class="size-10" alt="Svelte" />
+      </div>
       <h2 class="max-w-lg text-pretty text-center text-lg text-gray-300 sm:text-left">
         Toolkit for JavaScript game development and interactive experiences with <a
           class="underline"
