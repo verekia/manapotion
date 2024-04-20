@@ -27,12 +27,12 @@ Check out the [**React**](https://manapotion.org/), [**Vue**](https://vue.manapo
 
 <!-- - If you use **React Three Fiber**, install `@manapotion/r3f` -->
 
-- If you use **React**, install `@manapotion/react` and `zustand` (v4+)
+- If you use **React**, install `@manapotion/react`
 - If you use **Vue**, install `@manapotion/vue`
 - If you use **Svelte**, install `@manapotion/svelte`
 - If you don't use these frameworks, install `@manapotion/vanilla`
 
-The React version of Mana Potion requires [Zustand](https://github.com/pmndrs/zustand) v4 as a peer dependency. If you do not add Zustand v4 in your dependencies and one of your project dependencies uses Zustand v3 (React Three Fiber for instance), you will get an [error](https://github.com/verekia/manapotion/issues/39).
+The React version of Mana Potion uses [Zustand](https://github.com/pmndrs/zustand) v4 internally. If one of your project dependencies uses Zustand v3 (React Three Fiber for instance), you will have conflicting Zustand versions and will get an [error](https://github.com/verekia/manapotion/issues/39). In this case, please add `zustand` v4+ to your dependencies.
 
 ## Getting started
 
