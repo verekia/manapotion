@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     'react/no-unknown-property': 0,
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     'no-extra-semi': 'off',
     'react/react-in-jsx-scope': 0,
     'react/jsx-no-target-blank': 0,

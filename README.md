@@ -419,6 +419,8 @@ const App = () => (
 
 Similarly, if you are using Threlte, set `renderMode` to `manual` on your `Canvas` and call `useThrelte().advance()` in a `useMainLoop`.
 
+TresJS will support [conditional rendering](https://github.com/Tresjs/tres/pull/497) in [v4](https://github.com/Tresjs/tres/issues/541).
+
 ## Virtual joysticks
 
 Mana Potion includes **🗿 non-reactive** and **headless** virtual joysticks for mobile controls. Each virtual joystick is associated with a single `<JoystickArea />`. You can create your own Joystick objects with `createJoystick()` or use one of the two default ones that are already available on the joysticks store. The default ones are called `movement` and `rotation` joysticks.

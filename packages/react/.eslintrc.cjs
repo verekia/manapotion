@@ -19,6 +19,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react', 'react-refresh'],
   rules: {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     'no-extra-semi': 'off',
     'react/react-in-jsx-scope': 0,
   },

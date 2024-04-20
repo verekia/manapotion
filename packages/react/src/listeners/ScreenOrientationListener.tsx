@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
-import { mountScreenOrientationListener, ScreenOrientationListenerProps } from '@manapotion/core'
+import { mountScreenOrientationListener } from '@manapotion/core'
+
+import type { ScreenOrientationListenerProps } from '@manapotion/core'
 
 export const ScreenOrientationListener = ({
   onScreenOrientationChange,

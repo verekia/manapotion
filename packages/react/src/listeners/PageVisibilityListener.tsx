@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
-import { mountPageVisibilityListener, PageVisibilityListenerProps } from '@manapotion/core'
+import { mountPageVisibilityListener } from '@manapotion/core'
+
+import type { PageVisibilityListenerProps } from '@manapotion/core'
 
 export const PageVisibilityListener = ({ onPageVisibilityChange }: PageVisibilityListenerProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps

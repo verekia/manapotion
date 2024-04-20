@@ -1,4 +1,6 @@
-import { getMouse, MouseMovement, MousePosition } from '../stores/mouseStore'
+import type { MouseMovement, MousePosition } from '../stores/mouseStore'
+
+import { getMouse } from '../stores/mouseStore'
 
 let movementResetTimeout: ReturnType<typeof setTimeout> | null = null
 

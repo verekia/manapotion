@@ -1,6 +1,8 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountPointerLockListener, PointerLockChangePayload } from '@manapotion/core'
+import { mountPointerLockListener } from '@manapotion/core'
+
+import type { PointerLockChangePayload } from '@manapotion/core'
 
 export const PointerLockListener = defineComponent({
   emits: { pointerLockChange: (payload: PointerLockChangePayload) => payload },

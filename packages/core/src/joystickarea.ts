@@ -1,4 +1,4 @@
-import { Joystick } from './stores/joysticksStore'
+import { type Joystick } from './stores/joysticksStore'
 
 const { sin, cos, sqrt, pow, atan2 } = Math
 const pi = Math.PI

@@ -30,6 +30,10 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    // For some reason, this one crashes ESLint with this error:
+    // Error while loading rule '@typescript-eslint/consistent-type-imports': You have used a rule which requires parserServices to be generated. You must therefore provide a value for the "parserOptions.project" property for @typescript-eslint/parser.
+    // But the package/svelte one doesn't have this issue.
+    // '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     'no-extra-semi': 'off',
   },
 }

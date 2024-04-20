@@ -1,6 +1,8 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { DeviceTypeChangePayload, mountDeviceTypeListener } from '@manapotion/core'
+import { mountDeviceTypeListener } from '@manapotion/core'
+
+import type { DeviceTypeChangePayload } from '@manapotion/core'
 
 export const DeviceTypeListener = defineComponent({
   emits: { deviceTypeChange: (payload: DeviceTypeChangePayload) => payload },

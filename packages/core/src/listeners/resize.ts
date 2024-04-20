@@ -1,4 +1,6 @@
-import { Browser, getBrowser } from '../stores/browserStore'
+import type { Browser } from '../stores/browserStore'
+
+import { getBrowser } from '../stores/browserStore'
 
 export type ResizePayload = { width: number; height: number }
 

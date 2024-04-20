@@ -1,4 +1,6 @@
-import { getKeyboard, Keyboard, keyboardStore } from '../stores/keyboardStore'
+import type { Keyboard } from '../stores/keyboardStore'
+
+import { getKeyboard, keyboardStore } from '../stores/keyboardStore'
 
 type KeyState = {
   code: string

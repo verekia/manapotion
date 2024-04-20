@@ -1,6 +1,8 @@
 import { defineComponent, h, onMounted, onUnmounted, ref, watch } from 'vue'
 
-import { Joystick, mountJoystickArea } from '@manapotion/core'
+import { mountJoystickArea } from '@manapotion/core'
+
+import type { Joystick } from '@manapotion/core'
 
 export const JoystickArea = defineComponent({
   name: 'JoystickArea',

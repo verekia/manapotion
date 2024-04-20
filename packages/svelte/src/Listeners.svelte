@@ -6,18 +6,18 @@
     FullscreenChangePayload,
     KeyDownPayload,
     KeyUpPayload,
-    LeftMouseDownPayload,
-    LeftMouseUpPayload,
-    MiddleMouseDownPayload,
-    MiddleMouseUpPayload,
+    LeftMouseButtonDownPayload,
+    LeftMouseButtonUpPayload,
+    MiddleMouseButtonDownPayload,
+    MiddleMouseButtonUpPayload,
     MouseMovePayload,
     MouseScrollPayload,
     PageFocusChangePayload,
     PageVisibilityPayload,
     PointerLockChangePayload,
     ResizePayload,
-    RightMouseDownPayload,
-    RightMouseUpPayload,
+    RightMouseButtonDownPayload,
+    RightMouseButtonUpPayload,
     ScreenOrientationChangePayload,
   } from '@manapotion/core'
 
@@ -38,12 +38,12 @@
     fullscreenChange: FullscreenChangePayload
     keyDown: KeyDownPayload
     keyUp: KeyUpPayload
-    leftMouseDown: LeftMouseDownPayload
-    leftMouseUp: LeftMouseUpPayload
-    middleMouseDown: MiddleMouseDownPayload
-    middleMouseUp: MiddleMouseUpPayload
-    rightMouseDown: RightMouseDownPayload
-    rightMouseUp: RightMouseUpPayload
+    leftMouseDown: LeftMouseButtonDownPayload
+    leftMouseUp: LeftMouseButtonUpPayload
+    middleMouseDown: MiddleMouseButtonDownPayload
+    middleMouseUp: MiddleMouseButtonUpPayload
+    rightMouseDown: RightMouseButtonDownPayload
+    rightMouseUp: RightMouseButtonUpPayload
     mouseMove: MouseMovePayload
     scroll: MouseScrollPayload
     pageFocusChange: PageFocusChangePayload

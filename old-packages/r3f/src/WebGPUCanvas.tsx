@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { CanvasProps, Canvas as R3FCanvas } from '@react-three/fiber'
+import { Canvas as R3FCanvas } from '@react-three/fiber'
+
+import type { CanvasProps } from '@react-three/fiber'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let WebGPURenderer: any

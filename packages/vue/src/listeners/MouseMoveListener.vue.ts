@@ -1,6 +1,8 @@
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 
-import { mountMouseMoveListener, MouseMovePayload } from '@manapotion/core'
+import { mountMouseMoveListener } from '@manapotion/core'
+
+import type { MouseMovePayload } from '@manapotion/core'
 
 export const MouseMoveListener = defineComponent({
   // eslint-disable-next-line vue/require-default-prop

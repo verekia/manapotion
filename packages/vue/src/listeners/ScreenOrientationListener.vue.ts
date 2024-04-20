@@ -1,6 +1,8 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountScreenOrientationListener, ScreenOrientationChangePayload } from '@manapotion/core'
+import { mountScreenOrientationListener } from '@manapotion/core'
+
+import type { ScreenOrientationChangePayload } from '@manapotion/core'
 
 export const ScreenOrientationListener = defineComponent({
   emits: { screenOrientationChange: (payload: ScreenOrientationChangePayload) => payload },

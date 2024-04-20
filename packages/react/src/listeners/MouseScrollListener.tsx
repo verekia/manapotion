@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
-import { mountMouseScrollListener, MouseScrollListenerProps } from '@manapotion/core'
+import { mountMouseScrollListener } from '@manapotion/core'
+
+import type { MouseScrollListenerProps } from '@manapotion/core'
 
 export const MouseScrollListener = ({
   onScroll,

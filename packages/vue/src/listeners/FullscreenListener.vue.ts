@@ -1,6 +1,8 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { FullscreenChangePayload, mountFullscreenListener } from '@manapotion/core'
+import { mountFullscreenListener } from '@manapotion/core'
+
+import type { FullscreenChangePayload } from '@manapotion/core'
 
 export const FullscreenListener = defineComponent({
   emits: { fullscreenChange: (payload: FullscreenChangePayload) => payload },

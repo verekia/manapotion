@@ -1,6 +1,8 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountPageVisibilityListener, PageVisibilityPayload } from '@manapotion/core'
+import { mountPageVisibilityListener } from '@manapotion/core'
+
+import type { PageVisibilityPayload } from '@manapotion/core'
 
 export const PageVisibilityListener = defineComponent({
   emits: { pageVisibilityChange: (payload: PageVisibilityPayload) => payload },

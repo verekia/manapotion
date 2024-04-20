@@ -7,7 +7,7 @@
 
   const dispatch = createEventDispatcher<{ scroll: MouseScrollPayload }>()
 
-  export let mouseScrollResetDelay: number
+  export let mouseScrollResetDelay: number | undefined = undefined
 
   onMount(() =>
     mountMouseScrollListener({

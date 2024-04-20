@@ -7,7 +7,7 @@
 
   const dispatch = createEventDispatcher<{ mouseMove: MouseMovePayload }>()
 
-  export let mouseMovementResetDelay: number
+  export let mouseMovementResetDelay: number | undefined = undefined
 
   onMount(() =>
     mountMouseMoveListener({

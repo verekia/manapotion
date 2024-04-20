@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { getJoysticks, Joystick, JoystickArea } from '@manapotion/vue'
+import { getJoysticks, JoystickArea } from '@manapotion/vue'
+
+import type { Joystick } from '@manapotion/vue'
 
 const props = defineProps<{ mode: 'follow' | 'origin' }>()
 

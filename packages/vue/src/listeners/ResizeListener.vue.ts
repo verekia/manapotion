@@ -1,6 +1,8 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountResizeListener, ResizePayload } from '@manapotion/core'
+import { mountResizeListener } from '@manapotion/core'
+
+import type { ResizePayload } from '@manapotion/core'
 
 export const ResizeListener = defineComponent({
   emits: { resize: (payload: ResizePayload) => payload },

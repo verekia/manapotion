@@ -1,11 +1,12 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import {
+import { mountMouseButtonsListener } from '@manapotion/core'
+
+import type {
   LeftMouseButtonDownPayload,
   LeftMouseButtonUpPayload,
   MiddleMouseButtonDownPayload,
   MiddleMouseButtonUpPayload,
-  mountMouseButtonsListener,
   RightMouseButtonDownPayload,
   RightMouseButtonUpPayload,
 } from '@manapotion/core'

@@ -1,6 +1,8 @@
 import { onMounted, onUnmounted } from 'vue'
 
-import { addMainLoopEffect, MainLoopEffectCallback, MainLoopEffectOptions } from '@manapotion/core'
+import { addMainLoopEffect } from '@manapotion/core'
+
+import type { MainLoopEffectCallback, MainLoopEffectOptions } from '@manapotion/core'
 
 export const useMainLoop = (callback: MainLoopEffectCallback, options?: MainLoopEffectOptions) => {
   onMounted(() => {

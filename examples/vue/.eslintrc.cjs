@@ -21,6 +21,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'vue'],
   rules: {
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     'vue/multi-word-component-names': 0,
   },
 }

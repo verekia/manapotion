@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 
-import { getJoysticks, Joystick, JoystickArea } from '@manapotion/react'
+import { getJoysticks, JoystickArea } from '@manapotion/react'
+
+import type { Joystick } from '@manapotion/react'
 
 const MobileJoystick = ({ mode = 'follow' }: { mode?: 'follow' | 'origin' }) => {
   const joystickCurrentRef = useRef<HTMLDivElement>(null)

@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, RefObject, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 
 import {
   Listeners,
@@ -13,6 +13,8 @@ import {
   useKeyboard,
   useMainLoop,
 } from '@manapotion/react'
+
+import type { ForwardedRef, RefObject } from 'react'
 
 import {
   FullscreenButton,

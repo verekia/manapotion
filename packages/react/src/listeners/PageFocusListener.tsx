@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
-import { mountPageFocusListener, PageFocusListenerProps } from '@manapotion/core'
+import { mountPageFocusListener } from '@manapotion/core'
+
+import type { PageFocusListenerProps } from '@manapotion/core'
 
 export const PageFocusListener = ({ onPageFocusChange }: PageFocusListenerProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps

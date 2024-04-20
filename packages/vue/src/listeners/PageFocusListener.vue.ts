@@ -1,6 +1,8 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-import { mountPageFocusListener, PageFocusChangePayload } from '@manapotion/core'
+import { mountPageFocusListener } from '@manapotion/core'
+
+import type { PageFocusChangePayload } from '@manapotion/core'
 
 export const PageFocusListener = defineComponent({
   emits: { pageFocusChange: (payload: PageFocusChangePayload) => payload },

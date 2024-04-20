@@ -1,14 +1,9 @@
-import {
-  DetailedHTMLProps,
-  ForwardedRef,
-  forwardRef,
-  HTMLAttributes,
-  ReactNode,
-  useEffect,
-  useRef,
-} from 'react'
+import { forwardRef, useEffect, useRef } from 'react'
 
-import { JoystickAreaProps, mountJoystickArea } from '@manapotion/core'
+import { mountJoystickArea } from '@manapotion/core'
+
+import type { JoystickAreaProps } from '@manapotion/core'
+import type { DetailedHTMLProps, ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 
 // react-merge-refs v2.1.1
 function mergeRefs<T = unknown>(

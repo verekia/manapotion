@@ -1,7 +1,4 @@
 import {
-  DeviceTypeListenerProps,
-  FullscreenListenerProps,
-  KeyboardListenerProps,
   mountDeviceTypeListener,
   mountFullscreenListener,
   mountKeyboardListener,
@@ -13,6 +10,12 @@ import {
   mountPointerLockListener,
   mountResizeListener,
   mountScreenOrientationListener,
+} from '@manapotion/core'
+
+import type {
+  DeviceTypeListenerProps,
+  FullscreenListenerProps,
+  KeyboardListenerProps,
   MouseButtonsListenerProps,
   MouseMoveListenerProps,
   MouseScrollListenerProps,

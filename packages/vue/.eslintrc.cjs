@@ -20,5 +20,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'vue'],
-  rules: {},
+  rules: {
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+  },
 }

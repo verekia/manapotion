@@ -1,4 +1,6 @@
-import { getMouse, MouseWheel } from '../stores/mouseStore'
+import type { MouseWheel } from '../stores/mouseStore'
+
+import { getMouse } from '../stores/mouseStore'
 
 let resetTimeout: ReturnType<typeof setTimeout> | null = null
 
