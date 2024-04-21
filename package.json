@@ -28,15 +28,16 @@
     "pub-recovery": "npm run build && npm run publint && lerna publish from-package",
     "check-all": "run-s build typecheck lint format:check publint",
     "syncpack": "syncpack list",
+    "check-updates": "npx npm-check-updates -ws",
     "pre-push": "npm run check-all",
     "prepare": "husky"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^19.1.0",
-    "commitlint": "^19.2.1",
-    "husky": "^9.0.11",
-    "lerna": "^8.1.2",
-    "npm-run-all": "^4.1.5",
-    "syncpack": "^12.3.0"
+    "@commitlint/config-conventional": "19.2.2",
+    "commitlint": "19.2.2",
+    "husky": "9.0.11",
+    "lerna": "8.1.2",
+    "npm-run-all": "4.1.5",
+    "syncpack": "12.3.0"
   }
 }

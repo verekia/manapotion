@@ -15,26 +15,26 @@
     "publint": ""
   },
   "dependencies": {
-    "@manapotion/vue": "^0.26.0-alpha.0",
-    "vue": "^3.4.21"
+    "@manapotion/vue": "0.26.0-alpha.0",
+    "vue": "3.4.23"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
-    "@typescript-eslint/eslint-plugin": "^7.5.0",
-    "@typescript-eslint/parser": "^7.5.0",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "autoprefixer": "^10.4.19",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier-vue": "^5.0.0",
-    "eslint-plugin-vue": "^9.24.0",
-    "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.13",
-    "serve": "^14.2.1",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.4",
-    "vite": "^5.2.8",
-    "vue-tsc": "^2.0.10"
+    "@ianvs/prettier-plugin-sort-imports": "4.2.1",
+    "@typescript-eslint/eslint-plugin": "7.7.0",
+    "@typescript-eslint/parser": "7.7.0",
+    "@vitejs/plugin-vue": "5.0.4",
+    "autoprefixer": "10.4.19",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-prettier-vue": "5.0.0",
+    "eslint-plugin-vue": "9.25.0",
+    "postcss": "8.4.38",
+    "prettier": "3.2.5",
+    "prettier-plugin-tailwindcss": "0.5.14",
+    "serve": "14.2.1",
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.5",
+    "vite": "5.2.10",
+    "vue-tsc": "2.0.13"
   }
 }
