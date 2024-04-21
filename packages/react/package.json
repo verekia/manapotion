@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/react",
-  "version": "0.25.1",
+  "version": "0.26.0-alpha.0",
   "license": "MIT",
   "type": "module",
   "bump": 1,
@@ -42,7 +42,7 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/core": "^0.25.1",
+    "@manapotion/core": "^0.26.0-alpha.0",
     "use-sync-external-store": "1.2.0"
   },
   "peerDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/vanilla",
-  "version": "0.25.1",
+  "version": "0.26.0-alpha.0",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -41,7 +41,7 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/core": "^0.25.1"
+    "@manapotion/core": "^0.26.0-alpha.0"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
