@@ -152,9 +152,9 @@ Legend: ⚡️ **Reactive**, 🗿 **Non-reactive**, 🚧 **Not implemented yet**
 - ⚡️ `mouse.locked`
 - 🗿 `mouse.position.x`
 - 🗿 `mouse.position.y` (the bottom of the screen is 0)
-- 🗿 `mouse.movement.x`
+- 🗿 `mouse.movement.x` (reset after `mouseMovementResetDelay`)
 - 🗿 `mouse.movement.y` (going up is positive)
-- 🗿 `mouse.wheel.y` (delta)
+- 🗿 `mouse.wheel.y` (delta, reset after `mouseScrollResetDelay`)
 
 You can import and use `resetMouse` to reinitialize the mouse data.
 
