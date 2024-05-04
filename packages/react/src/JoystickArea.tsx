@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useRef } from 'react'
 import { mountJoystickArea } from '@manapotion/core'
 
 import type { JoystickAreaProps } from '@manapotion/core'
-import type { DetailedHTMLProps, ForwardedRef, HTMLAttributes, ReactNode } from 'react'
+import type { DetailedHTMLProps, ForwardedRef, HTMLAttributes, PropsWithChildren } from 'react'
 
 // react-merge-refs v2.1.1
 function mergeRefs<T = unknown>(
@@ -20,10 +20,11 @@ function mergeRefs<T = unknown>(
   }
 }
 
-type JoystickAreaBaseProps = Omit<JoystickAreaProps, 'element'> & {
-  children?: ReactNode
-  containerProps: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-}
+type JoystickAreaBaseProps = PropsWithChildren<
+  Omit<JoystickAreaProps, 'element'> & {
+    containerProps: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+  }
+>
 
 const JoystickAreaBase = (
   {
