@@ -56,10 +56,14 @@ export const mountKeyboardListener = ({ onKeyUp, onKeyDown }: KeyboardListenerPr
   const upHandler = (e: KeyboardEvent) => {
     keyboardStore.setState(s => {
       const newKeyboard: Mutable<Keyboard> = { ...s, codes: { ...s.codes }, keys: { ...s.keys } }
-      delete newKeyboard.codes[e.code]
-      delete newKeyboard.keys[e.key]
-      delete newKeyboard.keys[e.key.toUpperCase()]
-      delete newKeyboard.keys[e.key.toLowerCase()]
+      if (e.code) {
+        delete newKeyboard.codes[e.code]
+      }
+      if (e.key) {
+        delete newKeyboard.keys[e.key]
+        delete newKeyboard.keys[e.key.toUpperCase()]
+        delete newKeyboard.keys[e.key.toLowerCase()]
+      }
       delete newKeyboard.keys.Dead
       newKeyboard.ctrl = e.ctrlKey
       newKeyboard.shift = e.shiftKey
