@@ -10,6 +10,7 @@ const callbackLastExecutions = new WeakMap<MainLoopEffectCallback, number>()
 const state = { delta: 0, elapsed: 0 }
 let previousTime = performance.now()
 let running = false
+let animationFrameId: number | null = null
 
 const mainLoop = (time: number) => {
   if (!running) return
@@ -30,7 +31,7 @@ const mainLoop = (time: number) => {
     })
 
   previousTime = time
-  requestAnimationFrame(mainLoop)
+  animationFrameId = requestAnimationFrame(mainLoop)
 }
 
 export const addMainLoopEffect = (
@@ -57,7 +58,7 @@ export const addMainLoopEffect = (
   if (!running) {
     running = true
     previousTime = performance.now() // Reset time to avoid large delta after pause
-    requestAnimationFrame(mainLoop)
+    animationFrameId = requestAnimationFrame(mainLoop)
   }
 
   return () => {
@@ -68,12 +69,18 @@ export const addMainLoopEffect = (
   }
 }
 
-export const pauseMainLoop = () => (running = false)
+export const pauseMainLoop = () => {
+  running = false
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId)
+    animationFrameId = null
+  }
+}
 
 export const resumeMainLoop = () => {
   if (!running && callbacks.size > 0) {
     running = true
     previousTime = performance.now() // Reset time to avoid large delta after pause
-    requestAnimationFrame(mainLoop)
+    animationFrameId = requestAnimationFrame(mainLoop)
   }
 }
