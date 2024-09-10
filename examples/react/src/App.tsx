@@ -119,13 +119,13 @@ const UI = ({
     return () => clearInterval(interval)
   }, [])
 
-  useMainLoop(({ elapsed }) => {
-    mainLoopRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Count: ${count}`
+  useMainLoop(({ elapsed, callbackCount }) => {
+    mainLoopRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Counter: ${count} - CBs: ${callbackCount}`
   })
 
   useMainLoop(
-    ({ elapsed }) => {
-      MainLoopThrottledRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Count: ${count}`
+    ({ elapsed, callbackCount }) => {
+      MainLoopThrottledRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Counter: ${count} - CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )
