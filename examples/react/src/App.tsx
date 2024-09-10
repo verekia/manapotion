@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
 import {
   Listeners,
@@ -109,13 +109,23 @@ const UI = ({
   const MainLoopThrottledRef = useRef<HTMLSpanElement>(null)
   const [joystickMode, setJoystickMode] = useState<'follow' | 'origin'>('follow')
 
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(count => count + 1)
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
+
   useMainLoop(({ elapsed }) => {
-    mainLoopRef.current!.textContent = String(Math.round(elapsed * 1000))
+    mainLoopRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Count: ${count}`
   })
 
   useMainLoop(
     ({ elapsed }) => {
-      MainLoopThrottledRef.current!.textContent = String(Math.round(elapsed * 1000))
+      MainLoopThrottledRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Count: ${count}`
     },
     { throttle: 100 },
   )
