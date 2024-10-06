@@ -1,4 +1,5 @@
 export type MainLoopEffectCallback = (callback: {
+  time: number
   delta: number
   elapsed: number
   callbackCount: number
@@ -13,7 +14,7 @@ type StageNumber = number
 
 const callbacks = new Map<StageNumber, Set<MainLoopEffectCallback>>()
 const callbackLastExecutions = new WeakMap<MainLoopEffectCallback, number>()
-const state = { delta: 0, elapsed: 0, callbackCount: 0 }
+const state = { time: 0, delta: 0, elapsed: 0, callbackCount: 0 }
 let previousTime = performance.now()
 let running = false
 let animationFrameId: number | null = null
@@ -21,14 +22,13 @@ let animationFrameId: number | null = null
 const mainLoop = (time: number) => {
   if (!running) return
 
-  state.delta = (time - previousTime) / 1000
-  state.elapsed += state.delta
-
   let callbackCount = 0
   for (const callbacksSet of callbacks.values()) {
     callbackCount += callbacksSet.size
   }
   state.callbackCount = callbackCount
+
+  state.time = time
 
   Array.from(callbacks.keys())
     .sort((a, b) => a - b)
@@ -50,13 +50,20 @@ export const addMainLoopEffect = (
   callback: MainLoopEffectCallback,
   options?: MainLoopEffectOptions,
 ) => {
-  const throttledCallback = (state: { delta: number; elapsed: number; callbackCount: number }) => {
+  const throttledCallback = (state: {
+    time: number
+    delta: number
+    elapsed: number
+    callbackCount: number
+  }) => {
     const now = performance.now()
     const lastExecution = callbackLastExecutions.get(callback) || 0
     const throttleInterval = options?.throttle || 0
 
     if (now - lastExecution >= throttleInterval) {
       callbackLastExecutions.set(callback, now)
+      state.delta = (state.time - previousTime) / 1000
+      state.elapsed += state.delta
       callback(state)
     }
   }
