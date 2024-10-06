@@ -45,13 +45,26 @@
   let mainLoopEl: HTMLSpanElement
   let mainLoopThrottledEl: HTMLSpanElement
 
-  useMainLoop(({ elapsed }) => {
-    mainLoopEl.textContent = String(Math.round(elapsed * 1000))
+  import { onMount } from 'svelte'
+
+  let counter = 0
+
+  onMount(() => {
+    const interval = setInterval(() => {
+      counter++
+    }, 1000)
+
+    return () => clearInterval(interval)
+  })
+
+
+  useMainLoop(({ callbackCount, delta, deltaWithThrottle, elapsedRunning, time }) => {
+    mainLoopEl.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
   })
 
   useMainLoop(
-    ({ elapsed }) => {
-      mainLoopThrottledEl.textContent = String(Math.round(elapsed * 1000))
+    ({ callbackCount, delta, deltaWithThrottle, elapsedRunning, time }) => {
+      mainLoopThrottledEl.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )
@@ -221,10 +234,12 @@
     <section>
       <h2 class="section-heading">🔄 Main loop</h2>
       <div>
-        useMainLoop: <span class="tabular-nums" bind:this={mainLoopEl} />
+        <div><b>useMainLoop</b></div>
+        <div class="tabular-nums" bind:this={mainLoopEl} />
       </div>
       <div>
-        useMainLoop (throttled): <span class="tabular-nums" bind:this={mainLoopThrottledEl} />
+      <div><b>useMainLoop (throttled)</b></div>
+        <div class="tabular-nums" bind:this={mainLoopThrottledEl} />
       </div>
     </section>
     <section>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 import {
   Listeners,
@@ -39,13 +39,23 @@ const mousePosEl = ref<HTMLSpanElement>()
 const mouseMoveEl = ref<HTMLSpanElement>()
 const scrollYEl = ref<HTMLSpanElement>()
 
-useMainLoop(({ elapsed }) => {
-  mainLoopEl.value!.textContent = String(Math.round(elapsed * 1000))
+const counter = ref(0)
+
+onMounted(() => {
+  const intervalId = setInterval(() => {
+    counter.value++
+  }, 1000)
+
+  onUnmounted(() => clearInterval(intervalId))
+})
+
+useMainLoop(({ elapsedRunning, delta, deltaWithThrottle, time, callbackCount }) => {
+  mainLoopEl.value!.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
 })
 
 useMainLoop(
-  ({ elapsed }) => {
-    mainLoopThrottledEl.value!.textContent = String(Math.round(elapsed * 1000))
+  ({ elapsedRunning, delta, deltaWithThrottle, time, callbackCount }) => {
+    mainLoopThrottledEl.value!.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
   },
   { throttle: 100 },
 )

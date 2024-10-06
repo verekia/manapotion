@@ -240,15 +240,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateJoystickButton()
 
-  addMainLoopEffect(({ elapsed }) => {
+  addMainLoopEffect(({ elapsedRunning, callbackCount, delta, deltaWithThrottle, time }) => {
     const el = document.getElementById('mainLoopEl')!
-    el.textContent = String(Math.round(elapsed * 1000))
+    el.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />CBs: ${callbackCount}`
   })
 
   addMainLoopEffect(
-    ({ elapsed }) => {
+    ({ elapsedRunning, callbackCount, delta, deltaWithThrottle, time }) => {
       const el = document.getElementById('mainLoopThrottledEl')!
-      el.textContent = String(Math.round(elapsed * 1000))
+      el.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )
@@ -493,10 +493,13 @@ export const App = html`
       </section>
       <section>
         <h2 class="section-heading">🔄 Main loop</h2>
-        <div>addMainLoopEffect: <span id="mainLoopEl" class="tabular-nums"></span></div>
+        <div><b>addMainLoopEffect</b></div>
+        <div id="mainLoopEl" class="tabular-nums"></div>
         <div>
-          addMainLoopEffect (throttled):
-          <span id="mainLoopThrottledEl" class="tabular-nums"></span>
+          <div>
+            <b>addMainLoopEffect (throttled)</b>
+          </div>
+          <div id="mainLoopThrottledEl" class="tabular-nums"></div>
         </div>
       </section>
       <section>
