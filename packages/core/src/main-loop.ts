@@ -1,9 +1,12 @@
-export type MainLoopEffectCallback = (callback: {
+export type MainLoopState = {
   time: number
   delta: number
-  elapsed: number
+  deltaWithThrottle: number
+  elapsedRunning: number
   callbackCount: number
-}) => void
+}
+
+export type MainLoopEffectCallback = (callback: MainLoopState) => void
 
 export type MainLoopEffectOptions = {
   throttle?: number
@@ -12,24 +15,25 @@ export type MainLoopEffectOptions = {
 
 type StageNumber = number
 
-type State = {
-  time: number
-  delta: number
-  elapsed: number
-  callbackCount: number
-}
-
 const callbacks = new Map<StageNumber, Set<MainLoopEffectCallback>>()
-const callbackLastExecutions = new WeakMap<MainLoopEffectCallback, number>()
-const state: State = { time: 0, delta: 0, elapsed: 0, callbackCount: 0 }
-let previousTime = performance.now()
+const callbackLastExecutions = new Map<MainLoopEffectCallback, number>()
+const state: MainLoopState = {
+  time: 0,
+  delta: 0,
+  elapsedRunning: 0,
+  callbackCount: 0,
+  deltaWithThrottle: 0,
+}
 let running = false
+let previousTime = 0
 let animationFrameId: number | null = null
 
 const mainLoop = (time: number) => {
   if (!running) return
 
   state.time = time
+  state.delta = (state.time - previousTime) / 1000
+  state.elapsedRunning += state.delta
 
   let callbackCount = 0
   for (const callbacksSet of callbacks.values()) {
@@ -37,6 +41,7 @@ const mainLoop = (time: number) => {
   }
   state.callbackCount = callbackCount
 
+  // TODO: Use for loops instead, sort in addMainLoopEffect instead
   Array.from(callbacks.keys())
     .sort((a, b) => a - b)
     .forEach(stage => {
@@ -49,7 +54,7 @@ const mainLoop = (time: number) => {
       })
     })
 
-  previousTime = time
+  previousTime = state.time
   animationFrameId = requestAnimationFrame(mainLoop)
 }
 
@@ -57,14 +62,14 @@ export const addMainLoopEffect = (
   callback: MainLoopEffectCallback,
   options?: MainLoopEffectOptions,
 ) => {
-  const throttledCallback = (state: State) => {
+  const throttledCallback = (state: MainLoopState) => {
     const lastExecution = callbackLastExecutions.get(callback) || 0
     const throttleInterval = options?.throttle || 0
 
-    if (state.time - lastExecution >= throttleInterval) {
+    if (state.time - lastExecution >= throttleInterval + state.delta) {
+      state.deltaWithThrottle = (state.time - lastExecution) / 1000
+
       callbackLastExecutions.set(callback, state.time)
-      state.delta = (state.time - previousTime) / 1000
-      state.elapsed += state.delta
       callback(state)
     }
   }
@@ -77,8 +82,12 @@ export const addMainLoopEffect = (
 
   if (!running) {
     running = true
-    previousTime = performance.now() // Reset time to avoid large delta after pause
-    animationFrameId = requestAnimationFrame(mainLoop)
+    // Reset time to avoid large delta after pause
+    animationFrameId = requestAnimationFrame(time => {
+      previousTime = time
+      callbackLastExecutions.forEach((_, callback) => callbackLastExecutions.set(callback, time))
+      mainLoop(time)
+    })
   }
 
   return () => {
@@ -100,7 +109,11 @@ export const pauseMainLoop = () => {
 export const resumeMainLoop = () => {
   if (!running && callbacks.size > 0) {
     running = true
-    previousTime = performance.now() // Reset time to avoid large delta after pause
-    animationFrameId = requestAnimationFrame(mainLoop)
+    // Reset time to avoid large delta after pause
+    animationFrameId = requestAnimationFrame(time => {
+      previousTime = time
+      callbackLastExecutions.forEach((_, callback) => callbackLastExecutions.set(callback, time))
+      mainLoop(time)
+    })
   }
 }

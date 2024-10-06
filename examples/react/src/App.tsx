@@ -105,8 +105,8 @@ const UI = ({
   windowSizeRef: RefObject<HTMLSpanElement>
   scrollYRef: RefObject<HTMLDivElement>
 }) => {
-  const mainLoopRef = useRef<HTMLSpanElement>(null)
-  const mainLoopThrottledRef = useRef<HTMLSpanElement>(null)
+  const mainLoopRef = useRef<HTMLDivElement>(null)
+  const mainLoopThrottledRef = useRef<HTMLDivElement>(null)
   const [joystickMode, setJoystickMode] = useState<'follow' | 'origin'>('follow')
 
   const [count, setCount] = useState(0)
@@ -119,13 +119,13 @@ const UI = ({
     return () => clearInterval(interval)
   }, [])
 
-  useMainLoop(({ elapsed, callbackCount }) => {
-    mainLoopRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Counter: ${count} - CBs: ${callbackCount}`
+  useMainLoop(({ time, deltaWithThrottle, elapsedRunning, callbackCount, delta }) => {
+    mainLoopRef.current!.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Counter: ${count}<br />CBs: ${callbackCount}`
   })
 
   useMainLoop(
-    ({ elapsed, callbackCount }) => {
-      mainLoopThrottledRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Counter: ${count} - CBs: ${callbackCount}`
+    ({ time, elapsedRunning, callbackCount, delta, deltaWithThrottle }) => {
+      mainLoopThrottledRef.current!.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Counter: ${count}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )
@@ -296,11 +296,13 @@ const UI = ({
           <section>
             <h2 className="section-heading">🔄 Main loop</h2>
             <div>
-              useMainLoop: <span className="tabular-nums" ref={mainLoopRef} />
+              <b>useMainLoop</b>
             </div>
-            <div>
-              useMainLoop (throt.): <span className="tabular-nums" ref={mainLoopThrottledRef} />
+            <div className="tabular-nums" ref={mainLoopRef} />
+            <div className="mt-2">
+              <b>useMainLoop (throttled)</b>
             </div>
+            <div className="tabular-nums" ref={mainLoopThrottledRef} />
           </section>
           <section>
             <h2 className="section-heading">🍃 Tailwind</h2>
