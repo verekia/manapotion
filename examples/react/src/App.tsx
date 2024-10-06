@@ -106,7 +106,7 @@ const UI = ({
   scrollYRef: RefObject<HTMLDivElement>
 }) => {
   const mainLoopRef = useRef<HTMLSpanElement>(null)
-  const MainLoopThrottledRef = useRef<HTMLSpanElement>(null)
+  const mainLoopThrottledRef = useRef<HTMLSpanElement>(null)
   const [joystickMode, setJoystickMode] = useState<'follow' | 'origin'>('follow')
 
   const [count, setCount] = useState(0)
@@ -125,7 +125,7 @@ const UI = ({
 
   useMainLoop(
     ({ elapsed, callbackCount }) => {
-      MainLoopThrottledRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Counter: ${count} - CBs: ${callbackCount}`
+      mainLoopThrottledRef.current!.textContent = `${String(Math.round(elapsed * 1000))} - Counter: ${count} - CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )
@@ -299,7 +299,7 @@ const UI = ({
               useMainLoop: <span className="tabular-nums" ref={mainLoopRef} />
             </div>
             <div>
-              useMainLoop (throttled): <span className="tabular-nums" ref={MainLoopThrottledRef} />
+              useMainLoop (throt.): <span className="tabular-nums" ref={mainLoopThrottledRef} />
             </div>
           </section>
           <section>
