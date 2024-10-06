@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte'
+
   import {
     DeviceTypeListener,
     Listeners,
@@ -45,8 +47,6 @@
   let mainLoopEl: HTMLSpanElement
   let mainLoopThrottledEl: HTMLSpanElement
 
-  import { onMount } from 'svelte'
-
   let counter = 0
 
   onMount(() => {
@@ -56,7 +56,6 @@
 
     return () => clearInterval(interval)
   })
-
 
   useMainLoop(({ callbackCount, delta, deltaWithThrottle, elapsedRunning, time }) => {
     mainLoopEl.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
@@ -238,7 +237,7 @@
         <div class="tabular-nums" bind:this={mainLoopEl} />
       </div>
       <div>
-      <div><b>useMainLoop (throttled)</b></div>
+        <div><b>useMainLoop (throttled)</b></div>
         <div class="tabular-nums" bind:this={mainLoopThrottledEl} />
       </div>
     </section>
