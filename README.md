@@ -398,7 +398,7 @@ const SyncMainLoop = () => {
   const advance = useThree(s => s.advance)
 
   useMainLoop(
-    ({ elapsed }) => advance(elapsed),
+    ({ time }) => advance(time / 1000),
     { stage: STAGE_RENDER } // Or whatever stage you want
   )
 
