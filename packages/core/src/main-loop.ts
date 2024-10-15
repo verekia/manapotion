@@ -31,7 +31,6 @@ const mainLoop = (time: number) => {
 
   state.time = time
   state.timeRunning += state.time - previousTime
-  state.delta = (state.time - previousTime) / 1000
 
   let callbackCount = 0
   for (const callbacksSet of callbacks.values()) {
@@ -67,6 +66,8 @@ export const addMainLoopEffect = (
     if (throttleInterval === 0) {
       // No throttling, execute every frame
       callbackLastExecutions.set(callback, state.time)
+
+      state.delta = (state.time - previousTime) / 1000
       callback(state)
     } else {
       // Calculate the number of intervals passed
