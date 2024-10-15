@@ -66,7 +66,7 @@ export const addMainLoopEffect = (
     const lastExecution = callbackLastExecutions.get(callback) || 0
     const throttleInterval = options?.throttle || 0
 
-    if (state.time - lastExecution >= throttleInterval + state.delta) {
+    if (state.time - lastExecution >= throttleInterval) {
       state.deltaWithThrottle = (state.time - lastExecution) / 1000
 
       callbackLastExecutions.set(callback, state.time)
