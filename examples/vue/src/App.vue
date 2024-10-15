@@ -32,8 +32,8 @@ import RightMouseButtonLabel from './components/labels/RightMouseButtonLabel.vue
 import MobileJoystick from './components/MobileJoystick.vue'
 import TwitterIcon from './components/TwitterIcon.vue'
 
-const mainLoopEl = ref<HTMLSpanElement>()
-const mainLoopThrottledEl = ref<HTMLSpanElement>()
+const mainLoopEl = ref<HTMLDivElement>()
+const mainLoopThrottledEl = ref<HTMLDivElement>()
 const windowSizeEl = ref<HTMLSpanElement>()
 const mousePosEl = ref<HTMLSpanElement>()
 const mouseMoveEl = ref<HTMLSpanElement>()
@@ -49,13 +49,13 @@ onMounted(() => {
   onUnmounted(() => clearInterval(intervalId))
 })
 
-useMainLoop(({ elapsedRunning, delta, deltaWithThrottle, time, callbackCount }) => {
-  mainLoopEl.value!.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
+useMainLoop(({ timeRunning, delta, time, callbackCount }) => {
+  mainLoopEl.value!.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
 })
 
 useMainLoop(
-  ({ elapsedRunning, delta, deltaWithThrottle, time, callbackCount }) => {
-    mainLoopThrottledEl.value!.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
+  ({ timeRunning, delta, time, callbackCount }) => {
+    mainLoopThrottledEl.value!.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
   },
   { throttle: 100 },
 )
@@ -250,11 +250,10 @@ const joystickMode = ref<'follow' | 'origin'>('follow')
       </section>
       <section>
         <h2 class="section-heading">🔄 Main loop</h2>
-        <div>useMainLoop: <span ref="mainLoopEl" class="tabular-nums" /></div>
-        <div>
-          useMainLoop (throttled):
-          <span ref="mainLoopThrottledEl" class="tabular-nums" />
-        </div>
+        <div><b>useMainLoop</b></div>
+        <div ref="mainLoopEl" class="tabular-nums" />
+        <div><b>useMainLoop (throttled)</b></div>
+        <div ref="mainLoopThrottledEl" class="tabular-nums" />
       </section>
       <section>
         <h2 class="section-heading">🍃 Tailwind</h2>

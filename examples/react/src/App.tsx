@@ -119,13 +119,13 @@ const UI = ({
     return () => clearInterval(interval)
   }, [])
 
-  useMainLoop(({ time, deltaWithThrottle, elapsedRunning, callbackCount, delta }) => {
-    mainLoopRef.current!.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Reactive counter: ${count}<br />CBs: ${callbackCount}`
+  useMainLoop(({ time, timeRunning, callbackCount, delta }) => {
+    mainLoopRef.current!.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Reactive counter: ${count}<br />CBs: ${callbackCount}`
   })
 
   useMainLoop(
-    ({ time, elapsedRunning, callbackCount, delta, deltaWithThrottle }) => {
-      mainLoopThrottledRef.current!.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Reactive counter: ${count}<br />CBs: ${callbackCount}`
+    ({ time, timeRunning, callbackCount, delta }) => {
+      mainLoopThrottledRef.current!.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Reactive counter: ${count}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )

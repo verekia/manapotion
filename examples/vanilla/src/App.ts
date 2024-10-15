@@ -240,15 +240,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateJoystickButton()
 
-  addMainLoopEffect(({ elapsedRunning, callbackCount, delta, deltaWithThrottle, time }) => {
+  addMainLoopEffect(({ timeRunning, callbackCount, delta, time }) => {
     const el = document.getElementById('mainLoopEl')!
-    el.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />CBs: ${callbackCount}`
+    el.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />CBs: ${callbackCount}`
   })
 
   addMainLoopEffect(
-    ({ elapsedRunning, callbackCount, delta, deltaWithThrottle, time }) => {
+    ({ timeRunning, callbackCount, delta, time }) => {
       const el = document.getElementById('mainLoopThrottledEl')!
-      el.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />CBs: ${callbackCount}`
+      el.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )

@@ -57,13 +57,13 @@
     return () => clearInterval(interval)
   })
 
-  useMainLoop(({ callbackCount, delta, deltaWithThrottle, elapsedRunning, time }) => {
-    mainLoopEl.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
+  useMainLoop(({ callbackCount, delta, time, timeRunning }) => {
+    mainLoopEl.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
   })
 
   useMainLoop(
-    ({ callbackCount, delta, deltaWithThrottle, elapsedRunning, time }) => {
-      mainLoopThrottledEl.innerHTML = `Delta (s): ${String(delta)}<br />Delta with throttle (s): ${String(deltaWithThrottle)}<br />Elapsed running (s): ${String(Math.round(elapsedRunning * 1000) / 1000)}<br />Time (ms): ${String(time)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
+    ({ callbackCount, delta, time, timeRunning }) => {
+      mainLoopThrottledEl.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )

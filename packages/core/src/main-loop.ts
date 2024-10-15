@@ -1,8 +1,7 @@
 export type MainLoopState = {
   time: number
   delta: number
-  deltaWithThrottle: number
-  elapsedRunning: number
+  timeRunning: number
   callbackCount: number
 }
 
@@ -20,9 +19,8 @@ const callbackLastExecutions = new Map<MainLoopEffectCallback, number>()
 const state: MainLoopState = {
   time: 0,
   delta: 0,
-  elapsedRunning: 0,
+  timeRunning: 0,
   callbackCount: 0,
-  deltaWithThrottle: 0,
 }
 let running = false
 let previousTime = 0
@@ -32,8 +30,8 @@ const mainLoop = (time: number) => {
   if (!running) return
 
   state.time = time
+  state.timeRunning += state.time - previousTime
   state.delta = (state.time - previousTime) / 1000
-  state.elapsedRunning += state.delta
 
   let callbackCount = 0
   for (const callbacksSet of callbacks.values()) {
@@ -66,11 +64,22 @@ export const addMainLoopEffect = (
     const lastExecution = callbackLastExecutions.get(callback) || 0
     const throttleInterval = options?.throttle || 0
 
-    if (state.time - lastExecution >= throttleInterval) {
-      state.deltaWithThrottle = (state.time - lastExecution) / 1000
-
+    if (throttleInterval === 0) {
+      // No throttling, execute every frame
       callbackLastExecutions.set(callback, state.time)
       callback(state)
+    } else {
+      // Calculate the number of intervals passed
+      const intervalsPassed = Math.floor((state.time - lastExecution) / throttleInterval)
+
+      if (intervalsPassed >= 1) {
+        // Update last execution time to the most recent interval
+        const newLastExecution = lastExecution + intervalsPassed * throttleInterval
+        callbackLastExecutions.set(callback, newLastExecution)
+
+        state.delta = (newLastExecution - lastExecution) / 1000
+        callback(state)
+      }
     }
   }
 
@@ -84,7 +93,7 @@ export const addMainLoopEffect = (
     running = true
     // Reset time to avoid large delta after pause
     animationFrameId = requestAnimationFrame(time => {
-      previousTime = time
+      previousTime = Math.round(time) // To avoid microseconds that we might get at the initial call
       callbackLastExecutions.forEach((_, callback) => callbackLastExecutions.set(callback, time))
       mainLoop(time)
     })
