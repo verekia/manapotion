@@ -2,25 +2,37 @@
 
 export const enterFullscreen = () => {
   if (document.documentElement.requestFullscreen) {
-    document.documentElement.requestFullscreen()
-  } else if ((document.documentElement as any).mozRequestFullScreen) {
-    ;(document.documentElement as any).mozRequestFullScreen()
-  } else if ((document.documentElement as any).webkitRequestFullscreen) {
-    ;(document.documentElement as any).webkitRequestFullscreen()
-  } else if ((document.documentElement as any).msRequestFullscreen) {
-    ;(document.documentElement as any).msRequestFullscreen()
+    return document.documentElement.requestFullscreen()
+  }
+
+  if ((document.documentElement as any).mozRequestFullScreen) {
+    return (document.documentElement as any).mozRequestFullScreen()
+  }
+
+  if ((document.documentElement as any).webkitRequestFullscreen) {
+    return (document.documentElement as any).webkitRequestFullscreen()
+  }
+
+  if ((document.documentElement as any).msRequestFullscreen) {
+    return (document.documentElement as any).msRequestFullscreen()
   }
 }
 
 export const exitFullscreen = () => {
   if (document.exitFullscreen) {
-    document.exitFullscreen()
-  } else if ((document as any).mozCancelFullScreen) {
-    ;(document as any).mozCancelFullScreen()
-  } else if ((document as any).webkitExitFullscreen) {
-    ;(document as any).webkitExitFullscreen()
-  } else if ((document as any).msExitFullscreen) {
-    ;(document as any).msExitFullscreen()
+    return document.exitFullscreen()
+  }
+
+  if ((document as any).mozCancelFullScreen) {
+    return (document as any).mozCancelFullScreen()
+  }
+
+  if ((document as any).webkitExitFullscreen) {
+    return (document as any).webkitExitFullscreen()
+  }
+
+  if ((document as any).msExitFullscreen) {
+    return (document as any).msExitFullscreen()
   }
 }
 
@@ -39,13 +51,13 @@ export const lockOrientation = (type: OrientationLockType) => {
     return
   }
   if ('lock' in screen.orientation) {
-    ;(screen.orientation.lock as any)(type)
+    return (screen.orientation.lock as any)(type)
   }
 }
 
 export const unlockOrientation = () => {
   if ('unlock' in screen.orientation) {
-    screen.orientation.unlock()
+    return screen.orientation.unlock()
   }
 }
 
@@ -56,7 +68,7 @@ export const lockKeys = (keys: string[]) => {
     'lock' in (navigator.keyboard as any) &&
     (navigator.keyboard as any).lock
   ) {
-    ;((navigator.keyboard as any).lock as any)(keys)
+    return ((navigator.keyboard as any).lock as any)(keys)
   }
 }
 
@@ -67,7 +79,7 @@ export const unlockKeys = () => {
     'unlock' in (navigator.keyboard as any) &&
     (navigator.keyboard as any).unlock
   ) {
-    ;((navigator.keyboard as any).unlock as any)()
+    return ((navigator.keyboard as any).unlock as any)()
   }
 }
 
