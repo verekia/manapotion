@@ -1,1 +1,1 @@
-npm run pre-push
+sh deploy.sh

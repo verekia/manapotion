@@ -1,4 +1,6 @@
-FROM node:22.11.0-alpine3.20
+# Build stage
+
+FROM node:22.11.0-alpine3.20 AS builder
 
 WORKDIR /app
 
@@ -20,4 +22,12 @@ COPY . .
 
 RUN npm run build && npm run build-examples && npm run build-website
 
-CMD ["npm", "run", "website"]
+# Production stage
+
+FROM nginx:1.26.2-alpine3.20-slim
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=builder /app/website/dist /usr/share/nginx/html
+
+EXPOSE 80
