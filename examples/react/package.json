@@ -1,7 +1,7 @@
 {
   "name": "example-react",
   "private": true,
-  "version": "0.28.2",
+  "version": "1.0.0",
   "license": "MIT",
   "bump": 1,
   "type": "module",
@@ -17,7 +17,7 @@
     "publint": ""
   },
   "dependencies": {
-    "@manapotion/react": "^0.28.2",
+    "@manapotion/react": "^1.0.0",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },

@@ -1,7 +1,7 @@
 {
   "name": "example-svelte",
   "private": true,
-  "version": "0.28.2",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,7 +16,7 @@
     "publint": ""
   },
   "dependencies": {
-    "@manapotion/svelte": "^0.28.2"
+    "@manapotion/svelte": "^1.0.0"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.2.1",

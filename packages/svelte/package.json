@@ -1,6 +1,6 @@
 {
   "name": "@manapotion/svelte",
-  "version": "0.28.2",
+  "version": "1.0.0",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -24,7 +24,7 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@manapotion/core": "^0.28.2"
+    "@manapotion/core": "^1.0.0"
   },
   "peerDependencies": {
     "svelte": ">=4.2.1"
