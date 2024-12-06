@@ -43,10 +43,10 @@
   },
   "dependencies": {
     "@manapotion/core": "^0.28.2",
-    "use-sync-external-store": "1.2.0"
+    "use-sync-external-store": "1.4.0"
   },
   "peerDependencies": {
-    "react": ">=17.0.2"
+    "react": ">=19.0.0"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.2.1",
@@ -60,6 +60,6 @@
     "publint": "0.2.7",
     "tsup": "8.0.2",
     "typescript": "5.4.5",
-    "zustand": "4.5.2"
+    "zustand": "5.0.2"
   }
 }

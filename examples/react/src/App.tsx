@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 
 import {
   Listeners,
@@ -14,7 +14,7 @@ import {
   useMainLoop,
 } from '@manapotion/react'
 
-import type { ForwardedRef, RefObject } from 'react'
+import type { RefObject } from 'react'
 
 import {
   FullscreenButton,
@@ -44,7 +44,7 @@ interface EventNotificationActions {
   setMessage: (message: string) => void
 }
 
-const EventNotificationBase = (_: unknown, ref: ForwardedRef<EventNotificationActions>) => {
+const EventNotification = ({ ref }: { ref: RefObject<EventNotificationActions | null> }) => {
   const messageRef = useRef<HTMLDivElement>(null)
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -67,8 +67,6 @@ const EventNotificationBase = (_: unknown, ref: ForwardedRef<EventNotificationAc
     </div>
   )
 }
-
-const EventNotification = forwardRef(EventNotificationBase)
 
 const KeyboardSection = () => {
   const keyboard = useKeyboard()
@@ -100,10 +98,10 @@ const UI = ({
   windowSizeRef,
   scrollYRef,
 }: {
-  mousePosRef: RefObject<HTMLSpanElement>
-  mouseMoveRef: RefObject<HTMLSpanElement>
-  windowSizeRef: RefObject<HTMLSpanElement>
-  scrollYRef: RefObject<HTMLDivElement>
+  mousePosRef: RefObject<HTMLSpanElement | null>
+  mouseMoveRef: RefObject<HTMLSpanElement | null>
+  windowSizeRef: RefObject<HTMLSpanElement | null>
+  scrollYRef: RefObject<HTMLDivElement | null>
 }) => {
   const mainLoopRef = useRef<HTMLDivElement>(null)
   const mainLoopThrottledRef = useRef<HTMLDivElement>(null)
@@ -120,12 +118,12 @@ const UI = ({
   }, [])
 
   useMainLoop(({ time, timeRunning, callbackCount, delta }) => {
-    mainLoopRef.current!.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Reactive counter: ${count}<br />CBs: ${callbackCount}`
+    mainLoopRef.current!.innerHTML = `Delta (s): ${String(Math.round(delta * 1000) / 1000)}<br />Time (ms): ${String(Math.round(time))}<br />Time running (ms): ${String(Math.round(timeRunning))}<br />Reactive counter: ${count}<br />CBs: ${callbackCount}`
   })
 
   useMainLoop(
     ({ time, timeRunning, callbackCount, delta }) => {
-      mainLoopThrottledRef.current!.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Reactive counter: ${count}<br />CBs: ${callbackCount}`
+      mainLoopThrottledRef.current!.innerHTML = `Delta (s): ${String(Math.round(delta * 1000) / 1000)}<br />Time (ms): ${String(Math.round(time))}<br />Time running (ms): ${String(Math.round(timeRunning))}<br />Reactive counter: ${count}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )

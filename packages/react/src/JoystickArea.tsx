@@ -1,9 +1,9 @@
-import { forwardRef, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { mountJoystickArea } from '@manapotion/core'
 
 import type { JoystickAreaProps } from '@manapotion/core'
-import type { DetailedHTMLProps, ForwardedRef, HTMLAttributes, PropsWithChildren } from 'react'
+import type { DetailedHTMLProps, HTMLAttributes, PropsWithChildren, RefObject } from 'react'
 
 // react-merge-refs v2.1.1
 function mergeRefs<T = unknown>(
@@ -23,23 +23,22 @@ function mergeRefs<T = unknown>(
 type JoystickAreaBaseProps = PropsWithChildren<
   Omit<JoystickAreaProps, 'element'> & {
     containerProps: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+    ref?: RefObject<HTMLDivElement>
   }
 >
 
-const JoystickAreaBase = (
-  {
-    mode,
-    joystick,
-    maxFollowDistance,
-    maxOriginDistance,
-    onEnd,
-    onMove,
-    onStart,
-    containerProps,
-    children,
-  }: JoystickAreaBaseProps,
-  ref: ForwardedRef<HTMLDivElement>,
-) => {
+export const JoystickArea = ({
+  mode,
+  joystick,
+  maxFollowDistance,
+  maxOriginDistance,
+  onEnd,
+  onMove,
+  onStart,
+  containerProps,
+  children,
+  ref,
+}: JoystickAreaBaseProps) => {
   const localRef = useRef<HTMLDivElement>(null)
   const mergedRefs = mergeRefs([localRef, ref])
 
@@ -65,6 +64,3 @@ const JoystickAreaBase = (
     </div>
   )
 }
-
-export const JoystickArea = forwardRef<HTMLDivElement, JoystickAreaBaseProps>(JoystickAreaBase)
-JoystickArea.displayName = 'JoystickArea'

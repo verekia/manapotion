@@ -50,12 +50,12 @@ onMounted(() => {
 })
 
 useMainLoop(({ timeRunning, delta, time, callbackCount }) => {
-  mainLoopEl.value!.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
+  mainLoopEl.value!.innerHTML = `Delta (s): ${String(Math.round(delta * 1000) / 1000)}<br />Time (ms): ${String(Math.round(time))}<br />Time running (ms): ${String(Math.round(timeRunning))}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
 })
 
 useMainLoop(
   ({ timeRunning, delta, time, callbackCount }) => {
-    mainLoopThrottledEl.value!.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
+    mainLoopThrottledEl.value!.innerHTML = `Delta (s): ${String(Math.round(delta * 1000) / 1000)}<br />Time (ms): ${String(Math.round(time))}<br />Time running (ms): ${String(Math.round(timeRunning))}<br />Reactive counter: ${counter.value}<br />CBs: ${callbackCount}`
   },
   { throttle: 100 },
 )

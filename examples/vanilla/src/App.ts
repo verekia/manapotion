@@ -242,13 +242,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   addMainLoopEffect(({ timeRunning, callbackCount, delta, time }) => {
     const el = document.getElementById('mainLoopEl')!
-    el.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />CBs: ${callbackCount}`
+    el.innerHTML = `Delta (s): ${String(Math.round(delta * 1000) / 1000)}<br />Time (ms): ${String(Math.round(time))}<br />Time running (ms): ${String(Math.round(timeRunning))}<br />CBs: ${callbackCount}`
   })
 
   addMainLoopEffect(
     ({ timeRunning, callbackCount, delta, time }) => {
       const el = document.getElementById('mainLoopThrottledEl')!
-      el.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />CBs: ${callbackCount}`
+      el.innerHTML = `Delta (s): ${String(Math.round(delta * 1000) / 1000)}<br />Time (ms): ${String(Math.round(time))}<br />Time running (ms): ${String(Math.round(timeRunning))}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )

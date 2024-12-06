@@ -58,12 +58,12 @@
   })
 
   useMainLoop(({ callbackCount, delta, time, timeRunning }) => {
-    mainLoopEl.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
+    mainLoopEl.innerHTML = `Delta (s): ${String(Math.round(delta * 1000) / 1000)}<br />Time (ms): ${String(Math.round(time))}<br />Time running (ms): ${String(Math.round(timeRunning))}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
   })
 
   useMainLoop(
     ({ callbackCount, delta, time, timeRunning }) => {
-      mainLoopThrottledEl.innerHTML = `Delta (s): ${String(delta)}<br />Time (ms): ${String(time)}<br />Time running (ms): ${String(timeRunning)}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
+      mainLoopThrottledEl.innerHTML = `Delta (s): ${String(Math.round(delta * 1000) / 1000)}<br />Time (ms): ${String(Math.round(time))}<br />Time running (ms): ${String(Math.round(timeRunning))}<br />Counter: ${counter}<br />CBs: ${callbackCount}`
     },
     { throttle: 100 },
   )
