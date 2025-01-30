@@ -10,16 +10,22 @@ export const mountDeviceTypeListener = ({ onDeviceTypeChange }: DeviceTypeListen
   const desktopQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
   const mobileQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
 
-  const handler = () => {
+  const update = () => {
     const isDesktop = desktopQuery.matches
     const isMobile = mobileQuery.matches
-    browserStore.setState(s => ({ ...s, isDesktop, isMobile }))
-    onDeviceTypeChange?.({ isDesktop, isMobile })
+    const payload: DeviceTypeChangePayload = { isDesktop, isMobile }
+    browserStore.setState(s => ({ ...s, ...payload }))
+    return payload
   }
 
-  handler()
+  const handleChange = () => {
+    const payload = update()
+    onDeviceTypeChange?.(payload)
+  }
 
-  desktopQuery.addEventListener('change', handler)
+  update()
 
-  return () => desktopQuery.removeEventListener('change', handler)
+  desktopQuery.addEventListener('change', handleChange)
+
+  return () => desktopQuery.removeEventListener('change', handleChange)
 }

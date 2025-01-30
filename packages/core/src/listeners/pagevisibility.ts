@@ -9,15 +9,21 @@ export type PageVisibilityListenerProps = {
 export const mountPageVisibilityListener = ({
   onPageVisibilityChange,
 }: PageVisibilityListenerProps) => {
-  const handler = () => {
+  const update = () => {
     const isPageVisible = !document.hidden
-    browserStore.setState(s => ({ ...s, isPageVisible }))
-    onPageVisibilityChange?.({ isPageVisible })
+    const payload: PageVisibilityPayload = { isPageVisible }
+    browserStore.setState(s => ({ ...s, ...payload }))
+    return payload
   }
 
-  handler()
+  const handleChange = () => {
+    const payload = update()
+    onPageVisibilityChange?.(payload)
+  }
 
-  document.addEventListener('visibilitychange', handler)
+  update()
 
-  return () => document.removeEventListener('visibilitychange', handler)
+  document.addEventListener('visibilitychange', handleChange)
+
+  return () => document.removeEventListener('visibilitychange', handleChange)
 }

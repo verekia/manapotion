@@ -7,15 +7,21 @@ export type FullscreenListenerProps = {
 }
 
 export const mountFullscreenListener = ({ onFullscreenChange }: FullscreenListenerProps) => {
-  const handler = () => {
+  const update = () => {
     const isFullscreen = Boolean(document.fullscreenElement)
-    browserStore.setState(s => ({ ...s, isFullscreen }))
-    onFullscreenChange?.({ isFullscreen })
+    const payload: FullscreenChangePayload = { isFullscreen }
+    browserStore.setState(s => ({ ...s, ...payload }))
+    return payload
   }
 
-  handler()
+  const handleChange = () => {
+    const payload = update()
+    onFullscreenChange?.(payload)
+  }
 
-  document.addEventListener('fullscreenchange', handler)
+  update()
 
-  return () => document.removeEventListener('fullscreenchange', handler)
+  document.addEventListener('fullscreenchange', handleChange)
+
+  return () => document.removeEventListener('fullscreenchange', handleChange)
 }

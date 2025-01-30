@@ -15,16 +15,22 @@ export const mountScreenOrientationListener = ({
   const landscapeQuery = window.matchMedia('(orientation: landscape)')
   const portraitQuery = window.matchMedia('(orientation: portrait)')
 
-  const handler = () => {
+  const update = () => {
     const isLandscape = landscapeQuery.matches
     const isPortrait = portraitQuery.matches
-    browserStore.setState(s => ({ ...s, isLandscape, isPortrait }))
-    onScreenOrientationChange?.({ isLandscape, isPortrait })
+    const payload: ScreenOrientationChangePayload = { isLandscape, isPortrait }
+    browserStore.setState(s => ({ ...s, ...payload }))
+    return payload
   }
 
-  handler()
+  const handleChange = () => {
+    const payload = update()
+    onScreenOrientationChange?.(payload)
+  }
 
-  landscapeQuery.addEventListener('change', handler)
+  update()
 
-  return () => landscapeQuery.removeEventListener('change', handler)
+  landscapeQuery.addEventListener('change', handleChange)
+
+  return () => landscapeQuery.removeEventListener('change', handleChange)
 }

@@ -11,19 +11,25 @@ type Mutable<T> = {
 }
 
 export const mountPointerLockListener = ({ onPointerLockChange }: PointerLockListenerProps) => {
-  const handler = () => {
+  const update = () => {
     const locked = Boolean(document.pointerLockElement)
     mouseStore.setState(s => {
       const newMouse: Mutable<typeof s> = structuredClone(s)
       newMouse.locked = locked
       return newMouse
     })
-    onPointerLockChange?.({ isPointerLocked: locked })
+    const payload: PointerLockChangePayload = { isPointerLocked: locked }
+    return payload
   }
 
-  handler()
+  const handleChange = () => {
+    const payload = update()
+    onPointerLockChange?.(payload)
+  }
 
-  document.addEventListener('pointerlockchange', handler)
+  update()
 
-  return () => document.removeEventListener('pointerlockchange', handler)
+  document.addEventListener('pointerlockchange', handleChange)
+
+  return () => document.removeEventListener('pointerlockchange', handleChange)
 }

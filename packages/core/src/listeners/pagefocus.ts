@@ -7,19 +7,25 @@ export type PageFocusListenerProps = {
 }
 
 export const mountPageFocusListener = ({ onPageFocusChange }: PageFocusListenerProps) => {
-  const handler = () => {
+  const update = () => {
     const isPageFocused = document.hasFocus()
-    browserStore.setState(s => ({ ...s, isPageFocused }))
-    onPageFocusChange?.({ isPageFocused })
+    const payload: PageFocusChangePayload = { isPageFocused }
+    browserStore.setState(s => ({ ...s, ...payload }))
+    return payload
   }
 
-  handler()
+  const handleChange = () => {
+    const payload = update()
+    onPageFocusChange?.(payload)
+  }
 
-  window.addEventListener('focus', handler)
-  window.addEventListener('blur', handler)
+  update()
+
+  window.addEventListener('focus', handleChange)
+  window.addEventListener('blur', handleChange)
 
   return () => {
-    window.removeEventListener('focus', handler)
-    window.removeEventListener('blur', handler)
+    window.removeEventListener('focus', handleChange)
+    window.removeEventListener('blur', handleChange)
   }
 }
