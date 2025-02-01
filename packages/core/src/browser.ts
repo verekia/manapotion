@@ -83,6 +83,7 @@ export const unlockKeys = () => {
   }
 }
 
-export const lockPointer = () => document.body.requestPointerLock()
+export const lockPointer = (options?: PointerLockOptions) =>
+  document.body.requestPointerLock(options)
 
 export const unlockPointer = () => document.exitPointerLock()
