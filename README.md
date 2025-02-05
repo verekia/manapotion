@@ -21,7 +21,7 @@ The library consists of:
 
 ## Demos
 
-Check out the [**React**](https://manapotion.org/), [**Vue**](https://vue.manapotion.org/), [**Svelte**](https://svelte.manapotion.org/), and [**vanilla JS**](https://vanilla.manapotion.org/) demos.
+Check out the [**React**](https://manapotion.v1v2.io/react), [**Vue**](https://manapotion.v1v2.io/vue), [**Svelte**](https://manapotion.v1v2.io/svelte), and [**vanilla JS**](https://manapotion.v1v2.io/vanilla) demos.
 
 ## Installation
 
