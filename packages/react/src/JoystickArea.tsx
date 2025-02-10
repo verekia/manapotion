@@ -23,7 +23,7 @@ function mergeRefs<T = unknown>(
 type JoystickAreaBaseProps = PropsWithChildren<
   Omit<JoystickAreaProps, 'element'> & {
     containerProps: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-    ref?: RefObject<HTMLDivElement>
+    ref?: RefObject<HTMLDivElement | null>
   }
 >
 
