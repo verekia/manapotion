@@ -73,8 +73,8 @@ const extendScreens = {
   'max-4xl-h': { raw: `not all and (min-height: ${xxxxl})` },
   'max-5xl-h': { raw: `not all and (min-height: ${xxxxxl})` },
 
-  mobile: { raw: '(hover: none) and (pointer: coarse)' },
   desktop: { raw: '(hover: hover) and (pointer: fine)' },
+  mobile: { raw: 'not all and (hover: hover) and (pointer: fine)' },
 }
 
 export const tailwindTheme = { screens, extend: { screens: extendScreens } }

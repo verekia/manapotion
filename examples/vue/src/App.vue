@@ -292,6 +292,11 @@ const joystickMode = ref<'follow' | 'origin'>('follow')
             <span class="hidden 4xl-h:max-5xl-h:inline">4xl to 5xl</span>
             <span class="hidden 5xl-h:inline">5xl and up</span>
           </div>
+          <div>
+            Device:
+            <span class="hidden desktop:inline">desktop</span>
+            <span class="hidden mobile:inline">mobile</span>
+          </div>
         </div>
       </section>
     </div>

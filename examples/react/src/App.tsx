@@ -337,6 +337,11 @@ const UI = ({
                 <span className="hidden 4xl-h:max-5xl-h:inline">4xl to 5xl</span>
                 <span className="hidden 5xl-h:inline">5xl and up</span>
               </div>
+              <div>
+                Device:{' '}
+                <span className="hidden desktop:inline">desktop</span>
+                <span className="hidden mobile:inline">mobile</span>
+              </div>
             </div>
           </section>
         </div>

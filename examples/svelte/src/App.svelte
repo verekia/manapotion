@@ -279,6 +279,11 @@
           <span class="hidden 5xl-h:inline">5xl and up</span>
         </div>
       </div>
+      <div>
+        Device:
+        <span class="hidden desktop:inline">desktop</span>
+        <span class="hidden mobile:inline">mobile</span>
+      </div>
     </section>
   </div>
 
