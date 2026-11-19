@@ -83,7 +83,14 @@ export const unlockKeys = () => {
   }
 }
 
+// TypeScript 5.4's DOM types have neither PointerLockOptions nor the options argument of requestPointerLock
+type PointerLockOptions = { unadjustedMovement?: boolean }
+type PointerLockElement = HTMLElement & {
+  requestPointerLock(options?: PointerLockOptions): Promise<void> | void
+}
+
 export const lockPointer = (options?: PointerLockOptions) =>
-  'requestPointerLock' in document.body && document.body.requestPointerLock?.(options)
+  'requestPointerLock' in document.body &&
+  (document.body as PointerLockElement).requestPointerLock?.(options)
 
 export const unlockPointer = () => 'exitPointerLock' in document && document.exitPointerLock?.()

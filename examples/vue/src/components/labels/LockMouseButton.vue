@@ -3,7 +3,7 @@ import { computed } from 'vue'
 
 import { lockPointer, mouse, unlockPointer } from '@manapotion/vue'
 
-const toggleLocked = computed(() => (mouse.locked ? unlockPointer : lockPointer))
+const toggleLocked = computed(() => () => (mouse.locked ? unlockPointer() : lockPointer()))
 </script>
 
 <template>
